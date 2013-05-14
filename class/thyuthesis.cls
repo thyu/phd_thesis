@@ -11,6 +11,7 @@
 \usepackage{tocbibind}
 \usepackage{amssymb}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage[english]{babel}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage[perpage]{footmisc}
@@ -21,9 +22,21 @@
 \usepackage{calc}
 \usepackage{soul}
 \usepackage{lmodern}
+\usepackage{cite}
+\usepackage{xspace} 
+\usepackage{textcomp}
 
+% Palatino font 
 \usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
 \usepackage{tgpagella}
+
+% Palatino font fixes
+\normalfont
+\DeclareFontShape{T1}{qpl}{m}{sl} { <-> ssub * qpl/m/it }{}
+\DeclareFontShape{T1}{qpl}{b}{sl} { <-> ssub * qpl/b/it }{}
+
+% Other fonts 
 %\usepackage[lining]{ebgaramond}
 %\usepackage[default]{droidserif}
 %\usepackage{DejaVuSerif}
