@@ -1,7 +1,6 @@
 \documentclass[a4paper, 12pt]{class/thyuthesis}
 
-\title{Approaches to 3-D Shape Recognition and Human Pose Estimation}
-
+\title{Recognition and Pose Estimation for 3-D Shapes and Human Actions}
 \author{Tsz-Ho Yu}
 \collegeordept{Darwin College}
 \university{\href{http://www.cam.ac.uk}{University of Cambridge}}
@@ -17,7 +16,9 @@
 % 1.5 line spacing
 \OnehalfSpacing
 
-\include{00-globaldef}
+\include{0d-globaldef}
+\include{0d-defpart1}
+\include{0d-defpart2}
 
 \begin{document}
 
@@ -29,8 +30,8 @@
 \frontmatter
 \pagenumbering{roman}
 
-\include{01-abstract}
-\include{02-acknowledgement}
+\include{0f-abs}
+\include{0f-ack}
 
 \tableofcontents \newpage
 \listoffigures \newpage
@@ -40,26 +41,26 @@
 
 \mainmatter
 
-\part{3-D Shape Recognition}
-\include{10-def}
-\include{11-intro}
-\include{12-relatedwork}
-\include{13-detectoreval}
-\include{14-3dreg}
-\include{15-discussion}
+\include{01-intro}
 
-\part{3-D Human Pose Estimation}
-\include{20-def}
-\include{21-intro}
-\include{22-relatedwork}
-\include{23-actreg}
-\include{24-poseest}
-\include{25-handest}
-\include{26-discussion}
+\part{3-D Shapes}
+
+\include{11-lit}
+\include{12-eval}
+\include{13-3dreg}
+
+\part{Human Actions}
+
+\include{21-lit}
+\include{22-act}
+\include{23-body}
+\include{24-hand}
+
+\include{31-discussion} 
 
 \backmatter
 \appendix
-\include{a1-appdx1}
+\include{a1-app}
 
 \bibliographystyle{apalike}
 \renewcommand{\bibname}{References} 

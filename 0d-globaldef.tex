@@ -1,0 +1,29 @@
+% Import packages
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{rotating}
+\usepackage{class/slashbox} 
+
+% Turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+% Character  
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\cf}{c.f.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+\newcommand*{\etal}{et al.\@\xspace}
+\makeatletter
+\newcommand*{\etc}{%
+	\@ifnextchar{.}%
+	{etc}%
+	{etc.\@\xspace}%
+}
+\makeatother
+
+% argmin 
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
