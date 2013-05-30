@@ -1,0 +1,79 @@
+\chapter{Introduction}
+\label{chap/intro}
+
+\section{Motivation} 
+
+Recognition and pose estimation of objects are two central topics in computer vision. 
+
+
+Object recognition of high-dimensional data, such as 3-D shapes and videos, has been a long standing challenge for decades.  
+
+Pioneers in computer vision has articulated various methods, yet few have been brought to practical solution due to the availability of data. 
+
+Higher-dimension data have become more acessible, thanks to the recent advancedments in modern data-acquisition techniques, such as low-cost video cameras, real-time multi-view stereo systems, structured light sensor and crowd-sourced 3-D data. 
+
+Automatic object recognition systems are becoming essential to applications such as robotics, computer-aided design, surveillance systems, human-computer interface and computer graphics.  
+
+Recent advancements in data-acquisition techniques provides more acessible, such as Kinect, video cameras in mobile devices, real-time multi-view stereo systems and crowd-sourced 3-D data.  
+
+Computer vision techniques for higher dimensional data, such as videos and 3-D shapes, emerges as a new topic in computer vision.  
+
+This thesis addresses the sub-problems of recognition and pose estimation of 3-D shapes and human actions. 
+
+\section{3-D Shapes}
+\subsection{Limitations of Existing Systems}
+
+\section{Human Actions}
+\subsection{Limitations of Existing Systems}
+
+\subsection{Contributions}
+
+The main contributions of this thesis are:
+\begin{itemize}
+	\item A detailed performance evaluation on several state-of-the-art 3-D interest point detectors.
+	\item A new semi-supervised constellation model for 3-D shape recognition and registration. 
+	\item A real-time algorithm that combines appearance and structural information for video-based action categorisation. 
+	\item A new technique to estimate 3-D human body poses using action detection and regression random forests. 
+	\item A semi-supervised 3-D hand pose estimation algorithm that combines synthetic and realistic training data. 
+\end{itemize}
+
+\section{Thesis Outline}
+
+This thesis is composed of two parts. Chapter \ref{chap/lit3d} to Chapter \ref{chap/3dreg} focus on the recognition and pose estimation of 3-D shapes; the second part, from Chapter \ref{chap/lithuman} to \ref{chap/hand}, focuses on human action analysis, including action categorisation and 3-D pose estimation of human body and hand gestures.  
+
+\paragraph{Part I: 3-D Shapes}
+
+\paragraph{Chapter 2.} 
+This chapter presents a literature review of 3-D shape processing techniques.  
+Existing methods for 3-D feature detection, shape representation, shape recognition and pose estimation are discussed.  
+
+\paragraph{Chapter 3.} 
+A performance evaluation of volumetric 3-D interest points is presented in this chapter. 
+It first gives a brief introduction to the volumetric interest point detectors used in existing literature.
+The interest point detectors are evaluated quantitatively using a new performance metric.
+Finally, the characteristics of the candidate detectors are discussed qualitatively. 
+
+\paragraph{Chapter 4.}
+This chapter presents a weakly supervised constellation model for simultaneous 3-D shape recognition and pose estimation. 
+The proposed model learns the shape, appearance and pose \emph{(SAP)} of an object class from training exemplars, \eg images or point clouds, containing examples of the object in unknown poses.  
+
+\paragraph{Part II: Human Action Analysis}
+
+\paragraph{Chapter 5.} 
+This chapter introduces various sub-problems in human action analysis, including human action recognition, body pose estimation and hand pose estimation. 
+It also discuss the use of random forests and its variants to model human actions and poses.    
+It also reviews the existing approaches for the above sub-problems. 
+
+\paragraph{Chapter 6.} 
+This chapter addresses the recognition sub-problem in human action analysis. The spatiotemporal semantic and structural forest is proposed to recognise human actions in real-time.    
+
+\paragraph{Chapter 7.} 
+This chapter presents a new approach for 3-D body pose estimation in unconstrained, monoculat videos. .   
+A new random forest learning algorithm is introduced, in order to perform action detection and pose estimation simultaneously. 
+% By combining regression random forests with action detection, the proposed method infers 3-D poses from unconstrained, monocular videos. 
+
+\paragraph{Chapter 8.} 
+This chapter addresses the sub-problem of 3-D hand-pose estimation. 
+The regression tree learning algorithm introduced in chapter \ref{chap/body} is further developed to estimate 3-D hand pose from different viewpoints. 
+In addition, a data-driven inverse kinematic scheme is described to refine the occluded joints.
+
