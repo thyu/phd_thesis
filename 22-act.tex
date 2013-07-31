@@ -67,7 +67,7 @@ Some methods require a prior segmentation or a long sequence for classification,
 An overview of the proposed approach is illustrated in figure \ref{fig/act/flow}. Spaiotemporal interest points are first localised by the proposed V-FAST detector. Visual codewords are generated from the interest points by a semantic texton forest. Using pairwise codewords and their spatiotemporal associations, histograms that capture both local-appearance and structural information are constructed. Classification is performed efficiently using a hierarchical k-means algorithm with pyramid match kernels. The proposed method is adaptively combined with the prior-art that uses the bag of semantic texton (BOST) and random forest classifier to further improve the recognition accuracy.
 The proposed recognition framework is flexible. Depending on the application, simple spatiotemporal volumes can be replaced by other local features, such as HOG or tracked trajectories.
 
-\begin{figure}
+\begin{figure}[ht]
 \includegraphics[width=1.0\linewidth]{fig/act/fig1_new.pdf}%flow.png}
 \caption{Overview of the proposed approach}
 \label{fig/act/flow}
@@ -77,7 +77,7 @@ The proposed recognition framework is flexible. Depending on the application, si
 \label{sec/act/fastest}
 The V-FAST (Video FAST) interest point is an extended version of the two-dimensional FAST corner \cite{Rosten2006} to the spatiotemporal domain. It considers pixels in three orthogonal Bresenham circles with radius $r$ on $XY$, $YT$ and $XT$ planes. Similar to FAST, saliency is detected on a plane if there exists $n$ contiguous pixels on the circle which are all brighter than a reference pixel $p(x,y,t)$ plus a threshold $t$, or all darker than $p(x,y,t)-t$. An interest point is detected when the reference pixel shows both spatial ($XY$-plane) and temporal ($XT$-plane or $YT$-plane) saliency. The V-FAST detector gives a denser set of interest points, which enables accurate classification from relatively short sequences. Figure \ref{fig/act/fastest} illustrates how interest points are detected using a 42-pixel V-FAST interest point detector with $r = 3$.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\linewidth]{fig/act/fig2_tot.pdf}%fastest.png}
 \caption{Spatiotemporal interest points localised by the proposed V-FAST detector}
@@ -91,7 +91,7 @@ The semantic texton forest{Shotton2008} is an ensemble of randomised decision tr
 \mathit{f}(p) = w_1 \cdot p(x_1,y_2,t_1) - w_2 \cdot p(x_2,y_2,t_2) > threshold
 \end{equation}
 Features are passed down the $M$ trees. Hence, a STF codebook has a size of $L=\sum_m^M L_m$  where $L_m$ represents the number of leaf nodes i.e. codewords in $m$-th tree. Figure \ref{fig/act/stf} (right) shows the two codewords generated with respect to the example split function.
-\begin{figure}
+\begin{figure}[ht]
 \includegraphics[width=1\linewidth]{fig/act/stf.pdf}%stf.png}
 \caption{Visual codeword generation by Spatiotemporal Semantic Texton Forest}
 \label{fig/act/stf}
@@ -121,7 +121,7 @@ Hierarchical k-means & $O(b\log_{b}(K))$ & $43.51$ & yes \\
 \label{sec/act/MpSRM}
 Multi-pyramidal spatiotemporal relationship match (MpSRM) is presented to encapsulate both local-appearance and structural information efficiently. Semantic texton forest quantises local space-time volumes into codewords in multiple texton trees. For each tree, a three-dimensional histogram is constructed by analysing pairs of codewords and their structural relations (see figure~\ref{fig/act/mpsrm} (left and middle)). For each histogram, a novel pyramid match kernel is proposed for robust matching (figure~\ref{fig/act/mpsrm} (right)). Multiple pyramidal matches are then combined to classify a query video. Whereas the spatiotemporal relationship match (SRM){Ryoo2009} relies on a single flat k-means codebook, MpSRM utilises multiple tree codebooks and pyramid match kernels. Its hierarchical structure offers a time-efficient way to perform pyramid match kernel for semantic codeword matching \cite{Grauman2005}.
 \paragraph{Spatiotemporal relationship histograms.}
-\begin{figure}
+\begin{figure}[ht]
 \includegraphics[width=1\linewidth]{fig/act/fig4.pdf}%mpsrm.png}
 \caption{Multi-pyramidal spatiotemporal relationship match (MpSRM)}
 \label{fig/act/mpsrm}
@@ -188,7 +188,7 @@ The proposed method was tested on the well-known KTH data set \cite{Schuldt2004}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example frames of KTH and UT-interaction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1\linewidth]{fig/act/frames.png}
 \caption{Example frames of KTH (top row) and UT-interaction (bottom row) data set}
@@ -203,7 +203,7 @@ To demonstrate the method for continuous action recognition by a short response 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Confusion matrices
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.32\linewidth]{fig/act/bost.png}
 \includegraphics[width=0.32\linewidth]{fig/act/mpsrm.png}

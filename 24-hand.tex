@@ -28,7 +28,7 @@ manually labelled realistic data are extremely costly to obtain. Existing state-
 %Whilst handling shape variation is crucial for body pose estimation \cite{Shotton2011}, shape variations of human hands are generally smaller than that of body shape.        
 
 % hand shapes 
-\begin{figure}
+\begin{figure}[ht]
 \centering 
 \subcaptionbox{RGB}[0.22\linewidth]{ \raisebox{-1mm}{\includegraphics[height=0.27\linewidth]{fig/hand/fig1_rgb.png}} }
 \subcaptionbox{Labels}[0.22\linewidth]{ \raisebox{-1mm}{\includegraphics[height=0.25\linewidth]{fig/hand/fig1_a.png}} }
@@ -67,12 +67,12 @@ The main contribution of our work is threefold:\\
 \section{Related Work}
 
 % different shape --- apperance based 
-\begin{figure*}[ht]
+\begin{figure}[ht]
 	\hspace{-4mm}
 	\includegraphics[width=1.03\linewidth]{fig/hand/fig2.pdf}
 	\caption{The proposed \STR\ learning model.}
 	\label{fig/hand/concept}
-\end{figure*}
+\end{figure}
 
 \noindent\textbf{Hand pose estimation} Earlier approaches for articulated hand pose estimation are diversified, such as coloured markers \cite{Chua2002}, probabilistic line matching \cite{Athitsos2003}, multi-camera network \cite{Guan2006} and Bayesian filter with Chamfer matching \cite{Stenger2006}. 
 %For example, Chua \etal \cite{Chua2002} recognises hand poses from colored markers on hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimates articulated hand and viewpoint from a database using probabilistic line matching. Pose ambiguities of hand poses are resolved using multiple cameras in \cite{Guan2006}. Stenger \etal \cite{Stenger2006} infer hand poses using a Bayesian filter based on Chamfer matching. 
@@ -483,7 +483,7 @@ Fig.~\ref{fig/hand/multiqual}c shows a frame at the beginning of test sequence $
 Our efficient \STR\ forest also achieves promising run-time performance, it estimates hand poses at about $25$FPS on an Intel I7 PC without GPU acceleration, whilst the FORTH algorithm runs at $6$FPS on the same hardware configuration plus NVidia GT 640. 
 
 
-%\begin{figure*}[ht]
+%\begin{figure}[ht]
 %	\centering
 %	\includegraphics[width=0.33\linewidth]{fig/hand/sq1_avg.pdf}  
 %	\includegraphics[width=0.31\linewidth]{fig/hand/sq1_palm.pdf} 
@@ -493,9 +493,9 @@ Our efficient \STR\ forest also achieves promising run-time performance, it esti
 %	\includegraphics[width=0.31\linewidth]{fig/hand/sq2_tip.pdf} 
 %	\caption{Joint localisation errors of the multiview testing squences.}
 %	\label{fig/hand/multiquant}
-%\end{figure*}
+%\end{figure}
 
-\begin{figure*}[ht]
+\begin{figure}[ht]
 	\centering
 	\subcaptionbox{Test sequence $B$ (Average error)\label{fig/hand/multiquanta}}{
 		\includegraphics[width=0.48\linewidth]{fig/hand/sq1_avg.pdf}
@@ -517,7 +517,7 @@ Our efficient \STR\ forest also achieves promising run-time performance, it esti
 	}
 	\caption{Quantitative results of the multi-view experiment.}
 	\label{fig/hand/multiquant}
-\end{figure*}
+\end{figure}
 
 % 3 x 4 or 4 x 4 image array (RGB, Depth, Ours, FORTH), I expect half a page  
 % show two similar poses with similar viewpoints 

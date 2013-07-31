@@ -43,7 +43,7 @@ Furthermore, if there are changes to the imaging environment, the whole pose est
 %including multi-view videos, body segmentation and specialized hardware. 
 %Ideal imaging conditions, such as a clean background and calibrated camera system, seldom exist in realistic applications. 
 
-%\begin{figure}[th]
+%\begin{figure}[ht]
 %	\centering
 %	\includegraphics[width=1\linewidth]{fig/body/transferexplain.pdf}
 %	\caption{Knowledge transfer capability of the proposed method} 
@@ -142,14 +142,14 @@ Instead, we perform action detection in video, by which we exploit the spatiotem
 %a main object of our model is to estimate s by leveraging 
 %has not utilized the inherit spatiotemporal structure of an \emph{action}--
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.35\linewidth]{fig/body/figure4.pdf}
 	\caption{Graphical representation of the proposed model} 
 	\label{fig/body/figure4gm}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/body/figure3_overview.pdf}
 	\caption{Overview of the proposed framework}
@@ -203,10 +203,10 @@ In the training process, every feature vector is associated with a ground truth 
 The Kinect sensor is used to acquire 3D poses simultaneously with the RGB video sequences. 
 A 3D human pose is represented by the scale-normalised coordinates of the $\njoints$ joints detected by the Kinect sensor, an articulated model of $\njoints=15$ joints is used in this work. 
 Every feature vector in the training dataset is assigned to the 3D pose detected and one of the $\nclass$ action categories, according to its corresponding frame and video. The feature vectors are denoted as $\fset = \{\feature_{\videoth\frameth\hypth}\}$, where $\feature_{\videoth\frameth\hypth}$ is the $\hypth$-th configuration detected in the $\frameth$-th frame of the $\videoth$-th training video. The corresponding class label and corresponding 3D pose
-are defined as  $\aset = \{\action_{\videoth\frameth\hypth} | \action_{\videoth\frameth\hypth} \in 1,\dots,\nclass \}$ and $\pset = \{\pose_{\videoth\frameth\hypth} | \pose_{\videoth\frameth\hypth} \in \realnum^{3\njoints}\}$ respectively.  
-Furthermore, 3D poses $\pset$ of each action category are compressed separately into low-dimensional vectors $\ppset = \{\ppose_{\videoth\frameth\hypth}  |  \ppose_{\videoth\frameth\hypth} \in \realnum^{\pcadim} \}$ using PCA. 
+are defined as  $\aset = \{\action_{\videoth\frameth\hypth} | \action_{\videoth\frameth\hypth} \in 1,\dots,\nclass \}$ and $\pset = \{\bodypose_{\videoth\frameth\hypth} | \bodypose_{\videoth\frameth\hypth} \in \realnum^{3\njoints}\}$ respectively.  
+Furthermore, 3D poses $\pset$ of each action category are compressed separately into low-dimensional vectors $\ppset = \{\_{\videoth\frameth\hypth}  | \pbodypose_{\videoth\frameth\hypth} \in \realnum^{\pcadim} \}$ using PCA. 
 
-% in the $\frameth$-th frame of the $\videoth$-th video :w
+% in the $\frameth$-th frame of the $\videoth$-th video 
 
 
 
@@ -279,7 +279,7 @@ A vote $\vote_{\termnode c}$ cast by the leaf node is a  pair
 $ \vote_{\termnode c}= ( \videoth_{\termnode c}, \frameth_{\termnode c}), c = 1,...,\nclass$ such that
 \begin{equation}
 	(\videoth_{\termnode c}, \frameth_{\termnode c}) =  
-	\displaystyle\argmin_{(\videoth, \frameth)} || \ppose_{\videoth\frameth\hypth} - \mu({\ppset}_{\termnode c}) ||_{2}
+	\displaystyle\argmin_{(\videoth, \frameth)} || \_{\videoth\frameth\hypth} - \mu({\ppset}_{\termnode c}) ||_{2}
 \end{equation}
 $\videoth_{\termnode c}$ and $\frameth_{\termnode c}$ are the indices of the training sample that is the nearest neighbour of Gaussian mean $\mu(\ppset_{\termnode c})$. As a result, $\frameth$ is a temporal vote to the staring point of actions in sequence $\videoth$.
 
@@ -294,15 +294,15 @@ $\videoth_{\termnode c}$ and $\frameth_{\termnode c}$ are the indices of the tra
 %	\begin{array}{c}
 %
 %		\videoth_{c\termnode}, \frameth_{c\termnode}, \hypth_{c\termnode} =  
-%		\displaystyle\argmin_{\videoth, \frameth, \hypth} || \ppose_{\videoth\frameth\hypth} - \overline{\ppset}_{\termnode} ||_{2}  \\
+%		\displaystyle\argmin_{\videoth, \frameth, \hypth} || \_{\videoth\frameth\hypth} - \overline{\ppset}_{\termnode} ||_{2}  \\
 %
-%		P(\ppose'| \termnode, \action_{\termnode} = c) = \normdist(\ppose',%\ppose_{\videoth_{c\termnode}\frameth_{c\termnode}\hypth_{c\termnode}},  \Sigma(\ppset_{c\termnode})) 
+%		P(\'| \termnode, \action_{\termnode} = c) = \normdist(\pbodypose',%\pbodypose_{\videoth_{c\termnode}\frameth_{c\termnode}\hypth_{c\termnode}},  \Sigma(\ppset_{c\termnode})) 
 %
 %	\end{array}
 %\end{equation}
 
 
-%\begin{figure*}[t]
+%\begin{figure}[ht]
 %\begin{center}
 %\vspace{5cm}
 % %\includegraphics[width=0.8\linewidth]{egfigure.eps}
@@ -354,20 +354,20 @@ where $ k = 1,...,\ntreed$, $\delta = -\snippetlen/2,...,\snippetlen/2-1$, $j = 
 %are the poses associated with the votes obtained from $\snippetnow$, such that
 \begin{equation}
 	\begin{split}
-		& \pset^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \{\pose_{\videoth(\frameth-\delta)\hypth}\}\\ 
+		& \pset^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \{\bodypose_{\videoth(\frameth-\delta)\hypth}\}\\ 
 		\mbox{ s.t. } & (\videoth,\frameth) = \vote_{\termnode_{k}[\feature_{(t+\delta)j}]c} \mbox{ and } \action_{\videoth\frameth\hypth} = c 
 \end{split} 
 \end{equation} 
 
 % ----------------- BACK UP 2
 %\begin{equation}
-%\pset^{\mathcal{D}}_{c} = \{ \pose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}\}
+%\pset^{\mathcal{D}}_{c} = \{ \bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}\}
 %\end{equation}
-%where $j = [1,\nhyp]$, $\delta = [-\snippetlen/2,\snippetlen/2]$,  $ k = [1,\ntreed]$. The set $\pose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}$ denotes the $\delta$-voted (offseted) pose from the $\delta$-th frame in $\snippetnow$, \ie $(t\!+\!\delta)$-th frame in input video, by passing down the $k$-th tree in $\forestd$
+%where $j = [1,\nhyp]$, $\delta = [-\snippetlen/2,\snippetlen/2]$,  $ k = [1,\ntreed]$. The set $\bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}$ denotes the $\delta$-voted (offseted) pose from the $\delta$-th frame in $\snippetnow$, \ie $(t\!+\!\delta)$-th frame in input video, by passing down the $k$-th tree in $\forestd$
 %are the poses associated with the votes obtained from $\snippetnow$, such that
 %\begin{equation}
 %	\begin{split}
-%		& \pose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \pose_{\videoth(\frameth-\delta)\hypth}\\ 
+%		& \bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \bodypose_{\videoth(\frameth-\delta)\hypth}\\ 
 %		\mbox{ s.t. } & \videoth,\frameth\in\vote_{\termnode_{k}[\feature_{(t+\delta)j}]c}, \aset_{\videoth} = c 
 %\end{split} 
 %\end{equation} 
@@ -379,29 +379,29 @@ where $ k = 1,...,\ntreed$, $\delta = -\snippetlen/2,...,\snippetlen/2-1$, $j = 
 %	\label{eq:allDetectVotes}
 %	\begin{aligned}[lcl]
 %		\vset_{\_{\timenow c}} & = & \{\vset^{-\delta}_{\termnode[\sframe_{t + \delta}]};\; \delta \in [-\timenow/2,\timenow/2 )\} \\
-%		\vset^{-\delta}_{\termnode[\sframe_{t + \delta}]} & = & \{\pose_{\videoth_{c\termnode}\frameth_{c(\termnode-i)}\hypth_{c\termnode}}; \; c = i, \dots, \nclass \}
+%		\vset^{-\delta}_{\termnode[\sframe_{t + \delta}]} & = & \{\bodypose_{\videoth_{c\termnode}\frameth_{c(\termnode-i)}\hypth_{c\termnode}}; \; c = i, \dots, \nclass \}
 %	\end{aligned} 
 %\end{equation}
-Elements returned from $\Delta(\snippetnow, c)$ represent 3D pose estimations at time $\timenow$. A 3D pose $\posead_{\timenow}$ is hence modelled by $\njoints$ independent Gaussians with respect to its joints. 
+Elements returned from $\Delta(\snippetnow, c)$ represent 3D pose estimations at time $\timenow$. A 3D pose $\bodyposead_{\timenow}$ is hence modelled by $\njoints$ independent Gaussians with respect to its joints. 
 \begin{equation}
 	\begin{split}
-		& P( \posead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
-	 & = \normdist(\posead^{(j)}_{\timenow}; \mu(\Delta^{(j)}(\snippetnow,c)), \Sigma(\Delta^{(j)}(\snippetnow,c))
+		& P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
+	 & = \normdist(\bodyposead^{(j)}_{\timenow}; \mu(\Delta^{(j)}(\snippetnow,c)), \Sigma(\Delta^{(j)}(\snippetnow,c))
 \end{split} 
 \end{equation}
-where $\posead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\posead_{\timenow}\in\realnum^{3\njoints}$.
+where $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
 % backup---------------------------
 %\begin{equation}
 %	\begin{split}
-%		& P( \posead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
-%	 & = \normdist(\posead^{(j)}_{\timenow}; \mu(\pset^{\mathcal{D}(j)}_{c}), \Sigma(\pset^{\mathcal{D}(j)}_{\timenow c}))
+%		& P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
+%	 & = \normdist(\bodyposead^{(j)}_{\timenow}; \mu(\pset^{\mathcal{D}(j)}_{c}), \Sigma(\pset^{\mathcal{D}(j)}_{\timenow c}))
 %\end{split} 
 %\end{equation}
-%where $\posead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\posead_{\timenow}\in\realnum^{3\njoints}$.
+%where $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
 % end of back up
 \paragraph{Cross-modality Regression.}
 \label{sec:jrftest}
-Estimation of current 3D pose by the regression forest, $\posepr_{\timenow}$, is performed on per-frame basis. 
+Estimation of current 3D pose by the regression forest, $\bodyposepr_{\timenow}$, is performed on per-frame basis. 
 Passing down features of current $t$th frame $\{\feature_{ti}|i = 1,...,\nhyp\}$, the set of pose estimates for class $c$ is returned by the function $\Phi(\snippetnow, c)$
 \begin{equation}
 	\label{eq:regressset}
@@ -412,10 +412,10 @@ Passing down features of current $t$th frame $\{\feature_{ti}|i = 1,...,\nhyp\}$
 The distribution of votes for the $j$-th joint is described by an Gaussian: 
 \begin{equation}
 	\begin{split}
-		% & P( \posepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
-		% & = \normdist(\posepr_{\timenow}^{(j)};\mu(\pset^{\mathcal{R}(j)}_{c}),\Sigma(\pset^{\mathcal{R}(j)}_{c})
-		& P( \posepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
-		& = \normdist(\posepr_{\timenow}^{(j)};\mu(\Phi^{(j)}(\snippetnow, c)),\Sigma(\Phi^{(j)}(\snippetnow,c))
+		% & P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
+		% & = \normdist(\bodyposepr_{\timenow}^{(j)};\mu(\pset^{\mathcal{R}(j)}_{c}),\Sigma(\pset^{\mathcal{R}(j)}_{c})
+		& P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
+		& = \normdist(\bodyposepr_{\timenow}^{(j)};\mu(\Phi^{(j)}(\snippetnow, c)),\Sigma(\Phi^{(j)}(\snippetnow,c))
 \end{split}
 \end{equation}
 
@@ -425,35 +425,35 @@ The distribution of votes for the $j$-th joint is described by an Gaussian:
 \paragraph{Combined Pose Estimation.}
 
 Three-dimensional human poses are estimated globally via action detection, and locally by the joint regression forests. 
-Assuming $\posepr_{\timenow}$ and $\posead_{\timenow}$ are independent, 
-the probability of both observations coincide at $\posez$ is 
+Assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, 
+the probability of both observations coincide at $\bodyposez$ is 
 \begin{equation}
 	\label{eq:combination}
 	\begin{aligned}[rl] 
-		& P( \posead_{\timenow}\!=\!\posepr_{\timenow}\!=\!\posez, \action\!=\!c| \snippetnow, \forestr, \forestd)\\ 
-		= & P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} P( \posez^{(j)} | \snippetnow, \action\!=\!c, \forestr) \\
-			 & \hspace{20mm} P( \posez^{(j)}  | \snippetnow, \action\!=\!c, \forestd) \\
-		% = &  P(\action = c | \_\timenow, \forestd) \prod_{j= 1} ^{\njoints}\normdist(\posez_{\timenow}^{(j)};\:\overline{\rset^{(j)}_{\sframe_{\timenow}}},\Sigma(\rset^{(m)}_{\sframe_{\timenow}})) \normdist(\posez^{(j)}_\timenow; \overline{\vset^{(m)}_{\snippet_\timenow}}, \Sigma(\vset^{(m)}_{\snippet_\timenow}))\\ 
-		= &  P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} \normdist(\posez^{(j)}; \finalpose^{(j)}_{\timenow c}, \finalvariance^{(j)}_{\timenow c})
+		& P( \bodyposead_{\timenow}\!=\!\bodyposepr_{\timenow}\!=\!\bodyposez, \action\!=\!c| \snippetnow, \forestr, \forestd)\\ 
+		= & P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} P( \bodyposez^{(j)} | \snippetnow, \action\!=\!c, \forestr) \\
+			 & \hspace{20mm} P( \bodyposez^{(j)}  | \snippetnow, \action\!=\!c, \forestd) \\
+		% = &  P(\action = c | \_\timenow, \forestd) \prod_{j= 1} ^{\njoints}\normdist(\bodyposez_{\timenow}^{(j)};\:\overline{\rset^{(j)}_{\sframe_{\timenow}}},\Sigma(\rset^{(m)}_{\sframe_{\timenow}})) \normdist(\bodyposez^{(j)}_\timenow; \overline{\vset^{(m)}_{\snippet_\timenow}}, \Sigma(\vset^{(m)}_{\snippet_\timenow}))\\ 
+		= &  P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} \normdist(\bodyposez^{(j)}; \finalbodypose^{(j)}_{\timenow c}, \finalvariance^{(j)}_{\timenow c})
 	\end{aligned}
 \end{equation} 
 % ---- back up --- 
 %\begin{equation}
 %	\label{eq:combination}
 %	\begin{aligned}[rl] 
-%		& P( \posead_{\timenow}^{(m)} = \posez^{(m)}_{\timenow}, \posepr^{(m)}_{\timenow} = \posez^{(m)}_{\timenow}, \action_{\timenow} = c| \_\timenow, \forestr, \forestd)\\ 
-%		= & P( \posead_{\timenow}^{(m)} | \posepr^{(m)}_{\timenow}\_\timenow, \action_{\timenow} = c, \forestd, \forestr) P( \posepr^{(m)}_\timenow | \snippet_\timenow, \action_{\timenow} = c, \forestd) P(\action_{\timenow} = c | \snippet_\timenow, \forestd) \\
-%		= & P( \posez_{\timenow}^{(m)} | \_\timenow, \action_{\timenow} = c, \forestr) P( \posez^{(m)}_\timenow | \snippet_\timenow, \action_{\timenow} = c, \forestd) P(\action_{\timenow} = c | \snippet_\timenow, \forestd)\\ 
-%		= & \normdist(\posez_{\timenow}^{(m)};\:\overline{\rset^{(m)}_{\sframe_{\timenow}}},\Sigma(\rset^{(m)}_{\sframe_{\timenow}})) \normdist(\posez^{(m)}_\timenow; \overline{\vset^{(m)}_{\_\timenow}}, \Sigma(\vset^{(m)}_{\snippet_\timenow})) P(\action_{\timenow} = c | \snippet_\timenow, \forestd)\\ 
-%		= & \normdist(\posez^{(m)}_{\timenow}; \mu^{(m)}_{\timenow}, \sigma^{m}_{\timenow}) P(\action_{\timenow} = c | \_\timenow, \forestd)
+%		& P( \bodyposead_{\timenow}^{(m)} = \bodyposez^{(m)}_{\timenow}, \bodyposepr^{(m)}_{\timenow} = \bodyposez^{(m)}_{\timenow}, \action_{\timenow} = c| \_\timenow, \forestr, \forestd)\\ 
+%		= & P( \bodyposead_{\timenow}^{(m)} | \bodyposepr^{(m)}_{\timenow}\_\timenow, \action_{\timenow} = c, \forestd, \forestr) P( \bodyposepr^{(m)}_\timenow | \snippet_\timenow, \action_{\timenow} = c, \forestd) P(\action_{\timenow} = c | \snippet_\timenow, \forestd) \\
+%		= & P( \bodyposez_{\timenow}^{(m)} | \_\timenow, \action_{\timenow} = c, \forestr) P( \bodyposez^{(m)}_\timenow | \snippet_\timenow, \action_{\timenow} = c, \forestd) P(\action_{\timenow} = c | \snippet_\timenow, \forestd)\\ 
+%		= & \normdist(\bodyposez_{\timenow}^{(m)};\:\overline{\rset^{(m)}_{\sframe_{\timenow}}},\Sigma(\rset^{(m)}_{\sframe_{\timenow}})) \normdist(\bodyposez^{(m)}_\timenow; \overline{\vset^{(m)}_{\_\timenow}}, \Sigma(\vset^{(m)}_{\snippet_\timenow})) P(\action_{\timenow} = c | \snippet_\timenow, \forestd)\\ 
+%		= & \normdist(\bodyposez^{(m)}_{\timenow}; \mu^{(m)}_{\timenow}, \sigma^{m}_{\timenow}) P(\action_{\timenow} = c | \_\timenow, \forestd)
 %	\end{aligned}
 %\end{equation}
 % --- back up --- 
-Since the product of Gaussians is also a Gaussian, such that $\finalpose^{(j)}_{\timenow c}$ and $\finalvariance^{(j)}_{\timenow c}$ are 
+Since the product of Gaussians is also a Gaussian, such that $\finalbodypose^{(j)}_{\timenow c}$ and $\finalvariance^{(j)}_{\timenow c}$ are 
 \begin{equation}
 	\label{eq:combination2}
 	\begin{split}
-		\finalpose^{(j)}_{\timenow c} = & \finalvariance^{(j)}_{\timenow c} 
+		\finalbodypose^{(j)}_{\timenow c} = & \finalvariance^{(j)}_{\timenow c} 
 		[
 			\Sigma(\Phi^{(j)}(\snippetnow, c))^{-1} 
 			\mu(\Delta^{(j)}(\snippetnow, c)) + \\ &  
@@ -475,7 +475,7 @@ Since the product of Gaussians is also a Gaussian, such that $\finalpose^{(j)}_{
 		]^{-1}\!
 		\end{split}
 	\end{equation}
-	Consider the probability distribution in equation (\ref{eq:combination}), the final 3D pose estimation is described by the mean joint location $\finalpose^{(j)}_{t\hat{c}}$ of the most probable action category $\hat{c} = \argmax_c  P(\action = c | \snippetnow, \forestd)$, with the confidence region indicated by the covariance $\finalvariance^{(j)}_{t\hat{c}}$, where $ j=1,...,\njoints$. 
+	Consider the probability distribution in equation (\ref{eq:combination}), the final 3D pose estimation is described by the mean joint location $\finalbodypose^{(j)}_{t\hat{c}}$ of the most probable action category $\hat{c} = \argmax_c  P(\action = c | \snippetnow, \forestd)$, with the confidence region indicated by the covariance $\finalvariance^{(j)}_{t\hat{c}}$, where $ j=1,...,\njoints$. 
 
 \label{sec:eval}
 
@@ -503,7 +503,7 @@ Experiments are divided into two parts. In the first part, pose estimation accur
 
 \subsection{Experimental Results}
 
-\begin{figure}[*ht]
+\begin{figure}[ht]
 \centering
 	\includegraphics[width=0.8\linewidth]{fig/body/errplot3d.pdf} 
 	\caption{3D joint localisation errors based on ground truth pose from Kinect sensor}
@@ -512,7 +512,7 @@ Experiments are divided into two parts. In the first part, pose estimation accur
 
 
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[height=0.30\linewidth]{fig/body/confm_detection.pdf} \hspace{1cm} 
 	\includegraphics[height=0.30\linewidth]{fig/body/confm_regression.pdf}
@@ -542,7 +542,7 @@ Table \ref{tab/body/rf_train_params} lists the training parameters.
 \input{include/body_class3d}
 
 Pose estimation accuracy was evaluated in both 2D and 3D. Accuracies of 3D joint coordinates were compared directly with ground truth 3D poses captured by the Kinect sensor. Accuracies in 2D were measured by back-projecting the poses to image coordinates.  
-Besides the combined pose estimation $\finalpose$, we also evaluated each of the forests alone, and compared it with the latest 2D HPE algorithms \cite{Eichner2012} and \cite{Yang2011}. 
+Besides the combined pose estimation $\finalbodypose$, we also evaluated each of the forests alone, and compared it with the latest 2D HPE algorithms \cite{Eichner2012} and \cite{Yang2011}. 
 In order to cope with actions performed in different speeds, testing videos are preprocessed by normalising with respect to their action speeds estimated from the first $25$ frames of the videos.
 In order to make a fair comparison, the joint coordinates from the frame-based algorithms \cite{Eichner2012} and \cite{Yang2011} are temporally smoothed by a $10$-frame median filter, as our approach estimates poses from multiple-frame snippets. 
 

@@ -1,0 +1,101 @@
+
+
+					SRT 	Meanshift Intrinsic Minent  BLK
+
+bearing             55		77			77		83 		81 		
+block               30		13			15		20		21		
+bracket             80		95			96		98		97		
+car                	40		75			76		91		91
+cog                 100		100			100		100		100
+flange              35		41			35		36		34
+knob                90		88			86		91		77
+pipe                45		86			86		89		90
+piston              35		44			44		54		48
+piston2             50		64			67		84		86
+					
+Average				56 		68.3		68.2	74.6 	72.5
+
+
+
+ST only
+
+cog                         1
+bearing                      0.75
+block                      0.85
+bracket                       0.8
+piston                      0.85
+mini                       0.4
+pipe                      0.65
+knob                       0.9
+flange                      0.95
+piston2                      0.55
+cog2                      0.75
+
+
+Average 				0.77
+
+
+Updated Alpha
+
+bearing                     0.5
+block                      	0.35
+bracket                     1
+car                      	0.75
+cog                         1
+flange                      0.6
+knob                      	0.65
+pipe                      	0.25
+piston                      0.45
+piston2                     0.95
+
+
+Average 0.685
+
+
+None
+Method (Train) 3
+Average Score (100%) 0.5366
+Average Score ( 90%) 0.5939
+Average Score ( 75%) 0.6689
+Average Score ( 50%) 0.7414
+Method (Test) 3
+Average Score (100%) 0.5228
+Average Score ( 90%) 0.5791
+Average Score ( 75%) 0.6551
+Average Score ( 50%) 0.7329
+
+Small
+Method (Train) 3
+Average Score (100%) 0.5007
+Average Score ( 90%) 0.5559
+Average Score ( 75%) 0.6340
+Average Score ( 50%) 0.7216
+Method (Test) 3
+Average Score (100%) 0.4988
+Average Score ( 90%) 0.5523
+Average Score ( 75%) 0.6294
+Average Score ( 50%) 0.7240
+
+Mid
+Method (Train) 3
+Average Score (100%) 0.5169
+Average Score ( 90%) 0.5737
+Average Score ( 75%) 0.6570
+Average Score ( 50%) 0.7278
+Method (Test) 3
+Average Score (100%) 0.4863
+Average Score ( 90%) 0.5392
+Average Score ( 75%) 0.6110
+Average Score ( 50%) 0.6915
+
+Large
+Method (Train) 3
+Average Score (100%) 0.4978
+Average Score ( 90%) 0.5527
+Average Score ( 75%) 0.6289
+Average Score ( 50%) 0.6987
+Method (Test) 3
+Average Score (100%) 0.4572
+Average Score ( 90%) 0.5067
+Average Score ( 75%) 0.5768
+Average Score ( 50%) 0.6606
