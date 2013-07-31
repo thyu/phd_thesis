@@ -1,0 +1,69 @@
+\documentclass[a4paper, 12pt]{class/thyuthesis}
+
+\title{Classification and Pose Estimation of \\3D Shapes and Human Actions}
+\author{Tsz-Ho Yu}
+\collegeordept{Darwin College}
+\university{\href{http://www.cam.ac.uk}{University of Cambridge}}
+\crest{\includegraphics[width=75mm]{class/CamLogo.pdf}}
+
+\degree{Doctor of Philosophy}
+\degreedate{Yet to be decided}
+
+% turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+% 1.5 line spacing
+\OnehalfSpacing
+
+\include{0d-globaldef}
+
+\begin{document}
+
+% \maketitle
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\frontmatter
+\pagenumbering{roman}
+
+%\include{0f-abs}
+%\include{0f-ack}
+
+% \tableofcontents \newpage
+% \listoffigures \newpage
+% \listoftables
+%\printnomenclature  %% Print the nomenclature
+%\addcontentsline{toc}{chapter}{Nomenclature}
+
+\mainmatter
+
+% \include{01-intro}
+
+% \part{3-D Shapes}
+\include{0d-defpart1}
+
+% \include{11-lit}
+% \include{12-eval}
+% \include{13-3dreg}
+
+% \part{Human Action Analysis}
+\include{0d-defpart2}
+
+% \include{21-lit}
+\include{22-act}
+% \include{23-body}
+% \include{24-hand}
+
+% \include{31-discussion} 
+
+\backmatter
+% \appendix
+%\include{a1-app}
+
+\bibliographystyle{plain}
+\renewcommand{\bibname}{References} 
+\bibliography{references} 
+
+\end{document}
