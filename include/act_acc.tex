@@ -1,28 +1,30 @@
 \begin{sidewaystable}
 \centering
-{\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 \hline
-Method & box & hclp & hwav & jog & run & walk & \textbf{ Overall} & Protocol \\
+\textbf{Method} & \textbf{box} & \textbf{clap} & \textbf{wave} & \textbf{jog} & \textbf{run} & \textbf{walk} & \textbf{Overall} & \textbf{Protocol} \\
 \hline
-\textbf{ \color{blue} MpSRM + BOST} & \textbf{ \color{blue} 100.0} & \textbf{ \color{blue}96.0} & \textbf{ \color{blue}100} & \textbf{ \color{blue}86.0} & \textbf{ \color{blue}95.0} & \textbf{ \color{blue}97.0} & \textbf{ \color{blue}95.67} & sequence\\
-\textbf{ \color{blue} MpSRM + BOST} & \textbf{ \color{blue} 99.0} & \textbf{ \color{blue} 96.6} & \textbf{ \color{blue}98.9} & \textbf{ \color{blue}82.6} & \textbf{ \color{blue}89.5} & \textbf{ \color{blue}94.8} & \textbf{ \color{blue} 93.55} & snippet\\
-MpSRM & 99.0 & 96.1 & 98.7 & 74.6 & 85.9 & 92.2 & \textbf{ 91.10} & snippet\\
+\textbf{ \color{blue} HSRM + BOST} & \textbf{ \color{blue} 100.0} & \textbf{ \color{blue}96.0} & \textbf{ \color{blue}100} & \textbf{ \color{blue}86.0} & \textbf{ \color{blue}95.0} & \textbf{ \color{blue}97.0} & \textbf{ \color{blue}95.67} & sequence\\
+\textbf{ \color{blue} HSRM + BOST} & \textbf{ \color{blue} 99.0} & \textbf{ \color{blue} 96.6} & \textbf{ \color{blue}98.9} & \textbf{ \color{blue}82.6} & \textbf{ \color{blue}89.5} & \textbf{ \color{blue}94.8} & \textbf{ \color{blue} 93.55} & snippet\\
+HSRM & 99.0 & 96.1 & 98.7 & 74.6 & 85.9 & 92.2 & \textbf{ 91.10} & snippet\\
 SRM{Ryoo2009} & 96.0 & 95.0 & 97.0 & 78.0 & 85.0 & 92.0 & \textbf{ 90.5} & sequence\\
 \hline
-Mined features (2009) \cite{Gilbert2009} & 100.0 & 94.0 & 99.0 & 91.0 & 89.0 & 94.0 & \textbf{ 96.70} & sequence\\
-CCA (2007) \cite{Kim2007} & 98.0 & 100.0 & 97.0 & 90.0 & 88.0 & 99.0 & \textbf{ 95.33} & sequence\\
-Neighbourhood** (2010) \cite{Kovashka2010} & - & - & - & - & - & - & \textbf{ 94.53} & sequence\\
-Info. maximisation (2008) \cite{Liu2008} & 98.0 & 94.9 & 96.0 & 89.0 & 87.0 & 100.0 & \textbf{ 94.15} & sequence\\
-Shape-motion tree (2009) \cite{Lin2009} & 96.0 & 99.0 & 96.0 & 91.0 & 85.0 & 93.0 & \textbf{ 93.43} & sequence\\
-Vocabulary forest (2008) \cite{Mikolajczyk2008} & 97.0 & 96.0 & 98.0 & 88.0 & 93.0 & 87.0 & \textbf{ 93.17} & sequence\\
-Point Clouds (2009) \cite{Bregonzio2009} & 95.0 & 93.0 & 99.0 & 85.0 & 89.0 & 98.0 & \textbf{ 93.17} & sequence\\
-pLSA-ISA (2007) \cite{Wong2007} & 96.0 & 92.0 & 83.0 & 79.0 & 54.0 & 100.0 & \textbf{ 83.92} & sequence\\
+Mined features \cite{Gilbert2009} & 100.0 & 94.0 & 99.0 & 91.0 & 89.0 & 94.0 & \textbf{ 96.70} & sequence\\
+CCA \cite{Kim2007} & 98.0 & 100.0 & 97.0 & 90.0 & 88.0 & 99.0 & \textbf{ 95.33} & sequence\\
+Neighbourhood** \cite{Kovashka2010} & - & - & - & - & - & - & \textbf{ 94.53} & sequence\\
+Info. maximisation \cite{Liu2008} & 98.0 & 94.9 & 96.0 & 89.0 & 87.0 & 100.0 & \textbf{ 94.15} & sequence\\
+Shape-motion tree \cite{Lin2009} & 96.0 & 99.0 & 96.0 & 91.0 & 85.0 & 93.0 & \textbf{ 93.43} & sequence\\
+Vocabulary forest \cite{Mikolajczyk2008} & 97.0 & 96.0 & 98.0 & 88.0 & 93.0 & 87.0 & \textbf{ 93.17} & sequence\\
+Point Clouds \cite{Bregonzio2009} & 95.0 & 93.0 & 99.0 & 85.0 & 89.0 & 98.0 & \textbf{ 93.17} & sequence\\
+pLSA-ISA \cite{Wong2007} & 96.0 & 92.0 & 83.0 & 79.0 & 54.0 & 100.0 & \textbf{ 83.92} & sequence\\
 \hline
-\multicolumn{9}{p{0.9\linewidth}}{\scriptsize * The length of subsequences called snippet is about 50 frames. To balance accuracy, speed and generality, the depth of random forest classifier = $8$; For k-means forest classifier: K = $10$, depth = $3$. ** Classifiers were trained by a split dataset in separate scenarios.
+\multicolumn{9}{p{0.9\linewidth}}{
+\scriptsize * The length of subsequences called snippet is 30 frames. The depth of random forest classifier = $8$; For k-means forest classifier: K = $10$, depth = $3$. 
+}\\
+\multicolumn{9}{p{0.9\linewidth}}{
+\scriptsize ** Classifiers were trained by a split dataset in separate scenarios. 
 }\\
 \end{tabular}
-}
 \caption{Accuracies on KTH data set by the proposed method and state-of-the-art methods. Leave one out cross validation (LOOCV) scheme was used.}
 \label{tab/act/compare}
 \end{sidewaystable}
