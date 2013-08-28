@@ -214,23 +214,34 @@ The DPM is composed of $26$ constituent parts. Each body part in the DPM is repr
 Unlike the traditional silhouette-based features, which requires background subtraction, the proposed mid-level part-based features are more robust to dynamic and unseen backgrounds, as they are learnt from both appearances and spatial structures of low level features. 
 For each frame, the DPM fires up to $\nhyp$ 2D pose configurations.  
 The detected configurations are then normalised with respect to the distance between the head and the waist part. 
-The spatial structure of pose hypotheses from the DPM are represented 
-by measuring the pairwise Euclidean distances among the normalised parts in each pose hypothesis, hence a feature vector takes $325 (=26\times25/2)$ dimensions.
+The spatial structures of DPM part detections are represented by measuring the pairwise Euclidean distances among the normalised parts in each pose hypothesis, hence a feature vector takes $325 (=26\times25/2)$ dimensions.
+The feature vector $\feature_{\videoth\frameth\hypth}$ as computed in equation \ref{eq/body/feature}.
+\begin{equation}
+	\label{eq/body/feature} 
+	\begin{aligned}
+	\feature_{\videoth\frameth\hypth} & = & \left\{ || dpm(\videoth\frameth)_\hypth i - dpm(\videoth, \frameth)_\hypth j ||_{2} \right\} \\ 
+		i, j = 1\cdots26, i \not= j
+	\end{aligned}
+\end{equation}
+DPM detects 2D body parts in the $\frameth$ frame of the $\videoth$-th input video, $dpm(\videoth\frameth)_\hypth i$ denotes the $i$-th body part of the $\hypth$-th hypothesis in the DPM output.  
 
-In the training process, every feature vector is associated with a ground truth 3D pose.
-To generate labelled 3D pose data efficiently for training, a Kinect sensor was used to acquire 3D poses simultaneously with the RGB video sequences. 
-A 3D human pose is represented by the scale-normalised coordinates of the $\njoints$ joints detected by the Kinect sensor, an articulated model of $\njoints=15$ joints is used in this work. 
-Every feature vector in the training dataset is assigned to the 3D pose detected and one of the $\nclass$ action categories, according to its corresponding frame and video. The feature vectors are denoted as: 
+The feature vectors are denoted as: 
 \begin{equation} 
 	\fset = \{\feature_{\videoth\frameth\hypth}\}
 \end{equation}
-where $\feature_{\videoth\frameth\hypth}$ is the $\hypth$-th configuration detected in the $\frameth$-th frame of the $\videoth$-th training video. The set of class labels $\aset$ and corresponding 3D poses $\pset$ are defined as: 
+where $\feature_{\videoth\frameth\hypth}$ is the $\hypth$-th configuration detected in the $\frameth$-th frame of the $\videoth$-th training video. 
+
+Every feature vector in the training dataset is assigned to the 3D pose detected and one of the $\nclass$ action categories, according to its corresponding frame and video. 
+The set of class labels $\aset$ and corresponding 3D poses $\pset$ are defined as: 
 \begin{equation}
 	\begin{aligned}
 		\aset = & \{\action_{\videoth\frameth\hypth} | \action_{\videoth\frameth\hypth} \in 1,\dots,\nclass \} \\ 
 		\pset = & \{\bodypose_{\videoth\frameth\hypth} | \bodypose_{\videoth\frameth\hypth} \in \realnum^{3\njoints}\}  
 	\end{aligned}
 \end{equation}
+In the training process, every feature vector is associated with a ground truth 3D pose.
+To generate labelled 3D pose data efficiently for training, a Kinect sensor was used to acquire 3D poses simultaneously with the RGB video sequences. A 3D human pose is represented by the scale-normalised coordinates of the $\njoints$ joints detected by the Kinect sensor, an articulated model of $\njoints=15$ joints is used in this work. 
+
 Subsequently, 3D poses $\pset$ of each action category are compressed separately into low-dimensional vectors using PCA. 
 In the experiments reported in this chapter, 3D pose data were compressed to 6D feature vectors.  
 \begin{equation}
@@ -244,9 +255,22 @@ In the experiments reported in this chapter, 3D pose data were compressed to 6D 
 \label{sec/body/adflearn}
 The action detection forest, $\forestd$, performs action classification and 3D pose clustering simultaneously.  
 In each leaf node, the 3D pose vectors $\ppset$ are classified into the action class labels $\aset$ and cohering 3D pose vectors are grouped together.
-For given data triplets $\{\fset,\ppset, \aset\}$, $\ntreed$ decision trees are constructed by recursively splitting the data into two child nodes.
+For given data triplets $\{\fset,\ppset, \aset\}$, $\ntreed$ decision trees are constructed by recursively splitting the data into two child nodes. A splitting function determine the    
+performing a two point comparison on the feature vectors in $\fset$   
 A pool of candidate split functions are generated randomly, each compares one dimension in the feature vector $\feature$ with a threshold. 
-The best split is chosen among the candidates by maximising a quality measure in equation \ref{eq/body/newquality}. 
+The best split is chosen among the candidates by maximising a quality measure in equation \ref{eq/body/newquality}. A splitting function $\theta(\feature)$ performs on one of the feature vectors $\feature$ in $\fset$.   
+\begin{equation}
+	\theta(\feature) = 
+	\left\{
+		\begin{aligned}
+			1 & \mbox{ when } \feature[i] - \feature[j] > threshold \\  
+			0 & \mbox{ otherwise } 
+		\end{aligned}
+	\right.
+	\label{eqn/body/split}
+\end{equation}
+where $i$ and $j$ denote two randomly chosen dimensions of a the feature vector $\feature$. 
+
 The splitting process is performed until the new node reaches its maximum depth or minimum number of data points. 
 Once a split function is selected for a tree node, incoming training data are divided into two subsets, which are passed down to two new child nodes.  
 A node stop a predefined maximum depth is reached, or the incoming dataset is smaller than a threshold. Each leave node stores the incoming training data as votes, that are used in Hough-voting during the testing process. 
@@ -343,51 +367,63 @@ Upon completion of $\forestr^{(j)}$, the output of a tree node $\termnode$ is de
 The basic input unit for the proposed system \cite{Schindler2008}, namely video snippet, is a short sequence excerpted from the testing video. A snippet $\snippetnow$ contains $\snippetlen$ frames centered at a reference time $\timenow$ as in equation \ref{eq/body/snippetnow}. 
 \begin{equation}
 	\label{eq/body/snippetnow}
-\snippetnow = \left\{ \sframe_{\timenow - \snippetlen/2}, \dots, \sframe_{\timenow + \snippetlen/2 - 1} \right\}
+	\snippetnow = \left\{ \sframe_{\timenow - \frac{\snippetlen}{2}}, \dots, \sframe_{\timenow + \frac{\snippetlen}{2} - 1} \right\}
 \end{equation}
 
 The testing process starts with extracting features from $\snippetnow$. A DPM , \eg pictorial structure of Yang \etal \cite{Yang2011}, is applied separately on the frames of $\snippetnow$. The DPM produces $\nhyp$ hypotheses of 2D pose on each frame. Feature vectors are computed from the pose hypotheses afterwards, the set of feature of $\snippetnow$ is:
 \begin{equation}
 	\begin{aligned}
-		\fset_{\snippetnow} = \{ \feature_{ij}\} \mbox{ where } i =\timenow-\snippetlen/2,\dots,\timenow+\snippetlen/2-1 \mbox{ and } j=1,\dots,\nhyp
-\end{aligned}
+		\fset_{\snippetnow} = \{ \feature_{ij}\} \\ \mbox{ where } i =\timenow-\frac{\snippetlen}{2},\dots,\timenow+\frac{\snippetlen}{2}-1 \mbox{ and } j=1,\dots,\nhyp
+	\end{aligned}
 \end{equation} 
 
 \subsection{Action detection} 
 
+%done 
 \paragraph{Classification}
-Action detection forest $\forestd$ performs action classification on $\snippetnow$. Let $\termnode_k[\feature_{ij}]$ be the leaf node reached by a feature $\feature_{ij}$ in the $k$-th tree of $\forestd$. The posterior of snippet action class at time $t$ is defined as 
+Action detection forest $\forestd$ first performs action classification on $\snippetnow$. Let $\termnode_k[\feature_{ij}]$ be the terminal node reached by a feature vector $\feature_{ij}$ in the $k$-th tree of the action dection forest $\forestd$, the output action class is the average of all posteriors over trees, frames and hypotheses, as shown in equation \ref{eq/body/actionclassification}. 
 \begin{equation}
-	P(\action = c | \snippetnow, \forestd) = \sum_{k,i,j = 1}^{\ntreed, l, \nhyp}\frac {P(\action=c|\termnode_{k}[\feature_{ij}])} {\ntreed l \nhyp}. 
-\end{equation} 
-%Consequently, the pose found in $\sframe_{\timenow}$ can be estimated from $\snippetnow$ by action detection. 
-
-\paragraph{Detection (Hough voting)}
-A Hough-based voting scheme is designed for action detection. 
-As mentioned in section \ref{sec/body/adflearn}, the vote $(p,q)$ stored in $\forestd$ are temporally associated with their corresponding action sequence and time frame in the training data set. Note each training frame is paired with a ground truth 3D pose. Hence, all frames $I$ can vote for a 3D pose at time $\timenow$, by applying temporal offsets  $\delta$ to the votes obtained from $\fset_{\snippetnow}$. We define a function $\Delta(\snippetnow,c)$ that returns a set of 3D pose estimates in $\pset$ for action label $c$ from Hough-voting during action detection: 
-%The set of votes $\vset[\sframe_i] = \{ \videoth_{k c}[\sframe_{i}], \frameth_{k c}[\sframe_{i}]|k\!\in\!1,\dots,\nvset;c\!\in\!1,\dots,\nclass\}$ is obtained by passing down $\forestd$ the features extracted form a frame in snippet $\sframe_{i} \in \snippetnow$. 
-\begin{equation}
-	\Delta(\snippetnow, c) = \pset^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}
+	\label{eq/body/actionclassification} 
+	\begin{aligned}
+	P(\action & = c | \snippetnow, \forestd) = \displaystyle \sum_{i = 1}^{l} \sum_{j = 1}^{\nhyp} \sum_{k = 1}^{\ntreed} \frac {P(\action=c|\termnode_{k}[\feature_{ij}])} {l\times\ntreed\times\nhyp} \\ 
+	\end{aligned}
 \end{equation}
-where $ k = 1,...,\ntreed$, $\delta = -\snippetlen/2,...,\snippetlen/2-1$, $j = 1,...,\nhyp$. The set $\pset^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}$ denotes the $\delta$-voted (offset-ed) pose from the $\delta$-th frame in $\snippetnow$, \ie $(t\!+\!\delta)$-th frame in input video, by passing down the $k$-th tree in $\forestd$
-%are the poses associated with the votes obtained from $\snippetnow$, such that
+
+% Done 
+\paragraph{Detection (Hough voting)}
+Once the input snipper is classified, a Hough-based voting scheme is employed to perform action detection. 
+As mentioned in section \ref{sec/body/adflearn}, the vote $(\videoth,\frameth)$ stored in $\forestd$ are temporally associated with their corresponding action sequence in the training data set. Each training frame is therefore related to its ground truth 3D pose in $\pset$. All frames in $\snippetnow$ can vote for a 3D pose at time $\timenow$, by applying temporal offsets $\toffset$ to the votes obtained from $\fset_{\snippetnow}$. 
+
+The time offset function, $\toffsetfunc(\snippetnow,c)$, returns a set of 3D poses in $\pset$ for action label $c$ from Hough-voting during action detection: 
+The set of votes $\vset[\sframe_i] = \{ \videoth_{k c}[\sframe_{i}], \frameth_{k c}[\sframe_{i}]|k\in1,\dots,\nvset;c\in1,\dots,\nclass\}$ is obtained by passing down $\forestd$ the features extracted form a frame in snippet $\sframe_{i} \in \snippetnow$. 
+\begin{equation} 
+	\toffsetfunc(\snippetnow, c) = \pset^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c}
+	\mbox{ where }  
+	\left\{	
+	\begin{array}{ll}
+	k & = 1,\dots,\ntreed \\ 
+	\toffset & = -\frac{\snippetlen}{2},\dots,\frac{\snippetlen}{2}-1\\ 
+	j & = 1,\dots,\nhyp  
+	\end{array} 
+	\right.
+\end{equation}
+The set of 3D poses $\pset^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c}$ denotes the $\toffset$-voted (offset-ed) pose from the $\toffset$-th frame in $\snippetnow$, \ie the $(t + \toffset)$-th frame in input video, by passing down the $k$-th tree in $\forestd$. 
 \begin{equation}
 	\begin{split}
-		& \pset^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \{\bodypose_{\videoth(\frameth-\delta)\hypth}\}\\ 
-		\mbox{ s.t. } & (\videoth,\frameth) = \vote_{\termnode_{k}[\feature_{(t+\delta)j}]c} \mbox{ and } \action_{\videoth\frameth\hypth} = c 
+		& \pset^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c} = \{\bodypose_{\videoth(\frameth-\toffset)\hypth}\}\\ 
+		\mbox{ where } & \vote_{\termnode_{k}[\feature_{(t+\toffset)j}]c} = (\videoth, \frameth) \mbox{ and } \action_{\videoth\frameth\hypth} = c 
 \end{split} 
 \end{equation} 
-
 % ----------------- BACK UP 2
 %\begin{equation}
-%\pset^{\mathcal{D}}_{c} = \{ \bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}\}
+%\pset^{\mathcal{D}}_{c} = \{ \bodypose^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c}\}
 %\end{equation}
-%where $j = [1,\nhyp]$, $\delta = [-\snippetlen/2,\snippetlen/2]$,  $ k = [1,\ntreed]$. The set $\bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c}$ denotes the $\delta$-voted (offseted) pose from the $\delta$-th frame in $\snippetnow$, \ie $(t\!+\!\delta)$-th frame in input video, by passing down the $k$-th tree in $\forestd$
+%where $j = [1,\nhyp]$, $\toffset = [-\snippetlen/2,\snippetlen/2]$,  $ k = [1,\ntreed]$. The set $\bodypose^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c}$ denotes the $\toffset$-voted (offseted) pose from the $\toffset$-th frame in $\snippetnow$, \ie $(t+\toffset)$-th frame in input video, by passing down the $k$-th tree in $\forestd$
 %are the poses associated with the votes obtained from $\snippetnow$, such that
 %\begin{equation}
 %	\begin{split}
-%		& \bodypose^{\Delta}_{\termnode_{k}[\feature_{(t+\delta)j}]c} = \bodypose_{\videoth(\frameth-\delta)\hypth}\\ 
-%		\mbox{ s.t. } & \videoth,\frameth\in\vote_{\termnode_{k}[\feature_{(t+\delta)j}]c}, \aset_{\videoth} = c 
+%		& \bodypose^{\toffsetfunc}_{\termnode_{k}[\feature_{(t+\toffset)j}]c} = \bodypose_{\videoth(\frameth-\toffset)\hypth}\\ 
+%		\mbox{ s.t. } & \videoth,\frameth\in\vote_{\termnode_{k}[\feature_{(t+\toffset)j}]c}, \aset_{\videoth} = c 
 %\end{split} 
 %\end{equation} 
 %------------------ BACK UP 1
@@ -397,62 +433,55 @@ where $ k = 1,...,\ntreed$, $\delta = -\snippetlen/2,...,\snippetlen/2-1$, $j = 
 %\begin{equation}
 %	\label{eq:allDetectVotes}
 %	\begin{aligned}[lcl]
-%		\vset_{\_{\timenow c}} & = & \{\vset^{-\delta}_{\termnode[\sframe_{t + \delta}]};\; \delta \in [-\timenow/2,\timenow/2 )\} \\
-%		\vset^{-\delta}_{\termnode[\sframe_{t + \delta}]} & = & \{\bodypose_{\videoth_{c\termnode}\frameth_{c(\termnode-i)}\hypth_{c\termnode}}; \; c = i, \dots, \nclass \}
+%		\vset_{\_{\timenow c}} & = & \{\vset^{-\toffset}_{\termnode[\sframe_{t + \toffset}]};\; \toffset \in [-\timenow/2,\timenow/2 )\} \\
+%		\vset^{-\toffset}_{\termnode[\sframe_{t + \toffset}]} & = & \{\bodypose_{\videoth_{c\termnode}\frameth_{c(\termnode-i)}\hypth_{c\termnode}}; \; c = i, \dots, \nclass \}
 %	\end{aligned} 
 %\end{equation}
-Elements returned from $\Delta(\snippetnow, c)$ represent 3D pose estimations at time $\timenow$. A 3D pose $\bodyposead_{\timenow}$ is hence modelled by $\njoints$ independent Gaussians with respect to its joints. 
-\begin{equation}
-	\begin{split}
-		& P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
-	 & = \normdist(\bodyposead^{(j)}_{\timenow}; \mu(\Delta^{(j)}(\snippetnow,c)), \Sigma(\Delta^{(j)}(\snippetnow,c))
-\end{split} 
+Outputs from $\toffsetfunc(\snippetnow, c)$ are the 3D pose estimations at time $\timenow$. A 3D pose $\bodyposead_{\timenow}$ is modelled by $\njoints$ independent Gaussians with respect to its joints in equation \ref{eq/body/adgaussian}. 
+\begin{equation} 
+	\label{eq/body/adgaussian}
+	P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) =
+	\normdist\left(\bodyposead^{(j)}_{\timenow}; \mu\left(\toffsetfunc^{(j)}(\snippetnow,c)\right), \Sigma\left(\toffsetfunc^{(j)}(\snippetnow,c)\right)\right) 
 \end{equation}
-where $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
-% backup---------------------------
-%\begin{equation}
-%	\begin{split}
-%		& P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) \\ 
-%	 & = \normdist(\bodyposead^{(j)}_{\timenow}; \mu(\pset^{\mathcal{D}(j)}_{c}), \Sigma(\pset^{\mathcal{D}(j)}_{\timenow c}))
-%\end{split} 
-%\end{equation}
-%where $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ is the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
-% end of back up
+$\mu(\toffsetfunc^{(j)}(\snippetnow,c))$ is the mean $\Sigma(\toffsetfunc^{(j)}(\snippetnow,c))$ and covariance matrice of $\toffsetfunc^{(j)}(\snippetnow,c)$ respectively.  $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ denotes the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
 
+% Done 
 \subsection{Cross-modality regression}
-\label{sec:jrftest}
-Estimation of current 3D pose by the regression forest, $\bodyposepr_{\timenow}$, is performed on per-frame basis. 
-Passing down features of current $t$th frame $\{\feature_{ti}|i = 1,...,\nhyp\}$, the set of pose estimates for class $c$ is returned by the function $\Phi(\snippetnow, c)$
+
+While action detection is applied to video snippets, the cross-modality regression forest, $\bodyposepr_{\timenow}$, perform 3D pose refinement on a per-frame basis. 
+Passing down features of current $t$th frame $\{\feature_{ti}|i = 1,...,\nhyp\}$, the set of pose estimates for class $c$ is returned by the function $\Phi(\snippetnow, c)$ in equation \ref{eq/body/regressset}. 
 \begin{equation}
-	\label{eq:regressset}
-	% back up! 
-	%\pset^{\mathcal{R}(j)}_{c} = \{\mu({\pset^{(j)}_{\psi c}})|\psi \in \termnode[\feature \in \fset_{\snippetnow}]\}
-	\Phi^{(j)}(\snippetnow, c)\!=\!\ \pset^{(j)}_{\termnode_{k}[\feature_{ti}]c},  i\!=\!1,...,\nhyp,k\!=\!1,...,\ntreer
+	\label{eq/body/regressset}
+	\Phi^{(j)}(\snippetnow, c) = \pset^{(j)}_{\termnode_{k}[\feature_{ti}]c}
+	\mbox{ where } 
+	\left\{
+		\begin{array}{ll}
+			i & = 1,\dots,\nhyp \\ 
+			k & = 1,\dots,\ntreer
+		\end{array}
+	\right.
 \end{equation} 
-The distribution of votes for the $j$-th joint is described by an Gaussian: 
+Similar to the action detection forest, the regression result for the $j$-th joint is then described by an Gaussian distribution in \ref{eq/body/regressiongaussian}. 
 \begin{equation}
+	\label{eq/body/regressiongaussian}
 	\begin{split}
-		% & P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
-		% & = \normdist(\bodyposepr_{\timenow}^{(j)};\mu(\pset^{\mathcal{R}(j)}_{c}),\Sigma(\pset^{\mathcal{R}(j)}_{c})
-		& P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr)\\ 
-		& = \normdist(\bodyposepr_{\timenow}^{(j)};\mu(\Phi^{(j)}(\snippetnow, c)),\Sigma(\Phi^{(j)}(\snippetnow,c))
+		P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr) 
+		= \normdist\left(\bodyposepr_{\timenow}^{(j)};\mu\left(\Phi^{(j)}(\snippetnow, c)\right),\Sigma\left(\Phi^{(j)}(\snippetnow,c)\right)\right)
 \end{split}
 \end{equation}
 
+\subsection{Combined pose estimation}
 
-\subsection{Combined Pose Estimation.}
-
-Three-dimensional human poses are estimated globally via action detection, and locally by the joint regression forests. 
-Assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, 
-the probability of both observations coincide at $\bodyposez$ is 
+While the action detection phase estimate a 3D body pose gloablly, the regression forest refined each joint locally. Their results are combined to produce the output estimate. Since each joint is described as a Gaussian distribution in $\forestd$ and $\forestr$, assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, the probability of both observations coincide at $\bodyposez$ is formulated in \ref{eq/body/combine}.  
 \begin{equation}
-	\label{eq:combination}
+	\label{eq/body/combine}
 	\begin{aligned}[rl] 
-		& P( \bodyposead_{\timenow}\!=\!\bodyposepr_{\timenow}\!=\!\bodyposez, \action\!=\!c| \snippetnow, \forestr, \forestd)\\ 
-		= & P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} P( \bodyposez^{(j)} | \snippetnow, \action\!=\!c, \forestr) \\
-			 & \hspace{20mm} P( \bodyposez^{(j)}  | \snippetnow, \action\!=\!c, \forestd) \\
-		= &  P(\action = c | \_\timenow, \forestd) \prod_{j= 1} ^{\njoints}\normdist(\bodyposez_{\timenow}^{(j)};\:\overline{\rset^{(j)}_{\sframe_{\timenow}}},\Sigma(\rset^{(m)}_{\sframe_{\timenow}})) \normdist(\bodyposez^{(j)}_\timenow; \overline{\vset^{(m)}_{\snippet_\timenow}}, \Sigma(\vset^{(m)}_{\snippet_\timenow}))\\ 
-		= &  P(\action\!=\!c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} \normdist(\bodyposez^{(j)}; \finalbodypose^{(j)}_{\timenow c}, \finalvariance^{(j)}_{\timenow c})
+		& P( \bodyposead_{\timenow}=\bodyposepr_{\timenow}=\bodyposez, \action=c| \snippetnow, \forestr, \forestd)\\ 
+		= & P(\action=c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} P( \bodyposez^{(j)} | \snippetnow, \action=c, \forestr) P( \bodyposez^{(j)}  | \snippetnow, \action=c, \forestd) \\
+		= &  P(\action = c | \snippetnow, \forestd) \prod_{j= 1} ^{\njoints}
+		\normdist\left(\bodyposead^{(j)}_{\timenow}; \mu\left(\toffsetfunc^{(j)}(\snippetnow,c)\right), \Sigma\left(\toffsetfunc^{(j)}(\snippetnow,c)\right)\right) \\ 
+		& \hspace{35mm} \normdist\left(\bodyposepr_{\timenow}^{(j)};\mu\left(\Phi^{(j)}(\snippetnow, c)\right),\Sigma\left(\Phi^{(j)}(\snippetnow,c)\right)\right)\\ 
+		= &  P(\action=c | \snippetnow, \forestd) \prod_{j = 1}^{\njoints} \normdist(\bodyposez^{(j)}; \finalbodypose^{(j)}_{\timenow c}, \finalvariance^{(j)}_{\timenow c})
 	\end{aligned}
 \end{equation} 
 % ---- back up --- 
@@ -467,68 +496,45 @@ the probability of both observations coincide at $\bodyposez$ is
 %	\end{aligned}
 %\end{equation}
 % --- back up --- 
-Since the product of Gaussians is also a Gaussian, such that $\finalbodypose^{(j)}_{\timenow c}$ and $\finalvariance^{(j)}_{\timenow c}$ are 
+Since the product of Gaussians is also a Gaussian, such that $\finalbodypose^{(j)}_{\timenow c}$ and $\finalvariance^{(j)}_{\timenow c}$ are computed in equation \ref{eq/body/combine2}.  
 \begin{equation}
-	\label{eq:combination2}
+	\label{eq/body/combine2}
 	\begin{split}
 		\finalbodypose^{(j)}_{\timenow c} = & \finalvariance^{(j)}_{\timenow c} 
-		[
-			\Sigma(\Phi^{(j)}(\snippetnow, c))^{-1} 
-			\mu(\Delta^{(j)}(\snippetnow, c)) + \\ &  
-			\Sigma(\Delta^{(j)}(\snippetnow, c))^{-1} 
-			\mu(\Phi^{(j)}(\snippetnow, c))
-			%\Sigma(\pset^{\mathcal{R}(j)}_{c})^{-1} 
-			%\mu(\pset^{\mathcal{D}(j)}_{c}) + \\ &  
-			%\Sigma(\pset^{\mathcal{D}(j)}_{c})^{-1} 
-			%\mu(\pset^{\mathcal{R}(j)}_{c})
-		] \\  
+		\Bigg[
+			\Sigma\left(\Phi^{(j)}(\snippetnow, c)\right)^{-1} 
+			\mu\left(\toffsetfunc^{(j)}(\snippetnow, c)\right) + \\ 
+			& \hspace{10mm} \Sigma\left(\toffsetfunc^{(j)}(\snippetnow, c)\right)^{-1} 
+			\mu\left(\Phi^{(j)}(\snippetnow, c)\right)
+		\Bigg] \\  
 		\finalvariance^{(j)}_{\timenow c} = &  
-		[
-			%\Sigma(\pset^{\mathcal{R}(j)}_{c})^{-1} 
-			%+ 
-			%\Sigma(\pset^{\mathcal{D}(j)}_{c})^{-1} 
-			\Sigma(\Phi^{(j)}(\snippetnow, c))^{-1}\!
-			+\!
-			\Sigma(\Delta^{(j)}(\snippetnow, c))^{-1} 
-		]^{-1}\!
+		\Bigg[
+			\Sigma\left(\Phi^{(j)}(\snippetnow, c)\right)^{-1}
+			+
+			\Sigma\left(\toffsetfunc^{(j)}(\snippetnow, c)\right)^{-1} 
+		\Bigg]^{-1}
 		\end{split}
 	\end{equation}
-	Consider the probability distribution in equation (\ref{eq:combination}), the final 3D pose estimation is described by the mean joint location $\finalbodypose^{(j)}_{t\hat{c}}$ of the most probable action category $\hat{c} = \argmax_c  P(\action = c | \snippetnow, \forestd)$, with the confidence region indicated by the covariance $\finalvariance^{(j)}_{t\hat{c}}$, where $ j=1,...,\njoints$. 
-
-\label{sec:eval}
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=1.02\linewidth]{fig/body/errplot2d.pdf} 
- 	\includegraphics[width=0.6\linewidth]{fig/body/plot_legend.pdf}
-	\caption{2D joint localisation errors of our methods, \cite{Yang2011} and \cite{Eichner2012} their median smoothed versions.}
-\label{fig/body/errorplot2d}
-\end{figure} 
+	Consider the probability distribution in equation \ref{eq/body/combine}, the final 3D pose estimation is described by the mean joint location $\finalbodypose_{t\hat{c}}$ of the most probable action category $\hat{c} = \argmax_c  P(\action = c | \snippetnow, \forestd)$, with the confidence region indicated by the covariance matrices $\finalvariance^{(j)}_{t\hat{c}}$ of each joint. 
 
 \section{Evaluation}
 \label{sec/body/evaluation}
 
+% Done 
 \subsection{The APE Evaluation Dataset}
-Experiments were performed to investigate the feasibility of the proposed approach. 
-Existing public 3D pose datasets are inadequate to justify the main objectives of the proposed approach. Whilst benchmarks such as \cite{Sigal2010, Yao2012} model joint angles rather than joint positions using sophisticated techniques, e.g. camera networks, from a static area, our framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
+Experiments were performed to evaluate the performance of the proposed 3D HPE system.
+Existing public 3D pose datasets are inadequate to verify the main objectives of the proposed system.  
+While existing public benchmarks such as HumanEva \cite{Sigal2010} and TUM Kitchen dataset \cite{Yao2012} represent 3D body poses as joint angles rather than joint positions using sophiscated techniques, \eg camera networks, from a static area, the proposed framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
 
-To this end, we collected the \emph{action-pose-estimation (APE)} dataset for both quantitative and qualitative evaluations. The APE dataset contains $245$ sequences from $7$ subjects performing $7$ categories of actions. Videos of each subject were recorded in different environments, changing camera poses and moving background objects. The APE dataset will be made publicly available. 
+As a result, the action-pose-estimation (APE) dataset was collected for both quantitative and qualitative evaluations in this work. The APE dataset contains action videos from $7$ different subjects, each of them performed $7$ categories of actions. Each action was repeated five times per subject, hence there are $245$ sequences in the whole APE dataset.     
+Videos of each subject were recorded in different environments, changing camera poses and moving background objects. 
+
 %We refer the reader to \cite{APEwebsite} for details about the dataset.
+THe APE dataset possesses two challenging properties for traditional 3D HPE: (1) no scene-dependent cues, \eg foreground segmentation, can be applied; (2) testing is done in unseen environments.
 
-The setting of APE dataset is considered challenging for traditional 3D HPE because: (1) no scene-dependent cues, \eg foreground segmentation, can be applied, (2) testing is done in unseen environments. 
-Experiments are divided into two parts. In the first part, pose estimation accuracy was evaluated quantitatively with ground truth and current state-of-the-arts, in 3D and 2D respectively. In the second part, we demonstrated the knowledge transfer ability qualitatively, by testing with other videos and datasets.     
-
+Experiments in this chapter are divided into two parts. In the first part, pose estimation accuracy was evaluated quantitatively with ground truth and current state-of-the-arts, with respect to 3D and 2D pose estimation. In the second part, the knowledge transfer ability of the proposed method was evaluated by testing the prototype system with other unseen videos and datasets. 
 
 \subsection{Experimental Results}
-
-\begin{figure}[ht]
-\centering
-	\includegraphics[width=0.8\linewidth]{fig/body/errplot3d.pdf} 
-	\caption{3D joint localisation errors based on ground truth pose from Kinect sensor}
-\label{fig/body/errorplot3d}
-\end{figure}
-
-
 
 \begin{figure}[ht]
 	\centering
@@ -538,12 +544,12 @@ Experiments are divided into two parts. In the first part, pose estimation accur
 	\label{fig/body/confm}
 \end{figure}
 
-\paragraph{Quantitative Evaluation.}
+% DOne 
+\subsection{Quantitative evaluation}
 \label{sec/body/quant}
 The proposed approach was evaluated quantitatively using the leave-one-out cross-validation strategy. A subject was taken out in turn for testing, thus the model is trained with $210$ sequences and the remaining $35$ sequences are evaluated. 
-Snippets are extracted densely from training and testing data, where $\snippetlen = 10$. 
+Snippets are extracted densely from training and testing data, with snippet length $\snippetlen = 10$. 
 Table \ref{tab/body/rf_train_params} lists the training parameters. 
-%Parameters used in training are shown in table \ref{tab/body/rf_train_params}. 
 
 \begin{table}
 	\centering
@@ -569,24 +575,40 @@ The action detection forest achieves excellent accuracy, as it has been optimise
 The average 3D joint localisation errors of the experiments were reported in figure \ref{fig/body/errorplot3d}. 
 Sample results of the proposed method are also presented in figures \ref{fig/body/APE1}, \ref{fig/body/APE2} and \ref{fig/body/APE3}. 
 
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.8\linewidth]{fig/body/errplot3d.pdf} 
+	\caption{3D joint localisation errors based on ground truth pose from Kinect sensor}
+\label{fig/body/errorplot3d}
+\end{figure}
+
 The comparison our method and other 2D HPE algorithms is illustrated in figure \ref{fig/body/errorplot2d}.
 The proposed framework showed promising results, by extending the flexibility of \cite{Yang2011}, the proposed method showed high robustness in 3D pose estimation and outperformed both state-of-the-arts in the 2D tests. The hand parts have the highest localisation errors because of their large movements and frequent occlusions, which are as well indicated by the big variance ellipsoids in figures \ref{fig/body/APE1}, \ref{fig/body/APE2}, \ref{fig/body/APE3}.
 
-The per-class localisation errors are listed in table \ref{tab/body/errperclass3D} (3D) and \ref{tab/body/errperclass2D} (2D). While some classes reported significant improvements after combining the results of action detection and pose regression, \eg ``clap'' and ``wave 1'', the ``bend'' and ``box'' class reported the highest error rates.
-The 2D part detections obtained from the ``box'' and ``bend'' classes are less accurate than those from other classes.  For the ``box'' action, self-occlusion happens frequently such that the part detector is confused about the left and right hand positions, making the hand position distributions spread around the torso as in figure \ref{fig/body/APEerr2} and \ref{fig/body/APEerr3}. 
-Similarly, when the arms are stretched overhead and occluded, the 2D DPM model used in the experiments gives incorrect results.  
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1.00\linewidth]{fig/body/errplot2d.pdf} 
+	\caption{2D joint localisation errors of our methods, \cite{Yang2011} and \cite{Eichner2012} their median smoothed versions.}
+\label{fig/body/errorplot2d}
+\end{figure} 
+
+The per-class localisation errors are shown in table \ref{tab/body/errperclass3D} (3D) and \ref{tab/body/errperclass2D} (2D). While some classes reported significant improvements after combining the results of action detection and pose regression, \eg ``clap'' and ``wave 1'', the ``bend'' and ``box'' class reported the highest error rates. It was because the 2D part detections obtained from the ``box'' and ``bend'' classes were not as stable as those from other classes. For the ``box'' action, self-occlusion happened frequently such that the part detector was confused about the left and right hand positions, making hand and arm parts spread around the torso as in figure \ref{fig/body/APEerr2} and \ref{fig/body/APEerr3}. 
+Similarly, when the arms are stretched overhead and occluded, the 2D DPM model used in the experiments gave incorrect results. The above observations showed that using DPM alone is inadeuquate to perform human pose estimation in action with occlusions, justifying the use of spatiotemporal structures, \ie action, to refine the noisy DPM outputs.  
 
 \input{include/body_ape.tex}
 
-\paragraph{Qualitative Evaluation.}
+% Done 
+\paragraph{Qualitative evaluation}
+
 Knowledge transfer was evaluated by reusing the models trained in section \ref{sec/body/quant} to other datasets without retraining.
 The KTH \cite{Schuldt2004} and Weizmann \cite{Gorelick2007} dataset were used in the experiments as they shared action categories with the APE dataset. 
 
-The experimental results are reported qualitatively in figure \ref{fig/body/otherresults}. Even though the input videos are of extremely low resolutions, rendering them inapplicable to typical 3D HPE methods, our framework is still able to estimate their actions and poses simultaneously with encouraging accuracy. 
+The experimental results are summarised in figure \ref{fig/body/otherresults}. Even though the input videos were of extremely low resolutions, rendering them impossible to be processed by traditional 3D HPE methods, the proposed system could still estimate their actions and poses simultaneously with a satisfactory accuracy. 
 Incorrect poses were estimated when too many false positive parts are detected from the low resolution images, \eg figure \ref{fig/body/otherresults}(g--h). 
 
-\paragraph{Discussion.}
-The experimental results have demonstrated high feasibility in the idea of using action detection to estimate 3D poses under challenging conditions.  
+% Done 
+\paragraph{Discussion}
+Experimental results have demonstrated encouraging performance of the proposed 3D HPE system.  
 Coupling the outputs from the random forests, the 3D pose estimation accuracy is further enhanced. Action detection gives a global pose estimation and the corresponding class label. Meanwhile, errors in the initial global estimation, due to the differences among individual action patterns, are corrected locally by regression forests, which improves the accuracy of the final pose estimation as shown in figure \ref{fig/body/errorplot3d}. 
 
 On the other side, there is still room for improvement in the proposed approach. The proposed method relies on DPM as the only source of input. Albeit great flexibility, \cf \cite{Yang2011}, the performance of a DPM depends on its training data. Our method handles minor errors gracefully by allowing multiple hypotheses and snippet-based input, but large errors cannot be recovered completely, \eg figure \ref{fig/body/APEerr1} and \ref{fig/body/APEerr2} for APE dataset, and \ref{fig/body/others/g} and \ref{fig/body/others/h} for KTH and Weizmann dataset respectively. 
@@ -597,12 +619,12 @@ Besides, the proposed method runs at $0.31$fps. Feature extraction from DPM is t
 \section{Discussion}
 \label{sec/body/conclusions}
 
-The challenging problem of 3D human pose estimation is discussed in this chapter. 
-While traditional methods for 3D human pose estimation emphasise accuracy over their compatibility with realistic applications, we present a novel practical approach without using any scene-dependent constraints.
-We investigate the new area of using action for pose estimation. The proposed method combines human action detection and deformable part model-based 2D human pose estimation to estimate 3D poses from unconstrained, monocular videos.  
-The new APE dataset is introduced to evaluate the feasibility of our approach.  
-Experimental results have shown promising results and also high flexibility by transferring the knowledge obtained from training data to other unseen datasets.
-In the future we plan to apply kinematic constraints in our system for pose refinement. 
-We suggest that the collaboration between the techniques in human action and pose analysis will be beneficial to both areas of computer vision research in the coming future.  
+Human pose estimation, a subproblem in video-based human action analysis, is discussed in this chapter.  
+While traditional methods for 3D human pose estimation emphasise accuracy over their compatibility with realistic applications, the proposed system presents novel ideas that do not involve the traditional scene-dependent constraints, \eg background subtraction or multiple calibrated camera.
 
-% Add limitations of the current approach 
+This work explores the new area of using action for pose estimation. 
+Based on the idea of action detection, the proposed system estimates 3D poses under challenging conditions from uncontrolled, monocular videos.
+Two different random forest algorithms, namely action detection forest and cross-modality regression forest, were used to infer 3D pose configurations. Instead of using primitive appearance-based features, a deformable part model is utilised to detect 2D locations of body parts, which are regarded as robust mid-level features for the above random forest algorithms.
+
+On the other side, the new APE dataset is introduced to evaluate the proposed approach.  
+Experimental results have shown promising results and also high flexibility by transferring the knowledge obtained from training data to other unseen datasets. This work has shown that the collaboration between action detection and pose estimation are mutually beneficial to both areas, which is a area of great research potential.   
