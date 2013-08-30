@@ -140,7 +140,7 @@ For each viewpoint, training data are collected from a partially labelled target
 
 The proposed \STR\ learning algorithm introduces several novel techniques to the traditional Hough/regression forest \cite{Gall2011}. 
 Firstly, transductive realistic-synthetic associations are preserved, such that the matched data are passed down to the same node.
-Secondly, the distribution of labelled and unlabelled realistic data are modeled jointly in the proposed \STR\ forest using unsupervised learning. 
+Secondly, the distribution of labelled and unlabelled realistic data are modelled jointly in the proposed \STR\ forest using unsupervised learning. 
 Lastly, viewpoint changes are handled alongside with hand poses using an adaptive hierarchical classification scheme.
 In order to improve estimation performance of occluded and noisy data, we also propose an efficient \emph{data-driven, kinematic-based} method to refine the locations of detected joints.
 
@@ -224,7 +224,7 @@ Thus, $\viewterm$ and $\classterm$ optimises the decision trees by \emph{classif
 \end{equation}
 where $\clset_{lc}$ and $\clset_{rc}$ are the training data that pass down the left and right child nodes respectively, and $\trvar(\cdot) = \mathrm{trace}(\mathrm{var}(\cdot))$ is the trace of variance operator in \cite{Gall2011}. 
 $\regterm$ increases with compactness in vote space and converges to $1$ when all votes in a node are identical. \\ 
-\textbf{Unsupervised term $\usterm$:} The appearances the target domain, \ie realistic data, are modeled in an \emph{unsupervised} manner. 
+\textbf{Unsupervised term $\usterm$:} The appearances the target domain, \ie realistic data, are modelled in an \emph{unsupervised} manner. 
 Assuming appearances and poses are correlated under the same viewpoint, $\usterm$ evaluates the appearance similarities of all realistic patches $\realset$ within a node:    
 \begin{equation}
 	\usterm = \left[ 1 + 
