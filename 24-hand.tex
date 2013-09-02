@@ -51,7 +51,7 @@ Unlike sensor noise and depth errors in \cite{Girshick2011} and \cite{Baak2011},
 Due to noise, occlusions and the inherent complex structure of human hand, realistic data are extremely costly to obtain via manual labelling. 
 Existing state-of-the-art methods leverages either synthetic data \cite{Keskin2012} or model-based visual tracking \cite{LaGorce2011, Oikonomidis2012}, to estimate hand poses without labelled training data. 
 They do not consider the realistic-synthetic discrepancies. 
-Despite achieving promising performances on synthetic testing data, these techniques give suboptimal results when they are tested with realistic data. 
+Despite achieving encouraging performances on synthetic testing data, these techniques give suboptimal results when they are tested with realistic data. 
 Furthermore, noisy realistic data make automatic joint detection difficult, whereas in synthetic data joint boundaries are always clean and accurate.
 % Whilst handling shape variation is crucial for body pose estimation \cite{Shotton2011}, shape variations of human hands are generally smaller than that of body shape.        
 \end{itemize} 
@@ -64,7 +64,7 @@ It subsequently applies knowledge transfer to a different but related target dom
 
 % done  
 The \STR\ forest learning algorithm is also semi-supervised. 
-It learns the noisy appearances of realistic data from both labelled and unlabelled datapoints. 
+It learns the noisy appearances of realistic data from both labelled and unlabelled data points. 
 As a result, it benefits from the characteristics of both domains. 
 \STR\ forest not only captures a wide range of poses from synthetic data, it also achieves robust performances in challenging environments by learning the noisy appearances in realistic data. 
 
@@ -125,56 +125,40 @@ When the tracking is eventually lost, the incorrect pose estimates cannot be rec
 In addition, most model-based methods do not consider shape variations among individuals due to the additional complexity involved \cite{Erol2007}, which affect their accuracy in realistic applications.   
 Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with latest GPU acceleration techniques \cite{Oikonomidis2011}, generative method struggle to attain real-time performance in commodaity hardware. 
 
+% Done 
 \subsubsection{Discriminative approaches} 
 Discriminative approaches learn a function that maps from visual features to pose, the mapping is usually implemented. As opposed to generative approaches that use a predefined visual model, discriminative models are constructed from a training dataset.   
 In discriminative approaches, hand poses are represented as holistic templates \cite{Wang2009}, joint labels \cite{Shotton2011} or joint coordinates \cite{Girshick2011}.
 Although discriminative methods have proved successful in real-time body pose estimation from depth sensors \cite{Shotton2011, Girshick2011, Baak2011, Sun2012}, they are less common than model-based approaches with respect to hand pose estimation.  
-Recent discriminative algorithms for hand pose estimation include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}. 
+Recent discriminative algorithms for hand pose estimation include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}.  
 
-Discriminative methods rely heavily on the quality of training data. A large labelled dataset is necessary to model a wide range of poses. 
-The main limitation of discriminative approach is that they rely heavily on training data. 
-The overall performance of a discriminative pose estimator is largely determined by its training dataset.   
+Run-time performance is the major advantage of discriminative approaches over their generative counterparts. Since no iterative optimisation or visual tracking is involved in testing, discriminative approaches are generally more efficient than generative approaches.    
+They also handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. Last but not least, many discriminative approaches are frame-based such that drifting issue in generative approaches does not exist. 
 
-It is also costly to label sufficient realistic data for training. As a result, existing approaches resort to synthetic data by means of computer graphics \cite{Romero2009, Keskin2012}, which suffer from the realistic-synthetic discrepancies.
-On the positive side, discriminative methods are frame-based such that there exists no track drifting issue. 
-%In addition, driscriminative methods handle shape variations more efficiently by generating extra synthetic training data with different hand shapes.   
+Discriminative methods, however, rely heavily on training data. The number of recognisable poses of a model depends on the size of training dataset. The overall performance of a discriminative pose estimator is largely determined by its training dataset. 
+Since it is costly to label sufficient realistic data for training, existing approaches resort to synthetic data by means of computer graphics \cite{Romero2009, Keskin2012}, which suffer from realistic-synthetic discrepancies.
 
-%
-%The diversity of recognisable pose is typically determined by the training dataset used.  
-%However, it is costly to collect sufficient 
-%Since the diversity of recognisable poses is determined by the training dataset used, discriminati .
-%
-%Bad point 1: very costly to gather training data. 
-%Good point 1: no tracking, frame by frame so no lost tracking 
-%Good point 2: shape variation
-%
-%\emph{Discriminative} methods learn a pose estimator that appearance features extracted from the input data to the output pose parameter space, \ie joint labels. 
-%Instead of a hand-designed visual model as in model-based methods, discriminative approaches require labelled dataset to build the pose estimator.  
-%
-%
-%Approaches for articulated hand pose estimation are categorised into \emph{appearance-based} and \emph{model-based} methods. In model-based methods, hypotheses are generated from a visual model, \eg a deformable hand mesh. They are subsequently fitted to the test data via an iterative optimisation framework. For instance, \cite{LaGorce2011} renders synthetic images from a deformable model with detailed texture and lighting.  
-%
-% some papers on model-based method 
-%The main advantage of model-based tracking approach is that they inherently handle both joint articulations and viewpoint changes. 
-%However, their iterative optimisation processes are usually computationally expensive. Although near real-time performance has been reported using latest GPU acceleration techniques [FORTH], the model-based algorithms struggles to attain real-time performance in commodaity hardware. 
-%In addition, model-based methods do not consider the variations of hand shapes among individuals, affecting their accuracies in realistic situations.
-%
-%Appearance-based methods learn a pose estimator that maps appearance features extracted from the input data to the output pose parameter space, \ie labels. Instead of using a hand-designed visual model, appearance-based methods require a labelled training dataset to build the pose estimator.
-% some papers on appearance based method 
-%Since there exists no iterative optimisation is involved in the testing process, appearance-based method is generally faster than model-based method. Run-time performance is the major advantage of appearance-based method over its model-based counterpart. Recently, the bottleneck of feature extraction process is resolved using specialised hardware, \eg [Kinect], achieving real-time performance for practical applications. 
-%The main limitation of appearance-based method is that it relies heavily on the training data; A large labelled dataset is often needed to capture a wide range of poses and viewpoints.
-
+% done 
 \subsection{Inverse kinematics}   
-Inverse kinematics is a standard technique in model-based and tracking approaches for both body \cite{Yao2012, Pons-Moll2011} and hand poses estimation \cite{LaGorce2011, Oikonomidis2012, Stenger2006}. Lacking a deformable visual model, only a few discriminative methods consider the physical properties of hands. For instance, Girshick \etal \cite{Girshick2011} estimates body poses using a simple range heuristic, yet it is inapplicable to hand pose due to self-occlusions.  
-Wang \etal \cite{Wang2009} detect joint using a coloured-glove and match them from the groundtruth database. 
-%We propose a \emph{data-driven, pseudo-kinematic} method to correct strongly occluded joints from depth images.  
-%Distributions of joint locations are precomputed from a large database of synthetic hand articulations. Occluded joint centres are subsequently rectified by matching the visible joints from the corresponding distributions.
+Inverse kinematics has become a popular technique in optimisation-based and tracking-based  approaches for both body and hand poses estimation. 
+Girshick \etal \cite{Girshick2011} estimated body poses using a simple range heuristic, yet it is inapplicable to hand pose due to self-occlusions. 
+For instance, Zhu \etal \cite{Zhu2008a} applied visual tracking and inverse kinematics to estimate simplified body poses from sequences of depth images.
+Pons-Moll \etal \cite{Pons-Moll2011} presented a multi-camera motion capture system using Mises-Fisher sampling and inverse kinematics.  
 
+However, applying inverse kinematics to hand pose estimation is not as straightforward as that of body pose. As previously mentioned, fingertips are occluded frequently due to self-occlusions, extracting their locations for inverse kinematics is difficult, especially in videos. 
+Lacking a deformable articulated model, few discriminative methods consider the physical characteristics of human hands. Wu and Huang \cite{Wu1999} searched for the optimal solution in inverse kinematics through a genetic algorithm. Wang \etal \cite{Wang2009} proposed a data-driven approach to describe inverse kinematics using a colour-coded glove. The colour-coded glove avoided the problem of finger segmentation in video-based systems, a binary coding scheme was designed to perfrom nearest neighbour search efficiently in a large synethetic database. 
+
+Coping with the issues of occlusion and computational complexity, this work proposes a data-driven, pseudo-kinematic method to correct strongly occluded poses. Distributions of joint locations are efficiently described from a large database of synthetic hand articulations. Occluded joint centres are recovered by matching the visible joints from the corresponding distributions.
+
+% done 
 \subsection{Transfer learning} 
-Transductive transfer learning is often employed when training data of the \emph{target domain} are too costly to obtain. It has seen various successful applications \cite{Pan2010}, still it has not been applied in articulated pose estimation. In this work, realistic-synthetic fusion are realised by extending the idea of Bronstein \etal \cite{Bronstein2010} to the proposed \STR\ forest, where the training algorithm preserves the associations between cross-domain data pairs.
+Transductive transfer learning is often employed when training data of the target domain are too costly to obtain. 
+It has seen various successful applications \cite{Pan2010}, nontheless it has not been applied in articulated pose estimation. 
+In this work, realistic-synthetic fusion are realised by extending the idea of cross-modality learning by Bronstein \etal \cite{Bronstein2010} to the proposed \STR\ forest, where the training algorithm preserves the predefined associations between cross-domain data pairs.
 
-\subsection{Semi-supervised and Regression Forest} Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measure data compactness to relate labelled and unlabelled datapoints. Leistner \etal \cite{Leistner2009} design a margin metric to evaluate with unlabelled data. On the other side, regression forest is widely adopted in body pose estimation, \eg \cite{Girshick2011, Sun2012}. The \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work, as explained in Section \ref{sec/hand/methodology:strf}.
-
+% done 
+\subsection{Semi-supervised forest and regression forest} 
+Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measured data compactness to relate labelled and unlabelled data points. Leistner \etal \cite{Leistner2009} designed a margin metric to evaluate with unlabelled data. On the other side, regression forest was widely adopted in body pose estimation, \eg \cite{Girshick2011, Sun2012}. In the proposed system, \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work.
 
 \section{Overview}
 
@@ -185,28 +169,40 @@ Transductive transfer learning is often employed when training data of the \emph
 	\label{fig/hand/concept}
 \end{figure}
 
-The concept of \STR\ learning is illustrated in Fig. \ref{fig/hand/concept}. 
-For each viewpoint, training data are collected from a partially labelled target domain (realistic depth images) and a fully labelled source domain (synthetic depth images). These domains are explicitly related by establishing associations from the labelled target datapoints to their corresponding source datapoints, as shown in the figure. 
+% done 
+The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}. 
+Training data are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truths, only a small portion of the data points in the target domain are labelled manually.  
+The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points, as shown in the figure above. The proposed \STR\ learning algorithm introduces two new techniques to the traditional Hough and regression forest \cite{Gall2011}. Throughout the learning process, transductive realistic-synthetic associations are preserved, such that the matched data are passed down to the same node. Futhermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using unsupervised learning. 
 
-The proposed \STR\ learning algorithm introduces several novel techniques to the traditional Hough/regression forest \cite{Gall2011}. 
-Firstly, transductive realistic-synthetic associations are preserved, such that the matched data are passed down to the same node.
-Secondly, the distribution of labelled and unlabelled realistic data are modelled jointly in the proposed \STR\ forest using unsupervised learning. 
-Lastly, viewpoint changes are handled alongside with hand poses using an adaptive hierarchical classification scheme.
-In order to improve estimation performance of occluded and noisy data, we also propose an efficient \emph{data-driven, kinematic-based} method to refine the locations of detected joints.
+Similar to the action detection forest proposed in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within an unified algorithm. Figure \ref{fig/hand/concept}(right) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learnt to estimate joint locations.  
 
 \section{Learning} 
 
+% done 
 \subsection{Dataset}
 
-The training dataset $\totalset = \{\reallset, \realuset, \synset\}$ consists of both realistic data $\realset$ and synthetic data $\synset$. 
-A small potion of $\realset$ is labelled, where the labelled and the remaining unlabelled subsets are denoted by $\reallset$ and $\realuset$ respectively. All datapoints in $\synset$ are labelled with groundtruths. The subset of labelled data in $\totalset$ is defined as $\clset = \{\creallset, \csynset\}$.  
+% done 
+The training dataset $\totalset$ is a combination of realistic data $\realset$ and synthetic data $\synset$ in equation \ref{eq/hand/dataset}. 
+\begin{equation}
+	\label{eq/hand/dataset} 
+	\begin{aligned}
+		\totalset 	& = \left\{ \realset, \synset \right\} = \left\{ \reallset, \realuset, \synset \right\} & \mbox{(all training data) } \\
+		\clset 		& = \left\{ \realset, \synset \right\} & \mbox{(labelled training data) } \\ 
+	\end{aligned}
+\end{equation}
+A small potion of $\realset$ is labelled, where the labelled and the remaining unlabelled subsets are defined as $\reallset$ and $\realuset$ respectively. All synthetic data $\synset$ are labelled with groundtruths. In addition, the collection of labelled data $\totalset$ is defined as $\clset$.  
 
-All datapoints in $\totalset$ is represented by a local patch, which is randomly sampled from the training depth images. The number of datapoints roughly equals $5\%$ of foreground pixels in the depth images. 
+% done 
+All data points in $\totalset$ are represented by vectorised local patches extracted from depth images. In this work, patches are sampled randomly from the foreground pixels in the training images $\totalset$. Each patch is $64 \times 64$ in size, which is comparable to the patch size in Girshick \etal \cite{Girshick2011}. The total number of training features roughly equals $5\%$ of foreground pixels in the training dataset. 
 
-Every datapoint in $\reallset$ or $\synset$ is assigned to a tuple of labels $( \viewlabel, \jointlabel, \votelabel)$. Viewpoint of a patch is represented by the roll, pitch and yaw angles, which are quantised into $\nviewx$, $\nviewy$ and $\nviewz$ steps respectively. The view label $\viewlabel \in \viewlabelset:\mathbb{N}^{3}$ indicates one of the $135$ quantised viewpoints. A datapoint is also given the class label of its closest joint, $\jointlabel \in \{1\dots\njoint\}$, similar to \cite{Shotton2011}.   
-Furthermore, every labelled datapoint contains $\njoint$ vote vectors $\votelabel \in \mathbb{R}^{3\times16}$ from the patch's centroid to the 3D locations of all $\njoint$ joints as in \cite{Gall2011}. 
+% done 
+Every labelled data point in $\reallset$ or $\synset$ is assigned to a tuple of labels $(\viewlabel, \jointlabel, \votelabel)$. 
+Viewpoint of a patch is represented by the roll, pitch and yaw angles, which are quantised into $\nviewx$, $\nviewy$ and $\nviewz$ steps respectively. The view label $\viewlabel \in \viewlabelset:\mathbb{N}^{3}$ indicates one of the $135$ quantised viewpoints.
+A articulated hand model consists of $\njoint$ regions, with three per finger and a palm region. A data point is also given the class label of its region, $\jointlabel \in \{1\dots\njoint\}$.   
+Finally, every labelled data point contains $\njoint$ vote vectors $\votelabel \in \mathbb{R}^{3\times16}$ from the patch's centroid to the 3D locations of all $\njoint$ joints as in \cite{Gall2011}. 
 
-Realistic-synthetic associations are established through matching datapoints in $\reallset$ and $\synset$, according to their 3D joint locations.  The realistic-synthetic association $\assoc: \reallset,\synset \rightarrow \{1,0\}$ is defined as below:
+% done 
+Realistic-synthetic associations are established through matching data points in $\reallset$ and $\synset$, according to their 3D joint locations.  The realistic-synthetic association $\assoc: \reallset,\synset \rightarrow \{1,0\}$ is defined as follows:
 \begin{equation}
 	\assoc(\real \in \reallset, \syn \in \synset) =
 		\begin{cases}
@@ -215,119 +211,143 @@ Realistic-synthetic associations are established through matching datapoints in 
 		\end{cases}
 	\label{eq:association}
 \end{equation}
+Two patches $\real$ and $\syn$, by definition, are describing the same hand pose when their association function $\assoc(\real, \syn)$ equals one.  
 
+% done 
 \subsection{\STR\ forest} 
-\label{sec/hand/methodology:strf}
-The proposed \STR\ forest performs classification, clustering and regression on both domains in one pose estimator, instead of performing each task in separate forests.    
-We grow $\ntree$ decision trees by recursively splitting and passing the current training data to two child nodes. 
-The split function of a node is represented by a simple two-pixel test as in Shotton \etal \cite{Shotton2011}. 
-%The split function $\splitfunc$ of a node is represented by a simple two-pixel test, as shown in Equation \ref{eq:pixeltest}. 
-%\begin{equation}
-%	\splitfunc(\patch) = \begin{cases} 
-%		\mbox{Left child } & \patch(\textbf{u})-\patch(\textbf{v}) > \tau \\
-%		\mbox{Right child } & Otherwise \\
-%	\end{cases}
-%	\label{eq:pixeltest}
-%\end{equation}
-%where $\{\textbf{u}$, $\textbf{v}\}$ are two random locations on a datapoint $\patch$; $\tau$ is a random threshold. 
-% can delete?  
-A group of candidate split functions are generated at each node, the best one is chosen from the candidates by maximising a quality function.   
-Instead of using a typical metric such as information gain or label variance \cite{Shotton2013}, we propose two new quality functions.
-The quality function is selected at random between $\vpjterm$ and $\tssterm$ for training in Equation \ref{eq:qualityfunction}. 
+The proposed \STR\ forest performs clustering, classification and regression on both domains in one pose estimator, rather than performing each task in separate forests. 
+The proposed learning algorithm grows $\ntree$ decision trees by recursively splitting and passing the current training data to two child nodes. 
+The split function $\splitfunc$ of a node is a simple two-pixel test, similar to the proposed 3D HPE system in chapter \ref{chap/body}, as shown in equation \ref{eq/hand/pixeltest}. 
 \begin{equation}
-	\begin{cases}
-		\vpjterm\!=\!\viewparam\viewterm\!+\!(1\!-\!\viewparam)\classparam\classterm\!+\!(1\!-\!\viewparam)(1\!-\!\classparam)\regterm \\ 
-		\tssterm\!=\!\pairterm^{\tssparam}\usterm 
+	\splitfunc(\patch) = \begin{cases} 
+		1 & \patch(\textbf{i})-\patch(\textbf{j}) > \tau \\
+		0 & \mbox{ Otherwise } \\
 	\end{cases}
-	\label{eq:qualityfunction}
+	\label{eq/hand/pixeltest}
 \end{equation}
-where $\vpjterm$ is a hybrid quality function for learning classification-regression decision trees, and $\tssterm$ enables transductive and semi-supervised learning. 
-Given the training data $\ctotalset = \{\creallset, \crealuset, \csynset\}$, the quality functions are defined as below.   
+The values of two random locations $\textbf{i}$ and $\textbf{j}$ on a patch are compared with a random threshold $\tau$, patches are split into two child nodes according to the output of function $\splitfunc$. 
+% can delete?  
+A pool of candidate split functions are generated at each node, the optimal split is chosen from the candidates by maximising a quality function.   
+Instead of using a typical metric such as information gain \cite{Breiman2001} or label variance \cite{Shotton2013}, new quality functions are introduced to the \STR\ forest algorithm. The quality function is selected at random between $\vpjterm$ and $\tssterm$ for training. 
+\begin{align}
+	\label{eq/hand/qualityfunction1}
+	\vpjterm & = \viewparam\viewterm + (1 - \viewparam)\classparam\classterm + (1 - \viewparam)(1 - \classparam)\regterm  \\ 
+	\label{eq/hand/qualityfunction2}
+	\tssterm & = \pairterm^{\tssparam}\usterm 
+\end{align}
+In equation \ref{eq/hand/qualityfunction1}, $\vpjterm$ is a hybrid quality function for learning classification-regression decision trees. The transductive and semi-supervised term,$\tssterm$ is used to model the relationship among realistic-synthetic and labelled-unlabelled data. Given the training data $\ctotalset = \{\creallset, \crealuset, \csynset\}$, the quality functions are explained below.   
 
-\subsubsection{Viewpoint classification term $\viewterm$} 
-Traditional \emph{information gain} is used to evaluate the classification performance of all the viewpoint labels $\viewlabel$ in dataset $\clset$ \cite{Breiman2001}. Since this term is applied on the top of the hierarchy, a large amount of training samples needs to be evaluated. Inspired by \cite{Girshick2011}, reservoir sampling is employed to avoid memory restriction and speed up training. 
-% Note: although I look less rigorous I omitted the arguments in the quality terms, in order to save space
-%\begin{equation}
-%	\viewterm = 
-%	\entropy_{\viewlabel}(\clset) - 
-%	\frac{|\clset_{l}|}{|\clset|} \entropy_{\viewlabel}(\clset_{l}) -  
-%	\frac{|\clset_{r}|}{|\clset|} \entropy_{\viewlabel}(\clset_{r}). 
-%\end{equation}
-%where $\entropy_{\viewlabel}(\cdot)$ is the information entropy of viewpoint labels \cite{Breiman2001}. 
-%where $\clset_{l}$ and $\clset_{r}$ are the training data that pass down the left and right child nodes respectively. \\ 
-
-\subsubsection{Patch classification term $\classterm$} 
-Similar to $\viewterm$, it is the information gain of the joint labels $\jointlabel$ in $\clset$. It measures the performance of classifying individual patch in $\clset$. 
-%, by replacing $\entropy_{\viewlabel}(\cdot)$ with $\entropy_{\jointlabel}(\cdot)$:
-%\begin{equation}
-%	\classterm = 
-%	\entropy_{\jointlabel}(\clset) - 
-%	\frac{|\clset_{l}|}{|\clset|} \entropy_{\jointlabel}(\clset_{l}) -  
-%	\frac{|\clset_{r}|}{|\clset|} \entropy_{\jointlabel}(\clset_{r}). 
-%	\label{eq:classterm}
-%\end{equation}\\
-Thus, $\viewterm$ and $\classterm$ optimises the decision trees by \emph{classifying} $\clset$ their viewpoints and joint labels. 
-
-\subsubsection{Regression term $\regterm$} This term learns the \emph{regression} aspect of the decision trees by measuring the compactness of vote vectors. Given the set of vote vectors $\votelabelset(\clset)$ in $\clset$, regression term $\regterm$ is defined as:
+% done 
+\subsubsection{Viewpoint classification term} 
+Traditional information gain is used to evaluate the classification performance of all the viewpoints $\viewlabel$ in labelled data $\clset$ \cite{Breiman2001}.   
+Since a large amount of training samples needs to be evaluated, reservoir sampling is employed to avoid memory restriction and speed up training as in \cite{Girshick2011}. The information gain $\entropy_{\viewlabel}(\clset)$ is defined in equation \ref{eq/hand/viewterm}.  
 \begin{equation}
-	%\begin{split}
-	\regterm = \left[ 1 + 
-	\frac{|\clset_{lc}|}{|\clset|} \trvar(\votelabelset(\clset_{lc})) +  
-\frac{|\clset_{rc}|}{|\clset|} \trvar(\votelabelset(\clset_{rc})) \right]^{-1}
-	%\votelabelset(\clset) & = \{ \votelabel_{\patch}|\forall \patch \in \clset \}.
-	%\end{split}
-	\label{eq:regterm}
+	\label{eq/hand/viewterm}
+	\begin{aligned}
+		\entropy_{\viewlabel}(\clset) & = 
+		- \displaystyle\sum_{\viewlabel \in \viewlabelset} \frac{|\clset^{(\viewlabel)}|}{|\clset|}\log_{2}\left(\frac{|\clset^{(\viewlabel)}|}{|\clset|}\right)\\ 
+		\viewterm & = 
+		\entropy_{\viewlabel}(\clset) - 
+		\frac{|\clset_{l}|}{|\clset|} \entropy_{\viewlabel}(\clset_{l}) -  
+		\frac{|\clset_{r}|}{|\clset|} \entropy_{\viewlabel}(\clset_{r})  
+	\end{aligned}
 \end{equation}
-where $\clset_{lc}$ and $\clset_{rc}$ are the training data that pass down the left and right child nodes respectively, and $\trvar(\cdot) = \mathrm{trace}(\mathrm{var}(\cdot))$ is the trace of variance operator in \cite{Gall2011}. 
-$\regterm$ increases with compactness in vote space and converges to $1$ when all votes in a node are identical.
+$\clset^{(\viewlabel)}$ denotes the subset of $\clset$ that is assigned view point label $\viewlabel$. Incoming training data $\clset$ are divided into subsets $\clset_{l}$ and $\clset_{r}$ to the left and right child nodes respectively.  
 
-\subsubsection{Unsupervised term $\usterm$} The appearances the target domain, \ie realistic data, are modelled in an \emph{unsupervised} manner. 
-Assuming appearances and poses are correlated under the same viewpoint, $\usterm$ evaluates the appearance similarities of all realistic patches $\realset$ within a node:    
+% done 
+\subsubsection{Patch classification term} 
+This term measures the classification performance of joint labels $\jointlabel$ for incoming dataset $\clset$. Similar to the viewpoint classification, this term is basically the information gain with respect to patch labels $\jointlabelset$.  
+\begin{equation}
+	\begin{aligned}	
+		\entropy_{\jointlabel}(\clset) & = 
+		- \displaystyle\sum_{\jointlabel \in \jointlabelset} \frac{|\clset^{(\jointlabel)}|}{|\clset|}\log_{2}\left(\frac{|\clset^{(\jointlabel)}|}{|\clset|}\right)\\ 
+	\classterm & = 
+	\entropy_{\jointlabel}(\clset) - 
+	\frac{|\clset_{l}|}{|\clset|} \entropy_{\jointlabel}(\clset_{l}) -  
+	\frac{|\clset_{r}|}{|\clset|} \entropy_{\jointlabel}(\clset_{r}) 
+	\end{aligned}
+	\label{eq/hand/classterm}
+\end{equation}
+Consequently, $\viewterm$ and $\classterm$ optimises the decision trees by classifying $\clset$ their viewpoints and joint labels. Whilst $\viewterm$ handles the classification of global viewpoints of the whole depth image, $\classterm$ deals with the classification of individual local patches. 
+
+% done 
+\subsubsection{Regression term} 
+This term models the regression aspect of the proposed \STR\ forest, by maximising the compactness of vote vectors in a tree node.  
+Similar to Hough forest, each patch in $\clset$ is associated with a vote, which is a 3D vector from the patch's centroid to the center of a joint in $\jointlabelset$. Let $\votelabelset(\clset)$ be the voting vectors of current training data $\clset$, the regression term $\regterm$ is defined in equation \ref{eq/hand/regterm}.  
+\begin{equation}
+	\begin{aligned}
+	\votelabelset(\clset) & = \{ \votelabel_{\patch}|\forall \patch \in \clset \}\\
+	\trvar(\cdot) & = \mathrm{Tr}\left(\Sigma(\cdot)\right)\\ 
+	\regterm & = \left[ 1 + 
+		\frac{|\clset_{l}|}{|\clset|} \trvar\left(\votelabelset(\clset_{l})\right) +  
+	\frac{|\clset_{r}|}{|\clset|} \trvar\left(\votelabelset(\clset_{r})\right) \right]^{-1}  
+	\end{aligned}
+	\label{eq/hand/regterm}
+\end{equation}
+Subset $\clset_{l}$ and $\clset_{r}$ are the data points that pass down the left and right child nodes. The function $\trvar(\cdot)$ measures the closeness of vote vectors within a node, where $\mathrm{Tr}(\Sigma(\cdot))$ is the trace of covariance matrix. The value of $\regterm$ converges to $1$ when all votes in a node are identical. 
+
+%done 
+\subsubsection{Unsupervised term} 
+The appearances the target domain, \ie realistic data, are modelled in an unsupervised manner.
+Assuming appearances and poses are correlated under the same viewpoint, pose similarities between a pair of data points can be roughly estimated by the resemblance of their appearances. The unsupervised term $\usterm$ in equation \ref{eq/hand/usterm} evaluates the similarities among all realistic patches $\realset$ within a node.   
 \begin{equation}
 	\usterm = \left[ 1 + 
-	\frac{|\crealset_{lc}|}{|\crealset|} \trvar(\crealset_{lc}) +  
-\frac{|\crealset_{rc}|}{|\crealset|} \trvar(\crealset_{rc}) \right]^{-1}.  
-	\label{eq:usterm}
+		\frac{|\crealset_{l}|}{|\crealset|} \trvar(\crealset_{l}) +  
+	\frac{|\crealset_{r}|}{|\crealset|} \trvar(\crealset_{r}) \right]^{-1} 
+	\label{eq/hand/usterm}
 \end{equation}
-Since the realistic dataset is sparsely labelled, \ie$|\crealuset| \gg |\creallset|$, $\crealuset$ are essential for modeling the target distribution. 
-In order to speed up the learning process, $\usterm$ can be approximated by down-sampling the patches in $\crealset$. 
+Since the realistic dataset is sparsely labelled, \ie $|\crealuset| \gg |\creallset|$, the remaining unlabelled data $\crealuset$ are essential to describe the target distribution. The computation time of the above unsupervised term can be accelerated by down-sampling the patches in $\crealset$.  
 
-\subsubsection{Transductive term $\pairterm$} 
-%The relationship between the sparse realistic data and dense synthetic data is learned via \emph{transductive learning}. 
-Inspired from cross-modality boosting in \cite{Bronstein2010}, 
-the \emph{transductive} term $\pairterm$ preserves the cross-domain associations $\assoc$ as the training data pass down the trees: 
-%the cross-domain associations are preserved as the training data pass down the trees: 
+% done 
+\subsubsection{Transductive term} 
+The relationship between the sparse realistic data and dense synthetic data is learned via \emph{transductive learning}. Inspired from cross-modality boosting in \cite{Bronstein2010}, the transductive term $\pairterm$ preserves the cross-domain associations $\assoc$ as the training data pass down the trees: 
 \begin{equation}
 	\begin{split}
-	\pairterm &= 
-	\frac{|\{r,s\} \subset \clset_{lc}| +  
-	|\{r,s\} \subset \clset_{rc}|}{|\{r,s\} \subset \clset|} \\   
-	\forall\ \{r,s\} &\subset \clset \mbox{ where } \assoc(r,s) = 1
+		\pairterm &= 
+		\frac{|\{r,s\} \subset \clset_{l}| +  
+		|\{r,s\} \subset \clset_{r}|}{|\{r,s\} \subset \clset|} \\   
+		\forall\ \{r,s\} & \subset \clset \mbox{ where } \assoc(r,s) = 1
 	\end{split}
-	\label{eq:pairterm}
 \end{equation}
-The transductive term $\pairterm$ is hence the ratio of preserved association after a split. \\
-\subsubsection{Adaptive switching$\{\viewparam, \classparam, \regparam, \tssparam\}$} 
-A decision tree mainly performs classifications at the top levels, its training objective is switched adaptively to regression at the bottom levels (Fig. \ref{fig/hand/concept}). 
-%Fig. \ref{fig/hand/concept} illustrates the coarse-to-fine structure of trees in the proposed approach. 
-Let $\margin(\cdot)$ be the difference between the highest posterior of a class and the second highest posterior in a node. $\margin_{\viewlabel}(\clset)$ and $\margin_{\jointlabel}(\clset)$ denote the margin measures of viewpoint labels $\viewlabel$ and joint labels $\jointlabel$ in $\clset$. They measure the purity of a node with respect to viewpoint and patch label.   
+The transductive term $\pairterm$ is the ratio of preserved association. It gives a maximum value of one when all the linkages are kept after a split.   
+
+% done  
+\subsubsection{Adaptive switching parameters} 
+Parameters $\{ \viewparam, \classparam, \tssparam \}$ are the weightings of quality terms within the chosen quality function.   
+A hierarchical learning strategy is employed in the \STR\ forest. At the early stage of testing, coarse viewpoint classification is preferred to finer joint classification and regression.  
+Figure \ref{fig/hand/concept} illustrates the coarse-to-fine structure of trees in the proposed approach, a tree performs mainly classifications at the top levels, its training objective is switched adaptively to regression at the bottom levels. A margin function $\margin(\cdot)$ is defined to measure classification performance of a tree node. 
+\begin{align}
+	\label{eq/hand/margin} 
+	\margin_{\viewlabelset}(\clset) & = 
+	\max_{\viewlabel \in \viewlabelset} p(\viewlabel | \clset) - 
+	\max_{\hat{\viewlabel} \in \viewlabelset, \hat{\viewlabel} \not= \viewlabel} p(\hat{\viewlabel} | \clset) \\ 
+	\label{eq/hand/margin2} 
+	\margin_{\jointlabelset}(\clset) & = 
+	\max_{\jointlabel \in \jointlabelset} p(\jointlabel | \clset) - 
+	\max_{\hat{\jointlabel} \in \jointlabelset, \hat{\jointlabel} \not= \jointlabel} p(\hat{\jointlabel} | \clset) 
+\end{align}
+The margin function $\margin(\cdot)$ evaluates the purity of a node, which is the difference between the most probable class and the second most probable class in a node. 
+Equations \ref{eq/hand/margin} and \ref{eq/hand/margin2} are responsible for the classification of viewpoint labels $\viewlabel$ and joint labels $\jointlabel$ in $\clset$ respectively. They measure the purity of a node with respect to viewpoint and patch label.
 \begin{equation}
 	\begin{array}{l@{}r}
-	\viewparam  = 
-	\begin{cases}
-		1\mbox{ if } \margin_{\viewlabel}(\clset) < t_{\viewparam} \\
-		0\mbox{ otherwise }
-	\end{cases} & 
-	\classparam = 
-	\begin{cases}
-		1\mbox{ if } \margin_{\jointlabel}(\clset) < t_{\classparam} \\
-		0\mbox{ otherwise}
-	\end{cases}
-		\end{array}
+		\viewparam  = 
+		\begin{cases}
+			1\mbox{ if } \margin_{\viewlabelset}(\clset) < t_{\viewparam} \\
+			0\mbox{ otherwise }
+		\end{cases} & 
+		\classparam = 
+		\begin{cases}
+			1\mbox{ if } \margin_{\jointlabelset}(\clset) < t_{\classparam} \\
+			0\mbox{ otherwise}
+		\end{cases}
+	\end{array}
 	\label{eq:switchparam}
 \end{equation}
-where $t_{\viewparam}$ and $t_{\classparam}$ are predefined thresholds that determine the structure of the output decision trees. The parameter $\tssparam$ controls the relative importance of transductive term $\pairterm$ to unsupervised term $\usterm$.  
+Two thresholds $t_{\viewparam}$ and $t_{\classparam}$ are defined to control the behaviours of the output decision trees. 
 
+In addition, the free parameter $\tssparam$ controls the relative importance of transductive term $\pairterm$ to unsupervised term $\usterm$.  
+
+% Not useful 
 %\begin{algorithm}
 %	\label{alg:transductive}
 %	\KwData{Training dataset $\totalset = \{ \reallset, \realuset, \synset \}$ }
@@ -346,76 +366,59 @@ where $t_{\viewparam}$ and $t_{\classparam}$ are predefined thresholds that dete
 %	\caption{Tranductive training with RF}
 %\end{algorithm}
 
-
+% done 
 \subsection{Data-driven kinematic joint refinement}
 
-Since the proposed \STR\ forest considers joint as independent detection targets, it lacks structural information to recover poorly detected joints when they are occluded or missing from the depth image. 
-Without having an explicit hand model as in most model-based tracking methods, we designed a data-driven, kinematic-based method to refine joint locations from the \STR\ forest. 
-A large hand pose database $\ksynset$ is generated, such that $|\ksynset| \gg |\synset|$, in order to obtain the maximum pose coverage. The pose database $\ksynset$ is generated using the same hand model as in the synthetic dataset $\synset$, but $\ksynset$ contains only the joint coordinates. 
+Since the proposed \STR\ forest considers joints as independent detection targets, structural information is required to recover poorly detected joints when they are occluded or missing from the depth image. 
+It is also necessary to discard or correct anatomically impossible pose hypotheses.    
+As a result, the proposed system employed a data-driven, kinematic-based method to refine joint locations, without having an explicit hand model as in most model-based tracking methods. 
+In order to obtain the maximum pose coverage, a large hand pose database $\ksynset$ is generated from a synthetic articulated model, such that $|\ksynset| \gg |\synset|$. 
+The pose database $\ksynset$ is generated using the same hand model as in the synthetic dataset $\synset$, but $\ksynset$ contains only the joint coordinates. Hence, the kinematic datasest $\ksynset$ is not used to train the \STR\ dataset. 
 
-The procedures for computing the data-driven kinematic model $\GMM$ is described in Algorithm \ref{alg:kinematic}. $\GMM$ contains viewpoint-specific distributions of joint locations represented as a $\ngmm$-part \emph{Gaussian mixture models (GMM)}. 
-%The joint refinement algorithm is described in testing as described below. 
+% done 
+Training data $\ksynset$ is first categorised with respect to their viewpoints in equation \ref{eq/hand/datadrivenclassify}. 
+\begin{equation}
+	\label{eq/hand/datadrivenclassify} 
+	\ksynset = \{ \ksynset_{1}, \ksynset_{2}, \dots,  \ksynset_{i}, \dots, \ksynset_{|\viewlabelset|}\} 
+\end{equation}
+For each $\ksynset_{i}$, a $\ngmm$-component, axis-aligned Gaussian mixture model $\GMM$, is used to describe the viewpoint-specific spatial distributions of 3D joint locations. 
+\begin{equation}
+	\begin{aligned}
+		\GMM & = \{ \GMM_{1}, \dots, \GMM_{i}, \dots, \GMM_{|\viewlabelset|} \} \\ 
+		\GMM_{\mathbf{i}} & = \{\mu_{\mathbf{i}}^{1}\dots\mu_{\mathbf{i}}^{n}\dots\mu_{\mathbf{i}}^{\ngmm};\Sigma_{\mathbf{i}}^{1}\cdots\Sigma_{\mathbf{i}}^{n}\cdots\Sigma_{\mathbf{i}}^{\ngmm}\} 
+	\end{aligned}
+\end{equation}
+The $\onegmm$-th mean and variance in the $\mathbf{i}$-th viewpoint are denoted by $\mu_{\mathbf{i}}^{\onegmm}$ and $\Sigma_{\mathbf{i}}^{\onegmm}$ respectively. The procedures for computing the data-driven kinematic model $\GMM$ is shown in algorithm \ref{alg/hand/kinematic}. 
 
+% done 
 \begin{algorithm}
-	\KwData{A joint dataset $\ksynset \subset \mathbb{R}^{3\times16}$ that contains synthetic joint locations, where $|\ksynset| \gg |\synset|$. } 
-	\KwResult{A set of viewpoint-dependent distributions $\GMM = \{\GMM_{\mathbf{i}}| \forall \mathbf{i} \in \viewlabelset \}$ of global poses.}
+	\KwData{A joint dataset $\ksynset \subset \mathbb{R}^{3\times16}$, where $|\ksynset| \gg |\synset|$ } 
+	\KwResult{A set of viewpoint-dependent distributions $\GMM = \{\GMM_{\mathbf{i}}| \forall \mathbf{i} \in \viewlabelset \}$ of global poses}
 	Split $\ksynset$ with respect to viewpoint label $\viewlabelset$, such that $\ksynset = \{ \ksynset_{1} \dots \ksynset_{\nview} \}$\\
 	\ForAll{$\mathbf{i} \in \viewlabelset$}{
-		Learn a $\ngmm$-part GMM $\GMM_{i}$ of the dataset $\ksynset_{i}$:
-		$\GMM_{\mathbf{i}} = \{\mu_{\mathbf{i}}^{1}\dots\mu_{\mathbf{i}}^{n}\dots\mu_{\mathbf{i}}^{\ngmm};\Sigma_{\mathbf{i}}^{1}\cdots\Sigma_{\mathbf{i}}^{n}\cdots\Sigma_{\mathbf{i}}^{\ngmm}\}$, 
-		where $\mu_{\mathbf{i}}^{\onegmm}$ and $\Sigma_{\mathbf{i}}^{\onegmm}$ denote the mean and \emph{diagonal} variance of the $n$-th Gaussian component in $\GMM_{\mathbf{i}}$ of viewpoint $\mathbf{i}$. \\
+		Learn a $\ngmm$-part GMM $\GMM_{i}$ of the dataset $\ksynset_{i}$:\\
+		$\GMM_{\mathbf{i}} = \{\mu_{\mathbf{i}}^{1}\dots\mu_{\mathbf{i}}^{n}\dots\mu_{\mathbf{i}}^{\ngmm};\Sigma_{\mathbf{i}}^{1}\cdots\Sigma_{\mathbf{i}}^{n}\cdots\Sigma_{\mathbf{i}}^{\ngmm}\}$\\ 
+		$\mu_{\mathbf{i}}^{\onegmm}$ is the mean of the $\onegmm$-th Gaussian in $\ksynset_{\mathbf{i}}$\\ 
+		$\Sigma_{\mathbf{i}}^{\onegmm}$ is the variance of the same Gaussian
 	}
-	\caption{Data-driven Kinematic Models.}
-	\label{alg:kinematic}
+	\caption{Training algorithm of the data-driven kinematic models}
+	\label{alg/hand/kinematic}
 \end{algorithm}
 
 \section{Testing} 
 
-\label{sec/hand/methodology:test}
+% done 
+\subsection{Joint classification and detection} 
+Patches are extracted densely given a testing depth image. They pass down the \STR\ forest to obtain their viewpoint $\testviewlabel$ and vote vectors $\testvotelabel$. Similar to Hough forest in \cite{Gall2011}, the patches vote for all $16$ joint locations according to $\testvotelabel$.  
 
-\subsection{Joint classification and detection} Given a testing image, patches are extracted densely from the testing depth images. Similar to other decision forests, each patch passes down the \STR\ forest to obtain the viewpoint $\testviewlabel$ and vote vectors $\testvotelabel$. The patch vote for all $16$ joint locations according to $\testvotelabel$.   
-%Each patch $\testpatch$ in $\testpatchset$ will vote for all $16$ 3D joint locations.  
-
-\subsection{Kinematic joint refinement} 
-The objective of kinematic joint refinement is to compute the final joint locations $\testjoint = \{ \testonejoint_{1} \dots \testonejoint_{\joint} \dots \testonejoint_{16} | \forall \testonejoint \in \mathbb{R}^{3}\}. $
-Derived from the meanshift technique in \cite{Girshick2011}, the distributions of votes vectors are evaluated as stated below: 
-The set of votes received by the $\joint$-th joint is fitted a $2$-part GMM $\testGMM_{\joint} = \{ \hat{\mu}_{\joint}^{1}, \hat{\Sigma}_{\joint}^{1}, \hat{\rho}_{\joint}^{1}, \hat{\mu}_{\joint}^{2}, \hat{\Sigma}_{\joint}^{2}, \hat{\rho}_{\joint}^{2} \}$, where $\hat{\mu}$, $\hat{\Sigma}$, $\hat{\rho}$ denote the mean, variance and weight of the Gaussian components respectively. Fig. \ref{fig/hand/refine} visualises the two Gaussian components obtained from fitting the voting vectors of a joint.  
-
-A strong detection forms one compact cluster of votes, which leads to a high weighting and low variance in one of the Gaussians. 
-On the contrary, a weak detection usually contains scattered votes, indicated by separated means with similar weights. 
-%As a result, the output joint locations $\testjoint:\mathbb{R}^{3\!\times\!16}$ are evaluated and refined by the followings: 
-The $\joint$-th joint is of high-confidence 
-%A \emph{high-confidence} joint $\testonejoint_{h}$ is defined 
-when the Euclidean distance between $\hat{\mu}_{\joint}^{1}$ and $\hat{\mu}_{\joint}^{2}$ is smaller than a threshold $\testqualthres$. 
-For any high-confident $j$-th joint, the output location $\testonejoint_{\joint}$ is the mean of the dominating Gaussian in $\testGMM_{\joint}$.  
+The objective of kinematic joint refinement is to compute the final joint locations $\testjoint = \{ \testonejoint_{1} \dots \testonejoint_{\joint} \dots \testonejoint_{16} | \forall \testonejoint \in \mathbb{R}^{3}\}$ given an input depth image. 
+In order to reject the outlying votes received, the meanshift technique in Girshick \etal  \cite{Girshick2011} is applied.     
+Figure \ref{fig/hand/refine} depicts the two Gaussian components obtained from fitting the voting vectors of a joint.  
+The set of votes received by the $\joint$-th joint is fitted to a $2$-part GMM $\testGMM_{\joint}$.
 \begin{equation}
-	\testonejoint_{\joint} = 
-	\begin{cases}
-		\hat{\mu}_{\joint}^{1} & \mbox{ if } ||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||^2_2 < \testqualthres \mbox{ and } \hat{\rho}_{\joint}^{1} \ge \hat{\rho}_{\joint}^{2} \\  
-		\hat{\mu}_{\joint}^{2} & \mbox{ if } ||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||^2_2 < \testqualthres \mbox{ and } \hat{\rho}_{\joint}^{1} < \hat{\rho}_{\joint}^{2} \\  
-	\end{cases}
-	\label{eq:highconf}
+	\testGMM_{\joint} = \left\{ \hat{\mu}_{\joint}^{1}, \hat{\Sigma}_{\joint}^{1}, \hat{\rho}_{\joint}^{1}, \hat{\mu}_{\joint}^{2}, \hat{\Sigma}_{\joint}^{2}, \hat{\rho}_{\joint}^{2} \right\}
 \end{equation}
-
-Subsequently, final locations of all high-confidence joints are determined. The joint refinement process is performed on the other low-confidence joints.   
-
-The nearest neighbour of the set of high-confidence joints are searched from its corresponding joint means $\{\mu_{\testviewlabel}^{1}\dots\mu_{\testviewlabel}^{\ngmm}\}$ in the kinematic model $\GMM_{\testviewlabel}$ using least squares with a direct similarity homography. Only the high-confident joint locations are used in the above nearest neighbour matching; the low-confident joint locations are masked out. 
-Given the nearest Gaussian component $\{\mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}^{nn}\}$ of the high-confidence joints, each remaining low-confidence joint $\testonejoint_{\joint}$ are refined: 
-\begin{equation}
-		\{\tilde{\mu}, \tilde{\Sigma}\} 
-		= \argmin{\{\mu, \Sigma\} \in \{\hat{\mu}_{\joint}^{1}, \hat{\Sigma}_{\joint}^{1}\},  \{\hat{\mu}_{2}\, \hat{\Sigma}_{2}\}}  
-		||\mu - \mu_{\testviewlabel}^{nn}[\joint]||^2_2
-		\label{eq:refine1}
-\end{equation}
-where $\{\tilde{\mu}, \tilde{\Sigma}\}$ is the Gaussian in $\testGMM_{\joint}$ that is closer to the corresponding $\joint$-th joint location in $\{\mu_{\testviewlabel}^{nn}[\joint]:\mathbb{R}^{3}, \Sigma_{\testviewlabel}^{nn}[\joint]:\mathbb{R}^{3\times3}\}$. The final output of a low-confidence joint $\testonejoint_{l}$ is computed by merging the Gaussians in Equation \ref{eq:refine2}. 
-\begin{equation}
-	\testonejoint_{\joint} =
-	\left(\tilde{\Sigma}^{-1}\!+\!(\Sigma_{\testviewlabel}^{nn}[\joint])^{-1}\right)^{-1}\! \left( \tilde{\Sigma} \mu_{\testviewlabel}^{nn}[\joint]\!+\!\Sigma_{\testviewlabel}^{nn}[\joint]\tilde{\mu}\right) 
-	\label{eq:refine2}
-\end{equation}
-Fig. \ref{fig/hand/refine} illustrates the process of refining a low-confidence joint. The middle
-proximal joint is occluded by the index finger as seen in the RGB image; the $2$-part GMM $\testGMM_{\joint}$ is represented by the red crosses (mean) and ellipses (variance). The final output is computed by merging the nearest neighbour obtained from $\GMM$, \ie $\{\mu_{\testviewlabel}^{nn}[\joint], \Sigma_{\testviewlabel}^{nn}[\joint]\}$ (the green Gaussian), and the closer Gaussian in $\testGMM_{\joint}$ (the left red Gaussian).  
-The procedures of refining output poses $\testjoint$ are stated in Algorithm \ref{alg:testing}.  
+where $\hat{\mu}$, $\hat{\Sigma}$, $\hat{\rho}$ denote the mean, variance and weight of the Gaussian components respectively. 
 
 \begin{figure}[ht]
 	\centering
@@ -424,85 +427,100 @@ The procedures of refining output poses $\testjoint$ are stated in Algorithm \re
 	\label{fig/hand/refine}
 \end{figure}
 
+The true joint usually forms one compact cluster of votes, which leads to a high weighting and low variance in one of the Gaussians. 
+On the contrary, a weak detection usually contains scattered votes, indicated by separated means with similar weights. 
+A $\testonejoint_{\joint}$ is considered as a high-confidence joint when the Euclidean distance between $\hat{\mu}_{\joint}^{1}$ and $\hat{\mu}_{\joint}^{2}$ is smaller than a predefined threshold $\testqualthres$.  
+For a high-confident $j$-th joint, the final output location $\testonejoint_{\joint}$ is represented by the mean of the dominating Gaussian in $\testGMM_{\joint}$. Otherwise, low-confidence joints are computed using the kinematic joint refinement algorithm in section \ref{sec/hand/kjr}. 
+\begin{equation}
+	\testonejoint_{\joint} = 
+	\begin{cases}
+		\hat{\mu}_{\joint}^{1} & \mbox{ if } ||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||^2_2 < \testqualthres \mbox{ and } \hat{\rho}_{\joint}^{1} \ge \hat{\rho}_{\joint}^{2} \\  
+		\hat{\mu}_{\joint}^{2} & \mbox{ if } ||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||^2_2 < \testqualthres \mbox{ and } \hat{\rho}_{\joint}^{1} < \hat{\rho}_{\joint}^{2} \\ 
+		\mbox{Joint refinement} & \mbox{ otherwise }  
+	\end{cases}
+	\label{eq/hand/highconf}
+\end{equation}
+
+% done 
+\subsection{Kinematic joint refinement} 
+\label{sec/hand/kjr} 
+
+Final locations of all high-confidence joints are computed from the regression forest. The joint refinement process is performed on the other low-confidence joints. 
+The high-confidence joints are matched to the means $\{\mu_{\testviewlabel}^{1}\dots\mu_{\testviewlabel}^{\ngmm}\}$ in the kinematic model $\GMM_{\testviewlabel}$, where their nearest neighbours are found by least squares fitting, with a direct similarity transformation $\mathbf{T}$.  
+Only the high-confident joint locations are used in the above nearest neighbour matching; the low-confident joint locations are masked out. 
+Given the nearest Gaussian component $\{\mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}^{nn}\}$ of the high-confidence joints, each remaining low-confidence joint $\testonejoint_{\joint}$ are assigned in equation \ref{eq/hand/refine1}. 
+\begin{equation}
+		\{\tilde{\mu}, \tilde{\Sigma}\} 
+		= \argmin_{\{\mu, \Sigma\} \in \{\hat{\mu}_{\joint}^{1}, \hat{\Sigma}_{\joint}^{1}\},  \{\hat{\mu}_{2}\, \hat{\Sigma}_{2}\}}  
+		\big|\big|\mathbf{T}\mu - \mu_{\testviewlabel}^{nn}[\joint]\big|\big|^2_2
+		\label{eq/hand/refine1}
+\end{equation}
+The output joint distribution $\{\tilde{\mu}, \tilde{\Sigma}\}$ is one of the Gaussian components in $\testGMM_{\joint}$ that is closer to the corresponding $\joint$-th joint location in $\{\mu_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3}, \Sigma_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3\times3}\}$ taken from $\{ \mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}^{nn} \} $. Finally, the refined output of a low-confidence joint $\testonejoint_{l}$ is computed by merging the Gaussians in equation \ref{eq:refine2} (\cf equation \ref{eq/body/combine}). 
+\begin{equation}
+	\testonejoint_{\joint} =
+	\bigg(\tilde{\Sigma}^{-1} + \left(\Sigma_{\testviewlabel}^{nn}[\joint]\right)^{-1}\bigg)^{-1}  \bigg( \tilde{\Sigma} \mu_{\testviewlabel}^{nn}[\joint] + \Sigma_{\testviewlabel}^{nn}[\joint]\tilde{\mu}\bigg) 
+	\label{eq:refine2}
+\end{equation}
+
+Figure \ref{fig/hand/refine} illustrates the process of refining a low-confidence joint. The middle proximal joint is occluded by the index finger as seen in the RGB image; the Gaussians components in $\testGMM_{\joint}$ is represented by the red crosses (mean) and ellipses (variance). The final output is computed by merging the nearest neighbour obtained from $\GMM$, \ie $\{\mu_{\testviewlabel}^{nn}[\joint], \Sigma_{\testviewlabel}^{nn}[\joint]\}$ (the green Gaussian), and the closer Gaussian in $\testGMM_{\joint}$ (the left red Gaussian).  
+The procedures of refining output poses $\testjoint$ are stated in algorithm \ref{alg/hand/testing}.  
+
 \begin{algorithm}
 	\KwData{Vote vectors obtained from passing down the testing image to the \STR\ forest.}
 	\KwResult{The output pose $\testjoint:\mathbb{R}^{3\times16}$.} 
-	%Extract patches $\testpatchset$ from depth image $\testimg$ \\ 
-	%\ForEach{$\testpatch \in \testpatchset$}{
-	%	Compute the viewpoint $\testviewlabel$ and joint $\testjointlabel$. \\ 
-	%	Each $\testpatch$ votes at the leaf nodes.
-	%}
+	Extract patches $\testpatchset$ from depth image $\testimg$ \\ 
+	\ForEach{$\testpatch \in \testpatchset$}{
+		Compute the viewpoint $\testviewlabel$ and joint $\testjointlabel$. \\ 
+		Each $\testpatch$ votes at the leaf nodes
+	}
 	\ForEach{ Set of voting vectors for the $\joint$-th joint}{
-		%\If {$|\{\testpatch \in \testpatchset| \testjointlabel = j\}| < \testqualthres$}{
-		%	Assign the $j$-th joint to the occluded set $\testoccset$. \\
-		%}
-		Learn a 2-part GMM $\testGMM_{\joint}$ of the voting vectors.\\ 
+		Learn a $2$-part GMM $\testGMM_{\joint}$ of the voting vectors\\ 
 		\If{$||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||^2_2 < \testqualthres$}{
-			The $\joint$-th joint is a high-confidence joint.\\
-			Compute the $\joint$-th joint location. (Equation \ref{eq:highconf}) 
+			The $\joint$-th joint is a high-confidence joint\\
+			Compute the $\joint$-th joint location. (Equation \ref{eq/hand/highconf}) 
 		}\Else{
-			The $\joint$-th joint is a low-confidence joint.
+			The $\joint$-th joint is a low-confidence joint
 		}
 	}
-	Find the Gaussian $\{\mu_{\testviewlabel}^{nn},\Sigma_{\testviewlabel}^{nn}\}$ by finding the nearest neighbour of the high-confidence joints in $\GMM_{\testviewlabel}$.\\ 
-	Update the remaining low-confidence joint locations. (Equation \ref{eq:refine1} and \ref{eq:refine2}) \\
-	%Assign joint locations in both $\testjointset_{h}$ and $\testjointset_{l}$ to $\testjoint$
-	\caption{Pose Refinement} 
-	\label{alg:testing}
+	Find the nearest neighbour $\{\mu_{\testviewlabel}^{nn},\Sigma_{\testviewlabel}^{nn}\}$ by matching the high-confidence joints with $\GMM_{\testviewlabel}$\\ 
+	Update the remaining low-confidence joint (Equation \ref{eq/hand/refine1} and \ref{eq:refine2}) \\
+	\caption{Joint detection and pose refinement} 
+	\label{alg/hand/testing}
 \end{algorithm}
-
 
 \section{Experiments}
 
-
-% How the images are segmented 
-% How many training images
-% How can the real images be labelled 
-
+% done 
 \subsection{Evaluation dataset} 
 
-\label{sec/hand/methodology:eval}
-Synthetic training data $\synset$ were rendered using an articulated hand model(as shown in Figure~\ref{fig/hand/single}.
-Instead of adjusting individual joints, each finger is controlled by a bending parameter, such that only the articulations that can be performed by real hands are considered. 
-Hand shapes are mildly randomised when generating the depth images in $\synset$, in order to handle the shape variations in realistic applications. 
-Hence, the dataset $\synset$ contains $\nsynperview$ depth images per viewpoint, the size of $\synset$ is $\nsynperview \times 135 = 337.5K$. 
-
-Realistic data $\realset$ were captured using a Asus Xtion depth sensor. There exist about $600$ images per viewpoint, hence the size of $\realset$ is $81K$. Not more than $20\%$ of data in $\realset$ are labelled. The number of labelled sample $|\reallset|$ is around $10K$. Since labels can be reused for the rotationally symmetric images(same yaw and pitch, different roll), only around $1.2K$ of data are hand-labelled.    
-
-For $\reallset$, visible joints were annotated manually using 3D coordinates but occluded joints are annotated using the $(x,y)$ coordinates only. 
-Associations $\assoc$ and the remaining $z$-coordinates in $\reallset$ were computed by matching visible joint locations with $\synset$ using least squares with a direct similarity transform constraint. Consequently, each datapoint in $\reallset$ is paired with its closest match $\patch_{syn} \in \synset$, and its occluded $z$ coordinates were approximated by the corresponding $z$ coordinates of $\patch_{syn}$.
-With joint locations as mean, each joint can be model as a 3D truncated Gaussian distribution, where variances can be defined according to hand anatomy. Foreground pixels are clustered into one of these distributions and therefore assigned with labels $\jointlabel$.
-
-For experiments, three different sequences ($A$,$B$ and $C$) are captured and labelled with 450, 1000 and 240 frames respectively. Sequence $A$ has only one viewpoint, $B$ demonstrates viewpoint variation and $C$ has more abrupt changes in both viewpoint and scale. For all experiments, 3 trees are trained with maximum depth varying from 16 to 24, depending on the amount of training data.
-
-
-% In this work, the training dataset contains $\nsyn$ synthetic depth image and $\nreal$ realistic depth images.  
-
-
-\subsection{Single view experiment} 
-
-The proposed approach was evaluated under the frontal view scenario, comparing with the traditional regression forest in \cite{Gall2011} as a baseline. Since there was only one viewpoint in testing sequence $A$,  $\viewterm$ in Equation \ref{eq:qualityfunction} did not affect the experimental results.  
-%the difference between our method and the baseline algorithm depends on the performances of joint regression and classification only. 
-%thus this experiment only compares the joint classification performance. 
-Performances of algorithms are measured by their pixelwise classification accuracy per joint, similar to \cite{Shotton2011}, hence only $\classterm$,$\regterm$, $\pairterm$ and $\usterm$ were utilised in this experiment.    
-
-Fig. \ref{fig/hand/single} shows the classification accuracy plots of the algorithm evaluated in this experiment.  
-It demonstrates the strengths of realistic-synthetic fusion and semi-supervised learning. 
-Accuracy of baseline method was improved by simply including both domains in training without any algorithmic changes. 
-
-Transductive learning($\pairterm$) substantially improved the accuracy, particularly for the finger joints which were less robust in the baseline algorithms.  
-By coupling realistic data with synthetic data, the transductive term $\pairterm$ effectively learns the discrepancies between the domains, which is important in recognising noisy and strongly occluded fingers.
-%Transductive learning further helps the decision forest to recognise the intermediate poses between the sparsely labelled realistic data. 
-%Weaker joints in transductive learning, \eg joints in little finger tip (L3) and index proximal (I1), are often mislabelled as other more dominating joints.
-Some joints are often mislabelled as other more dominating joints after transductive learning, \eg joints in little finger tip (L3) and index proximal (I1). Nevertheless, the semi-supervised framework significantly improved the performances of those joints after transductive learning has applied.  
-%Consequently, our semi-supervised framework forms a complement to transductive learning by greatly enhancing the accuracies of these joints. 
+Synthetic training data $\synset$ were rendered using an articulated hand model as shown in figure \ref{fig/hand/label}. 
+Instead of adjusting individual joints, each finger was controlled by a bending parameter, such that only realistic articulations, \ie poses that can be performed by a real hand, were recorded in the training dataset. 
+In order to handle the shape variations in realistic environments, hand shapes were mildly randomised when generating the depth images in $\synset$. 
+Different poses performed by the articulated model were subsequently projected to depth images.
+Subsequently synthetic dataset $\synset$ were generated by projecting the articulated model, of different poses, to depth images. In this work, $\synset$ contained $\nsynperview$ depth images per viewpoint, the size of $\synset$ was $\nsynperview \times 3 \times 5 \times 9 = 337.5K$.  
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.22\linewidth]{fig/hand/hand.pdf}
+	\includegraphics[width=0.32\linewidth]{fig/hand/hand.pdf}
 	\caption{Color codes and label names of the 16 hand regions.}
 	\label{fig/hand/label}
 \end{figure}
+
+Meanwhile, realistic data $\realset$ were captured using a Asus Xtion depth sensor. 
+There were about $600$ frames per viewpoint, thus the size of $\realset$ is $81K$. 
+Within $\realset$, about $20\%$ of the frames in $\realset$ are labelled. 
+The number of labelled sample $|\reallset|$ is around $10K$.    
+Since labels can be reused for the in-plane rotationally symmetric images (same yaw and pitch, but different roll), only around $1.2K$ of data are actually hand-labelled.    
+
+Visible joints in $\reallset$ were annotated manually using 3D coordinates. However, annotation of occluded joints were labelled using the $(x,y)$ coordinates initially.  
+Realistic-synthetic associations $\assoc$ and the remaining $z$-coordinates in $\reallset$ were computed simultaneously by matching visible joint locations with $\synset$, using least squares and a direct similarity transform, similar to kinematic joint refinement in section \ref{sec/hand/kjr}. 
+Consequently, each data point in $\reallset$ was paired with its closest match $\patch_{syn} \in \synset$, and its occluded $z$ coordinates were approximated by the corresponding $z$ coordinates of $\patch_{syn}$.  
+A joint was model as a 3D truncated Gaussian distribution centered at the joint location, while its variance was defined according to the structure of human hands. Foreground pixels were clustered into one of these distributions and therefore assigned with labels $\jointlabel$. For example, the palm label usually contributed a larger region than the fingertip labels, due to the large variance in the palm joint.
+
+Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled with 450, 1000 and 240 frames respectively.  Sequence $A$ was captured with a static viewpoint for the single-view experiment. Sequence $B$ featured various viewpoint variations and sequence $C$ contained abrupt changes in both viewpoint and scale. In the experiments, 3 trees were trained with maximum depth varying from 16 (single-view experiment) to 24 (multi-view experiment), depending on the amount of training data.
+
+% done 
+\subsection{Single view experiment} 
 
 \begin{figure}[ht]
 	\centering
@@ -511,48 +529,37 @@ Some joints are often mislabelled as other more dominating joints after transduc
 	\label{fig/hand/single}
 \end{figure}
 
+The proposed approach was evaluated under a single view scenario, comparing with the traditional regression forest algorithm in \cite{Gall2011} as a baseline. Since there was only one viewpoint in testing sequence $A$, $\viewterm$ in equation \ref{eq/hand/qualityfunction1} did not affect the experimental results. In other words, the proposed method and the baseline algorithm only differed in joint regression and classification, hence only $\classterm$,$\regterm$, $\pairterm$ and $\usterm$ were utilised in this experiment.    
+
+Performances of algorithms were measured by their pixelwise classification accuracy per joint, similar to \cite{Shotton2011}. Figure \ref{fig/hand/single} shows the classification accuracy plots of the algorithm evaluated in this experiment.  
+It demonstrates the strengths of realistic-synthetic fusion and semi-supervised learning. 
+Accuracy of baseline method was improved by simply including both domains in training without any algorithmic changes. 
+
+Transductive learning term $\pairterm$ substantially improved the accuracy, particularly for the finger tips which were less robust in the baseline algorithms.  
+By coupling realistic data with synthetic data, the transductive term $\pairterm$ effectively learnt the discrepancies between the domains, which is important in recognising noisy and strongly occluded fingers.
+From figure \ref{fig/hand/single}, some joints were often mislabelled as other more dominating joints after transductive learning, \eg joints in little finger tip (L3) and index proximal (I1). 
+Nevertheless, semi-supervised learning significantly corrected those joints after transductive learning. To summarise, semi-supervised learning complemented transductive learning by modeling the intermediate poses between the sparsely labelled realistic data.    
+
 %\paragraph{Experiment on Data-driven Joint Refinement}
 %A fully-labelled, multiview video sequence is recorded to evaluate the overall performances of the approaches.  
 
 \subsection{Multi-view experiment}  
 
-In the multi-view experiment, the proposed approach was compared with the state-of-the-art by FORTH\cite{Oikonomidis2011} under a challenging multi-view scenario. Quantitative and qualitative evaluations were performed to provide a comprehensive comparison of the methods. 
+In the multi-view experiment, the proposed approach was compared with the state-of-the-art by Oikonomidis \etal (FORTH algorithm) \cite{Oikonomidis2011} under a challenging multi-view scenario. Quantitative and qualitative evaluations were performed to provide a comprehensive comparison of the methods. 
 
-Hand articulations are estimated from the multi-view testing sequences (sequence $B$ and $C$) by both of the methods. 
-%In addition to pose variations in sequence $A$, sequence $B$ contains long and continuous pose and viewpoint changes. 
-%Sequence $C$ is particularly challenging as it contains abrupt viewpoint changes and poses with strong occlusions, as visualised in Fig. \ref{fig/hand/experiments:multiview:qual}.
-Since FORTH require manual initialisation, the testing sequences used are designed such that they start with the required initialisation pose and position, making a fair comparison.   
-Same as \cite{Oikonomidis2011},  
-performances of pose estimation were measured by \emph{joint localisation error}.
-% necessary? 
+Hand articulations were estimated from the multi-view testing sequences, \ie sequence $B$ and $C$, by both of the methods. 
+Sequence $B$ contains long and continuous pose and viewpoint changes, while abrupt viewpoint changes and strong occlusions were presented in sequence $C$.  
+Since FORTH requires manual initialisation, the testing sequences were designed such that they started with a fixed initialisation pose and position, facilitating a fair comparison.   
+Similar to \cite{Oikonomidis2011}, pose estimation performances were measured by joint localisation error.
 
-\subsubsection{Quantitative Results}
-Fig. \ref{fig/hand/multiquant} shows the average localisation errors of the two testing sequences. It also shows a representative of error graphs from a stable joint (palm, $P$) and a difficult joint (index finger tip, $I3$). The proposed \STR\ forest, with the data-driven kinematic joint refinement, outperforms FORTH in all three statistics, especially for the finger tip joints that are noisy and frequently occluded. Even though a few large estimation errors are observed, our frame-based approach is able to recover from errors quickly.    
+\subsubsection{Quantitative results}
 
-Sequence $C$ further confirm the major advantage of our approach over its tracking-based counterpart---In the first $200$ frames, with kinematic joint refinement, \STR\ forest approach performs just slightly better than FORTH. However, localisation errors in FORTH accumulate after an abrupt change and have not been recovered since then. As model-based tracking approaches rely on previous results to optimise the current hypothesis iteratively, estimation errors amass over time. On the other hand, frame-based discriminative approaches consider each frame as an independent input, enabling fast error recovery at the expense of a smooth and continuous output. 
+Figure \ref{fig/hand/multiquant} shows the average localisation errors of the testing sequences. It also shows similar error graphs from a stable joint (palm, $P$) and a difficult joint (index finger tip, $I3$). The proposed \STR\ forest, together with the data-driven kinematic joint refinement, outperformed FORTH in all aspects, especially for the finger tip joints that are noisy and frequently occluded. Since the proposed approach is frame-based, even though a few large estimation errors are observed, they were recovered quickly without drifting.    
 
-The proposed joint refinement scheme increases the joint estimation accuracy in general, as shown in Fig. \ref{fig/hand/multiquant}. 
-Some of the large classification errors, \eg Fig. \ref{fig/hand/multiquantc}, are fixed after applying joint refinement. It implies that the joint refinement process not only improves the accuracy of joint, but also avoids incorrect detections by validating the output of \STR\ forest with kinematic constraints.
+Experiments with sequence $C$ further justified the advantages of the proposed system over its tracking-based counterpart. In the first $200$ frames, \STR\ forest with joint refinement performed just slightly better than FORTH. However, localisation errors in FORTH accumulated after an abrupt change in the testing sequence, the error had not been recovered since then. Since tracking-based approaches rely on previous results to optimise the current hypothesis iteratively, estimation errors amass and drifting issue worsens over time. On the contrary, frame-based discriminative approaches consider each frame as an independent input, enabling fast error recovery at the expense of a smooth and continuous output. 
 
-\subsubsection{Qualitative Analysis} 
-The experimental results are also visualised in Fig. \ref{fig/hand/multiqual} for qualitative evaluation. 
-Fig.~\ref{fig/hand/multiqual}a and b show the pose estimation results from different view points.    
-Fig.~\ref{fig/hand/multiqual}c shows a frame at the beginning of test sequence $B$, both FORTH and our method obtains accurate hand articulations. Nonetheless, the performance of FORTH declines rapidly in the middle of the sequence when its tracking is lost and failed to recognise Fig.~\ref{fig/hand/multiqual} d, yet our approach still gives correct results. 
-
-Our efficient \STR\ forest also achieves promising run-time performance, it estimates hand poses at about $25$FPS on an Intel I7 PC without GPU acceleration, whilst the FORTH algorithm runs at $6$FPS on the same hardware configuration plus NVidia GT 640. 
-
-
-%\begin{figure}[ht]
-%	\centering
-%	\includegraphics[width=0.33\linewidth]{fig/hand/sq1_avg.pdf}  
-%	\includegraphics[width=0.31\linewidth]{fig/hand/sq1_palm.pdf} 
-%	\includegraphics[width=0.31\linewidth]{fig/hand/sq1_tip.pdf} \\
-%	\includegraphics[width=0.33\linewidth]{fig/hand/sq2_avg.pdf} 
-%	\includegraphics[width=0.31\linewidth]{fig/hand/sq2_palm.pdf}
-%	\includegraphics[width=0.31\linewidth]{fig/hand/sq2_tip.pdf} 
-%	\caption{Joint localisation errors of the multiview testing squences.}
-%	\label{fig/hand/multiquant}
-%\end{figure}
+In this experiment, the proposed joint refinement scheme increased the joint estimation accuracy in general, as illustrated in figure \ref{fig/hand/multiquant}. 
+Some large classification errors, \eg figure \ref{fig/hand/multiquantc}, were fixed after applying joint refinement. It implied that the joint refinement process not only improved the accuracy of joint, but also avoided incorrect detections by validating the output of \STR\ forest with kinematic constraints.
 
 \begin{figure}[ht]
 	\centering
@@ -578,20 +585,44 @@ Our efficient \STR\ forest also achieves promising run-time performance, it esti
 	\label{fig/hand/multiquant}
 \end{figure}
 
+
+\subsubsection{Qualitative analysis} 
+
+The proposed pose estimation system was also evaluated qualitatively, figure \ref{fig/hand/multiqual} displays some of the experimental results extracted from testing sequence $B$ and $C$. 
+Figure \ref{fig/hand/multiqual}(a) and (b) show the pose estimation results of the same articulation from different view points.  
+Figure \ref{fig/hand/multiqual}(d) shows a frame at the beginning of test sequence $B$, both approaches obtained accurate hand articulations initially. However, the performance of FORTH declined rapidly in the middle of the sequence when its tracking algorithm was lost target and failed to recognise figure \ref{fig/hand/multiqual}(e), yet the \STR\ forest approach still gives correct results. In addition, strong occlusions were shown in figure \ref{fig/hand/multiqual}(f), where FORTH did not work well but \STR\ forest gave the correct pose. In figure \ref{fig/hand/multiqual}, however, both approaches did not produce very accurate output due to motion blur, which is indicated by a large blank region in the corresponding depth image.   
+
+With respect to run-time performance, the proposed \STR\ forest estimated one hand pose at about $25$FPS on an Intel I7 PC without GPU acceleration, whilst the FORTH algorithm ran at $6$FPS on the same hardware configuration plus GPU acceleration (NVidia GT 640). 
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[width=0.33\linewidth]{fig/hand/sq1_avg.pdf}  
+%	\includegraphics[width=0.31\linewidth]{fig/hand/sq1_palm.pdf} 
+%	\includegraphics[width=0.31\linewidth]{fig/hand/sq1_tip.pdf} \\
+%	\includegraphics[width=0.33\linewidth]{fig/hand/sq2_avg.pdf} 
+%	\includegraphics[width=0.31\linewidth]{fig/hand/sq2_palm.pdf}
+%	\includegraphics[width=0.31\linewidth]{fig/hand/sq2_tip.pdf} 
+%	\caption{Joint localisation errors of the multiview testing squences.}
+%	\label{fig/hand/multiquant}
+%\end{figure}
+
 % 3 x 4 or 4 x 4 image array (RGB, Depth, Ours, FORTH), I expect half a page  
 % show two similar poses with similar viewpoints 
 % show a pose with heavy occlusion 
 % shows FORTH gives large error when it loses track 
 \input{include/hand_qual} 
 
+% done 
 \section{Discussion}
 
 This chapter presents the first semi-supervised transductive approach for articulated hand pose estimation.  
-Despite its similarity with body pose estimation, techniques for articulated hand pose is still far from mature, primarily due to the unique issues of occlusion and noise issues in hand pose data. 
-On the other hand, the discrepancies between realistic and synthetic data also undermine the performances of state-of-the-arts. 
+Despite the task's similarity with body pose estimation, practical techniques for articulated hand pose estimation is still far from mature, primarily due to the characteristics of hand poses, in which occlusion and noise prevail. 
+Furthermore, the discrepancies between realistic and synthetic data also undermine the performances of existing systems. 
 
-Addressing the aforementioned issues, we propose a novel discriminative approach, \STR\ forest, to estimate hand articulations using both realistic and synthetic data. With transductive learning, the \STR\ forest recognises a wide range of poses from a small number of labelled realistic data. Semi-supervised learning is applied to fully utilise the sparsely labelled realistic dataset. Besides, we also present a data-driven pseudo-kinematic technique, as means to improve the estimation accuracy of occluded and noisy hand poses. 
+Addressing these issues, a novel discriminative approach, namely \STR\ forest, is designed to estimate hand poses using both realistic and synthetic data. 
+With transductive learning, \STR\ forest recognises a wide range of poses from a small number of labelled realistic data by linking them to a large synthetic dataset.
+Semi-supervised learning is also applied to fully utilise the sparsely labelled realistic dataset. 
+To improve the estimation accuracy of heavily occluded hand poses, a data-driven pseudo-kinematic technique is used to correct the occluded joints.  
 
-The proposed approach is evaluated with respect to different challenging environments.    
-From the quantitative and qualitative analyses conducted, our method has demonstrated promising results in estimating articulated hand poses from noisy and strongly occluded data.  
-It also attains superior performances and speed compared with state-of-the-art.  
+The proposed hand pose estimation system was evaluated with respect to different challenging environments. From the quantitative and qualitative analyses, it demonstrated promising results in estimating articulated hand poses from noisy and strongly occluded data.  
+It also achieved superior accuracy and run-time performance compared with the state-of-the-arts.  

@@ -145,385 +145,19 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 23-body.tex
+badd +476 23-body.tex
 badd +1130 references.bib
 badd +1 thesis.tex
 badd +109 backup/tex_backup/23-body.tex
-badd +82 22-act.tex
+badd +343 22-act.tex
 badd +29 01-intro.tex
-badd +0 TODO
-badd +1 0d-defpart2.tex
-badd +1 24-hand.tex
+badd +1 TODO
+badd +23 0d-defpart2.tex
+badd +594 24-hand.tex
+badd +26 0d-globaldef.tex
+badd +1 12-eval.tex
 args 23-body.tex
-edit 24-hand.tex
-set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 27 + 28) / 57)
-exe '2resize ' . ((&lines * 26 + 28) / 57)
-argglobal
-let s:cpo_save=&cpo
-set cpo&vim
-imap <buffer> <F9> <Plug>Tex_Completion
-imap <buffer> <C-CR> <Plug>Tex_InsertItemOnNextLine
-imap <buffer> <silent> <S-F7> <Plug>Tex_FastCommandChange
-imap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-inoremap <buffer> <silent> <S-F3> =Tex_PutEnvironment("bmatrix")
-inoremap <buffer> <silent> <S-F2> =Tex_PutEnvironment("eqnarray")
-inoremap <buffer> <silent> <S-F1> =Tex_PutEnvironment("eqnarray*")
-imap <buffer> <silent> <S-F5> <Plug>Tex_FastEnvironmentChange
-imap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-imap <buffer> <silent> ì <Plug>Tex_LeftRight
-imap <buffer> <silent> ã <Plug>Tex_MathCal
-imap <buffer> <silent> â <Plug>Tex_MathBF
-imap <buffer> é <Plug>Tex_InsertItemOnThisLine
-nmap <buffer> <silent> \rf <Plug>Tex_RefreshFolds
-nmap <buffer> \ls <Plug>Tex_ForwardSearch
-nmap <buffer> \lv <Plug>Tex_View
-vmap <buffer> \ll <Plug>Tex_Compile
-nmap <buffer> \ll <Plug>Tex_Compile
-nnoremap <buffer> <Plug>Tex_ForwardSearch :call Tex_ForwardSearchLaTeX()
-nnoremap <buffer> <Plug>Tex_View :call Tex_ViewLaTeX()
-vnoremap <buffer> <Plug>Tex_Compile :call Tex_PartCompile()
-nnoremap <buffer> <Plug>Tex_Compile :call Tex_RunLaTeX()
-vmap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-nmap <buffer> <silent> <S-F7> <Plug>Tex_FastCommandChange
-nmap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-nmap <buffer> <silent> <S-F5> <Plug>Tex_FastEnvironmentChange
-vmap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-nmap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-nmap <buffer> <silent> ì <Plug>Tex_LeftRight
-vmap <buffer> <silent> ã <Plug>Tex_MathCal
-vmap <buffer> <silent> â <Plug>Tex_MathBF
-let &cpo=s:cpo_save
-unlet s:cpo_save
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=sO:%\ -,mO:%\ \ ,eO:%%,:%
-setlocal commentstring=%%s
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=\\\\\\([egx]\\|char\\|mathchar\\|count\\|dimen\\|muskip\\|skip\\|toks\\)\\=def\\|\\\\font\\|\\\\\\(future\\)\\=let\\|\\\\new\\(count\\|dimen\\|skip\\|muskip\\|box\\|toks\\|read\\|write\\|fam\\|insert\\)\\|\\\\\\(re\\)\\=new\\(boolean\\|command\\|counter\\|environment\\|font\\|if\\|length\\|savebox\\|theorem\\(style\\)\\=\\)\\s*\\*\\=\\s*{\\=\\|DeclareMathOperator\\s*{\\=\\s*
-setlocal dictionary=/usr/share/vim/vimfiles/ftplugin/latex-suite/dictionaries/dictionary
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c\\,,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-G%*[\ ]from\ %f:%l:%c,%-G%*[\ ]from\ %f:%l:,%-G%*[\ ]from\ %f:%l\\,,%-G%*[\ ]from\ %f:%l,%f(%l):%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f|%l|\ %m,%-G%.%#Underfull%.%#,%-G%.%#Overfull%.%#,%-G%.%#specifier\ changed\ to%.%#,%-G%.%#You\ have\ requested%.%#,%-G%.%#Missing\ number%\\,\ treated\ as\ zero.%.%#,%-G%.%#There\ were\ undefined\ references%.%#,%-G%.%#Citation\ %.%#\ undefined%.%#,%E!\ LaTeX\ %trror:\ %m,%E!\ %m,%E%f:%l:\ %m,%+WLaTeX\ %.%#Warning:\ %.%#line\ %l%.%#,%+W%.%#\ at\ lines\ %l--%*\\d,%+WLaTeX\ %.%#Warning:\ %m,%-Cl.%l\ %m,%-Cl.%l\ ,%-C\ \ %m,%-C%.%#-%.%#,%-C%.%#[]%.%#,%-C[]%.%#,%-C%.%#%[{}\\]%.%#,%-C<%.%#>%m,%-GSee\ the\ LaTeX%m,%-GType\ \ H\ <return>%m,%-G\ ...%.%#,%-G%.%#\ (C)\ %.%#,%-G(see\ the\ transcript%.%#),%-G\\s%#,%-O(%*[^()])%r,%-P(%f%r,%-P\ %\\=(%f%r,%-P%*[^()](%f%r,%-P(%f%*[^()],%-P[%\\d%[^()]%#(%f%r,%-P%*[^()],%-Q)%r,%-Q%*[^()])%r,%-Q[%\\d%*[^()])%r,%-Q%*[^()],%-G%.%#
-setlocal noexpandtab
-if &filetype != 'tex'
-setlocal filetype=tex
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=4
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=TexFoldTextFunction()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
-setlocal include=\\\\input\\|\\\\include{
-setlocal includeexpr=substitute(v:fname,\ '^.\\{-}{\\|}.*',\ '',\ 'g')
-setlocal indentexpr=GetTeXIndent()
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e,},],=^s*^s*^s*^s*^s*^s*^s*^s*^s*^s*\\bibitem,=\\item
-setlocal noinfercase
-setlocal iskeyword=48-57,a-z,A-Z,192-255
-setlocal keywordprg=
-set linebreak
-setlocal linebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=pdflatex\ -interaction=nonstopmode\ $*
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=.tex
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'tex'
-setlocal syntax=tex
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-31,39fold
-4,66fold
-70,75fold
-67,135fold
-158,165fold
-147,166fold
-185,191fold
-216,224fold
-229,234fold
-242,250fold
-256,271fold
-167,292fold
-293,314fold
-332,339fold
-345,350fold
-352,356fold
-361,366fold
-315,395fold
-136,395fold
-403,422fold
-441,446fold
-448,453fold
-423,457fold
-498,520fold
-458,527fold
-396,527fold
-528,538fold
-1,538fold
-1
-normal! zo
-let s:l = 537 - ((15 * winheight(0) + 13) / 27)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-537
-normal! 0130|
-wincmd w
-argglobal
-edit 24-hand.tex
-let s:cpo_save=&cpo
-set cpo&vim
-imap <buffer> <F9> <Plug>Tex_Completion
-imap <buffer> <C-CR> <Plug>Tex_InsertItemOnNextLine
-imap <buffer> <silent> <S-F7> <Plug>Tex_FastCommandChange
-imap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-inoremap <buffer> <silent> <S-F3> =Tex_PutEnvironment("bmatrix")
-inoremap <buffer> <silent> <S-F2> =Tex_PutEnvironment("eqnarray")
-inoremap <buffer> <silent> <S-F1> =Tex_PutEnvironment("eqnarray*")
-imap <buffer> <silent> <S-F5> <Plug>Tex_FastEnvironmentChange
-imap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-imap <buffer> <silent> ì <Plug>Tex_LeftRight
-imap <buffer> <silent> ã <Plug>Tex_MathCal
-imap <buffer> <silent> â <Plug>Tex_MathBF
-imap <buffer> é <Plug>Tex_InsertItemOnThisLine
-nmap <buffer> <silent> \rf <Plug>Tex_RefreshFolds
-nmap <buffer> \ls <Plug>Tex_ForwardSearch
-nmap <buffer> \lv <Plug>Tex_View
-vmap <buffer> \ll <Plug>Tex_Compile
-nmap <buffer> \ll <Plug>Tex_Compile
-nnoremap <buffer> <Plug>Tex_ForwardSearch :call Tex_ForwardSearchLaTeX()
-nnoremap <buffer> <Plug>Tex_View :call Tex_ViewLaTeX()
-vnoremap <buffer> <Plug>Tex_Compile :call Tex_PartCompile()
-nnoremap <buffer> <Plug>Tex_Compile :call Tex_RunLaTeX()
-vmap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-nmap <buffer> <silent> <S-F7> <Plug>Tex_FastCommandChange
-nmap <buffer> <silent> <F7> <Plug>Tex_FastCommandInsert
-nmap <buffer> <silent> <S-F5> <Plug>Tex_FastEnvironmentChange
-vmap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-nmap <buffer> <silent> <F5> <Plug>Tex_FastEnvironmentInsert
-nmap <buffer> <silent> ì <Plug>Tex_LeftRight
-vmap <buffer> <silent> ã <Plug>Tex_MathCal
-vmap <buffer> <silent> â <Plug>Tex_MathBF
-let &cpo=s:cpo_save
-unlet s:cpo_save
-setlocal keymap=
-setlocal noarabic
-setlocal autoindent
-setlocal nobinary
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-setlocal colorcolumn=
-setlocal comments=sO:%\ -,mO:%\ \ ,eO:%%,:%
-setlocal commentstring=%%s
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=\\\\\\([egx]\\|char\\|mathchar\\|count\\|dimen\\|muskip\\|skip\\|toks\\)\\=def\\|\\\\font\\|\\\\\\(future\\)\\=let\\|\\\\new\\(count\\|dimen\\|skip\\|muskip\\|box\\|toks\\|read\\|write\\|fam\\|insert\\)\\|\\\\\\(re\\)\\=new\\(boolean\\|command\\|counter\\|environment\\|font\\|if\\|length\\|savebox\\|theorem\\(style\\)\\=\\)\\s*\\*\\=\\s*{\\=\\|DeclareMathOperator\\s*{\\=\\s*
-setlocal dictionary=/usr/share/vim/vimfiles/ftplugin/latex-suite/dictionaries/dictionary
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c\\,,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-G%*[\ ]from\ %f:%l:%c,%-G%*[\ ]from\ %f:%l:,%-G%*[\ ]from\ %f:%l\\,,%-G%*[\ ]from\ %f:%l,%f(%l):%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f|%l|\ %m,%-G%.%#Underfull%.%#,%-G%.%#Overfull%.%#,%-G%.%#specifier\ changed\ to%.%#,%-G%.%#You\ have\ requested%.%#,%-G%.%#Missing\ number%\\,\ treated\ as\ zero.%.%#,%-G%.%#There\ were\ undefined\ references%.%#,%-G%.%#Citation\ %.%#\ undefined%.%#,%E!\ LaTeX\ %trror:\ %m,%E!\ %m,%E%f:%l:\ %m,%+WLaTeX\ %.%#Warning:\ %.%#line\ %l%.%#,%+W%.%#\ at\ lines\ %l--%*\\d,%+WLaTeX\ %.%#Warning:\ %m,%-Cl.%l\ %m,%-Cl.%l\ ,%-C\ \ %m,%-C%.%#-%.%#,%-C%.%#[]%.%#,%-C[]%.%#,%-C%.%#%[{}\\]%.%#,%-C<%.%#>%m,%-GSee\ the\ LaTeX%m,%-GType\ \ H\ <return>%m,%-G\ ...%.%#,%-G%.%#\ (C)\ %.%#,%-G(see\ the\ transcript%.%#),%-G\\s%#,%-O(%*[^()])%r,%-P(%f%r,%-P\ %\\=(%f%r,%-P%*[^()](%f%r,%-P(%f%*[^()],%-P[%\\d%[^()]%#(%f%r,%-P%*[^()],%-Q)%r,%-Q%*[^()])%r,%-Q[%\\d%*[^()])%r,%-Q%*[^()],%-G%.%#
-setlocal noexpandtab
-if &filetype != 'tex'
-setlocal filetype=tex
-endif
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=4
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=TexFoldTextFunction()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
-setlocal include=\\\\input\\|\\\\include{
-setlocal includeexpr=substitute(v:fname,\ '^.\\{-}{\\|}.*',\ '',\ 'g')
-setlocal indentexpr=GetTeXIndent()
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e,},],=^s*^s*^s*^s*^s*^s*^s*^s*^s*^s*\\bibitem,=\\item
-setlocal noinfercase
-setlocal iskeyword=48-57,a-z,A-Z,192-255
-setlocal keywordprg=
-set linebreak
-setlocal linebreak
-setlocal nolisp
-setlocal nolist
-setlocal makeprg=pdflatex\ -interaction=nonstopmode\ $*
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=octal,hex
-set number
-setlocal number
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal nosmartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=.tex
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'tex'
-setlocal syntax=tex
-endif
-setlocal tabstop=4
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-31,39fold
-4,66fold
-70,75fold
-67,135fold
-158,165fold
-147,166fold
-185,191fold
-216,224fold
-229,234fold
-242,250fold
-256,271fold
-167,292fold
-293,314fold
-332,339fold
-345,350fold
-352,356fold
-361,366fold
-315,395fold
-136,395fold
-403,422fold
-441,446fold
-448,453fold
-423,457fold
-498,520fold
-458,527fold
-396,527fold
-528,538fold
-1,538fold
-1
-normal! zo
-4
-normal! zo
-let s:l = 1 - ((0 * winheight(0) + 13) / 26)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
-normal! 0
-wincmd w
-2wincmd w
-exe '1resize ' . ((&lines * 27 + 28) / 57)
-exe '2resize ' . ((&lines * 26 + 28) / 57)
-tabedit 0d-defpart2.tex
+edit 12-eval.tex
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -601,7 +235,7 @@ setlocal foldcolumn=0
 setlocal foldenable
 setlocal foldexpr=0
 setlocal foldignore=#
-setlocal foldlevel=0
+setlocal foldlevel=5
 setlocal foldmarker={{{,}}}
 setlocal foldmethod=manual
 setlocal foldminlines=1
@@ -616,7 +250,7 @@ setlocal imsearch=0
 setlocal include=\\\\input\\|\\\\include{
 setlocal includeexpr=substitute(v:fname,\ '^.\\{-}{\\|}.*',\ '',\ 'g')
 setlocal indentexpr=GetTeXIndent()
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e,},],=^s*^s*^s*^s*^s*^s*\\bibitem,=\\item,},],=^s*^s*^s*^s*^s*^s*^s*^s*\\bibitem,=\\item
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e,},],=^s*^s*^s*^s*^s*^s*^s*^s*^s*^s*^s*^s*\\bibitem,=\\item
 setlocal noinfercase
 setlocal iskeyword=48-57,a-z,A-Z,192-255
 setlocal keywordprg=
@@ -667,13 +301,79 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 75 - ((50 * winheight(0) + 27) / 54)
+6,38fold
+4,55fold
+78,82fold
+83,91fold
+92,95fold
+59,95fold
+99,118fold
+119,121fold
+96,121fold
+56,121fold
+130,136fold
+142,144fold
+137,146fold
+151,157fold
+158,167fold
+172,175fold
+180,182fold
+147,184fold
+188,198fold
+200,203fold
+205,208fold
+185,210fold
+211,215fold
+219,228fold
+229,232fold
+233,236fold
+216,238fold
+244,257fold
+239,259fold
+122,259fold
+272,275fold
+279,282fold
+296,299fold
+269,301fold
+304,307fold
+302,313fold
+316,319fold
+314,323fold
+260,323fold
+329,356fold
+366,379fold
+384,412fold
+357,413fold
+416,437fold
+439,446fold
+447,452fold
+453,460fold
+470,506fold
+461,507fold
+510,535fold
+508,538fold
+539,544fold
+414,544fold
+547,561fold
+566,570fold
+581,599fold
+571,600fold
+545,600fold
+603,619fold
+601,621fold
+625,626fold
+627,628fold
+629,637fold
+622,637fold
+324,637fold
+638,652fold
+1,652fold
+let s:l = 7 - ((6 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-75
-normal! 019|
-2wincmd w
+7
+normal! 010|
 tabedit references.bib
 set splitbelow splitright
 set nosplitbelow
@@ -783,13 +483,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2270 - ((26 * winheight(0) + 27) / 54)
+let s:l = 997 - ((26 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-2270
-normal! 010|
-2wincmd w
+997
+normal! 027|
 tabedit thesis.tex
 set splitbelow splitright
 set nosplitbelow
@@ -937,13 +636,12 @@ silent! normal! zE
 1,20fold
 1
 normal! zo
-let s:l = 54 - ((50 * winheight(0) + 27) / 54)
+let s:l = 27 - ((17 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-54
+27
 normal! 0
-2wincmd w
 tabedit TODO
 set splitbelow splitright
 set nosplitbelow
@@ -1053,14 +751,13 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 14 - ((13 * winheight(0) + 27) / 54)
+let s:l = 35 - ((34 * winheight(0) + 27) / 54)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-14
-normal! 012|
-2wincmd w
-tabnext 1
+35
+normal! 0
+tabnext 3
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

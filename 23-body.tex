@@ -111,7 +111,9 @@ Recent approaches achieve state-of-the-art performances by combining holistic sh
 On the other hand, thanks to the introduction of the Kinect sensor, 2.5D depth image emerges as a new direction for 3D HPE. 
 As depth information is provided in the depth 
 Depth information of the scene is provided in the depth images, information and as it provides inherent depth information and object segmentation. 
-For instance, Baak \etal \cite{Baak2011} presented a data-driven algorithm for real-time 3D pose estimation. A variant of Dijkstra's algorithm was introduced to extract holistic pose features efficiently from depth images, and then combined with local estimates that were computed using Hausdorff distance. Ye \etal \cite{Ye2011} matched a single depth image with a set of precomputed motion exemplars to estimate a holistic body configuration. The initial result was subsequently refined by fitting the pose configuration back to the testing depth image. 
+For instance, Zhu \etal \cite{Zhu2008a} presented a upper-body pose estimation method from sequences of depth images using visual tracking and inverse kinematics. 
+Baak \etal \cite{Baak2011} presented a data-driven algorithm for real-time 3D pose estimation. A variant of Dijkstra's algorithm was introduced to extract holistic pose features efficiently from depth images, and then combined with local estimates that were computed using Hausdorff distance. 
+Ye \etal \cite{Ye2011} matched a single depth image with a set of precomputed motion exemplars to estimate a holistic body configuration. The initial result was subsequently refined by fitting the pose configuration back to the testing depth image. 
 Sun \etal \cite{Sun2012} estimated 3D pose configurations from patches of depth images using regression forests.  
 Using a similar regression forest algorithm, Taylor \etal \cite{Taylor2012} performed 3D HPE by computing dense correspondences from an input depth image to a deformable 3D articulated model.  
 %However, the above methods require either specialised hardware (\eg Kinect sensor) or controlled environments to acquire compatible training or testing data.  
@@ -214,22 +216,18 @@ The DPM is composed of $26$ constituent parts. Each body part in the DPM is repr
 Unlike the traditional silhouette-based features, which requires background subtraction, the proposed mid-level part-based features are more robust to dynamic and unseen backgrounds, as they are learnt from both appearances and spatial structures of low level features. 
 For each frame, the DPM fires up to $\nhyp$ 2D pose configurations.  
 The detected configurations are then normalised with respect to the distance between the head and the waist part. 
-The spatial structures of DPM part detections are represented by measuring the pairwise Euclidean distances among the normalised parts in each pose hypothesis, hence a feature vector takes $325 (=26\times25/2)$ dimensions.
+The spatial structures of DPM part detections are represented by measuring the pairwise Euclidean distances among the normalised parts in each pose hypothesis, hence a feature vector takes $(26 \times 25 \div 2) = 325$ dimensions.
 The feature vector $\feature_{\videoth\frameth\hypth}$ as computed in equation \ref{eq/body/feature}.
 \begin{equation}
 	\label{eq/body/feature} 
 	\begin{aligned}
-	\feature_{\videoth\frameth\hypth} & = & \left\{ || dpm(\videoth\frameth)_\hypth i - dpm(\videoth, \frameth)_\hypth j ||_{2} \right\} \\ 
-		i, j = 1\cdots26, i \not= j
+		\feature_{\videoth\frameth\hypth} & = \Big\{ || DPM(\videoth\frameth)_{\hypth i} - DPM(\videoth, \frameth)_{\hypth j} ||_{2} \Big\} \\ 
+		\mbox{ for } i, j & = 1\cdots26, \mbox{ and } i \not= j
 	\end{aligned}
 \end{equation}
 DPM detects 2D body parts in the $\frameth$ frame of the $\videoth$-th input video, $dpm(\videoth\frameth)_\hypth i$ denotes the $i$-th body part of the $\hypth$-th hypothesis in the DPM output.  
 
-The feature vectors are denoted as: 
-\begin{equation} 
-	\fset = \{\feature_{\videoth\frameth\hypth}\}
-\end{equation}
-where $\feature_{\videoth\frameth\hypth}$ is the $\hypth$-th configuration detected in the $\frameth$-th frame of the $\videoth$-th training video. 
+The feature vectors are denoted as $\fset = \{\feature_{\videoth\frameth\hypth}\}$, where $\feature_{\videoth\frameth\hypth}$ is the $\hypth$-th configuration detected in the $\frameth$-th frame of the $\videoth$-th training video. 
 
 Every feature vector in the training dataset is assigned to the 3D pose detected and one of the $\nclass$ action categories, according to its corresponding frame and video. 
 The set of class labels $\aset$ and corresponding 3D poses $\pset$ are defined as: 
@@ -263,13 +261,13 @@ The best split is chosen among the candidates by maximising a quality measure in
 	\theta(\feature) = 
 	\left\{
 		\begin{aligned}
-			1 & \mbox{ when } \feature[i] - \feature[j] > threshold \\  
+			1 & \mbox{ when } \feature(\mathbf{i}) - \feature(\mathbf{j}) > threshold \\  
 			0 & \mbox{ otherwise } 
 		\end{aligned}
 	\right.
 	\label{eqn/body/split}
 \end{equation}
-where $i$ and $j$ denote two randomly chosen dimensions of a the feature vector $\feature$. 
+where $\mathbf{i}$ and $\mathbf{j}$ denote two randomly chosen dimensions of a the feature vector $\feature$. 
 
 The splitting process is performed until the new node reaches its maximum depth or minimum number of data points. 
 Once a split function is selected for a tree node, incoming training data are divided into two subsets, which are passed down to two new child nodes.  
@@ -288,7 +286,19 @@ Both classification and detection are performed in a single decision tree. To th
 	\label{eq/body/newquality}
 	\qualityad(\ppset_{\curnode}) & = (1 - \omega)\infogain(\ppset_{\curnode}) + \omega\qualityjr(\ppset_{\curnode}). 
 \end{align}
-The first term, $\infogain(\cdot)$, is the information gain measure used in standard classification forest, \cf equation \ref{eqn/act/ig} in chapter \ref{chap/act}, which describes the node's performance in action classification \cite{Breiman2001}. The second term, $\qualityjr(\cdot)$, measures the compactness of 3D poses when the candidate split is performed.  
+The first term $\infogain(\cdot)$ is the information gain measure used in standard classification forest, \cf equation \ref{eqn/act/ig}, which describes the node's performance in action classification \cite{Breiman2001}.  
+\begin{equation}
+	\label{eq/body/infogain}
+	\begin{aligned}
+		\infogain(\ppset_{\curnode}) & = 
+		- \displaystyle\sum_{c = 1}^{\nclass} \frac{|\ppset_{\curnode c}|}{|\ppset_{\curnode}|}\log_{2}\left(\frac{|\ppset_{\curnode c}|}{|\ppset_{\curnode}|}\right)\\ 
+		\viewterm & = 
+		\infogain(\ppset_{\curnode}) - 
+		\frac{|\ppset_{l}|}{|\ppset_{\curnode}|} \infogain(\ppset_{l}) -  
+		\frac{|\ppset_{r}|}{|\ppset_{\curnode}|} \entropy(\ppset_{r})  
+	\end{aligned}
+\end{equation}
+The second term, $\qualityjr(\cdot)$, measures the compactness of 3D poses when the candidate split is performed.  
 \begin{align}
 	\qualityjr(\ppset_{\curnode}) & = \displaystyle\sum_{c = 1}^{\nclass} \Psi\left(\Sigma(\ppset_{\curnode c})\right) - \Psi\left(\Sigma(\ppset_{lc})\right) 
 - \Psi\left(\Sigma(\ppset_{rc})\right) \\ 
@@ -352,9 +362,9 @@ The training pocess aims to maximise regression confidence of a joint, to this e
 \begin{equation}
 	\label{eq/body/qualityjr}
 	% \qualityjr(\pset^{(m)}_{\curnode c}) = \displaystyle\sum_{c = 1}^{\nclass} \left(  \log|\Sigma(\pset^{(m)}_{\curnode c})| - \nodeweight_{L}\log|\Sigma(\pset^{(y)}_{Lc})| - \nodeweight_{R}\log|\Sigma(\pset^{(m)}_{Rc})| \right) \\ 
-	\qualityjr(\pset^{(m)}_{\curnode}) = \displaystyle\sum_{c = 1}^{\nclass} \Psi\left(\Sigma(\pset_{\curnode c})\right) - \nodeweight_{L}\Psi\left(\Sigma(\pset_{Lc})\right) - \nodeweight_{R}\Psi\left(\Sigma(\pset_{Rc})\right)
+	\qualityjr(\pset^{(m)}_{\curnode}) = \displaystyle\sum_{c = 1}^{\nclass} \Psi\left(\Sigma(\pset_{\curnode c})\right) - \nodeweight_{L}\Psi\left(\Sigma(\pset_{lc})\right) - \nodeweight_{R}\Psi\left(\Sigma(\pset_{rc})\right)
 \end{equation}
-In equation \ref{eq/body/qualityjr}, $\pset^{(m)}_{\curnode c}$, $\pset^{(m)}_{L c}$ and $\pset^{(m)}_{R c}$ denote respectively the training data in the current node $\curnode$, its left child and right child.  
+In equation \ref{eq/body/qualityjr}, $\pset^{(m)}_{\curnode c}$, $\pset^{(m)}_{l c}$ and $\pset^{(m)}_{r c}$ denote respectively the training data in the current node $\curnode$, its left child and right child.  
 
 Learning of regression forest is stopped when the current node reaches the maximum depth, or is smaller than a size threshold.  
 Upon completion of $\forestr^{(j)}$, the output of a tree node $\termnode$ is described by the mean joint coordinates $\mu\left(\pset^{(j)}_{\termnode c}\right)$ of the corresponding node. If there exist no data point of a specific action class in a node, its output mean is not computed.  

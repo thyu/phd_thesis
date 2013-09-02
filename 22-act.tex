@@ -164,7 +164,7 @@ Depending on the target application, simple spatiotemporal video patches can be 
 \section{VFAST interest point detector}
 \label{sec/act/fastest}
 % DONE 
-Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into a spatiotemporal domain. It considers pixels in three orthogonal Bresenham circles $C$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively.
+Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into a spatiotemporal domain. It considers pixels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively.
 For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. The steps of computing VFAST interest points are described in algorithm \ref{algo/act/vfast}.
 
 %DONE 
@@ -176,10 +176,10 @@ For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if t
 	\REQUIRE $r_{XY},r_{XT},r_{YT} = $ Radii of Bresenham circles
 	\REQUIRE $n = $ Contiguous threshold
 	\REQUIRE $\delta^{FAST} = $ Intensity threshold
-	\STATE $C_{XY}(r_{XY}),C_{XT}(r_{XT}),C_{YT}(r_{YT})$ = Pixels of Bresenham circles
-	\STATE $FAST_{XY} = ( C > \vpatch(x,y,t)+t_{XY}\quad or\quad C < \vpatch(x,y,t)-\delta^{FAST}_{XY} )$
-	\STATE $FAST_{XT} = ( C > \vpatch(x,y,t)+t_{XT}\quad or\quad C < \vpatch(x,y,t)-\delta^{FAST}_{XT} )$
-	\STATE $FAST_{YT} = ( C > \vpatch(x,y,t)+t_{YT}\quad or\quad C < \vpatch(x,y,t)-\delta^{FAST}_{YT} )$
+	\STATE $\bcir_{XY}(r_{XY}),\bcir_{XT}(r_{XT}),\bcir_{YT}(r_{YT})$ = Pixels of Bresenham circles
+	\STATE $FAST_{XY} = ( \bcir > \vpatch(x,y,t)+t_{XY}\quad or\quad \bcir < \vpatch(x,y,t)-\delta^{FAST}_{XY} )$
+	\STATE $FAST_{XT} = ( \bcir > \vpatch(x,y,t)+t_{XT}\quad or\quad \bcir < \vpatch(x,y,t)-\delta^{FAST}_{XT} )$
+	\STATE $FAST_{YT} = ( \bcir > \vpatch(x,y,t)+t_{YT}\quad or\quad \bcir < \vpatch(x,y,t)-\delta^{FAST}_{YT} )$
 	\IF {Number of contiguous pixels in $Saliency_{XY} \ge n$}
 	\IF{(${ContiguousPixel}(FAST_{XY}) \ge n$)}
 		\RETURN \texttt{TRUE}
@@ -213,45 +213,46 @@ Semantic texton forest (STF) is an ensemble of randomised decision trees which t
 It is an extremely efficient codebook, where feature vectors traverse each of the trees by simple voxel pair tests, without computing filter responses or feature descriptor. STF codebook also demonstrates higher robustness and discriminative power than k-means algorithm because it produces multiple codewords from a feature vector. 
 
 % Done 
-The training algorithm of STF is similar to that of supervised classification forest \cite{Breiman2001}. At each new node, a pool of candidate split functions are generated randomly, a split function is selected from the pool, by maximising the information gain $\mathrm{IG}(\cdot)$ in the current training data. 
+The training algorithm of STF is similar to that of supervised classification forest \cite{Breiman2001}. Spatiotemporal patches $\tdata$ are extracted from the VFAST interest points detected in the training videos. 
+At each new node, a pool of candidate split functions are generated randomly, a split function is selected from the pool, by maximising the information gain $\mathcal{Q}(\cdot)$ in the current training data. 
 \begin{equation}
 	\begin{aligned}
-		\histogram(\tdata) & = -\sum_{c \in C} \frac{|\tdata[c]|}{|\tdata|}\log_{2}(\frac{|\tdata[c]|}{|\tdata|})\\ 
-		\mathrm{IG}(\tdata) & = \histogram(\tdata) - \frac{|\tdata_{l}|}{|\tdata|}\histogram(\tdata_{l}) - \frac{|\tdata_{r}|}{|\tdata|}\histogram(\tdata_{r})
+		\entropy(\tdata_{\curnode}) & = -\sum_{c \in \nclass} \frac{|\tdata_{\curnode c}|}{|\tdata_{\curnode}|}\log_{2}\left(\frac{|\tdata_{\curnode c}|}{|\tdata_{\curnode}|}\right)\\ 
+		\mathcal{Q}(\tdata_{\curnode}) & = \entropy(\tdata_{\curnode}) - \frac{|\tdata_{l}|}{|\tdata_{\curnode}|}\entropy(\tdata_{l}) - \frac{|\tdata_{r}|}{|\tdata_{\curnode}|}\entropy(\tdata_{r})
 	\end{aligned}
 	\label{eqn/act/ig}
 \end{equation}
-where $\histogram(\tdata)$ is the information entropy of the current dataset $\tdata$, $\tdata[c]$ denotes the subset of $\tdata$ that belongs to class $c$. $\tdata_{l}$ and $\tdata_{r}$ are the left and right subset of $\tdata$ that are divided by the candidate split function. 
-Split functions are assigned to a new node by maximising equation \ref{eqn/act/ig}. As a result, training video cuboids are clustered recursively down the decision tree. Training is stopped when the new tree nodes reach a certain depth. Algorithm \ref{c3/algo/grow} describes the recursive procedure of learning a randomised decision tree in a STF.
+where $\entropy(\tdata_{\curnode})$ is the information entropy of income dataset $\tdata_{\curnode}$ in current node $\curnode$. $\tdata_{\curnode c}$ denotes the subset of $\tdata_{\curnode}$ that belongs to class $c \in \nclass$. $\tdata_{l}$ and $\tdata_{r}$ are the left and right subsets of $\tdata_{\curnode}$.
+Split functions are assigned to a new node by maximising equation \ref{eqn/act/ig}. As a result, training video cuboids are clustered recursively down the decision tree. Training is stopped when the new tree nodes reach a certain depth. Algorithm \ref{algo/act/grow} describes the recursive procedure of learning a randomised decision tree in a STF.
 
 \begin{algorithm}
 \caption{Semantic Texton Tree Node Training}
-\label{c3/algo/grow}
+\label{algo/act/grow}
 \algsetup{indent=2em}
 \begin{algorithmic}
-	\STATE \hspace{-2em} \textbf{function split}($\tdata$, $N$):
+	\STATE \hspace{-2em} \textbf{function split}($\tdata_{\curnode}$, $N$):
 	\STATE Generate a pool of candidate split functions in $\Theta = \{ \theta_{1},\dots,\theta_{|\Theta|}\}$
 	\FOR {$i = 1$ to $|\Theta|$}
-	\STATE Split training data $\tdata$ using $\theta_i$;
-	\STATE $\tdata_l \Leftarrow$ data points in $\tdata$ which $\theta_i$ return $0$
-	\STATE $\tdata_r \Leftarrow$ data points in $\tdata$ which $\theta_i$ return $1$
-	\STATE $\mathrm{IG}(\tdata) = \Delta\histogram(\tdata)$ 
+	\STATE Split training data $\tdata_{\curnode}$ using $\theta_i$
+	\STATE $\tdata_l = $ data points in $\tdata_{\curnode}$ that $\theta_i$ return $0$
+	\STATE $\tdata_r = $ data points in $\tdata_{\curnode}$ that $\theta_i$ return $1$
+	\STATE $\mathcal{Q}(\tdata_{\curnode}) = \Delta\histogram(\tdata_{\curnode})$ 
 	\ENDFOR
-	\STATE Find the $j$-th candidate split that maximises $\mathcal{IG}(\tdata)$
+	\STATE Find the $j$-th candidate split that maximises $\mathcal{Q}(\tdata_{\curnode})$
 	\STATE Assign $\theta_j$ to the current node 
 	\IF {(Node has not reached maximum depth)}
 		\STATE Create left node $N_l$
 		\STATE Create right node $N_r$
-		\STATE \textbf{split}($\tdata_l$,$N_l$);
-		\STATE \textbf{split}($\tdata_r$,$N_r$);
+		\STATE \textbf{split}($\tdata_{l}$,$N_l$)
+		\STATE \textbf{split}($\tdata_{r}$,$N_r$)
 	\ENDIF
 	\STATE \hspace{-2em} \textbf{end function}
 \end{algorithmic}
 \begin{algorithmic}
 	\STATE \hspace{-2em} \textbf{function grow}():
-	\STATE $\tdata' = $ current training data
+	\STATE $\tdata_{root}$ = $\tdata$ 
 	\STATE Add root node $N_{0}$ to tree
-	\STATE \textbf{split}($\tdata'$, $N_{0}$)
+	\STATE \textbf{split}($\tdata_{root}$, $N_{0}$)
 	\STATE \hspace{-2em} \textbf{end function}
 \end{algorithmic}
 \end{algorithm}
@@ -277,7 +278,7 @@ The STF codebook has a size of $\codebooksize=\sum_m^M \codebooksize_m$ where $\
 Consequently, in each decision tree, the set of video cuboids are roughly clustered into $\codebooksize_m$ groups based on their appearance, the average of cuboids within a node is called a semantic texton \cite{Shotton2008}. 
 Figure \ref{fig/act/stf} demonstrates how input spatiotemporal patches are clustered into two codewords through a tree node. 
 
-Table \ref{tab/act/codebook} summarises a quantitative comparison between STF and k-means algorithms. Relative speed is measured by computing $1$ million feature vectors with $405$ dimensions. Size of codebook $K$ is $1905$. The branching factor $b$ for k-means algorithm is $16$.
+Table \ref{tab/act/codebook} summarises a quantitative comparison between STF and k-means algorithms. Relative speed is measured by computing $1$ million feature vectors with $405$ dimensions, with codebook size $K = 1905$ ($127$ codewords per tree). The branching factor $b$ for k-means algorithm is $16$.
 
 \begin{figure}[ht]
 	\centering 
@@ -376,13 +377,13 @@ A kernel function $\kernel(\onevfast,v: \codebooksize \times \codebooksize \righ
 PMK matches the input histograms at each resolution, at a specific resolution $\resolute$, $\mathrm{h}^\resolute_{m}(i,j,k)$ and $\mathrm{\hat{h}}^\resolute_{m}(i,j,k)$ denote two corresponding histogram bins in two sets of codewords, $\vfastset$ and $\vfastsetx$. They are matched by histogram intersection in equation \ref{eqn/act/hik}. New quantisation levels in the histogram pyramid are formed by increasing bin size. In the proposed method, adjacent bins that share the same parent node in the tree are conveniently merged in equation \ref{eqn/act/merge}, creating a new quantisation level $\mathrm{h}^{\resolute+1}_m(i,j,k)$ and $\mathrm{\hat{h}}^{\resolute+1}_m(i,j,k)$. The match kernel $\mathrm{K}_m$ for HSRM at the $m$-th tree is then defined in equation \ref{eqn/act/pmk} by the weighted summation of difference between successive histogram intersections. Matches in finer bins score higher similarity than matches in coarser levels by a factor of $\frac{1}{4^{\resolute-1}}$. A bin with a small bin size implies higher similarity among the feature within the bin, matches in high resolution (small bin size) are assigned a higher weighting.  
 \begin{align}
 	\label{eqn/act/hik}
-	\mathrm{I}_{m}^\resolute(\vfastset,\vfastsetx) &= & \displaystyle\sum_{i=1}^{\codebooksize_m}\sum_{j=1}^{\codebooksize_m}\sum_{k=1}^{|\mathcal{R}|} \left( \min(\mathrm{h}^{\resolute}_m(i,j,k), \mathrm{\hat{h}}^{\resolute}_m(i,j,k)) \right)\\
+	\mathrm{I}_{m}^\resolute(\vfastset,\vfastsetx) & =  \displaystyle\sum_{i=1}^{\codebooksize_m}\sum_{j=1}^{\codebooksize_m}\sum_{k=1}^{|\mathcal{R}|} \left( \min(\mathrm{h}^{\resolute}_m(i,j,k), \mathrm{\hat{h}}^{\resolute}_m(i,j,k)) \right)\\
 	\label{eqn/act/merge}
-	\mathrm{h}^{\resolute+1}_m(i,j,k) &= & \displaystyle\sum_{u=1}^{2}\sum_{v=1}^{2} \left( \mathrm{h}^{\resolute}_m(2(i-1)+u,2(j-1)+v,k) \right)\\
+	\mathrm{h}^{\resolute+1}_m(i,j,k) & =  \displaystyle\sum_{u=1}^{2}\sum_{v=1}^{2} \left( \mathrm{h}^{\resolute}_m(2(i-1)+u,2(j-1)+v,k) \right)\\
 	% \label{eqn/act/newcount}
 	% D^{\resolute}_m(\vfastset,V) &= & I^\resolute_m(U,V) - I^{\resolute-1}_m(U,V) \\
 	\label{eqn/act/pmk}
-	\kernel_m(\vfastset,\vfastsetx) &= & \displaystyle\sum_{\resolute = 1}^{Q}\frac{1}{4^{\resolute-1}} \left( \mathrm{I}_{m}^{\resolute+1}(\vfastset,\vfastsetx) - \mathrm{I}_{m}^{\resolute}(\vfastset,\vfastsetx) \right)
+	\kernel_m(\vfastset,\vfastsetx) & =  \displaystyle\sum_{\resolute = 1}^{Q}\frac{1}{4^{\resolute-1}} \left( \mathrm{I}_{m}^{\resolute+1}(\vfastset,\vfastsetx) - \mathrm{I}_{m}^{\resolute}(\vfastset,\vfastsetx) \right)
 \end{align}
 
 \subsection{Kenrel k-means forest classifier}

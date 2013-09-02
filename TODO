@@ -1,6 +1,9 @@
 *** Global ***
 V - rename all the references 
 V - reset all the labels 
+- Fix all eq labels
+- Fix all unused labels
+- Add fullstop in equation? 
 
 *** Intro *** 
 V write introduction 
@@ -24,6 +27,8 @@ v delete the legend
 - add sample of all subjects in APE 
 
 *** hand ***
+- Expand figures
+- Rearrange the graphs (probably replot them) 
 
 *** conclusions *** 
 
