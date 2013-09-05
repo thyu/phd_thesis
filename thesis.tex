@@ -22,18 +22,18 @@
 
 %\maketitle
 
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
-
 \frontmatter
 \pagenumbering{roman}
 
 %\include{0f-abs}
 %\include{0f-ack}
 
+%\begin{KeepFromToc}
 %\tableofcontents \newpage
+%\end{KeepFromToc} 
 %\listoffigures \newpage
 %\listoftables
+
 %\printnomenclature  %% Print the nomenclature
 %\addcontentsline{toc}{chapter}{Nomenclature}
 
@@ -45,18 +45,19 @@
 \include{0d-defpart1}
 
 % \include{11-lit}
-\include{12-eval}
-% \include{13-3dreg}
+%\include{12-eval}
+\include{13-3dreg}
 
-%\part{Human Action Analysis}
+\part{Human Action Analysis}
 \include{0d-defpart2}
 
 % \include{21-lit}
 %\include{22-act}
-% \include{23-body}
-% \include{24-hand}
+%\include{23-body}
+%\addcontentsline{toc}{part}{} % add a fake part to table of contents
+%\include{24-hand}
 
-% \include{31-discussion} 
+%\include{31-discussion} 
 
 \backmatter
 % \appendix

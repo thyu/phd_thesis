@@ -62,12 +62,13 @@ Subsequently, the recognition accuracy is further refined by adaptively combinin
 As a result, the proposed combined classification algorithm demonstrates a high accuracy comparable to that of existing state-of-the-arts, whilst simultaneously achieving real-time performance. 
 
 %Done 
+
 \paragraph{VFAST spatiotemporal interest point detector} 
-The 3D version of FAST interest point detector, namely Video-FAST (VFAST), is designed to detect sptaiotemporal interest points in training and testing videos \cite{Yu2013b}.   
-The VFAST interest points are detected by directly comparing intensities in the video sequences.
-Similar to FAST \cite{Rosten2010}, the VFAST detector can be further accelerated by learning a decision tree-based corner detector from training videos \cite{Rosten2010}. 
-VFAST features are relatively faster than the traditional 3D interest points by Laptev \cite{Laptev2005} and Dollar \etal \cite{Dollar2005}, it is therefore suitable for real-time application. Performance evaluations for 3D interest points are discussed in chapter \ref{chap/eval}.  
-The VFAST interests point also produce a denser feature set than spatiotemporal interest points in \cite{Laptev2005, Dollar2005}. It is suggested that a densely sampled visual codebook improve recognition performance \cite{Nowak2006}. 
+The 3D version of FAST interest point detector, namely Video-FAST (VFAST), is used to detect sptaiotemporal interest points in training and testing videos \cite{Yu2013b}.   
+Performance evaluations for 3D interest points are discussed in chapter \ref{chap/eval}.  
+The VFAST interests point also produce a denser feature set than spatiotemporal interest points in \cite{Laptev2005, Dollar2005}. It is suggested that a densely sampled visual codebook improve recognition performance \cite{Nowak2006}.
+
+VFAST features are relatively faster than the traditional 3D interest points by Laptev \cite{Laptev2005} and Dollar \etal \cite{Dollar2005}, it is therefore suitable for real-time application. 
 Given a denser set of interest points, action labels can be classified from a shorter sequence without sacrificing too much recognition accuracy, minimising the number of lookahead frames required. 
 In addition, scale-space analysis can be applied on VFAST in order to detect interest points across different scales.
 
@@ -164,8 +165,12 @@ Depending on the target application, simple spatiotemporal video patches can be 
 \section{VFAST interest point detector}
 \label{sec/act/fastest}
 % DONE 
-Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into a spatiotemporal domain. It considers pixels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively.
-For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. The steps of computing VFAST interest points are described in algorithm \ref{algo/act/vfast}.
+Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into a spatiotemporal domain. It considers pixels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of VFAST interest point detector has been explained in section \ref{sec/eval/vfast}. 
+
+% already discussed in ``eval'' chapter
+% For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. 
+\iffalse
+The steps of computing VFAST interest points are described in algorithm \ref{algo/act/vfast}.
 
 %DONE 
 \begin{algorithm}
@@ -191,6 +196,7 @@ For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if t
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
+\fi 
 
 % DONE
 Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 

@@ -1,45 +1,50 @@
-\chapter{Semi-supervised 3-D Constellation Model from Unknown Poses}
+\chapter{3-D Constellation Model from Unknown Poses}
 \label{chap/3dreg}
-
-% intro 
-
-\begin{figure}[ht]
-\centering
-\begin{subfigure}[b]{0.19\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/onebike_before2.png}
-	\caption{Input instance}
-	\label{fig:concept1}
-\end{subfigure}
-\begin{subfigure}[b]{0.19\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/avgbike_before.png}
-	\caption{Mean instance}
-	\label{fig:concept2}
-\end{subfigure}
-\begin{subfigure}[b]{0.19\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/pictorial2.pdf}
-	\caption{Constellation model}
-	\label{fig:concept4}
-\end{subfigure}
-\begin{subfigure}[b]{0.19\linewidth}
-	\label{fig:concept3}
-	\includegraphics[width=\linewidth]{fig/3dreg/avgbike_after.png}
-	\caption{Registered mean}
-\end{subfigure}
-\begin{subfigure}[b]{0.19\linewidth}
-	\label{fig:concept5}
-	\includegraphics[width=\linewidth]{fig/3dreg/onebike_after3.pdf}
-	\caption{Detected parts}
-\end{subfigure}
-\caption{(a) A training instance and (b) mean of input instances. (c) The learned constellation model, to which instances are \emph{simultaneously} registered during training. (d) The mean of registered input instances, weighted by their likelihoods, and (e) a registered instance with detected parts annotated.}
-\label{fig:concept}
-\end{figure}
 
 \section{Introduction}
 \label{sec:intro}
 
-Part and vote-based methods have proved popular for object recognition tasks, overcoming the limitations of methods such as bag-of-words~\cite{Sivic2005, Fei-Fei2005} and topic models~\cite{Fergus2005}, by enforcing structural coherence within object classes. However, existing methods require pose information for learning---training data have to be aligned to a common reference frame \emph{a priori}---since modelling pose dramatically increases the dimensionality of the parameter space and hence inference complexity. This requirement precludes the use of internet-scale training datasets, \eg ImageNet~\cite{Deng2009} and Tiny Image Dataset~\cite{Torralba2008}, which are not generally annotated.
+Traditional object recognition task, classification in particular, are usually approached by learning low level statistics on local, appearance based features, \eg bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, ignoring structural coherence within an object class for improved robustness. These methods become less reliable when objects' textures are often absent or indistinctive in appearance, such as 3D shape recognition of which input data are often textureless. 
 
-% Traditional computer vision tasks are usually approached by learning low level statistics on local, appearance based features, \eg bag of words~\cite{Sivic2005, Fei-Fei2005} and topic models~\cite{Fergus2005}, bypassing the high level structural information. These methods become less reliable in more challenging tasks, such as 3D shape recognition, when objects' textures are absent or weak in discriminative power. Making use of the spatial relationships among local features, part based model emerges as an effective solution for learning the geometric structure of an object class. Nevertheless, existing part based models require \emph{a priori pose information} for learning the structure of an object class---training data have to be registered to a common reference frame, involving extra manual processing when the poses of training or testing data are unknown. 
+Making use of the spatial relationships among local features, part-based model emerges as an effective solution by learning jointly local appearances and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
+Part-based models have overcome the limitations of traditional structureless approaches and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration process often involves manual processing when the poses of training of testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and qualities, manual rectification is often required before using them in training. 
+
+On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus it is still an unsolved problem in 2D part-based models, let alone their 3D counterparts. Addressing the above issue, this chapter presents a new approach, outlined in figure \ref{fig:concept}, for learning a shape, appearance and pose (SAP) constellation model. In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model, as well as registrations for the instances.  
+
+%Part and vote-based methods have proved popular for object recognition tasks, overcoming the limitations of methods such as bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, by enforcing structural coherence within object classes.  Such existing methods, however, require pose information for learning.  Specifically, training data have to be aligned to a common reference frame a priori. Since modelling pose dramatically increases the dimensionality of the parameter space and hence inference complexity, this requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}, which are not generally annotated.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.28\linewidth} \centering 
+	\includegraphics[width=\linewidth]{fig/3dreg/onebike_before2.png}
+	\caption{Input instance}
+	\label{fig:concept1}
+\end{subfigure}
+\begin{subfigure}[b]{0.28\linewidth} \centering 
+	\includegraphics[width=\linewidth]{fig/3dreg/avgbike_before.png}
+	\caption{Mean instance}
+	\label{fig:concept2}
+\end{subfigure} \\ 
+\begin{subfigure}[b]{0.28\linewidth} \centering
+	\includegraphics[width=\linewidth]{fig/3dreg/pictorial2.pdf}
+	\caption{Constellation model}
+	\label{fig:concept4}
+\end{subfigure}
+\begin{subfigure}[b]{0.28\linewidth} \centering 
+	\label{fig:concept3}
+	\includegraphics[width=\linewidth]{fig/3dreg/avgbike_after.png}
+	\caption{Registered mean}
+\end{subfigure}
+\begin{subfigure}[b]{0.28\linewidth} \centering 
+	\label{fig:concept5}
+	\includegraphics[width=\linewidth]{fig/3dreg/onebike_after3.pdf}
+	\caption{Detected parts}
+\end{subfigure}
+\caption{(a) A training instance and (b) mean of input instances. (c) The learned constellation model, to which instances are simultaneously registered during training. (d) The mean of registered input instances, weighted by their likelihoods, and (e) a registered instance with detected parts annotated.}
+\label{fig:concept}
+\end{figure}
+
+% Traditional computer vision tasks are usually approached by learning low level statistics on local, appearance based features, \eg bag of words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, bypassing the high level structural information. These methods become less reliable in more challenging tasks, such as 3D shape recognition, when objects' textures are absent or weak in discriminative power. Making use of the spatial relationships among local features, part based model emerges as an effective solution for learning the geometric structure of an object class. Nevertheless, existing part based models require \emph{a priori pose information} for learning the structure of an object class---training data have to be registered to a common reference frame, involving extra manual processing when the poses of training or testing data are unknown. 
 
 % Large scale image collections, such as Internet search engines or photo sharing services, have recently inspired various applications that utilize vast amounts of crowdsourced training data~\cite{Li2009, Simon2007}. However, processing these data is not trivial because the images are mostly unprocessed with varying poses and qualities, manual rectification is often required before passing the training data to learning algorithms. 
 
@@ -48,7 +53,7 @@ We address this issue with a framework, outlined in figure \ref{fig:concept}, fo
 % another unnecessary paragraph for lazy reviewers, I am thinking about removing this.
 %The rest of this paper is organized as follows: The next section gives a brief literature review of related models and algorithms. The design and optimization of the proposed approach are detailed in section \ref{sec:framework}. We present the evaluation experiments in section \ref{sec:experiments} and conclude the paper in section \ref{sec:conclusions}.  
 
-\subsection{Related Work}
+\subsection{Related work}
 \label{sec:relatedwork}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,25 +105,26 @@ This registration can be estimated from matching local features in a pre-process
 % I am thinking whether we should explicitly write the entire gaussian function out in the inference section
 % It depends on whether we have space for showing the maximizating steps or not (They should be in the supplementary materials anyway)
 
-\section{Framework}
+\section{Model}
 \label{sec:framework}
 The aims of our framework are two-fold:
 Firstly, given a set of $\numinstance$ data instances (\eg images or point clouds) with a particular class label, \ie an object of that class exists \emph{somewhere} in the data, to learn a constellation model for that object class.
 Secondly, given a data instance of unknown class, to estimate the class label and pose of the object in the data.
+
 \begin{figure}[ht]
 \centering
-\begin{subfigure}[b]{0.33\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/graphicalModelNoPose.pdf}
+\begin{subfigure}[t]{0.48\linewidth}
+	\includegraphics[width=0.8\linewidth]{fig/3dreg/graphicalModelNoPose.pdf}
 	\caption{Traditional constellation model}	
 	\label{fig:graphicalModelNoPose}
-\end{subfigure}
-\begin{subfigure}[b]{0.33\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/graphicalModelNoParticle.pdf}
+\end{subfigure}  
+\begin{subfigure}[t]{0.48\linewidth}
+	\includegraphics[width=0.8\linewidth]{fig/3dreg/graphicalModelNoParticle.pdf}
 	\caption{SAP model}	
 	\label{fig:graphicalModelNoParticle}
 \end{subfigure}
-\begin{subfigure}[b]{0.33\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/graphicalModelParticle.pdf}
+\begin{subfigure}[t]{0.48\linewidth}
+	\includegraphics[width=0.8\linewidth]{fig/3dreg/graphicalModelParticle.pdf}
 	\caption{Approx. SAP with \emph{particles}}
 	\label{fig:graphicalModelParticle}
 \end{subfigure}
@@ -126,8 +132,6 @@ Secondly, given a data instance of unknown class, to estimate the class label an
 \label{fig:graphicalmodel}
 \end{figure} 
 
-\subsection{Model}
-\label{sec:model}
 A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model (here, Gaussian with diagonal covariance) for appearance, $\partapp=\{\muapp,\sigmaapp\}$, and position, $\partshape=\{\mushape,\sigmashape\}$. Each part may or may not be seen in a given data instance, independently of other parts,\!\!\footnote{For simplicity, we assume independence of the presence of each part, in contrast to \cite{Fergus2007,Weber2000}, whose models are able to model correlations in part occlusion.} as indicated by the binary variable, $\seen$ ($=1$ if the part is seen). Following Fergus \etal \cite{Fergus2007}, we extract $\numfeat$ features\footnote{The number of extracted features, $\numfeat$, varies across instances; it is constant here for simplicity of exposition.} with pose $\featshape$ and appearance $\featapp$ from each data instance; the model assumes that each feature is generated either by a part from the object, or from an unknown background class (a single part with Gaussian appearance and pose distributions of $\{\muapp_0,\sigmaapp_0\}$ and $\{\mushape_0,\sigmashape_0\}$ respectively), according to an assignment, $\assign$. At most one feature can be assigned to a model part, whilst any number of features can be assigned to the background class, so that $\assign$, a $\numfeat\!\times\!(\numpart\!\!+\!\!1)$ binary indicator matrix, fulfils the constraints $\sum_{\anypart = 0}^{\numpart}\assignval_{\anyfeat\anypart}=1,\forall \anyfeat$ and $\sum_{\anyfeat = 1}^{\numfeat}\assignval_{\anyfeat\anypart}=\seen_\anypart,\forall \anypart>0$.\!\!\footnote{Since $\assign$ determines the $\seen$ values, the latter appear only for convenience, and are omitted where superfluous.} In addition, we novelly assume that the foreground object itself has a variable pose, $\pose$, completing the graphical model shown in figure \ref{fig:graphicalModelNoParticle}, which assumes there are $\numinstance$ training/test instances.
 
 The appearance vectors $\muapp$ and $\featapp$ are parameterized according to the choice of feature descriptor, which is application dependent; we describe our choices in section \S\ref{sec:experiments}. The parameterizations of object and feature poses, which are also application dependent, have a large bearing on the tractability of the resulting inference problems, and are discussed in more detail in section \S\ref{sec:optimization}.
@@ -149,8 +153,7 @@ We parameterize the various distributions in our model as follows:
 They are all relatively straightforward choices: a binomial prior over a binary variable, a uniform distribution over the valid assignments, and normal distributions around the appearance and position of the assigned part respectively, though the latter is in the non-Euclidean shape space, defined by the distance function, $\dist()$. 
 % The $\comp$ operator represents the transformation of the LHS argument (a position) by the RHS argument (a pose).
 
-\vspace{-0.5mm}
-\subsection{Training}
+\section{Learning}
 During training we seek to maximize the posterior probability of the constellation model parameters, $\setpartapp$ and $\setpartshape$, with respect to the $\numinstance$ given instances:
 \begin{equation}
 \setpartapp,\setpartshape = \argmax_{\setpartapp,\,\setpartshape}
@@ -161,7 +164,7 @@ During training we seek to maximize the posterior probability of the constellati
 \prod_{\anyinstance=1}^\numinstance 
 \prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance|\setpartapp,\setpartshape),
 \end{equation}
-which, assuming $\prob(\setpartapp,\setpartshape)$ is uniform, is equivalent to maximizing their likelihood, since $\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance)$ is constant. Ordinarily this would be done whilst marginalizing over $\assign$ and $\pose$, which in this scenario are both latent variables, for each instance, thus:
+which, assuming $\prob(\setpartapp,\setpartshape)$ is uniform, is equivalent to maximizing their likelihood, since $\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance)$ is constant. Normally this would be done whilst marginalizing over $\assign$ and $\pose$, which in this scenario are both latent variables, for each instance, thus:
 \begin{equation}
 \prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance|\setpartapp,\setpartshape) = 
 \sum_{\assign_\anyinstance \in \allassign}
@@ -211,7 +214,7 @@ Note that the marginalization over $\setseen$ is trivial since equation (\ref{eq
 $ \prob(\spfparticle) = \particleprior_\anyparticle$, where~~$ \sum_{\anyparticle=1}^\numparticle \particleprior_\anyparticle = 1.$ 
 The particles can be seen as samples of the joint space of $\assign$ and $\pose$, making our approach similar to the Monte Carlo Expectation Maximization algorithm \cite{Levine2001, Wei1990}, which uses samples to approximate integrations over latent variables. However, we seek to maximize the likelihood of our particles, rather than draw them randomly from the distribution.
 
-\subsection{Test}
+\section{Testing}
 At test stage we wish to estimate whether an object is present in the data, given the object class constellation model parameters, $\setpartapp$ and $\setpartshape$, and if so with what pose. The posterior probability of a given class being present would ideally be given by
 \begin{equation}
 \prob(\fg|\setfeatapp,\setfeatshape) = \frac{\prob(\fg)}{\prob(\setfeatapp,\setfeatshape)}\max_\pose \sum_{\assign \in \allassign}\prob(\setfeatapp,\setfeatshape,\assign,\pose|\setpartapp,\setpartshape),
@@ -226,17 +229,20 @@ which again decomposes according to equation (\ref{eqn:decompose}). The pose is 
 
 This probability can then be used in binary or multi-class object classifiers by comparing the probabilities given for different object classes, including the background class (no object). The value $\prob(\setfeatapp,\setfeatshape)$ is constant across classes so can be ignored, while the a priori class distribution, $\prob(\fg)$, can be given or learned; here we assume it is uniform across classes.
 
-\subsection{Optimization}
+\section{Inference}
 \label{sec:optimization}
 Since both training and test objective functions, given by equations (\ref{eq:particleapproximation}) and (\ref{eqn:testobjective}) respectively, involve the latent $\particle$ variables, we maximize them using Expectation Maximization (EM), thus: 
-
-\begin{algorithmic}[1]
+\begin{algorithm} 
+\begin{algorithmic}
 	\STATE Initialize $\parameter^{(0)}$.
 	\REPEAT
 		\STATE \emph{E-step}: Evaluate the latent likelihood $\expect$ from $\parameter^{(t-1)}$.   
 		\STATE \emph{M-step}: Maximize $\EMQ$ w.r.t. $\parameter^{(t)}$, in the following order: $\partprior^{(t)}$, $\particleprior^{(t)}$, $\assign^{(t)}$, $\partapp^{(t)}$, $\pose^{(t)}$ and $\partshape^{(t)}$.
 	\UNTIL{convergence}
 \end{algorithmic}
+\caption{Overview of the EM algorithm}
+\label{algo/3dreg/em}
+\end{algorithm} 
 where $\parameter^{(t)} = \{\partprior^{(t)},\particleprior^{(t)},\assign^{(t)},\setpartapp^{(t)},\pose^{(t)},\setpartshape^{(t)}\}$ are the model parameters\footnote{$\setpartapp$ and $\setpartshape$ are udated during training, but not during test. That aside, the two optimizations are identical.} at iteration $t$, and
 \begin{align}
 \EMQ &= \sum_{\anyinstance=1}^\numinstance \sum_{\anyparticle = 1}^{\numparticle} 
@@ -247,20 +253,13 @@ where $\parameter^{(t)} = \{\partprior^{(t)},\particleprior^{(t)},\assign^{(t)},
 The updates for the M-step are obtained by setting the derivative of the auxiliary function $\EMQ$ w.r.t. each target parameter to zero. Since the parameters are interdependent, but optimized separately, this part of the algorithm effectively consists of an iteration of coordinate descent. The computations required for each step are described below.
 
 \paragraph{Updating $\partprior$, $\particleprior$}  The update equations are
-\newline
-{\centering
-\noindent\begin{minipage}{0.45\linewidth}
 \begin{equation}
-\partprior_{\anypart} = \frac{\sum_{\anyinstance=1}^\numinstance \sum_{\anyparticle = 1}^{\numparticle} \expect\seen_{\anyinstance\anyparticle\anypart}}{\sum_{\anyinstance=1}^\numinstance \sum_{\anyparticle = 1}^{\numparticle} \expect},
+\partprior_{\anypart} = \frac{\sum_{\anyinstance=1}^\numinstance \sum_{\anyparticle = 1}^{\numparticle} \expect\seen_{\anyinstance\anyparticle\anypart}}{\sum_{\anyinstance=1}^\numinstance \sum_{\anyparticle = 1}^{\numparticle} \expect} 
 \end{equation}
-\end{minipage}
-\begin{minipage}{0.45\linewidth}
 \begin{equation}
 \particleprior_{\anyinstance\anyparticle} = 
-\frac{\expect}{\sum_{\anyparticle = 1}^{\numparticle} \expect}.
+\frac{\expect}{\sum_{\anyparticle = 1}^{\numparticle} \expect}
 \end{equation}
-\end{minipage}
-}
 
 \paragraph{Updating $\assign$}
 Taking negative logs of the terms in equation (\ref{eqn:decompose}) leads to a sum of costs to be minimized, all of which are linear in $\assign$, except for $-\log\prob(\assign|\setseen)$. However, if, as is generally the case, $\sum_{\anypart=1}^{\numpart}\seen_\anypart \ll \numfeat$, then this term is can be linearly approximated by $\sum_{\anypart=1}^{\numpart}\seen_\anypart\log\numfeat$, ($\seen_\anypart$ being a linear function of $\assign$). We compute the optimal $\assign$ for this approximate cost function in $\order\left((N\!+\!K)^3\right)$ time using a linear assignment solver such as the Hungarian method.
@@ -324,7 +323,6 @@ We evaluate both registration performance (during both training and test) and re
 % Experiments are performed to justify the versatility of our proposed shape-pose model under different types of input (2D images and 3D shapes) and applications (registration and recognition).  
 %This section details the evaluations of the proposed approach and reports the experimental results.
 
-\vspace{-2mm}
 \subsection{Datasets}
 % Maybe good to have a figure showing some sample data when we have enough space.
 %The evaluation framework consists of two parts. 
@@ -334,10 +332,10 @@ We evaluate both registration performance (during both training and test) and re
 % The model parameters, if not learned, are listed in table \ref{tab:parameters}. 
 %\paragraph{Evaluation datasets} 
 % 2D dataset, introduction
-For the 2D evaluation we use the Caltech \emph{Bike} dataset~\cite{CaltechBike2001}, which contains 800 generic background images and 800 motorbike images with large inter-class appearance variations in cluttered backgrounds and moderately varying poses. Features are detected in each image over translation and scale, using the method described in \cite{Fergus2007}. Each feature position, $\featshape_{\anyinstance\anyfeat}$, is then completed by computing an $8$-quantized principal orientation from pixel gradients of the local patch. Appearance vectors, $\featapp_{\anyinstance\anyfeat}$, are computed by projecting the local patches into a compact 15-dimensional space using PCA.  
+For the 2D evaluation we use the Caltech \emph{Bike} dataset~\cite{ComputationalVisionLab2001}, which contains 800 generic background images and 800 motorbike images with large inter-class appearance variations in cluttered backgrounds and moderately varying poses. Features are detected in each image over translation and scale, using the method described in \cite{Fergus2007}. Each feature position, $\featshape_{\anyinstance\anyfeat}$, is then completed by computing an $8$-quantized principal orientation from pixel gradients of the local patch. Appearance vectors, $\featapp_{\anyinstance\anyfeat}$, are computed by projecting the local patches into a compact 15-dimensional space using PCA.  
 
 % 3D dataset, introduction
-For the 3D evaluation we use the Toshiba CAD Model \emph{Point Cloud} dataset~\cite{ToshibaCAD2011}, which contains point clouds of 12 real objects acquired using multi-view stereo. Each object class contains 20 separate scans of a particular object, captured in a variety of poses. The dataset provides a set of features per point cloud, each with position in scale, rotation and translation, as well as a 31-dimensional descriptor, which we use for $\featshape_{\anyinstance\anyfeat}$ and $\featapp_{\anyinstance\anyfeat}$ respectively. The dataset additionally provides groundtruth pose for each object scan.
+For the 3D evaluation we use the Toshiba CAD Model \emph{Point Cloud} dataset \cite{Ltd.2011}, which contains point clouds of 12 real objects acquired using multi-view stereo. Each object class contains 20 separate scans of a particular object, captured in a variety of poses. The dataset provides a set of features per point cloud, each with position in scale, rotation and translation, as well as a 31-dimensional descriptor, which we use for $\featshape_{\anyinstance\anyfeat}$ and $\featapp_{\anyinstance\anyfeat}$ respectively. The dataset additionally provides groundtruth pose for each object scan.
 Similar to the \emph{Bike} dataset, the appearance descriptors are projected to a 10-dimensional subspace using PCA. More sophisticated features, \eg 3D shape context~\cite{Frome2004}, were tried in the experiments, but they showed similar performances with the default descriptor. The simpler default descriptor is therefore retained to demonstrate the effectiveness of the proposed model.
 
 %\paragraph{Feature detection and representation} 
@@ -346,7 +344,7 @@ Similar to the \emph{Bike} dataset, the appearance descriptors are projected to 
 % The large $255$-dimensional space for appearance feature is embedded to a compact $15$-dimensional space using principal component analysis, for computation efficiency and noise reduction. 
 %As point clouds are usually textureless, appearance features of the \emph{Point cloud} dataset are described by the local shape around the interest points. 
 %The default interest points and descriptors of the \emph{Point cloud} dataset are used as off-the-shelf features.
-\vspace{-2mm}
+
 \subsection{Results: 2D images}
 \paragraph{Recognition}
 We use the evaluation framework of \cite{Fergus2007}, randomly dividing the \emph{Bike} dataset into two equal subsets, training on one half and testing on the other and vice versa and summing the results. Performance figures, shown in table \ref{tab:regresult2d}, are given by the ROC equal error rates for binary classification (so 50\% is the performance of a random classifier), testing against the background dataset. We test both the direct similarity and affine pose parameterizations against data with varying levels of both direct similarity and affine random transformations artificially applied to them, and compare with the results of Fergus \etal \cite{Fergus2007}.
@@ -355,6 +353,7 @@ We use the evaluation framework of \cite{Fergus2007}, randomly dividing the \emp
 %Two-fold cross validation is performed by randomly dividing the \emph{Bike} dataset into two equal subsets. 
 %In order to evaluate the model's pose learning ability, we introduced three different levels of synthetic extra transformations. 
 %Hence, there are effectively seven datasets with different amounts of pose variations. 
+
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -371,20 +370,20 @@ SAP (affine) 			&	6, 5				& 91.250 & 88.000 & 78.250 & 70.500 & 84.250 & 72.375 
 Fergus \etal \cite{Fergus2007} 		& 6, -- & 95.125 & 87.000 & 60.000 & 52.000 & 86.375 & 59.250 & 52.000 \\
 \hline
 \end{tabular}
-
 \caption{Recognition: ROC equal error rates for binary classification of the \emph{Bike} dataset.}
 \label{tab:regresult2d}
 \end{table}
+
 \begin{figure}[ht]
 \centering 
-\includegraphics[width=0.80\linewidth]{fig/3dreg/reg2d_legend.pdf}
-\begin{subfigure}[b]{0.23\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_simsim.pdf}
+\includegraphics[width=1\linewidth]{fig/3dreg/reg2d_legend.pdf}
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_simsim.pdf}\vspace{3mm} 
 	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_simaff.pdf}
 	\caption{SAP (pose model: similarity)}
 \end{subfigure}
-\begin{subfigure}[b]{0.23\linewidth}
-	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_affsim.pdf}
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_affsim.pdf}\vspace{3mm}
 	\includegraphics[width=\linewidth]{fig/3dreg/reg2d_affaff.pdf}
 	\caption{SAP (pose model: affine)}
 \end{subfigure}
@@ -412,8 +411,7 @@ The registration score for the \emph{Bike} dataset is computed as follows: we ma
 Figure \ref{fig:regresult2d} plots the registration scores under different levels of pose variation, which corroborate the recognition results in terms of relative performance. Comparable training and test scores indicate that the learned model transfers well to unseen data.
 %The similarity-pose SAP model performs better than its affine-pose variant. Similar to the recognition experiment, it is mainly due to the lack of a full SRT shape model in the affine pose variant, and the geometric distortion of the appearance features. 
 
-\vspace{-0mm}
-\subsection{Results: 3D point clouds}
+\subsection{Results: 3D shapes}
 
 \paragraph{Recognition}
 Following \cite{Pham2011}, we use a leave-one-out cross validation scheme to measure multi-class recognition accuracy on the \emph{Point Cloud} dataset. 
@@ -512,17 +510,17 @@ Registration of the \emph{Point Cloud} dataset is evaluated quantitatively using
 		\includegraphics[width=\linewidth]{fig/3dreg/reg3Dtrain_cog.png} 
 		\caption{Cog}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.23\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/bracket.png} \\
 		\includegraphics[width=\linewidth]{fig/3dreg/reg3Dtrain_bracket.png} 
 		\caption{Bracket}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.23\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/pipe.png} \\
 		\includegraphics[width=\linewidth]{fig/3dreg/reg3Dtrain_pipe.png} 
 		\caption{Pipe}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.23\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/block.png} \\
 		\includegraphics[width=\linewidth]{fig/3dreg/reg3Dtrain_block.png} 
 		\caption{Block}
@@ -533,15 +531,15 @@ Registration of the \emph{Point Cloud} dataset is evaluated quantitatively using
 
 \begin{figure}[ht]
 	\centering
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.30\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/cluster1.png}
 		\caption{Scans 1--8}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.30\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/cluster2.png}
 		\caption{Scans 9--14}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.20\linewidth}
+	\begin{subfigure}[b]{0.30\linewidth}
 		\includegraphics[width=\linewidth]{fig/3dreg/cluster3.png}
 		\caption{Scans 15--20}
 	\end{subfigure}
@@ -551,42 +549,36 @@ Registration of the \emph{Point Cloud} dataset is evaluated quantitatively using
 
 %%%%%%%%%%%%%%%%% TRAINING REGISTRATION
 \begin{figure}[ht]
+	\centering 
+	\includegraphics[width=0.4\linewidth]{fig/3dreg/confusion_sap.pdf}
+	\caption{Confusion matrix of SAP model.}
+	\label{fig:confusion_sap}
+\end{figure}
+
+\begin{figure}[ht] 
 \centering
-\raisebox{2.5mm}{
-\begin{minipage}[!t]{0.24\linewidth}
-\centering
-\raisebox{1mm}{\includegraphics[height=2.5cm]{fig/3dreg/confusion_sap.pdf}}
-\caption{Confusion matrix of SAP model.}
-\label{fig:confusion_sap}
-\end{minipage}
-}
-\hfill
-\vspace{-1mm}
-\begin{minipage}[!t]{0.73\linewidth}
-\centering
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape01.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape02.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape03.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape04.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape05.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape06.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape07.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape08.png} \hspace{-1.5mm} 
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape09.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape10.png} \hspace{-1.5mm} \\ 
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape11.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape12.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape13.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape14.png} \hspace{-1.5mm} 
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape15.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape16.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape17.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape18.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape19.png} \hspace{-1.5mm}
-\includegraphics[width=0.098\linewidth]{fig/3dreg/shape20.png} \vspace{2mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape01.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape02.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape03.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape04.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape05.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape06.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape07.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape08.png} \hspace{-1.5mm} 
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape09.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape10.png} \hspace{-1.5mm} \\ 
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape11.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape12.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape13.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape14.png} \hspace{-1.5mm} 
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape15.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape16.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape17.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape18.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape19.png} \hspace{-1.5mm}
+\includegraphics[width=0.19\linewidth]{fig/3dreg/shape20.png} \vspace{2mm}
 \caption{\emph{Grey}: Inferred poses of the 20 \emph{pipe} class training instances. \emph{Cyan}: The \emph{canonical pose}. \emph{Red}: The locations and scales of parts.}
 \label{fig:alignresult3d}
-\end{minipage}
 \end{figure}
 
 For evaluation of registration in training, every training instance is compared with each of the 20 instances, giving a $20\!\times\!20$ SRT distance matrix. Figure \ref{fig:3dreg_srtmatrices} visualizes these matrices for several classes in the \emph{Point Cloud} dataset, demonstrating that for some classes, distinct pose clusters form. Figure \ref{fig:alignresult3d} indicates that these clusters form around a small number of distinct poses that the object was captured in, possibly latching onto background features in this situation also. Figure \ref{fig:3dclusters} visualizes the groups of distinct poses of the point clouds, showing that the clustering issue is originated from the raw data captured. Initializing poses to the groundtruth during learning still leads to these clusters. Since the \emph{Bike} dataset consists of images of different bikes on different backgrounds, it does not suffer from this issue.
@@ -596,7 +588,6 @@ In test, we use the evaluation framework of \cite{Pham2011}; the $\tilde{\pose}$
 
 \begin{table}[t]
 \centering
-{\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 \multirow{2}{*}{\textbf{Method}} & \multicolumn{10}{|c|}{\textbf{Category}} & \multirow{2}{*}{\textbf{Average}} \\
@@ -618,8 +609,6 @@ SAP ($\numpart = 15, \numparticle = 10$)%\remarka
 Min.-ent. H.~\cite{Woodford2013}\remarkb 			& \textbf{83} & 20 & 98 & \textbf{91} & \textbf{100} & 36 & \textbf{91} & \textbf{89} & \textbf{54} & 84 & \textbf{74.6}\\
 \hline
 \end{tabular}
-\vspace{2mm}
-}
 \caption{Object registration results for the \emph{Point Cloud} dataset. {\footnotesize \remarkb Trained using groundtruth poses.}}
 \label{tab:regresult3d}
 \end{table}

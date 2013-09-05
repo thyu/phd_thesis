@@ -5,12 +5,14 @@ V - reset all the labels
 - Fix all unused labels
 - Add fullstop in equation?
 - ground truth or groundtruth
-- learned or learnt 
+- learned or learnt
+- beautify equations --- where, ":", etc.  
 
 *** Intro *** 
 V write introduction 
 - Fill in the missing citations in introduction 
 - Add a figure for contributions 
+- delete the litreview chatpers introduction 
 
 *** Eval *** 
 
@@ -20,6 +22,7 @@ V write introduction
 
 V Add surveys to act reg (Moeslund, Weinland, Turaga)
 - Add a figure on generic BOW 
+- Remove VFAST as it is included in "eval" 
 
 *** body ***
 - add a figure for voting

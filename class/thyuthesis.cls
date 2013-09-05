@@ -3,16 +3,18 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
 \ProcessOptions\relax
-\LoadClass[a4paper]{memoir}
+% \LoadClass[a4paper]{memoir}
+\LoadClass[a4paper, oneside]{memoir}
 
 \renewcommand{\bibname}{References}
 
 \usepackage{setspace}						% spacing settings 
-\usepackage{tocbibind}
+%\usepackage{tocbibind}
+%\usepackage{tocloft} 
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{amsmath}
-\usepackage[english]{babel}
+%\usepackage[english]{babel}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage[perpage]{footmisc}
 %\usepackage[square, sort, numbers, authoryear]{natbib}
@@ -41,6 +43,28 @@
 %\usepackage[default]{droidserif}
 %\usepackage{DejaVuSerif}
 %\usepackage[urw-garamond]{mathdesign}
+
+% TABLE OF CONTENTS 
+%{
+% no dot for content line 
+\renewcommand{\cftdotsep}{\cftnodots}
+\renewcommand{\aftertoctitle}{\color{camblue}\vspace{0.3em}\hrule\vspace{2em}} 
+% part
+\renewcommand*{\cftpartfont}{\hfil\Large\color{camblue}}
+\renewcommand*{\cftpartafterpnum}{\color{camblue}{\hrule}}
+\cftsetindents{part}{0em}{0em} 
+\cftpagenumbersoff{part}
+\setlength{\cftbeforepartskip}{5em} 
+% chapter
+\renewcommand{\cftchapterpresnum}{\chaptername\hspace{2em}} 
+\renewcommand{\cftchapterafterpnum}{\vspace{1em}} 
+\renewcommand{\cftchapterfont}{\large}
+\cftsetindents{chapter}{0em}{0em} 
+\renewcommand{\chapternumberline}[1]{\cftchapterpresnum #1 \cftchapteraftersnum\\}
+% section
+\cftsetindents{section}{0em}{3em} 
+\cftsetindents{subsection}{3em}{3em} 
+%} 
 
 \usepackage{titlesec}
 \ifpdf
@@ -258,7 +282,7 @@
 %\def\myhelvetfont{\def\sfdefault{mdput}}
 \newsavebox{\feline@chapter}
 
-\newcommand\feline@chapter@marker[1][4cm]{%
+\newcommand\feline@chapter@marker[1][3cm]{%
 	\sbox\feline@chapter{%
 	\resizebox{#1}{!}{\fboxsep=1pt%
 		\colorbox{camblue}{\color{white}{\thechapter}}%
@@ -276,10 +300,10 @@
 
 \makechapterstyle{thyuchap}{
 %\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
-\renewcommand\chaptitlefont{\normalfont\fontsize{32}{40}\selectfont\color{camblue}}
+\renewcommand\chaptitlefont{\normalfont\fontsize{24}{32}\selectfont\color{camblue}}
 \renewcommand\chapternamenum{}
 \renewcommand\printchaptername{}
-\renewcommand\printchapternum{\null\hfill\feline@chm[4cm]\par}
+\renewcommand\printchapternum{\null\hfill\feline@chm[3cm]\par}
 \renewcommand\afterchapternum{\par\vskip\midchapskip}
 \renewcommand\printchaptertitle[1]{\chaptitlefont\raggedright ##1\par}
 }
