@@ -96,42 +96,36 @@ Finally, body shape estimation from images and videos are not considered in the 
 
 \subsection{Thesis outline}
 
-In the first part of this thesis, chapter \ref{chap/lit3d} to chapter \ref{chap/3dreg} focus on the recognition and pose estimation of 3D shapes; the second part, from chapter \ref{chap/lithuman} to \ref{chap/hand}, focuses on human action analysis, including action categorisation and 3D pose estimation of human body and hand gestures.  
+In the first part of this thesis, chapter \ref{chap/eval} and chapter \ref{chap/reg} focus on the recognition and pose estimation of 3D shapes; the second part, chapter \ref{chap/act}, \ref{chap/body} and \ref{chap/hand}, focuses on human action analysis, including action categorisation and 3D pose estimation of human body and hand gestures. Chapter \ref{chap/conclusion} concludes the thesis with possible directions for future research. 
 
 \paragraph{Part I: 3D Shapes}
 
-\paragraph{Chapter 2.} 
-This chapter presents a literature review of 3D shape processing techniques.  
-Recent topics about 3D feature detection, shape representation, shape recognition and pose estimation are discussed.  
+%\paragraph{Chapter 2.} This chapter presents a literature review of 3D shape processing techniques.  Recent topics about 3D feature detection, shape representation, shape recognition and pose estimation are discussed.  
 
-\paragraph{Chapter 3.} 
+\paragraph{Chapter 2. Evaluation of 3D feature detectors} 
 A performance evaluation of volumetric 3D interest points is presented in this chapter. 
 It first gives a brief introduction to the volumetric interest point detectors used in existing literature.
 There interest point detectors are evaluated quantitatively using a new performance metric.
 Finally, qualitative characteristics of the candidate detectors are also discussed in this chapter. 
 
-\paragraph{Chapter 4.}
+\paragraph{Chapter 3. 3D Constellation model from unkown pose}
 This chapter presents a weakly supervised constellation model for simultaneous 3D shape recognition and pose estimation. 
 The proposed model learns the shape, appearance and pose \emph{(SAP)} of an object class from training exemplars, \eg images or point clouds, containing examples of the object in unknown poses.  
 
-\paragraph{Part II: Human actions}
+\paragraph{Part II: Human action analysis}
 
-\paragraph{Chapter 5.} 
-This chapter introduces various sub-problems in human action analysis, including human action recognition, body pose estimation and hand pose estimation. 
-It discusses the application of random forests and its variants to model human actions and poses.    
-It also reviews the existing approaches for the above sub-problems. 
+%\paragraph{Chapter 5.} This chapter introduces various sub-problems in human action analysis, including human action recognition, body pose estimation and hand pose estimation.  It discusses the application of random forests and its variants to model human actions and poses. It also reviews the existing approaches for the above sub-problems. 
 
-\paragraph{Chapter 6.} 
+\paragraph{Chapter 4. Human action classification} 
 This chapter addresses the recognition sub-problem in human action analysis. The spatiotemporal semantic and structural forest is proposed to recognise human actions in real-time.    
 
-\paragraph{Chapter 7.} 
+\paragraph{Chapter 5. 3D human body pose estimation} 
 This chapter presents a new approach to 3D body pose estimation in unconstrained, monoculat videos. 
 A new random forest learning algorithm is introduced, in order to perform action detection and pose estimation simultaneously. 
 Pose estimation is based on action detection, which includes joint classification and localisation of actions in videos. 
 % By combining regression random forests with action detection, the proposed method infers 3D poses from unconstrained, monocular videos. 
 
-\paragraph{Chapter 8.} 
+\paragraph{Chapter 6. 3D hand pose estimation} 
 This chapter addresses the sub-problem of 3D hand pose estimation. 
 The regression tree learning algorithm introduced in chapter \ref{chap/body} is further developed to estimate 3D hand pose from different viewpoints. 
 A data-driven inverse kinematic scheme is also described to refine the occluded joints.
-

@@ -1,4 +1,4 @@
-\chapter{Evaluation of 3-D feature detectors}
+\chapter{Evaluation of 3D feature detectors}
 \label{chap/eval}
 
 \section{Introduction}
@@ -239,7 +239,7 @@ where $\kappa$ is a tunable sensitivity parameter that controls the reject of ed
 Saliency response $S_\textrm{Harris}$ is normalised by its scale $\sigma_s$ as shown in equation \ref{eq/eval/harriscorner}.
 
 % done 
-\subsection{Determinant of Hessian (DoH)}
+\subsection{Determinant-of-Hessian (DoH)}
 \label{sec/eval/doh}
 The DoH interest point is similar to the Harris detector with respect to formulation \cite{Lindeberg1998}. Instead of computing the second-moment matrix $\mathbf{M}$, a Hessian matrix $\mathbf{H}$ is computed: 
 \begin{equation}
@@ -727,7 +727,7 @@ The $\areascore$ scores were measured from the \mriset dataset with varying $\di
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_mini1.png}
-		\subcaption{Mini}
+		\subcaption{Car}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.23\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_pipe1.png}
@@ -753,7 +753,7 @@ The $\areascore$ scores obtained from the \stereoset dataset, shown in figure \r
 The differences in $\areascore$ scores were due to occlusions, viewpoint changes and uneven sampling density of the \stereoset dataset. 
 
 % done 
-Some testing instances, \eg ``mini'' in figure \ref{fig/eval/mvs}, had a much sparser point cloud due to a lack of texture on the object's surface, but the distribution of detected features was no less dense across any of the detectors, suggesting that the experimental results of the synthetic datasets are representative of sparse point clouds as well as dense ones.
+Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, had a much sparser point cloud due to a lack of texture on the object's surface, but the distribution of detected features was no less dense across any of the detectors, suggesting that the experimental results of the synthetic datasets are representative of sparse point clouds as well as dense ones.
 
 \begin{figure}[ht]
 	\centering

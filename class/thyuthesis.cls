@@ -55,10 +55,11 @@
 \cftsetindents{part}{0em}{0em} 
 \cftpagenumbersoff{part}
 \setlength{\cftbeforepartskip}{5em} 
+
 % chapter
 \renewcommand{\cftchapterpresnum}{\chaptername\hspace{2em}} 
 \renewcommand{\cftchapterafterpnum}{\vspace{1em}} 
-\renewcommand{\cftchapterfont}{\large}
+\renewcommand{\cftchapterfont}{\large\color{camblue}}
 \cftsetindents{chapter}{0em}{0em} 
 \renewcommand{\chapternumberline}[1]{\cftchapterpresnum #1 \cftchapteraftersnum\\}
 % section

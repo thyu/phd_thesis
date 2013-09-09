@@ -27,7 +27,7 @@ Schindler and van Gool \cite{Schindler2008} have shown that, by using appropriat
 \paragraph{Spatial and temporal structures}
 Human activities can be considered as a sequence of time-varying poses, spatiotemporal structure of actions is therefore a discriminative feature for action recognition.  
 While structural information is a useful cue for the task, it is often overlooked by traditional action recognition approaches.  
-Many existing methods are derived from the standard ``bag-of-words'' model in image recognition, \eg \cite{Schuldt2004, Dollar2005, Laptev2008, Niebles2008}, which has proved effective for action recognition owing to its rich discriminative power of local appearance information and its inherent benefits to cope with scaling, translation and cluttered backgrounds. 
+Many existing methods are derived from the standard ``bag-of-words'' model in image recognition, \eg \cite{Sivic2005, Fei-Fei2005}, which has proved effective for action recognition owing to its rich discriminative power of local appearance information and its inherent benefits to cope with scaling, translation and cluttered backgrounds. 
 It, however, neglects the spatial and temporal structure among features. 
 When a testing video sequence is represented as a unordered set of visual codewords, all structural information of features is discarded. 
 
@@ -83,7 +83,7 @@ In addition, scale-space analysis can be applied on VFAST in order to detect int
 Machine recognition of human activities has been a long-lasting topic in computer vision research since the seventies, \eg moving light display \cite{Johansson1973}. Early approaches to human activity analysis were reviewed by C\'edras and Shah \cite{Cedras1995}, Moeslund and Granum \cite{Moeslund2001} and Turaga \etal \cite{Turaga2008}. Contemporary action recognition algorithms are reviewed by Poppe \cite{Poppe2010} and Weinland \etal \cite{Weinland2011}.   
 
 State-of-the-art action recognition methods have shown the effectiveness of local appearance-based features, as the bag-of-words model is particularly popular in the literature \cite{Dollar2005, Riemenschneider2009, Niebles2008, Schuldt2004, Wong2007}.
-In a typical ``bag-of-words'' object recognition model, input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie histogram of visual codewords. A classifier is then trained to assign labels to the testing objects.
+In a typical bag-of-words object recognition model, input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie histogram of visual codewords. A classifier is then trained to assign labels to the testing objects.
 
 % Done 
 For action classification, a large codebook, \eg up to thousands of codewords, is favourable to ensure a good recognition accuracy. However, computational load and memory requirement also increase with codebook size. With respect to learning algorithms, feature quantization methods by a large flat codebook, such as k-means, is computationally heavy. Furthermore, an oversized codebook is vulnerable to high quantisation errors and overfitting. As a result, alternative approaches to codebook learning have been investigated to increase the efficiency and robustness for action classification. 
@@ -99,7 +99,7 @@ Hierarchical codebooks enable fast vector quantisation during testing, however, 
 
 % Done 
 Codeword histograms are orderless in the bag-of-words model. 
-Typical bag-of-words algorithms contain only encoded appearance information of local features.  
+A typical bag-of-words algorithm contains only encoded appearance information of local features.  
 % Standard bag of words models contain only local appearance information. 
 Whilst structural context is useful in describing some action classes, it is often omitted in current action recognition methods.
 On the other hand, some studies have implied that structural or holistic features can be as effective as local features. 
