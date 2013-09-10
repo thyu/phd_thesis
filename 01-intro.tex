@@ -22,9 +22,9 @@ With the advent of affordable data acquistiion technologies, such as depth senso
 
 This thesis addresses the sub-problems of \emph{classification} and \emph{pose-estimation} for \emph{3D shapes} and \emph{human actions in videos}. 
 % Videos and 3D shape data are the most accessible representation of 3D object data.
-Videos and 3D shapes are the most applicable and accessible representation of 3D spatial and spatiotemporal objects, which can be captured from video cameras and affordable modern 3D shape acquisition devices, e.g. multi-view stereo \cite{Vogiatzis2011} and Kinect sensor. 
+Videos and 3D shapes are the most applicable and accessible representation of 3D spatial and spatiotemporal objects, which can be captured from video cameras and affordable modern 3D shape acquisition devices, \eg multi-view stereo \cite{Vogiatzis2011} and Kinect sensor. 
 % Photometric textures on 3D shape surfaces are not considered because they are more costly and difficult to be captured.  
-In addition, large-scale benchmark datasets, e.g. Princeton shape benchmark \cite{Shilane2004},  KTH action dataset\cite{Schuldt2004}, TOSCA dataset \cite{Bronstein2011} and Youtube video dataset \cite{Liu2009}, have been made available to public, facilitiating standardised comparison among different approaches. 
+In addition, large-scale benchmark datasets, \eg Princeton shape benchmark \cite{Shilane2004},  KTH action dataset\cite{Schuldt2004}, TOSCA dataset \cite{Bronstein2011} and Youtube video dataset \cite{Liu2009}, have been made available to public, facilitiating standardised comparison among different approaches. 
 On the other side, classification and pose estimation are the essential components in object recognition systems, such as human-computer interface, computer-aided design, automatic fault detection, video surveillance, computer graphics and entertainment. 
 Early approaches of 3D shape recognition are detailed in the literature review in \cite{Besl1985}. Early techniques of video-based human motion classification and pose estimation are reviewed in \cite{Cedras1995, Moeslund2001, Turaga2008} and \cite{Aggarwal1999, Poppe2007}. 
 % Why classification? Maybe add some more\ldots 
@@ -41,21 +41,21 @@ This thesis is concerned with several long-standing challenges of 3D shapes and 
 
 \subsection{3D shape classification and registration} 
 
-Different 3D shape representations lead to diversified features for classification and registration. Designing an generic 3D shape recognition algorithm is therefore difficult. Many existing methods are restricted to certain data representations and formats, especially for triangular mesh which is a standard format for synthetic shape data, e.g. Harris3D @@ Sipiran @@ and MeshHOG @@ Zaharescu @@.     
-While 2D image-based interest points are studied extensively, e.g. @@ Schimid survey @@, there are few comprehensive performance evaluations for 3D interest points. 
+Different 3D shape representations lead to diversified features for classification and registration. Designing an generic 3D shape recognition algorithm is therefore difficult. Many existing methods are restricted to certain data representations and formats, especially for triangular mesh which is a standard format for synthetic shape data, \eg Harris3D \cite{Sipiran2011} and MeshHOG \cite{Zaharescu2009}.     
+While 2D image-based interest points are studied extensively \cite{Mikolajczyk2005}, there are few comprehensive performance evaluations for 3D interest points. 
 Adressing the above issue, this thesis is mainly concerned with the interest poinsts in volumetric data, which is a generic representation of 3D and time-varying data. Voxels can be converted conveniently from other data formats, such as point clouds, meshes and videos. 
 
 In addition, categorical-based pose estimation of 3D shapes has been a long standing issue in computer vision.
-Standard bag-of-words models for 3D object categorisation do not consider object pose, as they disregard the structural information of objects. Traditional 3D registration algorithms, such as iterative closest point (ICP) @@ @@, do not model the variations among instances within the same object class. 
-Generative part-based models, e.g. @@ Fergus, Weber @@, provide an supervised framework to infer both scale and translation of an object class. However, object rotation is not included in the above models. 
-Voting-based methods @@ @@ performs 3D shape classification and registration simultaneously using generalised Hough transform. However, they require training data to be registered manually in advance.  
+Standard bag-of-words models for 3D object categorisation do not consider object pose, as they disregard the structural information of objects. Traditional 3D registration algorithms, such as iterative closest point (ICP) \cite{Besl1992}, do not model the variations among instances within the same object class. 
+Generative part-based models provide an supervised framework to infer both scale and translation of an object class \cite{Weber2000, Fergus2007}. However, object rotation is not included in the above models. 
+Voting-based methods, \eg Gall and Lempitsky \cite{Gall2009a}, performs 3D shape classification and registration simultaneously using generalised Hough transform. However, they require training data to be registered manually in advance.  
 To summarise, pose estimation of 3D shapes remains an largely unresolved challenge, especially for category-based and unsupervised pose estimation tasks.  
 
 \subsection{Human action classification}
 
 % Computational bottleneck
 
-Bag-of-words is an established approach for easlier video classification tasks @@ @@, however, its performance is limited because the codeword histograms utilise no structural information. Run-time performance is also a major issue in human action classification. Although real-time action classification is essential for many applications, such as human-computer interfaces and video surveillance, existing methods perform classification only after the whole testing sequence has been processed @@ some examples @@. 
+Bag-of-words is an established approach for video classification tasks \cite{Schuldt2004, Dollar2005, Riemenschneider2009, Niebles2008, Wong2007}. However, its performance is limited because the codeword histograms utilise no structural information. Run-time performance is also a major issue in human action classification. Although real-time action classification is essential for many applications, such as human-computer interfaces and video surveillance, existing methods perform classification only after the whole testing sequence has been processed. 
 
 \subsection{3D human pose estimation} 
 
@@ -63,9 +63,9 @@ Bag-of-words is an established approach for easlier video classification tasks @
 % 1. Background
 % 2. Special Hardware, multiple cameras  
 
-Recent 3D human pose estimation algorithms achieve promising performances in controlled environments @@ @@. On the other side, 3D human pose estimation techniques in unconstrained environments is an unexplored area.       
-Traditional pose estimation algorithms often rely on low-level appearance features, such as silhouette and motion templates @@ @@. These features are vulnerable to dynamic and cluttered backgrounds and moving viewpoints in unconstrained videos. 
-Pose ambiguities and self-occlusions are common issues in both body pose and hand pose estimation. While multi-view techniques resolve such problems effectively in controlled settings, they are not applicable to unconstrained, monocular testing videos. Additional prior knowledge about the subject's structures, \eg human body, is required to remove such ambiguities in monocular videos. 
+Recent 3D human pose estimation algorithms achieve promising performances in controlled environments, \eg \cite{Rogez2012, Pons-Moll2011, Sigal2012}. On the other side, 3D human pose estimation techniques in unconstrained environments is an unexplored area.       
+Traditional pose estimation algorithms often rely on low-level appearance features, such as silhouette and motion templates \cite{Bissacco2007, Rogez2012, Ionescu2011, Navaratnam2006}. These features are vulnerable to dynamic and cluttered backgrounds and moving viewpoints in unconstrained videos. 
+Pose ambiguities and self-occlusions are common issues in both body pose and hand pose estimation. While multi-view techniques resolve such problems effectively in controlled settings, they are not applicable to unconstrained, monocular testing videos. Additional prior knowledge about the subject's structures, \eg articulated human body or hand, is required to remove such ambiguities in monocular videos. 
 
 \section{Thesis overview}
 
@@ -85,14 +85,14 @@ The main contributions of this thesis are:
 % Some thing which is not considered?
 In order to concentrate on the most importand and relevant topics, 
 several applications are not considered within this thesis. 
-The first is recognition of textured 3D shapes @@ @@. Textured mesh is a standard representation of 3D shapes in computer graphics and computer-aided design (CAD) tasks. However, realistic 3D shape data are usually captured in textureless point clouds, depthmaps or voxels. In addition, instances of the same object class can have different textures, texture-based features are therefore not suitable for shape classification.      
+The first is recognition of 3D meshes, such as \cite{Zaharescu2009, Bronstein2011, Kokkinos2012}. Textured mesh is a standard representation of 3D shapes in computer graphics and computer-aided design (CAD) tasks. However, realistic 3D shape data are usually captured in textureless point clouds, depthmaps or voxels. In addition, instances of the same object class can have different textures, texture-based features are therefore not suitable for shape classification.      
 
-The second application is model-based 3D object recognitions, e.g. @@ @@. These pose estimators are trained on object instances in a specific scene. The performances of object recognition and pose estimation rely mainly on feature matching between the model and query object instance. 
+The second application is model-based 3D object recognitions, \eg \cite{Mian2006, Rothganger2006, Shang2010}. These pose estimators are trained on object instances in a specific scene. The performances of object recognition and pose estimation rely mainly on feature matching between the model and query object instance. 
 
-Thirdly, marker-based motion capture sysems are not included in the scope of this thesis, @@ @@. They have been widely employed in computer-generated imagery for films and games. Markers are localised accurately from a calibrated camera system, using simple computer vision techniques. Poses are estimated straightforwardly by mapping the markers to a predefined articulated skeleton.
+Thirdly, marker-based motion capture sysems are not included in the scope of this thesis. They have been widely employed in computer-generated imagery for films and games. Markers are localised accurately from a calibrated camera system, using simple computer vision techniques. Poses are estimated straightforwardly by mapping the markers to a predefined articulated skeleton.
  With a calibrated camera network, 3D human poses can be recovered using marker-based approaches easily.  
 
-Finally, body shape estimation from images and videos are not considered in the thesis, @@ @@. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of a articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
+Finally, body shape estimation from images and videos are not considered in the thesis, \cite{Guan2009, Rother2009, Chen2011}. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of a articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
 
 \subsection{Thesis outline}
 
