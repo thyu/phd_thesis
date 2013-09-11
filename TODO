@@ -1,6 +1,6 @@
 *** Global ***
-V - rename all the references 
-V - reset all the labels 
+V rename all the references 
+V reset all the labels 
 V Fix all eq labels
 X Fix all unused labels
 V Add fullstop in equation?
@@ -10,8 +10,8 @@ V beautify equations --- where, ":", etc.
 V tables: best result in blue 
 V Review table and image caption 
 V am English and br English 
-- Chapter header
-- Abstract header
+V Chapter header
+V Abstract header
 V Citation has no meaning
 V Discussion -> Summary 
 
@@ -40,7 +40,7 @@ V delete the legend
 X add sample of all subjects in APE 
 
 *** hand ***
-- Expand figures
+V Expand figures
 V Rearrange the graphs (probably replot them) 
 
 *** conclusions *** 

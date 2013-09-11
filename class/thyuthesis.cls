@@ -9,16 +9,12 @@
 \renewcommand{\bibname}{References}
 
 \usepackage{setspace}						% spacing settings 
-%\usepackage{tocbibind}
-%\usepackage{tocloft} 
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 %\usepackage[english]{babel}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage[perpage]{footmisc}
-%\usepackage[square, sort, numbers, authoryear]{natbib}
-%\usepackage[square, sort, numbers, authoryear]{natbib}
 \usepackage{ifthen}
 \usepackage{ifpdf}
 \usepackage{calc}
@@ -65,7 +61,11 @@
 % section
 \cftsetindents{section}{0em}{3em} 
 \cftsetindents{subsection}{3em}{3em} 
-%} 
+%}
+
+\renewcommand{\afterloftitle}{\color{camblue}\vspace{0.3em}\hrule\vspace{2em}} 
+\renewcommand{\afterlottitle}{\color{camblue}\vspace{0.3em}\hrule\vspace{2em}} 
+
 
 \usepackage{titlesec}
 \ifpdf
@@ -111,8 +111,14 @@
     \graphicspath{{ThesisFigs/EPS/}{ThesisFigs/}}
 \fi
 
-
-\renewcommand{\bibname}{References}
+% Reference tutle 
+\renewcommand{\bibsection}{
+	\renewcommand{\bibname}{References}
+	\vspace{2em}\chapter{\bibname}
+	\color{camblue}{\vspace{-2.5em}\hrule\vspace{2em}}
+	\color{black}
+	\prebibhook
+}
 
 % Nomenclature
 \usepackage{nomencl}
@@ -192,19 +198,18 @@
     \thispagestyle{empty}
 %  \null\vfill
   \begin{center}
-	  {\fontsize{20}{24}\bfseries {\@title}} \par
+	  {\fontsize{18}{20}\bfseries{\@title}} \par
 	\vspace*{35mm}
 	{\fontsize{16}{20}\scshape\selectfont\@author}\par
 	\vspace*{1ex}
 	{{\fontsize{13}{15}\selectfont\@collegeordept} \par}
 	\vspace*{65mm} 
 	\@crest \par
-	\vspace*{1ex}
     %{{\@university} \par}
-	\vspace*{15mm}
-    {\large \submittedtext} \par
+	\vspace*{10ex}
+    {\large \submittedtext \par}
 	\vspace*{1ex}
-    {\large \textit {\@degree} \par}
+    {\large \@degree \par}
 	\vspace*{1ex}
     {\large \@degreedate}
   \end{center}
@@ -235,15 +240,16 @@
 % on its own page.
 
 \newenvironment{acknowledgements}
-{\pagestyle{empty}
-\begin{alwayssingle}
-\begin{center}
-\vspace*{1.5cm}
-{\Huge \color{camblue} Acknowledgements}
-\end{center}
-\vspace{0.5cm}
-\begin{quote}}
-{\end{quote}\end{alwayssingle}}
+{
+	\begin{alwayssingle}
+	\pagestyle{empty}
+  	\begin{center}
+  	\vspace*{0.5cm}
+  	{\Huge \color{camblue}Acknowledgements}
+  	\end{center}
+  	\vspace{0.5cm}
+  }
+{\end{alwayssingle}}
 
 %ABSTRACT
 %
@@ -251,14 +257,29 @@
 %the top of the page. The abstract itself appears in a quote environment,
 %i.e. tabbed in at both sides, and on its own page.
 
-\newenvironment{abstracts} {\begin{alwayssingle} \pagestyle{empty}
-  \begin{center}
-  \vspace*{1.5cm}
-  {\Huge \color{camblue}Abstract}
-  \end{center}
-  \vspace{0.5cm}
-   \begin{quote}}
-{\end{quote}\end{alwayssingle}}
+\newenvironment{abstracts}
+{
+	\begin{alwayssingle}
+	\pagestyle{empty}
+  	\begin{center}
+  	\vspace*{0.5cm}
+  	{\Huge \color{camblue}Abstract}
+  	\end{center}
+  	\vspace{0.5cm}
+  }
+{\end{alwayssingle}}
+
+\newenvironment{declarations}
+{
+	\begin{alwayssingle}
+	\pagestyle{empty}
+  	\begin{center}
+  	\vspace*{0.5cm}
+  	{\Huge \color{camblue}Declaration}
+  	\end{center}
+  	\vspace{0.5cm}
+  }
+{\end{alwayssingle}}
 
 %ROMANPAGES
 %
@@ -275,38 +296,37 @@
 
 % Define chapter 
 %\definecolor{camblue}{rgb}{.647,.129,.149}
-\definecolor{camblue}{rgb}{.639,.757,.678}
+%\definecolor{camblue}{rgb}{.639,.757,.678}
+\definecolor{camblue}{cmyk}{.56,.21,.0,.0}
+\definecolor{camgrey}{cmyk}{.11,.11,.11,.11}
 
 \makeatletter
-\newlength\dlf@normtxtw
-\setlength\dlf@normtxtw{\textwidth}
-%\def\myhelvetfont{\def\sfdefault{mdput}}
-\newsavebox{\feline@chapter}
-
-\newcommand\feline@chapter@marker[1][3cm]{%
-	\sbox\feline@chapter{%
-	\resizebox{#1}{!}{\fboxsep=1pt%
-		\colorbox{camblue}{\color{white}{\thechapter}}%
-	}}
-	\resizebox{\widthof{\usebox{\feline@chapter}}}{!}{\scshape\color{camblue}\@chapapp}
-	\hspace{-#1}\hspace{-1mm}
-	\raisebox{-1mm-\heightof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
-}
-
-\newcommand\feline@chm[1][4cm]{%
-\sbox\feline@chapter{\feline@chapter@marker[#1]}%
-\makebox[0pt][l]{% aka \rlap
-\makebox[0cm][r]{\usebox\feline@chapter}%
-}}
-
+% Chapter title 
 \makechapterstyle{thyuchap}{
-%\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
-\renewcommand\chaptitlefont{\normalfont\fontsize{24}{32}\selectfont\color{camblue}}
-\renewcommand\chapternamenum{}
-\renewcommand\printchaptername{}
-\renewcommand\printchapternum{\null\hfill\feline@chm[3cm]\par}
-\renewcommand\afterchapternum{\par\vskip\midchapskip}
-\renewcommand\printchaptertitle[1]{\chaptitlefont\raggedright ##1\par}
+	\renewcommand\chaptitlefont{\normalfont\fontsize{22}{22}\selectfont\bfseries\color{camblue}}
+	\renewcommand\chapternamenum{}
+	\renewcommand\printchaptername{}
+	\renewcommand\chaptername{CHAPTER} 
+	\renewcommand\printchapternum{
+		\vspace{12mm}
+		\begin{center}
+			\raisebox{-0.7cm}[0pt][0pt]{
+				\raisebox{0mm}[0pt][0pt]{\color{camblue}\rule{0.3\textwidth}{2.4mm}}
+				\parbox{0.25\textwidth}{
+					\centering
+					\normalfont\fontsize{110}{80}\selectfont
+					\color{camgrey}\textbf\thechapter
+				}
+				\raisebox{0mm}[0pt][0pt]{\color{camblue}\rule{0.3\textwidth}{2.4mm}}
+			}\\
+			\normalfont\fontsize{18}{18}\selectfont\bfseries\color{black}\@chapapp
+		\end{center}
+	}
+	\renewcommand\afterchapternum{\par\vskip\midchapskip\par}
+	\renewcommand\printchaptertitle[1]{
+		\centering 
+		\chaptitlefont ##1\par
+	}
 }
 \makeatother
 \chapterstyle{thyuchap}
@@ -315,13 +335,22 @@
 \titleclass{\part}{top} % make part like a chapter
 \titleformat{\part}
 [display]
-{\centering\normalfont\fontsize{40}{45}\selectfont\color{camblue}}
-%{\titlerule[5pt]\vspace{3pt}\titlerule[2pt]\vspace{3pt}\MakeUppercase{\partname}\thepart}
-{\vspace{7cm}\MakeUppercase{\partname}\quad\thepart}
-{0pt}
-{\titlerule[1pt]\vspace{10pt}\fontsize{25}{30}\selectfont\MakeUppercase}
+{\centering\fontsize{35}{35}\selectfont}
+{
+	\vspace{2cm}
+	\color{camblue}{\rule{0.3\linewidth}{1mm}}
+	\raisebox{-0.3cm}{\parbox{0.25\linewidth}{
+		\centering
+		\fontsize{140}{140}\selectfont\color{camgrey}
+		\thepart
+	}}  
+	\color{camblue}{\rule{0.3\linewidth}{1mm}}\\ 
+}
+{-30pt}
+{
+	\centering\color{camblue}\MakeUppercase
+}
 \titlespacing*{\part}{0pt}{0pt}{20pt}
-
 
 % default one half spacing
 \OnehalfSpacing
