@@ -8,11 +8,11 @@ The topics of 3D object recognition were studied extensively since the early day
 Pioneers of computer vision have proposed various models for representing and recognising objects from 3D data.
 % The number of literature reflected how the early researher treat the topic seriously. 
 % Marr 
-For instance, \cite{Marr1978} presented the primal sketch, in which an 3D object is represented as a hierarchical set of cylinders positioned in an object-centric frame. 
+For instance, Marr and Nishihara \cite{Marr1978} presented the primal sketch, in which an 3D object is represented as a hierarchical set of cylinders positioned in an object-centric frame. 
 % Generalised cone by Nevatia 
-In addition, \cite{Nevatia1977} proposed the generalised cones framework to describe and recognise 3D objects. \cite{Bolles1983} studied the pose estimation of 3D objects from depth maps.
+In addition, Nevatia and Binford \cite{Nevatia1977} proposed the generalised cones framework to describe and recognise 3D objects. Bolles \etal \cite{Bolles1983} studied the pose estimation of 3D objects from depth maps.
 % Moving light display 
-Concerning object recognition in video data, \cite{Johansson1973} pioneered video-based action recognition using a moving light display. 
+Concerning object recognition in video data, Johansson \cite{Johansson1973} pioneered video-based action recognition using a moving light display. 
 % Nevertheless, practical applications of such early models are limited, due to the restrictions in computational power to process large amount of 3D data and the high cost of collecting sufficient data for training and testing.
 
 The practical applications of these early models were limited: Firstly, the computational power available were inadequate to process large amount of 3D data for sophisicated learning algorithms. Secondly, it was too costly to collect sufficient data for training and testing, without the help of efficient 3D data capturing devices and technologies. Finally, they did not consider occlusions, viewpoints or pose variations which are the archetypal issues in practical object recognition systems. Image-based object recognition, being more efficient and attainable, has gradually gained more attention, because it is more applicable to than its 3D counterpart in practical object recognition systems.   
@@ -22,11 +22,11 @@ With the advent of affordable data acquistiion technologies, such as depth senso
 
 This thesis addresses the sub-problems of \emph{classification} and \emph{pose-estimation} for \emph{3D shapes} and \emph{human actions in videos}. 
 % Videos and 3D shape data are the most accessible representation of 3D object data.
-Videos and 3D shapes are the most applicable and accessible representation of 3D spatial and spatiotemporal objects, which can be captured from video cameras and affordable modern 3D shape acquisition devices, \eg multi-view stereo \cite{Vogiatzis2011} and Kinect sensor. 
+Videos and 3D shapes are the most applicable and accessible representation of 3D spatial and spatiotemporal objects, which can be captured from video cameras and affordable modern 3D shape acquisition devices, \eg multi-view stereo \cite{Vogiatzis2011} and Kinect sensor \cite{Shotton2011}. 
 % Photometric textures on 3D shape surfaces are not considered because they are more costly and difficult to be captured.  
-In addition, large-scale benchmark datasets, \eg Princeton shape benchmark \cite{Shilane2004},  KTH action dataset\cite{Schuldt2004}, TOSCA dataset \cite{Bronstein2011} and Youtube video dataset \cite{Liu2009}, have been made available to public, facilitiating standardised comparison among different approaches. 
+In addition, large-scale benchmark datasets, \eg Princeton shape benchmark \cite{Shilane2004},  KTH action dataset \cite{Schuldt2004}, TOSCA dataset \cite{Bronstein2011} and Youtube video dataset \cite{Liu2009}, have been made available to public, facilitiating standardised comparison among different approaches. 
 On the other side, classification and pose estimation are the essential components in object recognition systems, such as human-computer interface, computer-aided design, automatic fault detection, video surveillance, computer graphics and entertainment. 
-Early approaches of 3D shape recognition are detailed in the literature review in \cite{Besl1985}. Early techniques of video-based human motion classification and pose estimation are reviewed in \cite{Cedras1995, Moeslund2001, Turaga2008} and \cite{Aggarwal1999, Poppe2007}. 
+Early approaches of 3D shape recognition are detailed in the literature review by Besl and Jain \cite{Besl1985}. Early techniques of video-based human motion classification have been reviewed by C\'edras and Shah \cite{Cedras1995}, Moeslund and Granum \cite{Moeslund2001} and Turaga \etal \cite{Turaga2008}. In addition, literature reviews on human pose estimation were conducted by Aggarwal and Cai \cite{Aggarwal1999} and Poppe \cite{Poppe2007}.  
 % Why classification? Maybe add some more\ldots 
 % Why pose estimation? Matbe add some more\ldots
 
@@ -67,6 +67,13 @@ Recent 3D human pose estimation algorithms achieve promising performances in con
 Traditional pose estimation algorithms often rely on low-level appearance features, such as silhouette and motion templates \cite{Bissacco2007, Rogez2012, Ionescu2011, Navaratnam2006}. These features are vulnerable to dynamic and cluttered backgrounds and moving viewpoints in unconstrained videos. 
 Pose ambiguities and self-occlusions are common issues in both body pose and hand pose estimation. While multi-view techniques resolve such problems effectively in controlled settings, they are not applicable to unconstrained, monocular testing videos. Additional prior knowledge about the subject's structures, \eg articulated human body or hand, is required to remove such ambiguities in monocular videos. 
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\linewidth]{./fig/intro/intro.pdf}
+\caption{Thesis outline} 
+\label{fig/intro/outline}
+\end{figure}
+
 \section{Thesis overview}
 
 \subsection{Contributions}
@@ -85,18 +92,18 @@ The main contributions of this thesis are:
 % Some thing which is not considered?
 In order to concentrate on the most importand and relevant topics, 
 several applications are not considered within this thesis. 
-The first is recognition of 3D meshes, such as \cite{Zaharescu2009, Bronstein2011, Kokkinos2012}. Textured mesh is a standard representation of 3D shapes in computer graphics and computer-aided design (CAD) tasks. However, realistic 3D shape data are usually captured in textureless point clouds, depthmaps or voxels. In addition, instances of the same object class can have different textures, texture-based features are therefore not suitable for shape classification.      
+The first is recognition of 3D meshes \cite{Zaharescu2009, Bronstein2011, Kokkinos2012}. Textured mesh is a standard representation of 3D shapes in computer graphics and computer-aided design (CAD) tasks. However, realistic 3D shape data are usually captured in textureless point clouds, depthmaps or voxels. In addition, instances of the same object class can have different textures, texture-based features are therefore not suitable for shape classification.      
 
 The second application is model-based 3D object recognitions, \eg \cite{Mian2006, Rothganger2006, Shang2010}. These pose estimators are trained on object instances in a specific scene. The performances of object recognition and pose estimation rely mainly on feature matching between the model and query object instance. 
 
 Thirdly, marker-based motion capture sysems are not included in the scope of this thesis. They have been widely employed in computer-generated imagery for films and games. Markers are localised accurately from a calibrated camera system, using simple computer vision techniques. Poses are estimated straightforwardly by mapping the markers to a predefined articulated skeleton.
  With a calibrated camera network, 3D human poses can be recovered using marker-based approaches easily.  
 
-Finally, body shape estimation from images and videos are not considered in the thesis, \cite{Guan2009, Rother2009, Chen2011}. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of a articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
+Finally, body shape estimation from images and videos are not considered in the thesis \cite{Guan2009, Rother2009, Chen2011}. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of a articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
 
-\subsection{Thesis outline}
+\subsection{Outline}
 
-In the first part of this thesis, chapter \ref{chap/eval} and chapter \ref{chap/reg} focus on the recognition and pose estimation of 3D shapes; the second part, chapter \ref{chap/act}, \ref{chap/body} and \ref{chap/hand}, focuses on human action analysis, including action categorisation and 3D pose estimation of human body and hand gestures. Chapter \ref{chap/conclusion} concludes the thesis with possible directions for future research. 
+This thesis is outlined in figure \ref{fig/intro/outline}. In the first part, chapter \ref{chap/eval} and chapter \ref{chap/reg} focus on the recognition and pose estimation of 3D shapes; the second part, chapter \ref{chap/act}, \ref{chap/body} and \ref{chap/hand}, focuses on human action analysis, including action categorisation and 3D pose estimation of human body and hand gestures. Chapter \ref{chap/conclusion} concludes the thesis with possible directions for future research. 
 
 \paragraph{Part I: 3D Shapes}
 

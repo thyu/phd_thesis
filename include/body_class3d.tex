@@ -1,61 +1,29 @@
 \begin{table}[ht]
 \centering
-\begin{tabular}{|p{5cm}|c|c|c|c|c|c|c|}
+\begin{tabular}{|p{4.5cm}|c|c|c|c|c|c|c|}
 \hline
-\backslashbox[5cm]{\textbf{Method}}{\textbf{Action}} & 
-\rotatebox{90}{\textbf{Balance}}
+\backslashbox[4.5cm]{\textbf{Method}}{\textbf{Action}} & 
+\rotatebox{60}{\textbf{Balance}}
 & 
-\rotatebox{90}{\textbf{Bend}}
+\rotatebox{60}{\textbf{Bend}}
 & 
-\rotatebox{90}{\textbf{Box}}		
+\rotatebox{60}{\textbf{Box}}		
 & 
-\rotatebox{90}{\textbf{Clap}}	
+\rotatebox{60}{\textbf{Clap}}	
 &
-\rotatebox{90}{\textbf{Dance}}
+\rotatebox{60}{\textbf{Dance}}
 & 
-\rotatebox{90}{\textbf{Wave 1}}
+\rotatebox{60}{\textbf{Wave 1}}
 & 
-\rotatebox{90}{\textbf{Wave 2}}
+\rotatebox{60}{\textbf{Wave 2}}
 \\ 
 \hline
 \hline
-Action Detection Forest  	& 41.9 			& \textbf{58.6} & 84.3 			& 49.1 			& 47.4 			& 36.7 			& 36.2 \\ 
-Regression Forest 	& 41.4 			& 69.7 			& \textbf{60.3} & 52.2 			& 58.2 			& 36.1 			& 39.1 \\ 
-Combined & \textbf{37.8} & 58.8 			& 66.2 			& \textbf{41.0} & \textbf{45.1} & \textbf{30.1} & \textbf{34.6}\\  
+Action detection forest  	& 41.9 			& \textbf{\color{blue}58.6} & 84.3 			& 49.1 			& 47.4 			& 36.7 			& 36.2 \\ 
+Regression forest 	& 41.4 			& 69.7 			& \textbf{\color{blue}60.3} & 52.2 			& 58.2 			& 36.1 			& 39.1 \\ 
+Combined & \textbf{\color{blue}37.8} & 58.8 			& 66.2 			& \textbf{\color{blue}41.0} & \textbf{\color{blue}45.1} & \textbf{\color{blue}30.1} & \textbf{\color{blue}34.6}\\  
 \hline
 \end{tabular}
 \caption{Per-class joint localisation accuracy (3D)} 
 \label{tab/body/errperclass3D}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{|p{5cm}|c|c|c|c|c|c|c|}
-\hline
-\backslashbox[5cm]{\textbf{Method}}{\textbf{Action}} & 
-\rotatebox{90}{\textbf{Balance}}
-& 
-\rotatebox{90}{\textbf{Bend}}
-& 
-\rotatebox{90}{\textbf{Box}}		
-& 
-\rotatebox{90}{\textbf{Clap}}	
-&
-\rotatebox{90}{\textbf{Dance}}
-& 
-\rotatebox{90}{\textbf{Wave 1}}
-& 
-\rotatebox{90}{\textbf{Wave 2}} \\ 
-\hline
-\hline
-Action Detection Forest  	& 6.1 			& \textbf{10.2} & 13.1 			& 6.6 			& 7.3 			& 6.7 			& 5.1 \\ 
-Regression Forest  	& 6.6 			& 13.1 			& \textbf{9.7} 	& 6.4 			& 8.9 			& 6.4 			& 6.4 \\ 
-Combined 			& \textbf{5.6} 	& 10.7 			& 10.4 			& \textbf{5.4} 	& \textbf{7.0} 	& \textbf{4.8} & \textbf{5.2}\\ 
-\hline
-\cite{Eichner2012}  	& 20.6 			& 28.6 			& 26.4 			& 23 			& 22.6 			& 22.3 			& 24.8 \\ 
-\cite{Yang2011}  	& 14.2 			& 23.7 			& 21.6 			& 17.1 			& 16.7 			& 16.5 			& 19.3 \\ 
-\hline
-\end{tabular}
-\caption{Per-class joint localisation accuracy (2D)} 
-\label{tab/body/errperclass2D}
 \end{table}

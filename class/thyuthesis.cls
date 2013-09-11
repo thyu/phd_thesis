@@ -54,7 +54,7 @@
 \renewcommand*{\cftpartafterpnum}{\color{camblue}{\hrule}}
 \cftsetindents{part}{0em}{0em} 
 \cftpagenumbersoff{part}
-\setlength{\cftbeforepartskip}{5em} 
+\setlength{\cftbeforepartskip}{3em} 
 
 % chapter
 \renewcommand{\cftchapterpresnum}{\chaptername\hspace{2em}} 

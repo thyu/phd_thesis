@@ -1,41 +1,49 @@
 *** Global ***
 V - rename all the references 
 V - reset all the labels 
-- Fix all eq labels
-- Fix all unused labels
-- Add fullstop in equation?
-- ground truth or groundtruth
-- learned or learnt
-- beautify equations --- where, ":", etc. 
-- tables: best result in blue 
+V Fix all eq labels
+X Fix all unused labels
+V Add fullstop in equation?
+V ground truth or groundtruth
+V learned or learnt --- learned
+V beautify equations --- where, ":", etc. 
+V tables: best result in blue 
+V Review table and image caption 
+V am English and br English 
+- Chapter header
+- Abstract header
+V Citation has no meaning
+V Discussion -> Summary 
 
 *** Intro *** 
 V write introduction 
-- Fill in the missing citations in introduction 
-- Add a figure for contributions 
-- delete the litreview chatpers introduction 
+V Fill in the missing citations in introduction 
+V Add a figure for contributions 
+V delete the litreview chatpers introduction 
 
 *** Eval *** 
 
 *** 3dreg *** 
+V add bike dataset figure
+V add toshiba dataset figure 
 
 *** Act *** 
-
 V Add surveys to act reg (Moeslund, Weinland, Turaga)
-- Add a figure on generic BOW 
-- Remove VFAST as it is included in "eval" 
+V Add a figure on generic BOW 
+V Remove VFAST as it is included in "eval" 
 
 *** body ***
-- add a figure for voting
-v describe split function
-v describe compute feature?
-v delete the legend 
-- add sample of all subjects in APE 
+X add a figure for voting
+V describe split function
+V describe compute feature?
+V delete the legend 
+X add sample of all subjects in APE 
 
 *** hand ***
 - Expand figures
-- Rearrange the graphs (probably replot them) 
+V Rearrange the graphs (probably replot them) 
 
 *** conclusions *** 
-
+- Fix overfull
+- Proofread 
 

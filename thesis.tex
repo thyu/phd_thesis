@@ -17,51 +17,39 @@
 \OnehalfSpacing
 
 \include{0d-globaldef}
+\include{0d-defpart1}
+\include{0d-defpart2}
 
 \begin{document}
 
-\maketitle
-
+%\maketitle
 \frontmatter
 \pagenumbering{roman}
-
-\include{0f-abs}
-\include{0f-ack}
-
+%\include{0f-abs}
+%\include{0f-ack}
 \begin{KeepFromToc}
 \tableofcontents \newpage
 \end{KeepFromToc} 
 \listoffigures \newpage
 \listoftables
-
 %\printnomenclature  %% Print the nomenclature
 %\addcontentsline{toc}{chapter}{Nomenclature}
-
 \mainmatter
-
-\include{01-intro}
-
-\part{3D Shapes}
-\include{0d-defpart1}
-
-\include{11-eval}
-\include{12-reg}
-
-\part{Human Action Analysis}
-\include{0d-defpart2}
-
-\include{21-act}
+%\include{01-intro}
+%\part{3D Shapes}
+%\include{11-eval}
+%\include{12-reg}
+%\part{Human Action Analysis}
+%\include{21-act}
 \include{22-body}
-\addcontentsline{toc}{part}{} % add a fake part to table of contents
-\include{23-hand}
-
-\include{31-discussion} 
-
+%\addcontentsline{toc}{part}{} % add a fake part to table of contents
+%\include{23-hand}
+%\include{31-discussion} 
 \backmatter
 % \appendix
 %\include{a1-app}
 
-\bibliographystyle{plain}
+\bibliographystyle{abbrv}
 \renewcommand{\bibname}{References} 
 \bibliography{references} 
 
