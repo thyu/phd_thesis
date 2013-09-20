@@ -56,14 +56,14 @@ Body poses usually occupy larger and relatively static regions in the depth imag
 Hands, however, are often captured in a lower resolution, leading to more noisy inputs than body poses. 
 Missing parts and quantisation error is common in hand pose data, especially at small, partially occluded parts such as finger tips. Figure \ref{fig/hand/intro4} shows a depth image captured from a realistic environment, its hand shape is different from the synthetic depth image in figure \ref{fig/hand/intro3}.   
 Regardless of the object distance, missing values are created when stereo image pairs fail to match on the occlusion boundaries, as shown in figure \ref{fig/hand/intro4}. 
-Unlike sensor noise and depth errors \cite{Girshick2011, Baak2011}, these artifacts cannot be repaired or recovered easily. Consequently, a large discrepancy is observed between synthetic and realistic data.  
+Unlike sensor noise and depth errors \cite{Girshick2011, Baak2011}, these artefacts cannot be repaired or recovered easily. Consequently, a large discrepancy is observed between synthetic and realistic data.  
 
 % done 
 \item{\textbf{Inefficient data labelling}} \\ 
 Due to noise, occlusions and the inherent complex structure of human hand, realistic data are extremely costly to obtain via manual labelling. 
 Existing state-of-the-art methods leverage either synthetic data \cite{Keskin2012} or model-based visual tracking \cite{LaGorce2011, Oikonomidis2012}, to estimate hand poses without labelled training data. 
 They do not consider the realistic-synthetic discrepancies. 
-Despite achieving encouraging performances on synthetic testing data, these techniques give suboptimal results when they are tested with realistic data. 
+Despite achieving encouraging performances on synthetic testing data, these techniques give sub-optimal results when they are tested with realistic data. 
 Furthermore, noisy realistic data make automatic joint detection difficult, whereas in synthetic data joint boundaries are always clean and accurate.
 % Whilst handling shape variation is crucial for body pose estimation \cite{Shotton2011}, shape variations of human hands are generally smaller than that of body shape.        
 \end{itemize} 
@@ -82,7 +82,7 @@ As a result, it benefits from the characteristics of both domains.
 
 % done 
 In addition to the proposed \STR\ forest, a pseudo-kinematic joint refinement algorithm is proposed to handle occlusions and noisy articulations efficiently. 
-Hypotheses of 3D hand pose estimates from \STR\ forest are verified from this data-driven technique, which models the structure of human hands, without computing sophisicated inverse kinematics. 
+Hypotheses of 3D hand pose estimates from \STR\ forest are verified from this data-driven technique, which models the structure of human hands, without computing sophisticated inverse kinematics. 
 
 % Why depth image not RGB 
 % done 
@@ -102,7 +102,7 @@ The main contributions of the proposed 3D hand pose estimation framework are as 
 \item{\textbf{Realistic-Synthetic fusion}}\\
 Handling the issue of noisy inputs, a transductive learning algorithm for 3D hand pose estimation, namely \STR\ forest, is proposed. \STR\ forest relates the characteristics of realistic and synthetic training data, improving robustness and pose coverage in realistic testing environments.
 \item{\textbf{Semi-supervised learning}}\\
-Training a decriminative hand pose recogniser requires a large and extensive training dataset. Hand-labelling of hand pose data, however, is costly and ineffective due to occlusions and complicated articulations of human hands. 
+Training a discriminative hand pose recogniser requires a large and extensive training dataset. Hand-labelling of hand pose data, however, is costly and ineffective due to occlusions and complicated articulations of human hands. 
 The \STR\ forest utilises both labelled and unlabelled data in its learning algorithm, improving estimation accuracy while keeping a low labelling cost. 
 \item{\textbf{Data-driven pseudo-kinematics}}\\
 	Traditional Hough forest algorithms do not model occlusions and structural consistency of articulations \cite{Gall2009}. A data-driven, pseudo-kinematic technique is therefore introduced to verify the feasibility of hand poses inferred from the preceding \STR\ forest.  
@@ -117,7 +117,7 @@ The \STR\ forest utilises both labelled and unlabelled data in its learning algo
 Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
 
 % done 
-On the other hand, discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discimrinative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
+On the other hand, discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
 
 % done 
 \subsubsection{Early approaches} 
@@ -135,7 +135,7 @@ Although no training data is required for the above generative approaches, visua
 Tracking performances depend on the previous pose estimations, output pose estimates may drift away from ground truth when error accumulates over time. 
 When a tracking is eventually lost, accumulated incorrect pose estimates cannot be recovered without manual re-initialisation or re-detection. 
 In addition, most generative methods do not consider shape variations among individuals due to the additional complexity involved, affecting their accuracy in realistic applications \cite{Erol2007}.   
-Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with latest GPU acceleration techniques \cite{Oikonomidis2011}, generative methods struggle to attain real-time performance in commodaity hardware. 
+Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with latest GPU acceleration techniques \cite{Oikonomidis2011}, generative methods struggle to attain real-time performance in commodity hardware. 
 
 % Done 
 \subsubsection{Discriminative approaches} 
@@ -158,14 +158,14 @@ Zhu \etal \cite{Zhu2008a} applied visual tracking and inverse kinematics to esti
 Pons-Moll \etal \cite{Pons-Moll2011} presented a multi-camera motion capture system using Mises-Fisher sampling and inverse kinematics.  
 
 However, applying inverse kinematics to hand pose estimation is not as straightforward as that of body pose. As previously mentioned, fingertips are occluded frequently due to self-occlusions, extracting their locations for inverse kinematics is difficult, especially in videos. 
-Lacking a deformable articulated model, few discriminative methods consider the physical characteristics of human hands. For example, Wu and Huang \cite{Wu1999} searched for the optimal solution in inverse kinematics through a genetic algorithm. Additionally, Wang \etal \cite{Wang2009} proposed a data-driven approach to describe inverse kinematics using a colour-coded glove. The colour-coded glove avoided the problem of finger segmentation in video-based systems, a binary coding scheme was designed to perfrom nearest neighbour search efficiently in a large synethetic database. 
+Lacking a deformable articulated model, few discriminative methods consider the physical characteristics of human hands. For example, Wu and Huang \cite{Wu1999} searched for the optimal solution in inverse kinematics through a genetic algorithm. Additionally, Wang \etal \cite{Wang2009} proposed a data-driven approach to describe inverse kinematics using a colour-coded glove. The colour-coded glove avoided the problem of finger segmentation in video-based systems, a binary coding scheme was designed to perform nearest neighbour search efficiently in a large synthetic database. 
 
 Coping with the issues of occlusion and computational complexity, this work proposes a data-driven, pseudo-kinematic method to correct strongly occluded poses. Distributions of joint locations are efficiently described in a large database of synthetic hand articulations. Occluded joint centres are recovered by matching the visible joints from the corresponding distributions.
 
 % done 
 \subsection{Transfer learning} 
 Transductive transfer learning is often employed when training data of the target domain are too costly to obtain. 
-It has seen various successful applications \cite{Pan2010}, nontheless it has not been applied to articulated pose estimation. 
+It has seen various successful applications \cite{Pan2010}, nonetheless it has not been applied to articulated pose estimation. 
 In this work, realistic-synthetic fusion is realised by extending the idea of cross-modality learning by Bronstein \etal \cite{Bronstein2010} to the proposed \STR\ forest, where the training algorithm preserves the predefined associations between cross-domain data pairs, which are defined in section \ref{sec/hand/dataset}.  
 
 % done 
@@ -186,7 +186,7 @@ The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}(to
 Training data are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truths, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. 
 The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points, as shown in figure \ref{fig/hand/concept}. The proposed \STR\ learning algorithm introduces two new techniques to the traditional Hough and regression forest \cite{Gall2011}. 
 Transductive realistic-synthetic associations are preserved throughout the learning process, such that the paired data points pass down to the same node. 
-Futhermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using an unsupervised learning term. 
+Furthermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using an unsupervised learning term. 
 
 Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within an unified algorithm. Figure \ref{fig/hand/concept}(bottom) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
 
@@ -288,7 +288,7 @@ Consequently, $\viewterm$ and $\classterm$ optimises the decision trees by class
 % done 
 \subsubsection{Regression term} 
 This term optimises the regression aspect of the proposed \STR\ forest, by maximising the compactness of vote vectors in a tree node.  
-Similar to Hough forest, each patch in $\clset$ is associated with a vote, which is a 3D vector from the patch's centroid to the center of a joint in $\jointlabelset$. Let $\votelabelset(\clset)$ be the voting vectors of current training data $\clset$, the regression term $\regterm$ is defined as: 
+Similar to Hough forest, each patch in $\clset$ is associated with a vote, which is a 3D vector from the patch's centroid to the centre of a joint in $\jointlabelset$. Let $\votelabelset(\clset)$ be the voting vectors of current training data $\clset$, the regression term $\regterm$ is defined as: 
 \begin{equation}
 	\begin{aligned}
 		\votelabelset(\clset) & = \{ \votelabel_{\patch}|\forall \patch \in \clset \},\\[3mm]
@@ -371,7 +371,7 @@ It is also necessary to discard or correct anatomically impossible pose hypothes
 As a result, the proposed framework employs a data-driven, kinematic-based method to refine joint locations, without having an explicit hand model as in many generative tracking-based methods. 
 In order to obtain the maximum pose coverage, a large hand pose database $\ksynset$ is generated from a synthetic articulated model, such that $|\ksynset| \gg |\synset|$. 
 The pose database $\ksynset$ is generated using the same hand model as in the synthetic dataset $\synset$. Different from $\synset$, $\ksynset$ only contains the joint coordinates generated from the articulated model, while the corresponding depth images are not rendered. 
-Hence, the kinematic datasest $\ksynset$ is not used to train the \STR\ dataset. 
+Hence, the kinematic dataset $\ksynset$ is not used to train the \STR\ dataset. 
 % done 
 Training data $\ksynset$ is first categorised with respect to their viewpoints,  
 \begin{equation}
@@ -436,7 +436,7 @@ A $\testonejoint_{\joint}$ is considered as a high-confidence joint when the Euc
 		\hat{\mu}_{\joint}^{2} & \mbox{ if } ||\hat{\mu}_{\joint}^{1} - \hat{\mu}_{\joint}^{2}||_2 < \testqualthres \mbox{ and } \hat{\rho}_{\joint}^{1} < \hat{\rho}_{\joint}^{2}, \\[3mm] 
 		\mbox{undefined$\;^{\dagger}$} & \mbox{ otherwise }. 
 	\end{cases}\\
-	& \parbox{0.7\linewidth}{\small $\dagger$: Estimated by kinematic joint refinment algorithm}
+	& \parbox{0.7\linewidth}{\small $\dagger$: Estimated by kinematic joint refinement algorithm}
 	\end{aligned}
 	\label{eqn/hand/highconf}
 \end{equation}
@@ -505,7 +505,7 @@ Subsequently synthetic dataset $\synset$ were generated by projecting the articu
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.32\linewidth]{fig/hand/hand.pdf}
-	\caption{\textbf{Color codes and labels of the 16 hand regions.}}
+	\caption{\textbf{Colour codes and labels of the 16 hand regions.}}
 	\label{fig/hand/label}
 \end{figure}
 
@@ -518,7 +518,7 @@ Since labels can be reused for the in-plane rotationally symmetric images (same 
 Visible joints in $\reallset$ were annotated manually using 3D coordinates. However, annotation of occluded joints were labelled using the $(x,y)$ coordinates initially.  
 Realistic-synthetic associations $\assoc$ and the remaining $z$-coordinates in $\reallset$ were computed simultaneously by matching visible joint locations with $\synset$, using least squares and a direct similarity transform, similar to kinematic joint refinement in section \ref{sec/hand/kjr}. 
 Consequently, each data point in $\reallset$ was paired with its closest match $\patch_{syn} \in \synset$, and its occluded $z$ coordinates were approximated by the corresponding $z$ coordinates of $\patch_{syn}$.  
-A joint was model as a 3D truncated Gaussian distribution centered at the joint location, while its variance was defined empirically according to the structure of human hands. Foreground pixels were clustered into one of these distributions and therefore assigned with labels $\jointlabel$. For example, the palm label usually contributed a larger region than the fingertip labels, due to the large variance in the palm joint.
+A joint was model as a 3D truncated Gaussian distribution centred at the joint location, while its variance was defined empirically according to the structure of human hands. Foreground pixels were clustered into one of these distributions and therefore assigned with labels $\jointlabel$. For example, the palm label usually contributed a larger region than the fingertip labels, due to the large variance in the palm joint.
 
 Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled with 450, 1000 and 240 frames respectively.  Sequence $A$ was captured with a static viewpoint for the single-view experiment. Sequence $B$ features various viewpoint variations and sequence $C$ contains abrupt changes in both viewpoint and scale. In the experiments, 3 trees were trained with maximum depth varying from 16 (single-view experiment) to 24 (multi-view experiment), depending on the amount of training data.
 
@@ -534,7 +534,7 @@ Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled 
 
 The proposed approach was evaluated under a single view scenario, comparing with the traditional regression forest algorithm of Gall \etal \cite{Gall2011} as a baseline. Since there was only one viewpoint in testing sequence $A$, $\viewterm$ in equation \ref{eqn/hand/qualityfunction1} did not affect the experimental results. In other words, the proposed method and the baseline algorithm only differed in joint regression and classification, hence only $\classterm$,$\regterm$, $\pairterm$ and $\usterm$ were actually used in this experiment.    
 
-Performances of candidate algorithms were measured by their pixelwise classification accuracy per joint \cite{Shotton2011}. Figure \ref{fig/hand/single} shows the classification accuracy plots of the algorithm evaluated in this experiment.  
+Performances of candidate algorithms were measured by their pixel-wise classification accuracy per joint \cite{Shotton2011}. Figure \ref{fig/hand/single} shows the classification accuracy plots of the algorithm evaluated in this experiment.  
 It demonstrates the strengths of realistic-synthetic fusion and semi-supervised learning. 
 Accuracy of baseline method was improved by simply including both domains in training without any algorithmic changes. 
 
@@ -542,7 +542,7 @@ Transductive learning term $\pairterm$ have improved the accuracy substantially,
 By coupling realistic data with synthetic data, the transductive term $\pairterm$ effectively learns the discrepancies between the domains.
 %, which is important in recognising noisy and strongly occluded fingers.
 From figure \ref{fig/hand/single}, some joints are often mislabelled as other more dominating joints after transductive learning, \eg joints in little finger tip (L3) and index proximal (I1). 
-Nevertheless, semi-supervised learning significantly corrects those joints after transductive learning. To summarise, semi-supervised learning complements transductive learning by modeling the intermediate poses between the sparsely labelled realistic data.    
+Nevertheless, semi-supervised learning significantly corrects those joints after transductive learning. To summarise, semi-supervised learning complements transductive learning by modelling the intermediate poses between the sparsely labelled realistic data.    
 
 %\paragraph{Experiment on Data-driven Joint Refinement}
 %A fully-labelled, multiview video sequence is recorded to evaluate the overall performances of the approaches.  

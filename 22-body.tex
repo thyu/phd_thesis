@@ -10,7 +10,7 @@ Articulated 3D human pose estimation (3D HPE) is a longstanding problem in compu
 
 % Done -- maybe longer 
 % First problem - uncontrolled environments 
-Contemporary methods approach 3D pose estimation as a regression or a manifold learning scenario, 3D poses are estimated by learning a mapping from the feature space to the parametrised pose space. However, building a mapping between the two high-dimensional spaces is an essentially ill-posed problem \cite{Elgammal2004}. Hence, additional cues are necessary to recover the correct pose from multiple solutions, such as feature correspondences between calibrated cameras, visual tracking of body parts, foreground segmentation and 3D scene information. 
+Contemporary methods approach 3D pose estimation as a regression or a manifold learning scenario, 3D poses are estimated by learning a mapping from the feature space to the parameterised pose space. However, building a mapping between the two high-dimensional spaces is an essentially ill-posed problem \cite{Elgammal2004}. Hence, additional cues are necessary to recover the correct pose from multiple solutions, such as feature correspondences between calibrated cameras, visual tracking of body parts, foreground segmentation and 3D scene information. 
 Nevertheless, obtaining such extra cues is not trivial. 
 Most of the above techniques require a well-controlled environment, including a clean background for segmentation, a calibrated multi-camera network or specialised hardware.   
 As these ideal imaging conditions rarely exist in reality, the applicability of traditional 3D HPE is greatly restricted. 
@@ -52,7 +52,7 @@ Each action is a time series of instantaneous poses, with particular starting an
 
 In this work, action detection is applied to extract spatiotemporal structures of human actions for pose estimation. A new action detection forest algorithm, an extension of Hough forest \cite{Gall2009}, is introduced to infer a global body pose hypothesis.   
 In figure \ref{fig/body/actionexplain}, action detection categorises the action class and then estimates the relative space-time location of the recognised action with respect to the input video. In other words, action detection predicts the current states of an action, which assists 3D pose estimation within the action's time span. Once an action is detected, the current pose hypothesis can be determined by computing the relative spatiotemporal displacements between the current observation and the action's preceding poses as shown in figure \ref{fig/body/actionexplain}.   
-On top of its many benefits to pose estimation, action detection does not impose extra restriction on the imaging environment. As discussed in chapter \ref{chap/act}, there already exist promising approaches for human action classification, action detection is therefore a suitabe candidate to improve 3D HPE in realistic applications.   
+On top of its many benefits to pose estimation, action detection does not impose extra restriction on the imaging environment. As discussed in chapter \ref{chap/act}, there already exist promising approaches for human action classification, action detection is therefore a suitable candidate to improve 3D HPE in realistic applications.   
 
 % DOne 
 \subsubsection{Mid-level features from deformable part model} 
@@ -87,8 +87,8 @@ The outputs of both forests, and their combined results, are formulated in a pro
 
 % Part-based 2D pose analysis has been studied for decades, examples of 
 Human pose estimation has been studied for decades, where most of the early approaches focused on estimating poses in 2D images, including pictorial structure \cite{Fischler1973} and template matching \cite{Ioffe1999}. These methods, however, lack an automatic part detector, which implies that manual labelling is required for both training and testing data. Hence, their potential applications are greatly limited.
-On the other side, 3D human pose estimation is a more sophisicated task than its 2D counterpart due to occlusions and high dimensionality of the pose space. Nevertheless, various techniques have been investigated to estimate 3D poses from video data. For instance, Hogg \cite{Hogg1983} used image edges to infer the 3D pose of a walking person captured from a carefully controlled scene. 
-Micilotta \etal \cite{Micilotta2006} used serveral appearance-based part detectors, \eg boosting detectors for face and hand, to compose a simple 3D upper-body pose. 
+On the other side, 3D human pose estimation is a more sophisticated task than its 2D counterpart due to occlusions and high dimensionality of the pose space. Nevertheless, various techniques have been investigated to estimate 3D poses from video data. For instance, Hogg \cite{Hogg1983} used image edges to infer the 3D pose of a walking person captured from a carefully controlled scene. 
+Micilotta \etal \cite{Micilotta2006} used several appearance-based part detectors, \eg boosting detectors for face and hand, to compose a simple 3D upper-body pose. 
 Navaratnam \etal \cite{Navaratnam2006} designed a semi-supervised regression algorithm, where unlabelled training data were used to learn a Gaussian mixture based pose regressor, from shape-context features extracted from silhouettes. Two extensive literature reviews on traditional 3D human pose estimation were presented by Aggarwal and Cai \cite{Aggarwal1999} and Poppe \cite{Poppe2007}. 
 
 More recent techniques of human pose estimation are discussed below according to the techniques or representations used.
@@ -100,7 +100,7 @@ For instance, Agarwal and Triggs encoded foreground silhouettes using shape-cont
 Bissacco \etal \cite{Bissacco2007} proposed a boosting classifier to compute human poses from both silhouettes and motion features.  
 Andriluka \etal used a deformable pedestrian detector to cover 3D walking poses in a cluttered street scene.  
 Jiang \etal \cite{Jiang2011} presented consistent max-covering which maximises the overlapping area of a projected 3D pose configuration and an input silhouette. 
-A lantent structured model is described by Ionescu \etal \cite{Ionescu2011} to estimate 3D poses from silhouettes. 
+A latent structured model is described by Ionescu \etal \cite{Ionescu2011} to estimate 3D poses from silhouettes. 
 Motion templates are also used in 3D pose estimation, Rogez \etal \cite{Rogez2012} used a global motion template to recognise poses using a tree-shape ensemble of rejectors. 
 Pons-Moll \etal \cite{Pons-Moll2011} presented a pose optimisation algorithm from silhouettes captured from multiple cameras. 
 % such as motion templates \cite{Rogez2012}, pedestrian detectors \cite{Andriluka2010}, shape-context \cite{Agarwal2006} and consistent max-covering \cite{Jiang2011}. 
@@ -111,7 +111,7 @@ Given 2.5D information, foreground object segmentation is straightforward in a s
 %Depth information of the scene is provided in the depth images, information and as it provides inherent depth information and object segmentation. 
 For instance, Zhu \etal \cite{Zhu2008a} presented a upper-body pose estimation method from sequences of depth images using visual tracking and inverse kinematics. 
 Baak \etal \cite{Baak2011} proposed a data-driven algorithm for real-time 3D pose estimation. A variant of Dijkstra's algorithm was introduced to extract holistic pose features efficiently from depth images, and such features were combined with local estimates using Hausdorff distance. 
-Ye \etal \cite{Ye2011} matched a single depth image with a set of precomputed motion exemplars to estimate a holistic body configuration. The initial result was subsequently refined by fitting the pose configuration back to the testing depth image. 
+Ye \etal \cite{Ye2011} matched a single depth image with a set of pre-computed motion exemplars to estimate a holistic body configuration. The initial result was subsequently refined by fitting the pose configuration back to the testing depth image. 
 Sun \etal \cite{Sun2012} estimated 3D pose configurations from depth image patches using regression forests.  
 Using a similar regression forest algorithm, Taylor \etal \cite{Taylor2012} performed 3D HPE by computing dense correspondences from an input depth image to a deformable 3D articulated model.  
 %However, the above methods require either specialised hardware (\eg Kinect sensor) or controlled environments to acquire compatible training or testing data.  
@@ -129,7 +129,7 @@ During data acquisition, 3D body poses are projected to 2D video frames or depth
 
 A standard approach to resolve the pose ambiguity issue is to maximise the field of view by capturing multiple images simultaneously using calibrated cameras \cite{Pons-Moll2011, Sigal2012, Yao2012}.   
 Although these methods guarantee excellent accuracy, their potential applications are restricted to a fixed, calibrated multi-camera system. 
-Meanwhile, resolving the pose ambiguity from multiple views is, still, a sophisicated optimisation problem. 
+Meanwhile, resolving the pose ambiguity from multiple views is, still, a sophisticated optimisation problem. 
 As a result, existing solutions are often computationally expensive, which further limit their potential applications.   
 
 % Done 
@@ -139,7 +139,7 @@ As mentioned in the previous section, the integration of action and pose is bene
 While there exist some algorithms that recognise actions from pose estimation or structural constraints constraints \cite{Yu2010, Raja2011}, the opposite direction, \ie pose estimation from human action, is still a relatively new area. 
 
 Regarding the idea of pose estimation from action recognition, Yao \etal \cite{Yao2012} used action recognition to assist a multi-view 3D HPE algorithm. 
-Action class contains rich information about the spatiotemporal strcuture of the testing data. For example, when a ``walking'' action is detected from the input video, the subsequent pose estimator then constricts the possible output space to walking poses.   
+Action class contains rich information about the spatiotemporal structure of the testing data. For example, when a ``walking'' action is detected from the input video, the subsequent pose estimator then constricts the possible output space to walking poses.   
 Separate regression models were trained for each action class in the training data. 
 Action classification was used to select the corresponding regression model that estimates the output 3D poses. 
 However, the above approach did not consider the temporal structure of an action.    
@@ -276,7 +276,7 @@ The second term $\qualityjr(\cdot)$ measures the compactness of 3D poses when th
 	- \Psi\left(\Sigma(\ppset_{rc})\right), \\[3mm]
 	\Psi(\cdot) & = \log\left(\det(\cdot)\right),
 \end{align} 
-where $\Sigma(\ppset_{\curnode c})$ is the covariances of the PCA-embedded pose vectors of action class $c$ in node $\curnode$, $\ppset_{lc}$ and $\ppset_{rc}$ denote the datasets divded by the split function for left and right respectively. The compactness of 3D poses in a node is measured by the log-determinant of covariance $\Psi(\cdot)$. 
+where $\Sigma(\ppset_{\curnode c})$ is the covariances of the PCA-embedded pose vectors of action class $c$ in node $\curnode$, $\ppset_{lc}$ and $\ppset_{rc}$ denote the datasets divided by the split function for left and right respectively. The compactness of 3D poses in a node is measured by the log-determinant of covariance $\Psi(\cdot)$. 
 
 % Done 
 The relative importance of each term in equation \ref{eqn/body/newquality} is determined by $\omega$. The value of $\omega$ is determined by the class purity of a node: 
@@ -323,7 +323,7 @@ As a result, $\frameth_{\termnode c}$ is a temporal offset that relates other 3D
 The cross-modality regression forests $\{\forestr^{(j)}|{j} = 1,\dots,\njoints\}$, inspired by the work of Criminisi \etal \cite{Criminisi2011}, are learned to refine the 3D locations of joints. However, instead of locating objects from local patches within the same volumetric data, the proposed regression forests learn direct mappings from 2D pose configurations to 3D joint locations.
 
 Each joint location is refined by learning a separate regression forest.  
-A regression forest $\forestr^{(j)}$ contains $\ntreer$ trees that estimate the location of the $j$-th joint in a 3D pose configuration, trained independely from the dataset $\{ \pset^{(j)}, \fset, \aset\}$, where $\pset^{(j)}$ is the $j$-th joint's 3D coordinates in $\pset$. 
+A regression forest $\forestr^{(j)}$ contains $\ntreer$ trees that estimate the location of the $j$-th joint in a 3D pose configuration, trained independently from the dataset $\{ \pset^{(j)}, \fset, \aset\}$, where $\pset^{(j)}$ is the $j$-th joint's 3D coordinates in $\pset$. 
 Split function candidates are generated in the same way as action detection using the feature vector $\feature$. 
 
 Although action class posteriors can be computed in the terminal nodes, they are not included in this model. The action detection forest $\forestd$ provides a better action recognition rate that helps the localisation accuracies of $\forestr^{(j)}$. Since the action class labels are recognised in advanced via action detection, the quality function $\qualityjr(\cdot)$ aims to minimise the uncertainty in joint regression rather than classification error.
@@ -344,7 +344,7 @@ Upon completion of $\forestr^{(j)}$, the output of a tree node $\termnode$ is de
 % Done 
 \subsection{Input features}
 
-The basic input unit for the proposed system, namely video snippet, is a short sequence excerpted from the testing video \cite{Schindler2008}, \cf chapter \ref{chap/act}. A snippet $\snippetnow$ contains $\snippetlen$ frames centered at a reference time $\timenow$ such that
+The basic input unit for the proposed system, namely video snippet, is a short sequence excerpted from the testing video \cite{Schindler2008}, \cf chapter \ref{chap/act}. A snippet $\snippetnow$ contains $\snippetlen$ frames centred at a reference time $\timenow$ such that
 \begin{equation}
 	\label{eqn/body/snippetnow}
 	\snippetnow = \left\{ \sframe_{\timenow - \frac{\snippetlen}{2}}, \dots, \sframe_{\timenow + \frac{\snippetlen}{2} - 1} \right\}.
@@ -365,7 +365,7 @@ The testing process starts with extracting features from $\snippetnow$. A DPM , 
 
 %done 
 \paragraph{Classification}
-Action detection forest $\forestd$ first performs action classification on $\snippetnow$. Let $\termnode_k[\feature_{ij}]$ be the terminal node reached by a feature vector $\feature_{ij}$ in the $k$-th tree of the action dection forest $\forestd$, the output action class is the average of all posteriors over trees, frames and hypotheses:   
+Action detection forest $\forestd$ first performs action classification on $\snippetnow$. Let $\termnode_k[\feature_{ij}]$ be the terminal node reached by a feature vector $\feature_{ij}$ in the $k$-th tree of the action detection forest $\forestd$, the output action class is the average of all posteriors over trees, frames and hypotheses:   
 \begin{equation}
 	\label{eqn/body/actionclassification} 
 	\begin{aligned}
@@ -375,7 +375,7 @@ Action detection forest $\forestd$ first performs action classification on $\sni
 
 % Done 
 \paragraph{Detection (Hough voting)}
-Once the input snipper is classified, a Hough-based voting scheme is employed to perform action detection. 
+Once the input snippet is classified, a Hough-based voting scheme is employed to perform action detection. 
 As mentioned in section \ref{sec/body/adflearn}, the vote $(\videoth,\frameth)$ stored in $\forestd$ are temporally associated with their corresponding action sequence in the training data set. Each training frame is therefore related to its ground truth 3D pose in $\pset$. All frames in $\snippetnow$ can vote for a 3D pose at time $\timenow$, by applying temporal offsets $\toffset$ to the votes obtained from $\fset_{\snippetnow}$. 
 
 The time offset function, $\toffsetfunc(\snippetnow,c)$, returns a set of 3D poses in $\pset$ for action label $c$ from Hough-voting during action detection. 
@@ -431,7 +431,7 @@ Outputs from $\toffsetfunc(\snippetnow, c)$ are the 3D pose estimations at time 
 	P( \bodyposead^{(j)}_{\timenow}| \snippetnow, \action = c,\forestd) =
 	\normdist\left(\bodyposead^{(j)}_{\timenow}; \mu\left(\toffsetfunc^{(j)}(\snippetnow,c)\right), \Sigma\left(\toffsetfunc^{(j)}(\snippetnow,c)\right)\right),
 \end{equation}
-where $\mu(\toffsetfunc^{(j)}(\snippetnow,c))$ is the mean $\Sigma(\toffsetfunc^{(j)}(\snippetnow,c))$ and covariance matrice of $\toffsetfunc^{(j)}(\snippetnow,c)$ respectively.  The 3D vector $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ denotes the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
+where $\mu(\toffsetfunc^{(j)}(\snippetnow,c))$ and $\Sigma(\toffsetfunc^{(j)}(\snippetnow,c))$ are the mean and covariance matrix of $\toffsetfunc^{(j)}(\snippetnow,c)$ respectively.  The 3D vector $\bodyposead_{\timenow}^{(j)}\in\realnum^{3}$ denotes the $j$-th joint in $\bodyposead_{\timenow}\in\realnum^{3\njoints}$.
 
 % Done 
 \subsection{Cross-modality regression}
@@ -457,7 +457,7 @@ Similar to the action detection forest, the regression result for the $j$-th joi
 
 \subsection{Combined pose estimation}
 
-While the action detection phase estimate a 3D body pose gloablly, the regression forest refined each joint locally. Their results are combined to produce the output estimate. Since each joint is described as a Gaussian distribution in $\forestd$ and $\forestr$, assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, the probability of both observations coincide at $\bodyposez$ is formulated as
+While the action detection phase estimate a 3D body pose globally, the regression forest refined each joint locally. Their results are combined to produce the output estimate. Since each joint is described as a Gaussian distribution in $\forestd$ and $\forestr$, assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, the probability of both observations coincide at $\bodyposez$ is formulated as
 \begin{equation}
 	\label{eqn/body/combine}
 	\begin{aligned}
@@ -513,7 +513,7 @@ where the confidence region indicated by the covariance matrices $\finalvariance
 \subsection{APE evaluation dataset}
 Experiments were performed to evaluate the performance of the proposed 3D HPE system.
 Existing public 3D pose datasets are inadequate to verify the main objectives of the proposed system.  
-While existing public benchmarks such as HumanEva \cite{Sigal2010} and TUM Kitchen dataset \cite{Yao2012} represent 3D body poses using sophiscated techniques, \eg camera networks, from a static area, the proposed framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
+While existing public benchmarks such as HumanEva \cite{Sigal2010} and TUM Kitchen dataset \cite{Yao2012} represent 3D body poses using sophisticated techniques, \eg camera networks, from a static area, the proposed framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
 
 As a result, the action-pose-estimation (APE) dataset was collected for both quantitative and qualitative evaluations in this work. The APE dataset contains action videos from $7$ different subjects, each of them performs $7$ categories of actions. Each action is repeated five times per subject, hence there are $245$ sequences in the whole APE dataset. 
 Videos of each subject were recorded in different environments, changing camera poses and moving background objects. Pose configurations are represented by 3D joint locations instead of joint angles as in other existing human pose datasets.   
@@ -554,7 +554,7 @@ Snippets were extracted densely from training and testing data, with snippet len
 
 Pose estimation accuracy was evaluated in both 2D and 3D. Accuracies of 3D joint coordinates were compared directly with ground truth 3D poses captured by the Kinect sensor as described in section \ref{sec/body/featureextraction}. Accuracies in 2D were measured by back-projecting the poses to image coordinates.  
 Besides the combined pose estimation $\finalbodypose$, each of the forests was also evaluated separately, and they were compared it with the latest 2D HPE algorithms, by Eichner \etal \cite{Eichner2012} and Yang and Ramanan \cite{Yang2011}. 
-In order to cope with actions performed in different speeds, testing videos were preprocessed by normalising with respect to their action speeds estimated from the first $25$ frames of the videos.
+In order to cope with actions performed in different speeds, testing videos were pre-processed by normalising with respect to their action speeds estimated from the first $25$ frames of the videos.
 In order to make a fair comparison, the joint coordinates from the frame-based algorithms were temporally smoothed by a $10$-frame median filter, as the proposed approach estimates body poses from multiple-frame snippets. 
 
 Action classification rates of individual frames by both forests are presented in figure \ref{fig/body/confm}. 
@@ -584,7 +584,7 @@ The proposed framework shows promising results, by extending the flexibility of 
 \input{include/body_class2d}
 
 The per-class localisation errors are shown in table \ref{tab/body/errperclass3D} (3D) and \ref{tab/body/errperclass2D} (2D). While some classes demonstrate significant improvements after combining the results of action detection and pose regression, \eg ``clap'' and ``wave 1'', the ``bend'' and ``box'' class report the highest error rates. It is because the 2D part detections obtained from the ``box'' and ``bend'' classes are not as stable as those from other classes. For the ``box'' action, self-occlusion happens frequently such that the part detector is confused about the left and right hand positions, making hand and arm parts spread around the torso as in figure \ref{fig/body/APEerr2} and \ref{fig/body/APEerr3}. 
-Similarly, when the arms are stretched overhead and occluded, the 2D DPM model used in the experiments gives incorrect results as no appearance cue can be used for detection. The above observations show that using DPM alone is inadeuquate to perform human pose estimation in action with occlusions, justifying the use of spatiotemporal structures, \ie action, to refine the noisy DPM outputs.  
+Similarly, when the arms are stretched overhead and occluded, the 2D DPM model used in the experiments gives incorrect results as no appearance cue can be used for detection. The above observations show that using DPM alone is inadequate to perform human pose estimation in action with occlusions, justifying the use of spatiotemporal structures, \ie action, to refine the noisy DPM outputs.  
 
 \input{include/body_ape.tex}
 
@@ -604,14 +604,14 @@ Coupling the outputs from the two random forests, 3D pose estimation accuracy is
 
 On the other side, there is still room for improvement in the proposed approach. The proposed method relies on DPM as the only source of input. Albeit great flexibility, the performance of a DPM depends on its training data \cite{Yang2011, Eichner2012}. The proposed method handles minor errors gracefully by allowing multiple hypotheses and snippet-based input, but large errors cannot be recovered completely, \eg figure \ref{fig/body/APEerr1} and \ref{fig/body/APEerr2} for APE dataset, and \ref{fig/body/others/g} and \ref{fig/body/others/h} for KTH and Weizmann dataset respectively. 
 
-The prototype system used in the experiments operated at a frame rate of $0.31$fps. Its main run-time bottleneck was at the feature extraction phase by DPM; Using precomputed DPM features, the pose estimator alone ran at about $5$fps on the APE dataset. 
+The prototype system used in the experiments operated at a frame rate of $0.31$fps. Its main run-time bottleneck was at the feature extraction phase by DPM; Using pre-computed DPM features, the pose estimator alone ran at about $5$fps on the APE dataset. 
 
 \input{include/body_others.tex}
 
 \section{Summary}
 \label{sec/body/conclusions}
 
-Human pose estimation, a subproblem in video-based human action analysis, is discussed in this chapter.  
+Human pose estimation, a sub-problem in video-based human action analysis, is discussed in this chapter.  
 While traditional methods for 3D human pose estimation emphasise accuracy over their compatibility with realistic applications, the proposed system presents novel ideas that do not involve traditional scene-dependent constraints, \eg background subtraction or multiple calibrated camera.
 
 This work explores the new area of using action for pose estimation. 

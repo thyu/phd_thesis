@@ -7,7 +7,7 @@
 Traditional object recognition task, classification in particular, are usually approached by learning low level statistics on local, appearance based features, \eg bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, ignoring structural coherence within an object class for improved robustness. These methods become less reliable when objects' textures are often absent or indistinctive in appearance, such as 3D shape recognition of which input data are often textureless. 
 
 Making use of the spatial relationships among local features, part-based model emerges as an effective solution by learning jointly local appearance and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
-Part-based models have overcome the limitations of traditional structureless approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration process often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
+Part-based models have overcome the limitations of traditional structure-less approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration process often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
 
 On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus this problem is still unsolved in 2D part-based models, let alone their 3D counterparts. 
 As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. 
@@ -68,7 +68,7 @@ Early implementations of part-based models were class-specific, where parts arra
 
 Vote-based methods, \eg implicit shape model \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Barinova2010}.
 
-Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intraclass appearance variation, \eg cars or pedestrians, than appearance-only approaches. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
+Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation, \eg cars or pedestrians, than appearance-only approaches. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
 
 %Alternative approaches, such as part-based models (\eg constellation, pictorial structures) and vote-based approaches (\eg generalised hough transform), utilise the structural coherence of an object class, at a cost of lower flexibility to pose changes. 
 
@@ -116,11 +116,11 @@ Secondly, given a testing instance of unknown class, the proposed SAP model is a
 
 \subsection{Variables}
 
-A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. Apperance and position of a part are described by two Gaussians with diagonal covariances. Part appearance is represented by variable $\partapp=\{\muapp,\sigmaapp\}$, where $\muapp$ and $\sigmaapp$ are the mean and covariance of the corresponding Gaussian. Similarly, variable $\partshape=\{\mushape,\sigmashape\}$ denotes the location of a part. 
+A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. Appearance and position of a part are described by two Gaussians with diagonal covariances. Part appearance is represented by variable $\partapp=\{\muapp,\sigmaapp\}$, where $\muapp$ and $\sigmaapp$ are the mean and covariance of the corresponding Gaussian. Similarly, variable $\partshape=\{\mushape,\sigmashape\}$ denotes the location of a part. 
 
 In the SAP model, each part is either visible or occluded in a given data instance.   
-For simplicity, the presence of each part is independent of other parts, in constrast to \cite{Fergus2007, Weber2000}, whose model consider correlations in part occlusion. 
-The visibility of a part is indicated by the binary variable, $\seen$, which equals to $1$ if the part is seen. Similar to Fergus \etal \cite{Fergus2007}, $\numfeat$ features with pose $\featshape$ and appearance $\featapp$ are indentified from each data instance. (The number of extracted features, $\numfeat$, actually varies across instance. It is shown as a constant for simplicity of exposition.)  
+For simplicity, the presence of each part is independent of other parts, in contrast to \cite{Fergus2007, Weber2000}, whose model consider correlations in part occlusion. 
+The visibility of a part is indicated by the binary variable, $\seen$, which equals to $1$ if the part is seen. Similar to Fergus \etal \cite{Fergus2007}, $\numfeat$ features with pose $\featshape$ and appearance $\featapp$ are identified from each data instance. (The number of extracted features, $\numfeat$, actually varies across instance. It is shown as a constant for simplicity of exposition.)  
 
 The SAP model assumes that each feature is generated either by a part of the object, or from an unknown background class, which is represented by a part with Gaussian appearance $\{\muapp_0, \sigmaapp_0\}$ and $\{\mushape_0, \sigmashape_0\}$ respectively. 
 The feature to part assignment is indicated by an variable $\assign$, which is a $\numfeat \times (\numpart + 1)$ binary indicator matrix. 
@@ -131,7 +131,7 @@ At most one feature can be assigned to an object part, whilst any number of feat
 		\sum_{\anyfeat = 1}^{\numfeat}\assignval_{\anyfeat\anypart}& =\seen_\anypart & \forall \anypart>0.
 	\end{aligned} 
 \end{equation}
-Since $\assign$ determines the value of $\seen$, the latter appear only for convenience, and are omitted where superflous. 
+Since $\assign$ determines the value of $\seen$, the latter appear only for convenience, and are omitted where superfluous. 
 
 Different from other existing constellation models, object poses are explicitly modelled in learning. Each foreground object has a variable pose, $\pose$, completing the graphical model shown in figure \ref{fig/reg/graphicalModelNoParticle}, which assumes there are $\numinstance$ training/test instances. 
 
@@ -143,7 +143,7 @@ The appearance vectors $\partapp$ and $\featapp$ are parameterised according to 
 %\footnote{Since $\assign$ determines the $\seen$ values, the latter appear only for convenience, and are omitted where superfluous.} In addition, we novelly assume that the foreground object itself has a variable pose, $\pose$, completing the graphical model shown in figure \ref{fig/reg/graphicalModelNoParticle}, which assumes there are $\numinstance$ training/test instances.
 
 
-\paragraph{Notation~} Many of the random variables in the proposed model are one of an independent set, indicated by the plates (boxes) in figure \ref{fig/reg/graphicalmodel}. The variable sets using the same letters in caligraphic font, while variables are indexed within these sets by subscript lowercase letters matching the uppercase letter indicating the number of elements in the set. For example, the set of part-feature assignments over all instances is $\setassign = \{\assign_{\anyinstance}\}_{\anyinstance=1}^\numinstance$. Set and subset indices are concatenated, \eg $\assignval_{\anyinstance\anyfeat\anypart}$.
+\paragraph{Notation~} Many of the random variables in the proposed model are one of an independent set, indicated by the plates (boxes) in figure \ref{fig/reg/graphicalmodel}. The variable sets using the same letters in calligraphic font, while variables are indexed within these sets by subscript lowercase letters matching the uppercase letter indicating the number of elements in the set. For example, the set of part-feature assignments over all instances is $\setassign = \{\assign_{\anyinstance}\}_{\anyinstance=1}^\numinstance$. Set and subset indices are concatenated, \eg $\assignval_{\anyinstance\anyfeat\anypart}$.
 
 \subsection{Distributions}
 
@@ -161,7 +161,7 @@ where $\partprior_\anypart\in [0, 1]$ is a binomial prior of a single part. Give
 	\end{cases},
 	\label{eqn/reg/HDdist}
 \end{align}
-where all valid assignments forms a uniform distribution. The distritbution of observed appearance $\featapp$ given $\setpartapp$ and $\assign$ is modelled as a joint normal distribution of all visible parts:  
+where all valid assignments forms a uniform distribution. The distribution of observed appearance $\featapp$ given $\setpartapp$ and $\assign$ is modelled as a joint normal distribution of all visible parts:  
 \begin{equation}
 	\prob(\featapp|\setpartapp,\assign) = \displaystyle\prod_{\anypart=0}^\numpart
 	\NormDist(\featapp; \muapp_\anypart, \sigmaapp_\anypart)^{\assignval_{\anyfeat\anypart}}.
@@ -339,7 +339,7 @@ The part appearance, represented by mean $\muapp_{\anypart}^{(t)}$ and covarianc
 	\end{aligned}
 	\label{eqn/reg/partappearance}
 \end{equation}
-Since the weights in equation \ref{eqn/reg/partappearance} depend on other part appearances, the optimal $\setpartapp$ is not maximised in a single iteration. Nevertheless, the equation approaches to the optimal solutions when the M-step are interated. 
+Since the weights in equation \ref{eqn/reg/partappearance} depend on other part appearances, the optimal $\setpartapp$ is not maximised in a single iteration. Nevertheless, the equation approaches to the optimal solutions when the M-step are iterated. 
 
 \subsubsection{Updating $\pose$}
 The instance pose, $\pose$, can be parameterised in various ways, depending on the pose variations seen in the data. In this work two different parameterisations are considered. The first is the direct similarity transform
@@ -351,7 +351,7 @@ The instance pose, $\pose$, can be parameterised in various ways, depending on t
 \end{equation}
 where $s(\pose)\in\mathbb{R}^+$, $\mathbf{R}(\pose)\in SO(l,\mathbb{R})$, and $\mathbf{t}(\pose)\in\mathbb{R}^l$ are the scale, rotation, and translation components respectively; and $l$ is the dimensionality of input data. 
 
-In this case the part/feature positions, $\partshape$ and $\featshape$, adopt the SRT ditance \cite{Pham2011} for the distance function $d()$ in equation \ref{eqn/reg/shape}. In the SRT distance, a feature is represented by a similarity transformation matrix, similar to \ref{eqn/reg/dsmatrix}. The weighting for scale, rotation and translation in SRT distance are denoted by parameters $\sigmashape = \{\sigmashapes, \sigmashaper, \sigmashapet\}$.
+In this case the part/feature positions, $\partshape$ and $\featshape$, adopt the SRT distance \cite{Pham2011} for the distance function $d()$ in equation \ref{eqn/reg/shape}. In the SRT distance, a feature is represented by a similarity transformation matrix, similar to \ref{eqn/reg/dsmatrix}. The weighting for scale, rotation and translation in SRT distance are denoted by parameters $\sigmashape = \{\sigmashapes, \sigmashaper, \sigmashapet\}$.
 According to Pham \etal \cite{Pham2011}, the SRT distance has the desirable properties of a closed form weighted mean and a constant Gaussian normalisation factor. This not only eliminates scale bias, but also introduces feature orientation into the constellation model.
 
 The second is the affine transform, represented by a matrix similar to that above, but whose first $l$ rows can take any real values. In this situation the part/feature positions are parameterised by translation only, and $d()$ is simply Euclidean distance.
@@ -470,7 +470,7 @@ The $255$-dimensional appearance space feature was embedded to a compact $15$-di
 	\label{fig/reg/toshiba}
 \end{figure}
 
-The Toshiba CAD Model \textbf{point cloud} dataset \cite{Ltd.2011} was used for the 3D evaluation. It contains point clouds of 12 real objects acquired using multi-view stereo \cite{Vogiatzis2011}. Each object class contains 20 separate scans of a particular object, captured in a variety of poses. In this experiment, two shape classes, namely ``cog2'' and ``bearing1\_black'' were not incuded in the experiments because their shapes are too similar to other classes, \ie ``cog1'' and ``bearing1''. The ten classes of shapes included in the experiment are shown in figure \ref{fig/reg/toshiba} 
+The Toshiba CAD Model \textbf{point cloud} dataset \cite{Ltd.2011} was used for the 3D evaluation. It contains point clouds of 12 real objects acquired using multi-view stereo \cite{Vogiatzis2011}. Each object class contains 20 separate scans of a particular object, captured in a variety of poses. In this experiment, two shape classes, namely ``cog2'' and ``bearing1\_black'' were not included in the experiments because their shapes are too similar to other classes, \ie ``cog1'' and ``bearing1''. The ten classes of shapes included in the experiment are shown in figure \ref{fig/reg/toshiba} 
 
 As point clouds are usually textureless, appearance features of the \textbf{Point cloud} dataset are described by the local shape around the interest points. 
 The dataset includes a set of features per point cloud, each with position in scale, rotation and translation, as well as a $31$-dimensional descriptor, which are used for $\featshape_{\anyinstance\anyfeat}$ and $\featapp_{\anyinstance\anyfeat}$ respectively in the experiments. Furthermore, this dataset provides a ground truth pose for each object scan.
@@ -523,7 +523,7 @@ Performances figures are given by the ROC equal error rates for binary classific
 According to the experimental results, both approaches perform similarly when there is no or small pose variations. However, the performance of Fergus \etal \cite{Fergus2007}, which does not model pose as a variable, drops rapidly as the pose variation level increases. Under large pose variation, traditional constellation model \cite{Fergus2007} ceases working, leading to a random classification. 
 By contrast, the SAP model with direct similarity pose maintains a high recognition rate under large direct similarity pose variations, while the affine model, for which feature rotation and scaling components are absent, performs slightly worse. 
 Under affine transformations, the two types SAP model perform similarly, with a significant drop in performance under large pose variations. Since the computed features, \ie the rotated patches, are not affine-invariant, they are irreversibly distorted by shearing, leading to a weaker appearance model, especially $\partapp$.
-The more flexible affine transformations might also overfit the poses of some non-object testing instances, creating more false positives that affected the recognition accuracy. 
+The more flexible affine transformations might also over-fit the poses of some non-object testing instances, creating more false positives that affected the recognition accuracy. 
 
 \begin{figure}[ht]
 	\centering 
@@ -640,7 +640,7 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 		\includegraphics[width=\linewidth]{fig/reg/reg3Dtrain_block.png} 
 		\subcaption{Block}
 	\end{subfigure}
-	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist())$, where $\dist()$ is the SRT distance. Note that the bad resgistred classes, \eg \emph{block}, are clustered.}
+	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist())$, where $\dist()$ is the SRT distance. Note that the bad registered classes, \eg \emph{block}, are clustered.}
 	\label{fig/reg/reg_srtmatrices}
 \end{figure}
 
