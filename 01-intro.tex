@@ -43,7 +43,7 @@ This thesis studies several long-standing challenges in 3D object classification
 
 \subsection{3D shape classification and registration} 
 
-Different 3D shape representations lead to diversified features for classification and registration. Designing an generic 3D shape recognition algorithm is therefore difficult. Many existing methods are restricted to certain data representations and formats, especially for triangular mesh which is a standard for synthetic 3D data, \eg Harris3D \cite{Sipiran2011} and MeshHOG \cite{Zaharescu2009}.     
+Different 3D shape representations lead to diversified features for classification and registration. Designing a generic 3D shape recognition algorithm is therefore difficult. Many existing methods are restricted to certain data representations and formats, especially for triangular mesh which is a standard for synthetic 3D data, \eg Harris3D \cite{Sipiran2011} and MeshHOG \cite{Zaharescu2009}.     
 While 2D image-based interest points are studied extensively \cite{Mikolajczyk2005}, there are few comprehensive performance evaluations for 3D interest points. 
 Addressing the above issue, this thesis is mainly concerned with the interest points in volumetric data, which is a common representation of 3D and time-varying data. Voxels can be converted conveniently from other data formats, such as point clouds, meshes and videos, providing extra applicability and usability. 
 
@@ -51,7 +51,7 @@ In addition, categorical pose estimation of 3D shapes is another important area 
 Standard bag-of-words models for 3D object categorisation do not consider object pose, as they disregard the structural information of objects for better robustness. Traditional 3D registration algorithms, such as iterative closest point (ICP) \cite{Besl1992}, do not model the variations among instances within the same object class. 
 Generative part-based models provide a supervised framework to infer scale and translation of an object class \cite{Weber2000, Fergus2007}. However, object rotation is not included in the above models. 
 Voting-based methods, \eg Gall and Lempitsky \cite{Gall2009a}, performs 3D shape classification and registration simultaneously using generalised Hough transform. However, they require training data to be registered manually in advance.  
-To summarise, pose estimation of 3D shapes remains an largely unresolved issue, especially for category-based and unsupervised pose estimation tasks.  
+To summarise, pose estimation of 3D shapes remains a largely unresolved issue, especially for category-based and unsupervised pose estimation tasks.  
 
 \subsection{Human action classification}
 
@@ -101,7 +101,7 @@ The second application is model-based 3D object recognition, \eg \cite{Mian2006,
 Thirdly, marker-based motion capture systems are not included in the scope of this thesis. They have been widely employed in computer-generated imagery for films and games. Markers are localised accurately from a calibrated camera system, using simple computer vision techniques. Poses are estimated straightforwardly by mapping the markers to a predefined articulated skeleton.
  With a calibrated camera network, 3D human poses can be recovered using marker-based approaches easily.  
 
-Finally, body shape estimation from images and videos are not considered in the thesis \cite{Guan2009, Rother2009, Chen2011}. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of a articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
+Finally, body shape estimation from images and videos are not considered in the thesis \cite{Guan2009, Rother2009, Chen2011}. It reconstructs 3D human shapes directly from testing data, instead of parameterised poses of an articulated model. Body pose estimation is concerned with understanding the semantics of the subject and the scene, rather than reconstructing them accurately. 
 
 \subsection{Outline}
 

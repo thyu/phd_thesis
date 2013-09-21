@@ -114,7 +114,7 @@ The \STR\ forest utilises both labelled and unlabelled data in its learning algo
 \subsection{Hand pose estimation}
 
 % done 
-Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
+Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy-minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
 
 % done 
 On the other hand, discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
@@ -188,7 +188,7 @@ The synthetic dataset and the realistic dataset are related by establishing asso
 Transductive realistic-synthetic associations are preserved throughout the learning process, such that the paired data points pass down to the same node. 
 Furthermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using an unsupervised learning term. 
 
-Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within an unified algorithm. Figure \ref{fig/hand/concept}(bottom) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
+Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within a unified algorithm. Figure \ref{fig/hand/concept}(bottom) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
 
 \section{Learning} 
 
@@ -213,7 +213,7 @@ All data points in $\totalset$ are represented by vectorised local patches extra
 % done 
 Every labelled data point in $\reallset$ or $\synset$ is assigned to a tuple of labels $(\viewlabel, \jointlabel, \votelabel)$. 
 Viewpoint of a patch is represented by the roll, pitch and yaw angles, which are quantised into $\nviewx$, $\nviewy$ and $\nviewz$ steps respectively. The view label $\viewlabel \in \viewlabelset:\mathbb{N}^{3}$ indicates one of the $135$ quantised viewpoints.
-A articulated hand model consists of $\njoint$ regions, with three regions per finger and one palm region. A data point is also given the class label of its region, $\jointlabel \in \{1\dots\njoint\}$.   
+An articulated hand model consists of $\njoint$ regions, with three regions per finger and one palm region. A data point is also given the class label of its region, $\jointlabel \in \{1\dots\njoint\}$.   
 Finally, every labelled data point contains $\njoint$ vote vectors $\votelabel \in \mathbb{R}^{3\times16}$ from the patch's centroid to the 3D locations of all $\njoint$ joints, similar to Gall \etal \cite{Gall2011}. 
 
 % done 
@@ -509,7 +509,7 @@ Subsequently synthetic dataset $\synset$ were generated by projecting the articu
 	\label{fig/hand/label}
 \end{figure}
 
-Meanwhile, realistic data $\realset$ were captured using a Asus Xtion depth sensor. 
+Meanwhile, realistic data $\realset$ were captured using an Asus Xtion depth sensor. 
 There were about $600$ frames per viewpoint, thus the size of $\realset$ is $81K$. 
 Within $\realset$, about $20\%$ of the frames in $\realset$ are labelled. 
 The number of labelled sample $|\reallset|$ is around $10K$.    
@@ -637,7 +637,7 @@ Despite sharing many similarities with body pose estimation, practical 3D hand p
 Furthermore, the discrepancies between realistic and synthetic data also undermine the performances of existing systems. 
 
 Dealing with the above issues, this work introduces a semi-supervised transductive approach for articulated hand pose estimation. A novel discriminative pose estimator, namely \STR\ forest, is proposed to infer hand poses using both realistic and synthetic training data. 
-With transductive learning, \STR\ forest recognises a wide range of poses from a small number of labelled realistic data by linking them to a large synthetic dataset.
+With transductive learning, \STR\ forest recognises a wide range of poses from a small labelled realistic dataset by linking its data points to a large synthetic dataset.
 Semi-supervised learning is also applied to fully utilise the sparsely labelled realistic dataset. 
 To improve the estimation accuracy of heavily occluded hand poses, a data-driven pseudo-kinematic technique is used to correct the occluded joints.  
 

@@ -91,7 +91,7 @@ Section \ref{sec/eval/experiments} presents the evaluation experiments and their
 
 %  done 
 The process of interest point detection is the first stage of many object recognition tasks, including object classification and pose estimation. An interest point detector localises salient features from input visual data for further processing. The detected interest points are typically used to match corresponding points across two or more similar sets of data. 
-The majority of early studies focus on detecting features on 2D images. The paradigm of 2D interest point detection has already been well studied, for instance Tuytelaars and Mikolajczyk \cite{Tuytelaars2008} performed an extensive survey on locally-invariant feature detectors.  
+Most early studies focus on detecting features on 2D images. Consequently, the paradigm of 2D interest point detection has already been well studied, for instance Tuytelaars and Mikolajczyk \cite{Tuytelaars2008} performed an extensive survey on locally-invariant feature detectors.  
 
 % done 
 Recent advancements in data acquisition techniques have greatly improved the availability of 3D shape data. Large scale synthetic and realistic 3D repositories, such as Google Warehouse \cite{Lai2010} and the B3DO dataset \cite{Janoch2011}, have attracted much interest in shape-based 3D object recognition systems. Consequently, various 3D interest point detection techniques have been proposed alongside with this emerging field of computer vision research. 
@@ -116,7 +116,7 @@ This approach was extended to space-time interest points for video classificatio
 Instead of detecting corners by image gradients, corner detectors that operate directly on image pixels were also proposed. 
 Smith and Brady \cite{Smith1997} presented SUSAN corner detector. It leveraged the proportion of pixels in a neighbourhood, which were dissimilar to the central pixel value.
 The FAST corner detector by Rosten \etal \cite{Rosten2010} used the accelerated segment test (AST), a relaxed version of SUSAN, to locate stable corners in an image.  
-FAST measures the largest number of contiguous pixels on a circle which are significantly darker, or brighter, than the centre pixel. Without computing the derivative at each pixel, the speed of FAST can also be further improved by learning a decision tree classifier for feature detection. Due to its efficient run-time performance, volumetric feature detectors have been applied to space-time volume classification based on FAST interest points \cite{Koelstra2009,Yu2010}. 
+FAST measures the largest number of contiguous pixels on a circle which are significantly darker, or brighter, than the centre pixel. Without computing the derivative at each pixel, the speed of FAST can also be further improved by learning a decision tree classifier for feature detection. Due to its efficient run-time performance, volumetric feature detectors have been applied to video classification based on FAST interest points \cite{Koelstra2009,Yu2010}. 
 
 \subsubsection{Blob detection}
 
@@ -173,7 +173,7 @@ In the context of image-based interest points, performance of detectors are ofte
 \subsubsection{Ground truth data} 
 
 %With both localisation accuracy and repeatability criteria, the ground truth location of interest points in the scene must be known. The ground truth data can be computed in a variety of ways. 
-In order to compute any of the aforementioned interest point characteristics, the ground truth locations of interest points, or alternatively the ground truth homography between two evaluation instances, must be known. Ground truth information can be obtained in a variety of ways.  
+In order to compute any of the aforementioned interest point characteristics, the ground truth locations of interest points, or the ground truth homography between two evaluation instances, must be known. Ground truth information can be obtained in a variety of ways.  
 Several approaches specify the location of interest points in an image, either known by design \cite{Rajan1989}, or hand-labelled by multiple people \cite{Heath1997}. 
 Other methods find corresponding pairs of point across two or more images. For example, matching is achieved using planar scenes and computing homographies between images \cite{Schmid2000}, scenes of known geometry manually registered in each image \cite{Rosten2010}, scene geometry captured using structured light \cite{Aanaes2012} and synthetic data \cite{Laptev2005}. 
 In addition, ground truth data for 3D interest point evaluations are likewise obtained from manual annotation \cite{Dutagaci2011}, known projection homography of stereo point clouds \cite{Aanaes2012} and synthetic shape data \cite{Salti2011}. 
@@ -182,7 +182,7 @@ In addition, ground truth data for 3D interest point evaluations are likewise ob
 \section{Detectors}
 \label{sec/eval/detectors}
 
-Generally every new volumetric interest point was proposed with an applications in mind, such as shape retrieval and classification \cite{Riemenschneider2009,Flitton2010,Knopp2010,Prasad2011}, medical imaging \cite{Criminisi2011,Ni2008,Donner2011} and video classification \cite{Willems2009,Laptev2005,Yu2010}. 
+Generally every new volumetric interest point was proposed with an application in mind, such as shape retrieval and classification \cite{Riemenschneider2009,Flitton2010,Knopp2010,Prasad2011}, medical imaging \cite{Criminisi2011,Ni2008,Donner2011} and video classification \cite{Willems2009,Laptev2005,Yu2010}. 
 Whilst interest point detectors for images have already been studied extensively \cite{Mikolajczyk2005, Tuytelaars2008}, evaluation of 3D interest points is still an unexplored area. 
 
 This section describes the principles and formulations of the 3D interest points evaluated in the experiments. These include DoG \cite{Flitton2010, Pham2011}, DoH and Harris-based interest points \cite{Laptev2005}, SURF \cite{Willems2008, Knopp2010}, VFAST \cite{Yu2010} and MSER \cite{Donoser2006, Riemenschneider2009}. 
@@ -384,7 +384,7 @@ Rosten \etal \cite{Rosten2010} computed the area under $R_\textrm{ratio}$ as a f
 The same principle is applied in the proposed evaluation metric, but it is computed using the repeatability ratio $R_\textrm{ratio}$ under varying distance threshold, $\disp$.  
 The proposed score therefore increases both if a higher proportion of points are matched, and also if matches are more accurate. 
 
-The above combined score is not symmetric with respect to testing instances $\volumep$ and $\volumeq$, symmetry of evaluation score is enforced by computing the average score across two matching directions, using $\volumep$ and $\volumeq$ as the reference frames respectively, in order to compensate for the effect of different interest point densities among the testing instances. The final evaluation score is given as the area under the $\disp$ \textit{versus} $R_\textrm{ratio}$ curve within a maximum matching distance $D$, such that  
+Such combined score is not symmetric with respect to testing instances $\volumep$ and $\volumeq$, symmetry of evaluation score is enforced by computing the average score across two matching directions, using $\volumep$ and $\volumeq$ as the reference frames respectively, in order to compensate for the effect of different interest point densities among the testing instances. Finally, the evaluation score is given as the area under the $\disp$ \textit{versus} $R_\textrm{ratio}$ curve within a maximum matching distance $D$, such that  
 \begin{equation}
 \areascore=\frac{1}{2D}\int_{0}^{D}R_\textrm{ratio}(\onepointset, \anotherpointset', \disp) + R_\textrm{ratio}(\anotherpointset, \onepointset', \disp) ~ \textrm{d}\disp.
 \label{eqn/eval/rptarea}
@@ -668,7 +668,7 @@ The MSER detector obtains the highest percentage of correspondences, yet it prod
 Figure \ref{fig/eval/graph_keypointnum} shows the repeatability ratio, $R_\textrm{ratio}$, with varying percentages of interest points. For each detector, interest points were detected and sorted by their corresponding saliency responses in descending order, afterwards the first $p\%$ of interest points were used to calculate $R_\mathrm{ratio}$. However, since no saliency measure has been defined in the MSER detector, the number of detected interest points could not be controlled directly; MSER was therefore not included in figure \ref{fig/eval/graph_keypointnum}. Similar to the previous test on correspondences, $R_\textrm{ratio}$ was computed using a smaller displacement threshold ($\disp = 0.015L$) in this experiment.   
 
 % done 
-The performances of DoG and Harris detectors tend to be stable, though Harris performs notably worse than DoG, with increasing numbers of interest points, \ie decreasing saliency threshold. The results imply that a saliency threshold is not necessary for these detectors. In other words, the saliencies of DoG and Harris do not reflect their potential repeatabilities. The performance of DoH, which are initially the best, decrease very slowly and converge with DoG and SURF, indicating that the lower saliency points are less reliable. A saliency threshold for DoH would benefit applications requiring more accurate point localisation. By contrast, the repeatability scores of SURF and VFAST increase steadily before levelling off, suggesting that some of the high saliency points are unreliable. Having a unstable saliency measure, this would pose more of a problem in terms of interest point selection. 
+The performances of DoG and Harris detectors tend to be stable, though Harris performs notably worse than DoG, with increasing numbers of interest points, \ie decreasing saliency threshold. The results imply that a saliency threshold is not necessary for these detectors. In other words, the saliencies of DoG and Harris do not reflect their potential repeatabilities. The performance of DoH, which are initially the best, decrease very slowly and converge with DoG and SURF, indicating that the lower saliency points are less reliable. A saliency threshold for DoH would benefit applications requiring more accurate point localisation. By contrast, the repeatability scores of SURF and VFAST increase steadily before levelling off, suggesting that some of the high saliency points are unreliable. Having an unstable saliency measure, this would pose more of a problem in terms of interest point selection. 
 
 \begin{figure}[ht]
 	\centering

@@ -136,14 +136,14 @@ As a result, existing solutions are often computationally expensive, which furth
 \subsection{Action and pose estimation}
 
 As mentioned in the previous section, the integration of action and pose is beneficial to both action recognition and pose estimation tasks. 
-While there exist some algorithms that recognise actions from pose estimation or structural constraints constraints \cite{Yu2010, Raja2011}, the opposite direction, \ie pose estimation from human action, is still a relatively new area. 
+While there exist some algorithms that recognise actions from pose estimation or structural constraints \cite{Yu2010, Raja2011}, the opposite direction, \ie pose estimation from human action, is still a relatively new area. 
 
 Regarding the idea of pose estimation from action recognition, Yao \etal \cite{Yao2012} used action recognition to assist a multi-view 3D HPE algorithm. 
 Action class contains rich information about the spatiotemporal structure of the testing data. For example, when a ``walking'' action is detected from the input video, the subsequent pose estimator then constricts the possible output space to walking poses.   
 Separate regression models were trained for each action class in the training data. 
 Action classification was used to select the corresponding regression model that estimates the output 3D poses. 
 However, the above approach did not consider the temporal structure of an action.    
-Action classification was performed on a frame-by-frame basis, class labels were only used as a indicator variable of pose estimator for each independent frame. 
+Action classification was performed on a frame-by-frame basis, class labels were only used as an indicator variable of pose estimator for each independent frame. 
 %to select the corresponding regression models for pose estimation, independently in each frame.  
 % Moreover its multi-camera settings limited its applications to 
 %Furthermore, it still  data were still captured in a controlled, multi-camera environment.      
@@ -153,7 +153,7 @@ Besides model selection via action classification, action detection forest also 
 
 % Done 
 \subsection{Deformable part model}  
-Most deformable part models (DPM) for 2D HPE are built upon the original seminal work of pictorial structures by Fischler and Elschlager \cite{Fischler1981}. In a pictorial structure model, an object is recognised by evaluating the spatial arrangement of its constituent parts in the image. Early work by Felzenszwalb \etal \cite{Felzenszwalb2000, Felzenszwalb2005} designed a probabilistic approach to the training and testing of pictorial structure models in an image. Recently proposed DPMs are often extensions of traditional pictorial structure models with new features or improved machine learning algorithms. For instance, Sapp \etal \cite{Sapp2011} described pictorial structure in a more complicated graph by decomposing the it into smaller, stretchable components. Yang and Ramanan \cite{Yang2011} captured location-dependent appearances and spatial relations of parts with a structured SVM model. Similarly, an branch-and-bound algorithm was proposed by Sun \etal \cite{Sun2012a} to extend traditional pictorial structure beyond star-shaped or tree graphs. Hua and Wu \cite{Hua2007} combined visual tracking with part detection in order to estimate articulated human pose. Ardriluka \etal \cite{Andriluka2009} revisited traditional pictorial structure using dense shape context and boosting algorithm. Eichner \etal \cite{Eichner2012} presented a multi-phase algorithm that detects 2D body parts from unconstrained images using various clues such as face detection and graph cut. 
+Most deformable part models (DPM) for 2D HPE are built upon the original seminal work of pictorial structures by Fischler and Elschlager \cite{Fischler1981}. In a pictorial structure model, an object is recognised by evaluating the spatial arrangement of its constituent parts in the image. Early work by Felzenszwalb \etal \cite{Felzenszwalb2000, Felzenszwalb2005} designed a probabilistic approach to the training and testing of pictorial structure models in an image. Recently proposed DPMs are often extensions of traditional pictorial structure models with new features or improved machine learning algorithms. For instance, Sapp \etal \cite{Sapp2011} described pictorial structure in a more complicated graph by decomposing the it into smaller, stretchable components. Yang and Ramanan \cite{Yang2011} captured location-dependent appearances and spatial relations of parts with a structured SVM model. Similarly, a branch-and-bound algorithm was proposed by Sun \etal \cite{Sun2012a} to extend traditional pictorial structure beyond star-shaped or tree graphs. Hua and Wu \cite{Hua2007} combined visual tracking with part detection in order to estimate articulated human pose. Ardriluka \etal \cite{Andriluka2009} revisited traditional pictorial structure using dense shape context and boosting algorithm. Eichner \etal \cite{Eichner2012} presented a multi-phase algorithm that detects 2D body parts from unconstrained images using various clues such as face detection and graph cut. 
 
 %Despite achieving remarkable performances, particularly in uncontrolled environments, 
 As DPMs have shown encouraging performances in 2D HPE, especially in uncontrolled environments, it is suggested that similar techniques can be applied to improve 3D HPE. For example, by applying suitable inverse kinematics constraints, 3D poses can be estimated accurately from images with manually labelled parts \cite{Wei2009, Ramakrishna2012}. In addition, poselet algorithm \cite{Bourdev2009} estimated a rough 3D pose by learning 2D part templates. Andriluka \etal \cite{Andriluka2010} used a pedestrian detector with an automatic deformable DPM algorithm to estimate rough 3D poses in street scenes. Simo-Serra \etal \cite{Simo-Serra2012} applied inverse kinematics to optimise for the most probably 3D pose configuration from multiple noisy 2D DPM hypotheses. To summarise, the above-mentioned approaches demonstrate a greater flexibility than the traditional holistic-based 3D HPE systems. Hence, the use of part-based, mid-level features in multi-action 3D HPE is a topic with great research potential. 
@@ -238,7 +238,7 @@ A split function performs a two-point comparison on a feature vector $\feature \
 	\right.,
 	\label{eqn/body/split}
 \end{equation}
-where $\mathbf{i}$ and $\mathbf{j}$ denote two randomly chosen dimensions of a the feature vector $\feature$. 
+where $\mathbf{i}$ and $\mathbf{j}$ denote two randomly chosen dimensions of a feature vector $\feature$. 
 
 The splitting process is performed until the new node reaches its maximum depth or minimum number of data points. 
 Once a split function is selected for a tree node, incoming training data are divided into two subsets, which pass down to two new child nodes.  
@@ -350,7 +350,7 @@ The basic input unit for the proposed system, namely video snippet, is a short s
 	\snippetnow = \left\{ \sframe_{\timenow - \frac{\snippetlen}{2}}, \dots, \sframe_{\timenow + \frac{\snippetlen}{2} - 1} \right\}.
 \end{equation}
 
-The testing process starts with extracting features from $\snippetnow$. A DPM , \eg pictorial structure of Yang and Ramanan \cite{Yang2011}, is applied separately on the frames of $\snippetnow$. The DPM produces $\nhyp$ hypotheses of 2D pose on each frame. Feature vectors are computed from the pose hypotheses afterwards, the set of feature of $\snippetnow$ is:
+The testing process starts with extracting features from $\snippetnow$. A DPM, \eg pictorial structure of Yang and Ramanan \cite{Yang2011}, is applied separately on the frames of $\snippetnow$. The DPM produces $\nhyp$ hypotheses of 2D pose on each frame. Feature vectors are computed from the pose hypotheses afterwards, the set of feature of $\snippetnow$ is:
 \begin{equation}
 	\begin{array}{lr}
 		\fset_{\snippetnow} = \{ \feature_{ij}\} & \mbox{ where } 
@@ -449,7 +449,7 @@ Passing down features of current $t$th frame $\{\feature_{ti}|i = 1,...,\nhyp\}$
 		\end{cases}
 	\end{array}.
 \end{equation} 
-Similar to the action detection forest, the regression result for the $j$-th joint is then described by an Gaussian distribution, such that 
+Similar to the action detection forest, the regression result for the $j$-th joint is then described by a Gaussian distribution, such that 
 \begin{equation}
 	\label{eqn/body/regressiongaussian}
 	P( \bodyposepr_{\timenow}^{(j)}| \snippetnow, \action = c, \forestr) = \normdist\left(\bodyposepr_{\timenow}^{(j)};\mu\left(\Phi^{(j)}(\snippetnow, c)\right),\Sigma\left(\Phi^{(j)}(\snippetnow,c)\right)\right). 

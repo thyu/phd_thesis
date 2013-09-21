@@ -7,7 +7,7 @@
 Traditional object recognition task, classification in particular, are usually approached by learning low level statistics on local, appearance based features, \eg bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, ignoring structural coherence within an object class for improved robustness. These methods become less reliable when objects' textures are often absent or indistinctive in appearance, such as 3D shape recognition of which input data are often textureless. 
 
 Making use of the spatial relationships among local features, part-based model emerges as an effective solution by learning jointly local appearance and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
-Part-based models have overcome the limitations of traditional structure-less approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration process often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
+Part-based models have overcome the limitations of traditional structure-less approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
 
 On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus this problem is still unsolved in 2D part-based models, let alone their 3D counterparts. 
 As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. 
@@ -68,7 +68,7 @@ Early implementations of part-based models were class-specific, where parts arra
 
 Vote-based methods, \eg implicit shape model \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Barinova2010}.
 
-Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation, \eg cars or pedestrians, than appearance-only approaches. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
+Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation than appearance-only approaches, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
 
 %Alternative approaches, such as part-based models (\eg constellation, pictorial structures) and vote-based approaches (\eg generalised hough transform), utilise the structural coherence of an object class, at a cost of lower flexibility to pose changes. 
 
@@ -123,7 +123,7 @@ For simplicity, the presence of each part is independent of other parts, in cont
 The visibility of a part is indicated by the binary variable, $\seen$, which equals to $1$ if the part is seen. Similar to Fergus \etal \cite{Fergus2007}, $\numfeat$ features with pose $\featshape$ and appearance $\featapp$ are identified from each data instance. (The number of extracted features, $\numfeat$, actually varies across instance. It is shown as a constant for simplicity of exposition.)  
 
 The SAP model assumes that each feature is generated either by a part of the object, or from an unknown background class, which is represented by a part with Gaussian appearance $\{\muapp_0, \sigmaapp_0\}$ and $\{\mushape_0, \sigmashape_0\}$ respectively. 
-The feature to part assignment is indicated by an variable $\assign$, which is a $\numfeat \times (\numpart + 1)$ binary indicator matrix. 
+The feature to part assignment is indicated by a variable $\assign$, which is a $\numfeat \times (\numpart + 1)$ binary indicator matrix. 
 At most one feature can be assigned to an object part, whilst any number of features can be assigned to the background class, so that $\assign$ fulfils the constraints: 
 \begin{equation}
 	\begin{aligned}
@@ -270,7 +270,7 @@ However, as previously mentioned, marginalisation of $\assign$ is avoided using 
 Similarly, the expression is then decomposed according to equation \ref{eqn/reg/decompose}.
 The object pose is then computed by finding the value of $\pose_\anyparticle$ for the most likely particle, \ie for which $\prob(\spfparticle)$ is largest.
 
-This probability can then be used in binary or multi-class object classifiers by comparing the probabilities given for different object classes, including the background class, \ie no object is present in the data. The value $\prob(\setfeatapp,\setfeatshape)$ is constant across classes thus it can be ignored. The a priori class distribution, $\prob(\fg)$, can be given or learned. For simplicity, this work assumes an uniform class prior. 
+This probability can then be used in binary or multi-class object classifiers by comparing the probabilities given for different object classes, including the background class, \ie no object is present in the data. The value $\prob(\setfeatapp,\setfeatshape)$ is constant across classes thus it can be ignored. The a priori class distribution, $\prob(\fg)$, can be given or learned. For simplicity, this work assumes a uniform class prior. 
 
 \section{Inference}
 \label{sec/reg/optimisation}
@@ -679,7 +679,7 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 \end{figure}
 \fi 
 
-For evaluation of registration in training, every training instance was compared with each of the 20 instances, giving a $20 \times 20$ SRT distance matrix. Figure \ref{fig/reg/reg_srtmatrices} visualises these matrices for several classes in the \textbf{point cloud} dataset, demonstrating that for some classes, distinct pose clusters have been observed. Figure \ref{fig/reg/alignresult3d} indicates that these clusters form around a small number of distinct poses that the object was captured in, latching onto background features in this situation. 
+For evaluation of registration in training, every training instance was compared with each of the 20 instances, giving a $20 \times 20$ SRT distance matrix. Figure \ref{fig/reg/reg_srtmatrices} visualises these matrices for several classes in the \textbf{point cloud} dataset, demonstrating that for some classes, distinct pose clusters have been observed. Figure \ref{fig/reg/alignresult3d} indicates that these clusters form around a few distinct poses that the object was captured in, latching onto background features in this situation. 
 
 Figure \ref{fig/reg/3dclusters} visualises the groups of distinct poses of the point clouds, showing that the clustering issue is originated from the raw point clouds captured. Initialising poses to the ground truth during learning still led to these clusters, hence it shows that initialisation is not related to the above pose clustering problem. Since the \textbf{bike} dataset contains images of different bikes on different backgrounds, it does not suffer from this issue.
 
