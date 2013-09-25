@@ -1,0 +1,163 @@
+
+% EVAL 
+\newcommand{\becir}{\mathbf{B}} 
+\newcommand{\becire}{\mathbf{b}} 
+\newcommand{\onepoint}{\mathbf{P}} 
+\newcommand{\onepointset}{\mathcal{P}} 
+\newcommand{\anotherpoint}{\mathbf{Q}} 
+\newcommand{\anotherpointset}{\mathcal{Q}} 
+\newcommand{\vxpatch}{\mathbf{v}} 
+\newcommand{\pointx}{P_x}
+\newcommand{\pointy}{P_y}
+\newcommand{\pointz}{P_z}
+\newcommand{\pointscale}{P_s}
+\newcommand{\volumep}{\mathbf{v}_P}
+\newcommand{\volumeq}{\mathbf{v}_Q}
+\newcommand{\scalefactor}{f}
+\newcommand{\meshset}{\textbf{mesh}\ }
+\newcommand{\mriset}{\textbf{MRI}\ }
+\newcommand{\stereoset}{\textbf{stereo}\ } 
+\newcommand{\areascore}{R_\textrm{area}}
+\newcommand{\disp}{D}
+% 3D REG 
+\newcommand{\prob}{p}
+\newcommand{\quasi}{q}
+\newcommand{\comp}{}  % Transform composition \otimes
+\newcommand{\order}{\mathcal{O}}
+\newcommand{\trsp}{\textsf{T}}
+
+\newcommand{\model}{\mathcal{M}}
+\newcommand{\shapemodel}{\mathcal{M}_\mathrm{SRT}}
+\newcommand{\appmodel}{\mathcal{M}_\mathrm{appearance}}
+
+\newcommand{\setassign}{\mathcal{H}}				% Part assignments over all instances
+\newcommand{\allassign}{\mathbb{H}}				% Set of possible part assignments
+\newcommand{\assignval}{{H}}				% A value in the part assignment matrix
+\newcommand{\setpartapp}{\mathcal{A}}					% Set of part appearances
+\newcommand{\setfeatapp}{\mathcal{B}}					% Set of feature appearances
+\newcommand{\setpartshape}{\mathcal{X}}					% Set of part shapes
+\newcommand{\setfeatshape}{\mathcal{Y}}					% Set of feature shapes
+\newcommand{\setseen}{\mathcal{D}}					% Set of feature shapes
+
+\newcommand{\partapp}{\mathbf{A}}					% Part Appearance
+\newcommand{\featapp}{\mathbf{B}}					% Feature Appearance
+\newcommand{\partshape}{\mathbf{X}}					% Part Shape
+\newcommand{\featshape}{\mathbf{Y}}					% Feature Shape
+\newcommand{\assign}{\mathbf{H}}					% Part Assignment
+\newcommand{\pose}{\mathbf{T}}						% Pose 
+\newcommand{\apose}{\mathbf{\hat{T}}}				% affine pose
+\newcommand{\particle}{{J}}					% Particle
+\newcommand{\seen}{{D}}					% Part seen?
+\newcommand{\weight}{{w}}					% weight
+
+\newcommand{\dirsim}{S^{+}}							% Similarity Group
+\newcommand{\dist}{d}								% "distance"
+\newcommand{\srtdist}{\dist_{\mathrm{SRT}}}			% SRT distance
+
+%\newcommand{\fg}{\mathrm{Foreground}}
+%\newcommand{\bg}{\mathrm{Background}}
+\newcommand{\fg}{\mathrm{Object}}
+\newcommand{\bg}{\mathrm{No~object}}
+
+% SRT Components of shapes
+% Note that the pair of extra curly bractkets {} is used 
+% to prevent double underscript error
+\newcommand{\poses}{{\pose_{\mathbf{s}}}}
+\newcommand{\poser}{{\pose_{\mathbf{r}}}}
+\newcommand{\poset}{{\pose_{\mathbf{t}}}}
+\newcommand{\posed}{{\pose_{\bm{\Delta}}}}
+\newcommand{\poseds}{{\pose_{\bm{\Delta s}}}}
+\newcommand{\posedr}{{\pose_{\bm{\Delta r}}}}
+\newcommand{\posedt}{{\pose_{\bm{\Delta t}}}}
+\newcommand{\featshapesrt}[1][]{{\featshape_{#1}}}
+\newcommand{\featshapes}[1][]{{\featshape_{#1\mathbf{s}}}}
+\newcommand{\featshaper}[1][]{{\featshape_{#1\mathbf{r}}}}
+\newcommand{\featshapet}[1][]{{\featshape_{#1\mathbf{t}}}}
+\newcommand{\muapp}{{\mu_{\partapp}}}
+\newcommand{\sigmaapp}{{\Sigma_{\partapp}}}
+\newcommand{\mushape}{{\mu_{\partshape}}}
+\newcommand{\mushapes}{{\mu_{\mathbf{s}}}}
+\newcommand{\mushaper}{{\mu_{\mathbf{r}}}}
+\newcommand{\mushapet}{{\mu_{\mathbf{t}}}}
+\newcommand{\sigmashape}{{\Sigma_{\partshape}}}
+\newcommand{\sigmashapes}{{\sigma^{2}_{\mathbf{s}}}}
+\newcommand{\sigmashaper}{{\sigma^{2}_{\mathbf{r}}}}
+\newcommand{\sigmashapet}{{\sigma^{2}_{\mathbf{t}}}}
+
+\newcommand{\SRT}{\mathrm{SRT}}
+
+
+\newcommand{\auxfunct}{\mathcal{L}}
+
+\newcommand{\partprior}{\bm{\alpha}}
+\newcommand{\particleprior}{\bm{\beta}}
+
+\newcommand{\numinstance}{M}
+\newcommand{\numfeat}{N}
+\newcommand{\numparticle}{Q}
+\newcommand{\numpart}{K}
+
+\newcommand{\anyinstance}{m}
+\newcommand{\anyfeat}{n}
+\newcommand{\anyparticle}{q}
+\newcommand{\anotherparticle}{q'}
+\newcommand{\anypart}{k}
+\newcommand{\regdata}{\mathrm{reg}}
+
+\newcommand{\oneassign}{\assign_{\anyinstance\anyfeat\anyparticle\anypart}}
+\newcommand{\zeroassign}{\assign_{\anyinstance\anyfeat\anyparticle0}}
+\newcommand{\oneparticle}{\particle_{\anyinstance\anyparticle}}
+\newcommand{\onefeatapp}{\featapp_{\anyinstance\anyfeat}}
+\newcommand{\onefeatshape}{\featshape_{\anyinstance\anyfeat}}
+\newcommand{\onefeatshapet}{\featshape_{\mathbf{t}\anyinstance\anyfeat}}
+\newcommand{\onepose}{\pose_{\anyinstance\anyparticle}}
+\newcommand{\oneposes}{\poses[\anyinstance\anyparticle]}
+\newcommand{\oneposer}{\poser[\anyinstance\anyparticle]}
+\newcommand{\oneposet}{\poset[\anyinstance\anyparticle]}
+\newcommand{\onepartapp}{\partapp_{\anypart}}
+\newcommand{\onepartshape}{\partshape_{\anypart}}
+
+\newcommand{\sumparticle}{\displaystyle\sum_{\anyparticle = 1}^{\numparticle}}
+\newcommand{\sumparticleinline}{\sum_{\anyparticle = 1}^{\numparticle}}
+\newcommand{\sumpart}{\displaystyle\sum_{\anypart = 1}^{\numpart}}
+\newcommand{\sumpartbginline}{\sum_{\anypart = 0}^{\numpart}}
+\newcommand{\suminstance}{\displaystyle\sum_{\anyinstance = 1}^{\numinstance}}
+\newcommand{\sumpartbg}{\displaystyle\sum_{\anypart = 0}^{\numpart}}
+\newcommand{\sumfeat}{\displaystyle\sum_{\anyfeat = 1}^{\numfeat}}
+
+\newcommand{\prodparticle}{\displaystyle\prod_{\anyparticle = 1}^{\numparticle}}
+\newcommand{\prodinstance}{\displaystyle\prod_{\anyinstance = 1}^{\numinstance}}
+\newcommand{\prodpart}{\displaystyle\prod_{\anypart = 1}^{\numpart}}
+\newcommand{\prodpartbg}{\displaystyle\prod_{\anypart = 0}^{\numpart}}
+\newcommand{\prodfeat}{\displaystyle\prod_{\anyfeat = 1}^{\numfeat}}
+
+\newcommand{\Gauss}{\mathcal{G}}
+\newcommand{\NormDist}{\mathcal{N}}
+\newcommand{\UniformDist}{\mathcal{U}}
+\newcommand{\wavg}{\mathcal{W}}
+
+\newcommand{\parameter}{\theta}
+\newcommand{\EMQ}{\mathcal{Q}} %(\parameter^{(t)},\parameter^{(t-1)})
+
+\newcommand{\expect}{\mathcal{L}_{\anyinstance\anyparticle}}
+\newcommand{\expectall}{\mathcal{L}}
+\newcommand{\tof}{\mathbf{t}}
+\newcommand{\sof}{\mathbf{s}}
+\newcommand{\rof}{\mathbf{r}}
+\newcommand{\transformedpoint}{\pose_{\anyinstance\anyparticle}\onefeatshape}
+
+\newcommand{\dimension}{d}
+\newcommand{\deltapose}{\onepose^{\Delta}}
+
+\newcommand{\background}{\gamma}
+\newcommand{\backgrounds}{\background_\mathrm{S}}
+\newcommand{\backgroundr}{\background_\mathrm{R}}
+\newcommand{\backgroundt}{\background_\mathrm{T}}
+\newcommand{\backgroundreg}{\background_\mathrm{reg}}
+
+\newcommand{\refptfront}{\mathbf{R}_\mathrm{front}}
+\newcommand{\refptrear}{\mathbf{R}_\mathrm{rear}}
+
+\newcommand{\remarka}{\textsuperscript{\textbf{\S}}}
+\newcommand{\remarkb}{\textsuperscript{\textbf{\dag}}}
+\newcommand{\remarkc}{\textsuperscript{\textbf{*}}}

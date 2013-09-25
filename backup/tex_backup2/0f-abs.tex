@@ -1,0 +1,24 @@
+\begin{abstracts}
+
+The recognition of three dimensional visual data is a fundamental problem in computer vision. 
+Automatic 3D object recognition is becoming a vital part of a wide range of applications, such as robotics, human-computer interaction, activity analysis and video search. This thesis focuses on the sub-problems of 3D object recognition: \emph{classification} and \emph{pose estimation} of \emph{geometric shapes} and \emph{human actions} from 3D data, including voxels, point clouds, videos and depth image sequences.  
+
+The main contributions of this work are various new practical solutions to the aforementioned tasks. 
+It first introduces a performance evaluation of 3D interest point detectors used in existing 3D object recognition systems.  
+Concerning 3D geometric shapes, this thesis proposes a novel, weakly-supervised constellation model that performs classification and registration simultaneously, without using pose information in training. This thesis also presents three different random forest-based algorithms for human action classification, 3D body pose estimation and 3D hand pose estimation respectively. 
+A real-time action classification algorithm is proposed using semantic texton forest for efficient visual codeword extraction. By relating human actions and their poses, a novel approach is proposed to estimate 3D human pose in unconstrained, monocular videos. To this end, a hybrid random forest algorithm is designed to adaptively perform classification and regression in 3D visual data.   
+Furthermore, a semi-supervised hand pose estimation approach is introduced by utilising both synthetic and realistic depth image sequences. 
+
+\paragraph{Keywords:~} object recognition, classification, pose estimation, 3D shape, human action, human pose estimation, hand pose estimation, random forest, interest point detector, performance evaluation, constellation model, random forest, semantic texton forest, regression forest, action-detection. 
+\end{abstracts}
+
+\begin{declarations}
+	This thesis is submitted to the Department of Engineering, University of Cambridge, in fulfilment of the requirements for the degree of Doctor of Philosophy. The work contained in this thesis is my own except where otherwise mentioned. Parts of the work presented in chapters \ref{chap/eval}, \ref{chap/reg}, \ref{chap/act}, \ref{chap/body} and \ref{chap/hand} appear in the following articles:
+	\begin{itemize}[]
+		\item Tsz-Ho Yu, Tae-Kyun Kim, and Roberto Cipolla. Real-time action recognition by spatiotemporal semantic and structural forest. \textit{In Proceedings of the British Machine Vision Conference}, 2010 %\cite{Yu2010}
+		\item Tsz-Ho Yu, Oliver J. Woodford, and Roberto Cipolla. An evaluation of volumetric interest points. \textit{In Proceedings of the 2011 International Conference on 3D Imaging, Modeling, Processing, Visualization and Transmission}, 2011 %\cite{Yu2011}
+		\item Tsz-Ho Yu, Oliver J. Woodford, and Roberto Cipolla. A performance evaluation of volumetric 3d interest point detectors. \textit{International Journal of Computer Vision}, 2013 %\cite{Yu2013a}
+		\item Tsz-Ho Yu, Tae-Kyun Kim, and Roberto Cipolla. Unconstrained monocular 3d human pose estimation by action detection and cross-modality regression forest. \textit{In Proceedings of the 2013 IEEE Conference on Computer Vision and Pattern Recognition}, 2013 %\cite{Yu2013}
+		\item Danhang Tang, Tsz-Ho Yu, and Tae-Kyun Kim. Real-time articulated hand pose estimation using semi-supervised transductive regression forests. \textit{In Proceedings of the 14th IEEE International Conference on Computer Vision}, 2013 %\cite{Tang2013}
+	\end{itemize}
+\end{declarations}

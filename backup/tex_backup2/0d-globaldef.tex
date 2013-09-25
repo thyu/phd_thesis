@@ -1,0 +1,49 @@
+% Import packages
+\usepackage{multirow}
+\usepackage{multicol} 
+% \usepackage{caption}
+\usepackage{subcaption}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{rotating}
+\usepackage{class/slashbox} 
+\usepackage{algorithmic}
+\usepackage{bm}
+\usepackage{arydshln} % dashed line 
+%\usepackage[section]{placeins}
+
+% draft only pacakge
+% \usepackage{showlabels} 
+%\usepackage{lineno} 
+%\linenumbers
+
+% Turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+% redefine ``blue''
+\definecolor{blue}{cmyk}{0.89, 0.52, .0, .0}
+
+% Set spacing
+% \setlength{\parskip}{3mm plus3mm minus1mm}
+
+% Set section numbering depth
+\setsecnumdepth{subsection}
+\settocdepth{subsection}
+
+% Character  
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\cf}{c.f.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+\newcommand*{\etal}{et al.\@\xspace}
+\makeatletter
+\newcommand*{\etc}{%
+	\@ifnextchar{.}%
+	{etc}%
+	{etc.\@\xspace}%
+}
+\makeatother
+
+% argmin 
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
