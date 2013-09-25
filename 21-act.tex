@@ -430,7 +430,7 @@ where the weight $\alpha_c$ is set to maximise the true positive ratio (sensitiv
 \begin{figure}[th]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/act/frames.png}
-	\caption{\textbf{Evaluation datasets.} Example frames of KTH (top row) and UT-interaction (bottom row) dataset.}
+	\caption{\textbf{Evaluation datasets.} Example frames of the KTH (top row) and the UT-interaction (bottom row) dataset.}
 	\label{fig/act/frames}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -438,7 +438,7 @@ where the weight $\alpha_c$ is set to maximise the true positive ratio (sensitiv
 \subsection{Experimental setup} 
 
 % done 
-The proposed action classification system was evaluated on two public benchmarks, namely KTH dataset \cite{Schuldt2004} and UT-interaction dataset \cite{Ryoo2010}. 
+The proposed action classification system was evaluated on two public benchmarks, namely the KTH dataset \cite{Schuldt2004} and the UT-interaction dataset \cite{Ryoo2010}. 
 Other existing approaches were compared with the proposed approach in terms of recognition accuracy. 
 Run-time performance of the proposed action classification system was also reported. A prototype system was implemented in C++. Experiments were performed on an \emph{Intel Core}\texttrademark \; i7 $2.8$Ghz PC. It demonstrated real-time (about $15$ frames per second) and continuous performance. 
 The prototype system was also deployed in an \emph{Intel Core 2 Duo} $2.4$Ghz laptop and ran at approximately $10$ frames per second on the KTH dataset. 
@@ -454,7 +454,7 @@ No multi-core optimisation was enabled in the prototype system. It is expected t
 The KTH dataset is an established benchmark for action recognition research. 
 It contains sequences of six action classes captured from four different environments: boxing, hand-clapping, hand-waving, jogging, running and walking. 
 The videos are taken with changing subjects, camera poses, scales and appearances, as illustrated in figure \ref{fig/act/frames}. 
-The video sequences in KTH have an average length of $19$ seconds, at a frame rate of $30$ frames per second. 
+The video sequences in the KTH dataset have an average length of $19$ seconds, at a frame rate of $30$ frames per second. 
 To recognise actions within a short response time, video snippet of $1$ second ($30$ frames) in length were extracted on-the-fly from the training and testing sequences. 
 Each training subsequence (video snippet) was sampled in every $5$ frames, which was collected from the training dataset to build the classifiers. 
 Testing snippets were densely sampled from testing videos in a similar manner. 
@@ -516,7 +516,7 @@ Quantisation effects are soothed by the tree-based STF codebook and pyramid matc
 \includegraphics[width=0.32\linewidth]{fig/act/bost.png}
 \includegraphics[width=0.32\linewidth]{fig/act/mpsrm.png}
 \includegraphics[width=0.32\linewidth]{fig/act/combine.png}
-\caption{\textbf{Confusion matrices, KTH dataset.} From left to right: BOST, HSRM, and combined classification.}
+\caption{\textbf{Confusion matrices of the KTH dataset.} From left to right: BOST, HSRM, and combined classification.}
 \label{fig/act/confusion}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -590,7 +590,7 @@ The drop in run-time speed for the UT-interaction experiment is mainly due to th
 		\textbf{ Overall } & \textbf{\color{blue}83.33} & \textbf{66.67} & \textbf{59.16} & \textbf{70.8} \\ 
 		\hline 
 	\end{tabular}
-	\caption{\textbf{Classification result, UT-interaction dataset.} Sequential classification accuracy of the UT-interaction dataset, leave-one-out-cross-validation was used in the experiment.}
+	\caption{\textbf{Classification result of the UT-interaction dataset.} Sequential classification accuracy of the UT-interaction dataset, leave-one-out-cross-validation was used in the experiment.}
 	\label{tab/act/utcompare}
 \end{table}
 

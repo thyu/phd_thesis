@@ -371,7 +371,7 @@ It is also necessary to discard or correct anatomically impossible pose hypothes
 As a result, the proposed framework employs a data-driven, kinematic-based method to refine joint locations, without having an explicit hand model as in many generative tracking-based methods. 
 In order to obtain the maximum pose coverage, a large hand pose database $\ksynset$ is generated from a synthetic articulated model, such that $|\ksynset| \gg |\synset|$. 
 The pose database $\ksynset$ is generated using the same hand model as in the synthetic dataset $\synset$. Different from $\synset$, $\ksynset$ only contains the joint coordinates generated from the articulated model, while the corresponding depth images are not rendered. 
-Hence, the kinematic dataset $\ksynset$ is not used to train the \STR\ dataset. 
+Hence, the kinematic dataset $\ksynset$ is not used to train the \STR\ forest. 
 % done 
 Training data $\ksynset$ is first categorised with respect to their viewpoints,  
 \begin{equation}

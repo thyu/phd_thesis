@@ -423,7 +423,7 @@ Three different datasets were used in the evaluation experiments. Two of them ar
 From the graphs in figure \ref{fig/eval/graph2}, synthetic and real testing data produce comparable results in the evaluation experiments. 
 
 % done 
-The first set, \meshset dataset, contains $25$ shapes (surface meshes) chosen from the Princeton Shape Benchmark \cite{Shilane2004} and TOSCA \cite{Bronstein2008} dataset. 
+The first set, the \meshset dataset, contains $25$ shapes (surface meshes) chosen from the Princeton Shape Benchmark \cite{Shilane2004} and the TOSCA \cite{Bronstein2008} dataset. 
 This dataset includes a wide range of geometric features, ranging from coarse structures to fine details, as illustrated in figure \ref{fig/eval/sampleshapes}. In the experiment, point clouds were created by sampling 3D points, with a uniform distribution, over the surfaces of the meshes. Gaussian white noise was added to the points to simulate measurement errors introduced during 3D shape acquisition. 
 The point clouds were subsequently voxelised using kernel density estimation with a Gaussian kernel $g(\cdot,\sigma_{KDE})$ as shown in figure \ref{fig/eval/vol_conversion}.
 %This conversion process allows sampling density and noise to be varied when generating the volumes.
@@ -433,10 +433,10 @@ Finally, a linear scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ was created from
 The \mriset dataset consists of two synthetic MRI scans of a human brain, generated from BrainWeb simulated brain database \cite{Cocosco1997}. The ground truth homographies ($20^{\circ}$ rotation and $20$ voxel translation) between the two MRI scans are given for performance evaluation. Since MRI scans are inherently volumetric, voxelisation is not necessary. 
 
 % done 
-The third dataset \stereoset contains a series of $16$ point clouds of $8$ objects from the Toshiba CAD model point clouds dataset \cite{Pham2011}, which were captured using a photometric, multi-view stereo system \cite{Vogiatzis2011}. Relative transformations were computed by aligning each point cloud with a reference model using the ICP algorithm \cite{Besl1992} and then refining the registration manually. The same voxelisation technique was used to convert stereo point clouds to volumetric data.
+The third \stereoset dataset contains a series of $16$ point clouds of $8$ objects from the Toshiba CAD model point clouds dataset \cite{Pham2011}, which were captured using a photometric, multi-view stereo system \cite{Vogiatzis2011}. Relative transformations were computed by aligning each point cloud with a reference model using the ICP algorithm \cite{Besl1992} and then refining the registration manually. The same voxelisation technique was used to convert stereo point clouds to volumetric data.
 
 % done 
-In \meshset and \stereoset datasets, high-intensity voxels are located at the object surface, leaving the interior of the shapes hollow as low-intensity voxels. In contrast, the interior of the \mriset data is filled with voxels of different intensities. The experimental results in the next section have demonstrated different behaviours of the detectors in these two voxelisation scenarios.
+In the \meshset and the \stereoset datasets, high-intensity voxels are located at the object surface, leaving the interior of the shapes hollow as low-intensity voxels. In contrast, the interior of the \mriset data is filled with voxels of different intensities. The experimental results in the next section have demonstrated different behaviours of the detectors in these two voxelisation scenarios.
 
 % done 
 While the synthetic shape instances of the same object completely overlap one another, avoiding bias to the repeatability score mentioned in Willis and Sui \cite{Willis2009}, the real stereo data contain occlusions. While the underside of each object, which varied across instances, was not captured, the shapes in \stereoset were captured with uneven sampling density and generally more sampling noise. The feasibility of performance evaluation using synthetic data is therefore verified by comparing the results on the \meshset dataset with those on the \stereoset dataset. 
@@ -457,7 +457,7 @@ In the evaluation experiments, a series of transformed shapes were created from 
 
 % done 
 The characteristics of the interest point detectors were evaluated under five different variations. These include (1) rotation, (2) translation, (3) scale, (4) sampling density and (5) sampling noise. 
-For \mriset and \stereoset datasets, such variations were introduced during the process of shape acquisition. Shapes in the \meshset dataset were generated synthetically with different variations.
+For the \mriset and the \stereoset datasets, such variations were introduced during the process of shape acquisition. Shapes in the \meshset dataset were generated synthetically with different variations.
 
 % done 
 The variations applied to the evaluation datasets are described in table \ref{tab/eval/datavar}. Although image compression rate and lighting change were also evaluated for image-based detectors \cite{Mikolajczyk2005}, similar variations are not necessary for 3D shape data because they are unaffected by such factors. 
@@ -574,7 +574,7 @@ Figure \ref{fig/eval/graph_sample} presents the change of $\areascore$ scores ve
 		\subcaption{Sampling density}
 		\label{fig/eval/graph_sample}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores of \meshset dataset.} Repeatability area scores under (a) sampling noise, (b) sampling density (point cloud size).}
+	\caption{\textbf{$\areascore$ scores of the \meshset dataset.} Repeatability area scores under (a) sampling noise, (b) sampling density (point cloud size).}
 	\label{fig/eval/graph_graph0} 
 \end{figure}
 
@@ -614,7 +614,7 @@ Meanwhile, the performance of most detectors decreases slowly as scale increases
 		\subcaption{Scale}
 		\label{fig/eval/graph_scaling}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores of \meshset dataset.} Repeatability area scores under varying (a) rotation, (b) scale.}
+	\caption{\textbf{$\areascore$ scores of the \meshset dataset.} Repeatability area scores under varying (a) rotation, (b) scale.}
 	\label{fig/eval/graph_graph1} 
 \end{figure}
 
@@ -681,7 +681,7 @@ The performances of DoG and Harris detectors tend to be stable, though Harris pe
 \subsection{Experiments on MRI and stereo data}
 
 % done 
-Interest points detectors were also evaluated on the \mriset and \stereoset datasets. As a reference for cross validation, average scores obtained from the \meshset dataset are plotted against displacement threshold $\disp$ in figure \ref{fig/eval/graph_syn}. 
+Interest points detectors were also evaluated on the \mriset and the \stereoset datasets. As a reference for cross validation, average scores obtained from the \meshset dataset are plotted against displacement threshold $\disp$ in figure \ref{fig/eval/graph_syn}. 
 
 % done 
 \subsubsection{MRI dataset} This dataset contains two MRI scans of a human brain, each MRI has the longest dimension $L$ of $218$ voxels.
@@ -750,7 +750,7 @@ The $\areascore$ scores are measured from the \mriset dataset with varying $\dis
 Sixteen point clouds were captured using a multi-view stereo technique \cite{Vogiatzis2011} from realistic, 3D-printed CAD models. The point clouds were converted into volumes with maximum length $L$ of $132$ voxels. Figure \ref{fig/eval/mvscad} shows the CAD models from the \stereoset dataset; figure \ref{fig/eval/mvs} visualises different types of interest points detected on their corresponding voxelised shapes.
 
 % done 
-The $\areascore$ scores obtained from the \stereoset dataset, shown in figure \ref{fig/eval/graph_mvs}, are lower compared with \meshset and \mriset datasets, especially at a small matching threshold $\disp$. Nonetheless, in terms of overall rankings and relative scores of the detectors, synthetic and real data show similar behaviours. The decrease in performance for stereo data are due to its: (a) low sampling frequency and high noise, (b) uneven object surfaces, which are infeasible for blob detection algorithms, such as MSER, SURF and DoH, and (c) small errors in the estimated ground truth poses from ICP alignment.
+The $\areascore$ scores obtained from the \stereoset dataset, shown in figure \ref{fig/eval/graph_mvs}, are lower compared with the \meshset and the \mriset datasets, especially at a small matching threshold $\disp$. Nonetheless, in terms of overall rankings and relative scores of the detectors, synthetic and real data show similar behaviours. The decrease in performance for stereo data are due to its: (a) low sampling frequency and high noise, (b) uneven object surfaces, which are infeasible for blob detection algorithms, such as MSER, SURF and DoH, and (c) small errors in the estimated ground truth poses from ICP alignment.
 The differences in $\areascore$ scores are due to occlusions, viewpoint changes and uneven sampling density of the \stereoset dataset. 
 
 % done 
@@ -777,7 +777,7 @@ Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, have much spar
 		\subcaption{$\areascore$ score: \stereoset}		
 		\label{fig/eval/graph_mvs}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores versus displacement threshold $d$.} Left to right: (a) \meshset dataset, (b) \mriset dataset and (c) \stereoset dataset.}
+	\caption{\textbf{$\areascore$ scores versus displacement threshold $d$.} Left to right: (a) the \meshset dataset, (b) the \mriset dataset and (c) the \stereoset dataset.}
 \label{fig/eval/graph2}
 \end{figure}
 

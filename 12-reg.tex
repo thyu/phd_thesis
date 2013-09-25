@@ -615,7 +615,7 @@ The weakly-supervised SAP model achieves satisfactory results of 75.5\% multi-cl
 
 \subsubsection{Registration} 
 \label{sec/reg/reg}
-Registration of the \textbf{point cloud} dataset was evaluated quantitatively using SRT distances \cite{Pham2011} between pairs of instances. Given the ground truth pose, $\pose_\mathrm{gt}$, of an instance, the learned pose relative to the ground truth object coordinate frame is $\tilde{\pose} = \pose_\mathrm{gt}\pose^{-1}$.  
+Registration performance of the \textbf{point cloud} dataset was evaluated quantitatively using SRT distances \cite{Pham2011} between pairs of instances. Given the ground truth pose, $\pose_\mathrm{gt}$, of an instance, the learned pose relative to the ground truth object coordinate frame is $\tilde{\pose} = \pose_\mathrm{gt}\pose^{-1}$.  
 The registration criterion of \cite{Pham2011} is employed in this experiment. A pair of instances are considered registered correctly when their $\tilde{\pose}$ are within $5\%$ in scale, $\pi/12$ in orientation and $10\%$ in relative translation.
 
 \begin{figure}[ht]

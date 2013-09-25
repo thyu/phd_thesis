@@ -513,7 +513,7 @@ where the confidence region indicated by the covariance matrices $\finalvariance
 \subsection{APE evaluation dataset}
 Experiments were performed to evaluate the performance of the proposed 3D HPE system.
 Existing public 3D pose datasets are inadequate to verify the main objectives of the proposed system.  
-While existing public benchmarks such as HumanEva \cite{Sigal2010} and TUM Kitchen dataset \cite{Yao2012} represent 3D body poses using sophisticated techniques, \eg camera networks, from a static area, the proposed framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
+While existing public benchmarks such as the HumanEva \cite{Sigal2010} and the TUM Kitchen dataset \cite{Yao2012} represent 3D body poses using sophisticated techniques, \eg camera networks, from a static area, the proposed framework focuses on flexible, multi-action 3D HPE from monocular videos without using background statistics.
 
 As a result, the action-pose-estimation (APE) dataset was collected for both quantitative and qualitative evaluations in this work. The APE dataset contains action videos from $7$ different subjects, each of them performs $7$ categories of actions. Each action is repeated five times per subject, hence there are $245$ sequences in the whole APE dataset. 
 Videos of each subject were recorded in different environments, changing camera poses and moving background objects. Pose configurations are represented by 3D joint locations instead of joint angles as in other existing human pose datasets.   
@@ -592,7 +592,7 @@ Similarly, when the arms are stretched overhead and occluded, the 2D DPM model u
 \subsubsection{Qualitative evaluation}
 
 Knowledge transfer was evaluated by reusing the models trained in section \ref{sec/body/quant} to other datasets without retraining.
-KTH \cite{Schuldt2004} and Weizmann \cite{Gorelick2007} dataset are used in the experiments as they shared action categories with the APE dataset. 
+The KTH \cite{Schuldt2004} and the Weizmann \cite{Gorelick2007} dataset are used in the experiments as they shared action categories with the APE dataset. 
 
 The experimental results are summarised in figure \ref{fig/body/otherresults}. Even though the input videos were of extremely low resolutions, rendering them impossible to be processed by traditional 3D HPE methods, the proposed system can still estimate their actions and poses simultaneously with a satisfactory accuracy. 
 Incorrect poses are estimated when too many false positive parts are detected from the low resolution images, \eg figure \ref{fig/body/otherresults}(g--h). 
@@ -602,7 +602,7 @@ Incorrect poses are estimated when too many false positive parts are detected fr
 Experimental results have demonstrated encouraging performance of the proposed 3D HPE system.  
 Coupling the outputs from the two random forests, 3D pose estimation accuracy is further enhanced. Action detection gives a global pose estimation and the corresponding class label. Meanwhile, errors in the initial global estimation, due to the differences among individual action patterns, are corrected locally by regression forests, which improve the accuracy of the final pose estimation as shown in figure \ref{fig/body/errorplot3d}. 
 
-On the other side, there is still room for improvement in the proposed approach. The proposed method relies on DPM as the only source of input. Albeit great flexibility, the performance of a DPM depends on its training data \cite{Yang2011, Eichner2012}. The proposed method handles minor errors gracefully by allowing multiple hypotheses and snippet-based input, but large errors cannot be recovered completely, \eg figure \ref{fig/body/APEerr1} and \ref{fig/body/APEerr2} for APE dataset, and \ref{fig/body/others/g} and \ref{fig/body/others/h} for KTH and Weizmann dataset respectively. 
+On the other side, there is still room for improvement in the proposed approach. The proposed method relies on DPM as the only source of input. Albeit great flexibility, the performance of a DPM depends on its training data \cite{Yang2011, Eichner2012}. The proposed method handles minor errors gracefully by allowing multiple hypotheses and snippet-based input, but large errors cannot be recovered completely, \eg figure \ref{fig/body/APEerr1} and \ref{fig/body/APEerr2} for the APE dataset, and \ref{fig/body/others/g} and \ref{fig/body/others/h} for the KTH and the Weizmann dataset respectively. 
 
 The prototype system used in the experiments operated at a frame rate of $0.31$fps. Its main run-time bottleneck was at the feature extraction phase by DPM; Using pre-computed DPM features, the pose estimator alone ran at about $5$fps on the APE dataset. 
 
