@@ -47,17 +47,10 @@
 	\caption{\label{fig/eval/testshapes} \textbf{Volumetric interest points detected on a test 3D shape.}}
 \end{figure}
 
-% This paragraph move to introduction! 
-\iffalse 
-The applications of object detection, recognition and registration are of great importance in computer vision. 
-However, advancing geometry capture techniques, in the form of stereo, structured light, structure-from-motion and sensor technologies such as laser scanners, time-of-flight cameras, MRIs and CAT scans, pave the way for the use of shape in these tasks, either on its own or complementing appearance. Whilst an object's appearance is a function not only of its texture, but also its pose and lighting, an object's 3D shape is invariant to all these factors, providing robustness as well as additional discriminative power.
-\fi  
+While three-dimensional object recognition is not a new topic \cite{Fisher1987, Nevatia1977, Marr1978, Bolles1983}, its applications have seen a recent resurgence in computer vision research. 
 
-% done 
-Recognition of 3D data is not a new topic in computer vision \cite{Fisher1987, Nevatia1977, Marr1978, Bolles1983}, though such applications have seen a recent resurgence. Approaches to 3D object recognition range from the local to the global. 
-
-% done 
-At the global end are those which form a descriptor from an entire object. Such methods generally offer excellent discrimination plus robustness to shape variation. However, they do not cope well with clutter or occlusion, as they require a complete and segmented object for feature extraction. Also, albeit suitable for recognition, many of the matching algorithms do not consider object pose for registration. 
+Approaches to 3D object recognition range from the local to the global. 
+At the global end are those which form a descriptor from an entire object. Such methods generally offer excellent discrimination plus robustness to shape variation. However, they do not cope well with clutter or occlusion, as they require a complete and segmented object in order to extract a holistic feature descriptor. Despite being widely applied to object classification tasks, matching algorithms of holistic shape features do not consider object pose for registration. 
 
 % done 
 At the other end of the spectrum are highly local features, such as points. Being completely non-discriminant, such features are usually embedded in a framework that finds geometrical consistency of features across shapes, \eg iterative closest point (ICP) \cite{Besl1992} and RANSAC \cite{Brown2005, Papazov2011}. 
