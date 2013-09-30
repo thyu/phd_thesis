@@ -82,7 +82,7 @@
 %
 % Define colours 
 %
-\definecolor{camcarbon}{cmyk}{.0,.0,.0,.95}
+\definecolor{camcarbon}{cmyk}{.0,.0,.0, .95}
 \definecolor{camblue}{cmyk}{.89,.52,.0,.0}
 \definecolor{camgrey}{cmyk}{.11,.11,.11,.11}
 \definecolor{camred}{cmyk}{0, 0.88, 0.88, 0.157}

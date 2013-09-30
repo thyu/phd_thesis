@@ -7,7 +7,7 @@
 \crest{\includegraphics[width=75mm]{class/CamLogo.pdf}}
 
 \degree{Doctor of Philosophy}
-\degreedate{\today}
+\degreedate{September 2013}
 
 % turn of those nasty overfull and underfull hboxes
 \hbadness=10000
@@ -26,11 +26,22 @@
 \maketitle
 \frontmatter
 \pagenumbering{roman}
-% \include{0f-abs}
-% \include{0f-ack}
+
+\begin{abstracts}
+	\input{0f-abs}
+\end{abstracts}
+
+\begin{declarations}
+	\input{0f-dec} 
+\end{declarations}
+
+\begin{acknowledgements}
+	\input{0f-ack}
+\end{acknowledgements}
+
 
 \begin{KeepFromToc}
-\tableofcontents \newpage
+	\tableofcontents \newpage
 \end{KeepFromToc} 
 \listoffigures \newpage
 \listoftables
@@ -39,11 +50,9 @@
 
 \mainmatter
 \include{01-intro}
-\label{part/shape}
 \part{3D Shape}
 \include{11-eval}
 \include{12-reg}
-\label{part/action}
 \part{Human Action Analysis}
 \include{21-act}
 \include{22-body}

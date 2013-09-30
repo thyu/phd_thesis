@@ -6,8 +6,7 @@
 % Done  
 Articulated 3D hand pose estimation is another important area in human activity analysis. 
 It serves very different applications compared with body pose estimation, such as gesture and sign language recognition, user interface and computer graphics.
-Nevertheless, articulated hand pose estimation shares a lot of similarities with the popular 3D body pose estimation. Basically, both tasks aim to recognise the configuration of an articulated subject with a high degree of freedom.  
-On the other side, they require domain knowledge, \eg kinematics \cite{LaGorce2011, Simo-Serra2012}, specialised part detector \cite{Bissacco2007} or actions \cite{Yao2012}, in order to infer complex articulations from limited input data. 
+Nevertheless, articulated hand pose estimation shares a lot of similarities with the popular 3D body pose estimation. Basically, both tasks aim to recognise the configuration of an articulated subject with a high degree of freedom. On the other hand, they require domain knowledge, \eg kinematics \cite{LaGorce2011, Simo-Serra2012}, specialised part detector \cite{Bissacco2007} or actions \cite{Yao2012}, in order to infer complex articulations from limited input data. 
 
 % done 
 While latest depth sensor technologies has enabled body pose estimation in real-time \cite{Baak2011, Shotton2011, Girshick2011, Sun2012}, 3D hand pose estimation still remains an unsolved issue. Despite their similarities, proven approaches for body pose estimation cannot be repurposed directly to hand articulations, due to several unique characteristics of 3D hand pose estimation.  
@@ -117,7 +116,7 @@ The \STR\ forest utilises both labelled and unlabelled data in its learning algo
 Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy-minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
 
 % done 
-On the other hand, discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
+Discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
 
 % done 
 \subsubsection{Early approaches} 
@@ -170,7 +169,7 @@ In this work, realistic-synthetic fusion is realised by extending the idea of cr
 
 % done 
 \subsection{Semi-supervised forest and regression forest} 
-Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measured data compactness to relate labelled and unlabelled data points. Leistner \etal \cite{Leistner2009} designed a margin metric to evaluate unlabelled data. On the other side, regression forest was adopted in body pose estimation \cite{Girshick2011, Sun2012}. In the proposed system, \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work.
+Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measured data compactness to relate labelled and unlabelled data points. Leistner \etal \cite{Leistner2009} designed a margin metric to evaluate unlabelled data. On the contrary, regression random forest was adopted in body pose estimation \cite{Girshick2011, Sun2012}. In the proposed system, \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work.
 
 \section{Overview}
 

@@ -81,7 +81,7 @@ The bag-of-word model is a well-established approach for video classification ta
 
 Recent 3D human pose estimation algorithms have achieved promising performances in controlled environments, where input data are captured using calibrated cameras in front of a clean, static background \cite{Rogez2012, Pons-Moll2011, Sigal2012}. 
 %On the other hand, 3D human pose estimation in unconstrained environments is still an unexplored area. 
-On the other hand, there are few studies on 3D human pose estimation in unconstrained environments.  
+However, there are few studies on 3D human pose estimation in unconstrained environments.  
 Traditional pose estimation algorithms often rely on low-level appearance features, such as silhouette and motion templates \cite{Bissacco2007, Rogez2012, Ionescu2011, Navaratnam2006}. These features are vulnerable to dynamic scenes; cluttered backgrounds and moving viewpoints in unconstrained videos. 
 Pose ambiguities and self-occlusions are common issues in both body pose and hand pose estimation. While multi-view techniques handle such problems effectively in controlled settings, they are not applicable to unconstrained, monocular testing videos. Additional prior knowledge about the subject's structure, \eg articulated human body or hand, is required to remove such ambiguities in monocular videos. 
 
@@ -136,9 +136,8 @@ The structure of this thesis is outlined in figure \ref{fig/intro/outline}. In p
 
 \subsubsection*{Chapter 2. Evaluation of 3D feature detectors} 
 A performance evaluation of volumetric 3D interest points is presented in this chapter. 
-It first provides an overview of current volumetric interest point detectors found in the literature.
-A selection of interest point detectors are then evaluated quantiatively using a new performance metric. 
-Finally, the qualitative characteristics of each of the detectors is also discussed. 
+It first provides an overview of current volumetric interest point detectors found in the literature. A selection of interest point detectors are then evaluated quantiatively using a new performance metric. Finally, the qualitative characteristics of each of the detectors is also discussed. 
+(An abstract of this chapter has appeared in the International Journal of Computer Vision, volume 102, 2013 \cite{Yu2013a}.)  
 
 \subsubsection*{Chapter 3. 3D Constellation model from unknown pose}
 This chapter presents a weakly-supervised constellation model for simultaneous 3D shape recognition and pose estimation. 
@@ -150,14 +149,17 @@ The proposed model learns the shape, appearance and pose of an object class from
 
 \subsubsection*{Chapter 4. Human action classification} 
 This chapter addresses the recognition sub-problem in human action analysis. A spatiotemporal semantic and structural forest is proposed to recognise human actions in real-time.    
+(This work has been presented in the 2010 British Machine Vision Conference \cite{Yu2010}.)  
 
 \subsubsection*{Chapter 5. 3D human body pose estimation} 
 This chapter presents a new approach to 3D body pose estimation in unconstrained, monocular videos. 
 A new hybrid decision forest is introduced, in order to perform action detection and pose estimation simultaneously. 
 Pose estimation is based on action detection, which includes joint classification and localisation of actions in videos. 
+(This work has been presented in the 2013 IEEE Conference on Computer Vision and Pattern Recognition \cite{Yu2013}.)  
 % By combining regression random forests with action detection, the proposed method infers 3D poses from unconstrained, monocular videos. 
 
 \subsubsection*{Chapter 6. 3D hand pose estimation} 
 This chapter addresses the sub-problem of 3D hand pose estimation. 
 The regression tree learning algorithm introduced in chapter \ref{chap/body} is further developed to estimate 3D hand pose from different viewpoints. 
 A data-driven inverse kinematic scheme is also described to refine the occluded joints.
+(This work will also be presented in the 14th IEEE International Conference of Computer Vision, 2013 \cite{Tang2013}.)
