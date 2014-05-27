@@ -216,7 +216,7 @@
     \thispagestyle{empty}
 %  \null\vfill
   \begin{center}
-	  {\fontsize{18}{20}\bfseries{\@title}} \par
+	  {\fontsize{2.2em}{2.7em}\bfseries{\@title}} \par
 	\vspace*{35mm}
 	{\fontsize{16}{20}\scshape\selectfont\@author}\par
 	\vspace*{1ex}

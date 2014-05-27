@@ -1,6 +1,6 @@
 \documentclass[a4paper, 11pt]{class/thyuthesis}
 
-\title{Classification and Pose Estimation of \\3D Shapes and Human Actions}
+\title{Classification and Pose Estimation of \\[5mm] 3D Shapes and Human Actions}
 \author{Tsz-Ho Yu}
 \collegeordept{Darwin College}
 \university{\href{http://www.cam.ac.uk}{University of Cambridge}}
@@ -27,19 +27,31 @@
 \frontmatter
 \pagenumbering{roman}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstracts}
 	\input{0f-abs}
 \end{abstracts}
 
-\begin{declarations}
-	\input{0f-dec} 
-\end{declarations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{declarations}
+% \input{0f-dec} 
+% \end{declarations}
 
-\begin{acknowledgements}
-	\input{0f-ack}
-\end{acknowledgements}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{acknowledgements}
+%	\input{0f-ack}
+%\end{acknowledgements}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Tables / Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{KeepFromToc}
 	\tableofcontents \newpage
 \end{KeepFromToc} 
@@ -48,18 +60,21 @@
 %\printnomenclature  %% Print the nomenclature
 %\addcontentsline{toc}{chapter}{Nomenclature}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mainmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mainmatter
-\include{01-intro}
-\part{3D Shape}
-\include{11-eval}
-\include{12-reg}
-\part{Human Action Analysis}
-\include{21-act}
-\include{22-body}
-\addcontentsline{toc}{part}{} % add a fake part to table of contents
-\include{23-hand}
-\include{31-discussion} 
-\backmatter
+% \include{01-intro}
+% \part{3D Shape}
+% \include{11-eval}
+% \include{12-reg}
+% \part{Human Action Analysis}
+% \include{21-act}
+% \include{22-body}
+% \addcontentsline{toc}{part}{} % add a fake part to table of contents
+% \include{23-hand}
+% \include{31-discussion} 
+% \backmatter
 % \appendix
 %\include{a1-app}
 

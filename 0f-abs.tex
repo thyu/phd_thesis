@@ -1,10 +1,15 @@
-The recognition of three dimensional visual data is a fundamental problem in computer vision. 
-Automatic 3D object recognition is becoming a vital part of a wide range of applications, such as robotics, human-computer interaction, activity analysis and video search. This thesis focuses on the sub-problems of 3D object recognition: \emph{classification} and \emph{pose estimation} of \emph{geometric shapes} and \emph{human actions} from 3D data, including voxels, point clouds, videos and depth image sequences.  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The recognition of three dimensional visual data is a fundamental problem in computer vision.  Automatic 3D object recognition is becoming a vital part of a wide range of applications, such as robotics, human-computer interaction, activity analysis and video search. This thesis focuses on the sub-problems of 3D object recognition: \emph{classification} and \emph{pose estimation} of \emph{geometric shapes} and \emph{human actions} from 3D data, including voxels, point clouds, videos and depth image sequences.  
 
 The main contributions of this work are various new practical solutions to the aforementioned tasks. 
-It first introduces a performance evaluation of 3D interest point detectors used in existing 3D object recognition systems.  
-Concerning 3D geometric shapes, this thesis proposes a novel, weakly-supervised constellation model that performs classification and registration simultaneously, without using pose information in training. This thesis also presents three different random forest-based algorithms for human action classification, 3D body pose estimation and 3D hand pose estimation respectively. 
-A real-time action classification algorithm is proposed using semantic texton forest for efficient visual codeword extraction. By relating human actions and their poses, a novel approach is proposed to estimate 3D human pose in unconstrained, monocular videos. To this end, a hybrid random forest algorithm is designed to adaptively perform classification and regression in 3D visual data.   
-Furthermore, a semi-supervised hand pose estimation approach is introduced by utilising both synthetic and realistic depth image sequences. 
-
+It first introduces a performance evaluation of 3D interest point detectors used in existing 3D object recognition systems. 
+Concerning 3D geometric shapes, this thesis proposes a novel, weakly-supervised constellation model that performs classification and registration simultaneously, without using pose information in training. 
+This thesis also presents three different random forest-based algorithms for human action classification, 3D body pose estimation and 3D hand pose estimation respectively. 
+A real-time action classification algorithm is proposed using semantic texton forest for efficient visual codeword extraction. A new spatiotemporal relationship matching technique is introduced to capture both appearance and structure information of a short video sequence in a single framework.  
+By relating human actions and their poses, a novel approach is proposed to estimate 3D human pose in unconstrained, monocular videos. To this end, a hybrid random forest algorithm is designed to adaptively perform classification and regression of 3D human poses from 2D videos. 
+Furthermore, this thesis addresses the problem of 3D hand pose estimation by proposing a new semi-supervised, transductive forest algorithm. In order to estimate 3D hand poses from noisy depth images, transductive learning is introduced to combine synthetic and realistic training data effectively. The proposed algorithm is also semi-supervised, which utilises a real-time hand pose estimator can be learnt using sparsely labelled training data.  
+ 
 \paragraph{Keywords:~} object recognition, classification, pose estimation, 3D shape, human action, human pose estimation, hand pose estimation, random forest, interest point detector, performance evaluation, constellation model, random forest, semantic texton forest, regression forest, action-detection. 
