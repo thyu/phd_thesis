@@ -5,20 +5,20 @@
 \label{sec/act/intro}
 
 % Done 
-Recognising human activities from videos is regarded as a challenging problem in contemporary computer vision research. It has attracted much attention recently due to the popularity of web-scale video databases, such as YouTube. The task of video-based human action analysis is regarded as a multi-class detection, classification and pose estimation problems of time-varying (spatiotemporal) data.  Action classification has been widely studied for different applications, including human-computer interaction, digital entertainment, visual surveillance and automatic video indexing. Despite the popularity of such topic in computer vision research, several issues still remain unresolved:   
+Recognising human activities from videos is regarded as a challenging problem in contemporary computer vision research. It has attracted much attention recently due to the popularity of web-scale video databases, such as YouTube. The task of video-based human action analysis is regarded as a multi-class detection, classification and pose estimation problems of time-varying (spatiotemporal) data.  Action classification has been widely studied for different applications, including human-computer interaction, digital entertainment, visual surveillance and automatic video indexing. Despite the popularity of such topics in computer vision research, several issues still remain unresolved:   
 
 % Done 
-\paragraph{Run-time performance in realistic recognition systems} Run-time efficiency is of vital importance for real-world object recognition systems. While real-time action classification is required by many time-critical applications, existing algorithms seldom take computational complexity into full consideration. Current state-of-the-art solutions focus on the final classification accuracy in testing. They reported promising results on standard human action datasets \cite{Kim2007, Lin2009, Liu2008, Willems2009}. However, such solutions are not as efficient when they are applied to realistic applications, because they either employ sophisticated algorithms or complex features to maximise recognition accuracy at the expense of increased computation time. To summarise, there exists a trade-off between classification accuracy and run-time performance, designing a suitable algorithm for video-based human action analysis is a challenging engineering problem.  
+\paragraph{Run-time performance in realistic recognition systems} Run-time efficiency is of vital importance for real-world object recognition systems. While real-time action classification is required by many time-critical applications, existing algorithms seldom take computational complexity into full consideration. Current state-of-the-art solutions focus on the final classification accuracy in testing. They report promising results on standard human action datasets \cite{Kim2007, Lin2009, Liu2008, Willems2009}. However, such solutions are not as efficient when they are applied to realistic applications, because they either employ sophisticated algorithms or complex features to maximise recognition accuracy at the expense of increased computation time. To summarise, there exists a trade-off between classification accuracy and run-time performance, designing a suitable algorithm for video-based human action analysis is a challenging engineering problem.  
 
 % Done 
-\paragraph{Responsive action recognition}  For many computer vision applications, such as human-computer interface and video surveillance, it is necessary to classify an action within a short response time, \ie look-ahead time, in order to perform a promptly feedback to the observed actions.  The recognition algorithms of such tasks are often repurposed from existing classification algorithms for 2D images, which have been adopted and proved effective in early video-based action recognition research \cite{Schuldt2004, Dollar2005}.  Traditional action recognition systems consider the testing video as a single 3D object. Typically, a class label is assigned after sufficient features are extracted from the entire testing video, or with a large look-ahead. It is necessary to minimise the look-ahead time required for time-critical tasks, still there are few attempts to improve the designs of existing action recognition systems. Schindler and van Gool \cite{Schindler2008} have shown that, by using appropriate spatiotemporal features, human actions could be recognised from very short video sequences (1--7 frames) with a promising accuracy comparable to state-of-the-arts.
+\paragraph{Responsive action recognition}  For many computer vision applications, such as human-computer interface and video surveillance, it is necessary to classify an action within a short response time, \ie look-ahead time, in order to perform a prompt feedback to the observed actions.  The recognition algorithms of such tasks are often repurposed from existing classification algorithms for 2D images, which have been adopted and proved effective in early video-based action recognition research \cite{Schuldt2004, Dollar2005}.  Traditional action recognition systems consider the testing video as a single 3D object. Typically, a class label is assigned after sufficient features are extracted from the entire testing video. It is necessary to minimise the look-ahead time required for time-critical tasks, still there are few attempts to improve the design of existing action recognition systems. Schindler and van Gool \cite{Schindler2008} have shown that, by using appropriate spatiotemporal features, human actions could be recognised from very short video sequences (1--7 frames) with a promising accuracy comparable to state-of-the-art approaches.
 
 % done 
 \paragraph{Spatial and temporal structures}
 Human activities can be considered as a sequence of time-varying independent poses, spatiotemporal structure of actions is therefore a discriminative feature for action recognition.  
 While structural information is a useful cue for the task, it is often overlooked by traditional action recognition approaches.  
 Many existing methods are derived from the standard bag-of-words model in image recognition \cite{Sivic2005, Fei-Fei2005}, which has proved effective for action recognition owing to its rich discriminative power of local appearance information and its inherent benefits to cope with scaling, translation and cluttered backgrounds. 
-Bag-of-words model, however, neglects the spatial and temporal structure among features. 
+A bag-of-words model, however, neglects the spatial and temporal structure among features. 
 When a testing video sequence is represented as an unordered set of visual codewords, all structural information of features is discarded. 
 
 \subsection{Contributions}
@@ -28,22 +28,22 @@ Addressing the aforementioned challenges, this chapter presents a novel method f
 
 % Done 
 \paragraph{Learning visual codebooks via semantic texton forest} 
-Inspired by the work of Shotton \etal \cite{Shotton2008}, the proposed system extends semantic texton forests (STF) from 2D image segmentation to human action classification. STF is a variant of randomised decision forest \cite{Ho1995, Amit1997, Breiman2001} that encodes textons to multiple visual codewords. STF is capable of learning a powerful codebook without computing expensive local descriptors, and without performing costly k-means clustering as in traditional action recognition algorithms. It operates directly on spatiotemporal video patches without computing expensive local descriptors or filter-bank responses, such as 3D-SIFT descriptors \cite{Scovanner2007}, non-negative matrix factorisation \cite{Wong2007}, histogram of gradient (HOG) \cite{Schuldt2004, Laptev2008} and histogram of optical flow (HOF) descriptors \cite{Riemenschneider2009}. 
-In addition to faster training and testing time, Moosmann \etal \cite{Moosmann2007} also suggested that decision forest codebooks showed robustness to background clutter compared with traditional flat codebooks such as k-means algorithm, hence they can attain a better recognition accuracy.  
+Inspired by the work of Shotton \etal \cite{Shotton2008}, the proposed system extends semantic texton forests (STF) from 2D image segmentation to human action classification. STF is a variant of a randomised decision forest \cite{Ho1995, Amit1997, Breiman2001} that encodes textons to multiple visual codewords. STF is capable of learning a powerful codebook without computing expensive local descriptors, and without performing costly k-means clustering as in traditional action recognition algorithms. It operates directly on spatiotemporal video patches without computing expensive local descriptors or filter-bank responses, such as 3D-SIFT descriptors \cite{Scovanner2007}, non-negative matrix factorisation \cite{Wong2007}, histogram of gradient (HOG) \cite{Schuldt2004, Laptev2008} and histogram of optical flow (HOF) descriptors \cite{Riemenschneider2009}. 
+In addition to faster training and testing time, Moosmann \etal \cite{Moosmann2007} also suggested that decision forest codebooks showed robustness to background clutter compared with traditional flat codebooks such as those constructed via k-means algorithm, hence they can attain a better recognition accuracy.  
 
 %Firstly, inspired by the work of Shotton \etal \cite{Shotton2008}, we extend the use of semantic texton forests from 2D image segmentation to spatiotemporal analysis. STFs are ensembles of random decision trees that translate interest points into visual codewords. In our method, STF performs directly on video pixels without computing expensive local descriptors and efficiently generates codewords. As well as being faster than a traditional flat codebook such as k-means clustering, STF achieves high effectiveness comparable to that of existing approaches.  As far as we are aware, this is the first method that uses STF in action recognition studies.
 
 % Done 
-\paragraph{Combining structural and appearance information} This chapter presents the pyramidal spatiotemporal relationship match (HSRM), building on the work of Ryoo and Aggarwal \cite{Ryoo2009}. HSRM describes both local appearance and structural information of visual codewords, such that the subsequent action classifier recognises short video snippets to minimise classification delay. Feature histograms are compared using intersection \cite{Ryoo2009}. Since plain histogram intersection is sensitive to noise and appearance error, pyramidal match kernel \cite{Grauman2005} is introduced to alleviate this problem. Taking advantage of the inherent hierarchical structure of semantic texton forests, instead of representing a video snippet as an unordered set of codewords, HSRM takes the spatiotemporal relationship among individual local feature points into account. Despite using only simple features and classifier (video patches and decision forest), the proposed HSRM still achieves promising speed and accuracy by utilising both appearance and structures of human actions. 
+\paragraph{Combining structural and appearance information} This chapter presents the pyramidal spatiotemporal relationship match (HSRM), building on the work of Ryoo and Aggarwal \cite{Ryoo2009}. HSRM describes both local appearance and structural information of visual codewords, such that the subsequent action classifier recognises short video snippets to minimise classification delay. Feature histograms are compared using intersection \cite{Ryoo2009}. Since plain histogram intersection is sensitive to noise and appearance errors, a pyramidal match kernel \cite{Grauman2005} is introduced to alleviate this problem. Taking advantage of the inherent hierarchical structure of semantic texton forests, instead of representing a video snippet as an unordered set of codewords, HSRM takes the spatiotemporal relationship among individual local feature points into account. Despite using only simple features and classifier (video patches and decision forest), the proposed HSRM still achieves promising speed and accuracy by utilising both appearance and structure of human actions. 
 
 
 % Done 
-\paragraph{Fast classification using k-means forest} The proposed framework employs k-means forest to classify snippets from testing videos. K-means forest is an ensemble of k-means decision trees, which was originally introduced by Muja and Lowe \cite{Muja2009} for approximate nearest neighbour classifier. In this work, it is repurposed to an efficient k-nearest neighbour classifier. Instead of the Euclidean kernel, HSRM is employed as the matching kernel for learning the k-means forest classifier. Subsequently, the recognition accuracy is further refined by adaptively combining the k-means forest and the traditional bag-of-semantic-texton method, together with an adaptive weighting scheme \cite{Shotton2008}. As a result, the proposed combined classification algorithm demonstrates a high accuracy comparable to that of existing state-of-the-arts, whilst simultaneously achieving real-time performance. 
+\paragraph{Fast classification using a k-means forest} The proposed framework employs a k-means forest to classify snippets from testing videos. A k-means forest is an ensemble of k-means decision trees, which was originally introduced by Muja and Lowe \cite{Muja2009} for approximate nearest neighbour classifier. In this work, it is repurposed to an efficient k-nearest neighbour classification. Instead of the Euclidean kernel, HSRM is employed as the matching kernel for learning the k-means forest classifier. Subsequently, the recognition accuracy is further refined by adaptively combining the k-means forest and the traditional bag-of-semantic-texton method, together with an adaptive weighting scheme \cite{Shotton2008}. As a result, the proposed combined classification algorithm demonstrates a high accuracy comparable to that of existing state-of-the-art approaches, whilst simultaneously achieving real-time performance. 
 
 %Done 
-\paragraph{VFAST spatiotemporal interest point detector} The 3D version of FAST interest point detector, namely Video-FAST (VFAST), is used to detect spatiotemporal interest points in training and testing videos. Performance evaluations for 3D interest points are discussed in chapter \ref{chap/eval}. The VFAST interests point also produce a dense feature set than spatiotemporal interest points than traditional approaches as shown in chapter \ref{chap/eval}. It is suggested that a densely sampled visual codebook improve recognition performance, according to Nowak \etal \cite{Nowak2006}.
+\paragraph{VFAST spatiotemporal interest point detector} The 3D version of the FAST interest point detector, namely Video-FAST (VFAST), is used to detect spatiotemporal interest points in training and testing videos. Performance evaluation for 3D interest points was discussed in chapter \ref{chap/eval}. VFAST interest points also produce a densed feature set than traditional approaches as shown in chapter \ref{chap/eval}. It is suggested that a densely sampled visual codebook improve recognition performance, according to Nowak \etal \cite{Nowak2006}.
 
-VFAST features are relatively faster than the traditional 3D interest points by Laptev \cite{Laptev2005} and Dollar \etal \cite{Dollar2005}, it is therefore suitable for real-time application. 
+VFAST features are faster than the traditional 3D interest points by Laptev \cite{Laptev2005} and Dollar \etal \cite{Dollar2005}, it is therefore suitable for real-time application. 
 Given a denser set of interest points, action labels can be classified from a shorter sequence without sacrificing too much recognition accuracy, minimising the number of look-ahead frames required. 
 In addition, scale-space analysis can be applied on VFAST in order to detect interest points across different scales.
 
@@ -55,10 +55,10 @@ In addition, scale-space analysis can be applied on VFAST in order to detect int
 \label{sec/act/relatedwork}
 % Done 
 
-Machine recognition of human activities has been a long-lasting topic in computer vision research since the seventies, \eg moving light display \cite{Johansson1973}. Early approaches to human activity analysis were reviewed by C\'edras and Shah \cite{Cedras1995}, Moeslund and Granum \cite{Moeslund2001} and Turaga \etal \cite{Turaga2008}. Contemporary action recognition algorithms were reviewed by Poppe \cite{Poppe2010} and Weinland \etal \cite{Weinland2011}.   
+Machine recognition of human activities has been a long-lasting topic in computer vision research since the seventies, \eg moving light displays \cite{Johansson1973}. Early approaches to human activity analysis were reviewed by C\'edras and Shah \cite{Cedras1995}, Moeslund and Granum \cite{Moeslund2001} and Turaga \etal \cite{Turaga2008}. Contemporary action recognition algorithms were reviewed by Poppe \cite{Poppe2010} and Weinland \etal \cite{Weinland2011}.   
 
-State-of-the-art action recognition methods have shown the effectiveness of local appearance-based features, as bag-of-words model is particularly popular in the literature \cite{Schuldt2004, Dollar2005, Riemenschneider2009, Niebles2008, Wong2007}.
-Figure \ref{fig/act/bow} summarises a typical bag-of-word object recognition pipeline. Feature descriptors are firstly extracted from the detected interest points. Input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie histogram of visual codewords. A classifier is then trained to assign class labels to the testing objects.
+State-of-the-art action recognition methods have shown the effectiveness of local appearance-based features, the bag-of-words model is particularly popular in the literature \cite{Schuldt2004, Dollar2005, Riemenschneider2009, Niebles2008, Wong2007}.
+Figure \ref{fig/act/bow} summarises a typical bag-of-word object recognition pipeline. Feature descriptors are firstly extracted from the detected interest points. Input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie the histogram of visual codewords. A classifier is then trained to assign class labels to the testing objects.
 
 \begin{figure}[t]
 	\centering  	
@@ -69,10 +69,10 @@ Figure \ref{fig/act/bow} summarises a typical bag-of-word object recognition pip
 
 
 % Done 
-For action classification, a large codebook, \eg up to thousands of codewords, is favourable to ensure a good recognition accuracy. However, computational load and memory requirement also increase with codebook size. With respect to learning algorithms, feature quantisation by a large flat codebook, such as k-means, is computationally heavy. Furthermore, an oversized codebook is vulnerable to high quantisation errors and over-fitting. As a result, alternative approaches to codebook learning have been investigated to increase the efficiency and robustness of action classification. Moosmann \etal \cite{Moosmann2007} first suggested learning a fast visual codebook as a randomised clustering forest. Since then tree-based codebook has been adopted gradually in various object recognition tasks, including scene recognition \cite{Bosch2007} and semantic segmentation \cite{Shotton2008}, owing to its superior efficiency and generalisation power. There exist two advantages of using a tree-based codebook for object recognition. Firstly, decision trees can be highly parallelised for efficient computation, which is essential for time-critical applications. Secondly, given a feature vector, a decision tree produces multiple visual codewords at different levels, increasing the robustness of visual codeword matching. 
+For action classification, a large codebook, \eg up to thousands of codewords, is favourable to ensure a good recognition accuracy. However, computational load and memory requirement also increase with codebook size. With respect to learning algorithms, feature quantisation by a large flat codebook, such as k-means, is computationally heavy. Furthermore, an oversized codebook is vulnerable to high quantisation errors and over-fitting. As a result, alternative approaches to codebook learning have been investigated to increase the efficiency and robustness of action classification. Moosmann \etal \cite{Moosmann2007} first suggested learning a fast visual codebook as a randomised clustering forest. Since then tree-based codebooks have been adopted gradually in various object recognition tasks, including scene recognition \cite{Bosch2007} and semantic segmentation \cite{Shotton2008}, owing to its superior efficiency and generalisation power. There exist two advantages of using a tree-based codebook for object recognition. Firstly, decision trees can be highly parallelised for efficient computation, which is essential for time-critical applications. Secondly, given a feature vector, a decision tree produces multiple visual codewords at different levels, increasing the robustness of visual codeword matching. 
 
 % Done 
-As a variant of tree-based codebook, Oshin \etal \cite{Oshin2009} recognised human actions by describing the spatial distribution of interest points by random ferns. Lin \etal \cite{Lin2009} used a prototype tree to encode holistic motion-shapes descriptors.  Mikolajczyk and Uemura \cite{Mikolajczyk2008} improved codebook testing time by learning clustering trees from the results of k-means clustering. Hierarchical codebooks enable fast vector quantisation during testing, however, the expensive features and classifiers make the overall processes still heavy \cite{Lin2009, Mikolajczyk2008}.
+As a variant of a tree-based codebook, Oshin \etal \cite{Oshin2009} recognised human actions by describing the spatial distribution of interest points by random ferns. Lin \etal \cite{Lin2009} used a prototype tree to encode holistic motion-shapes descriptors.  Mikolajczyk and Uemura \cite{Mikolajczyk2008} improved codebook testing time by learning clustering trees from the results of k-means clustering. Hierarchical codebooks enable fast vector quantisation during testing, however, the expensive features and classifiers make the overall processes still costly \cite{Lin2009, Mikolajczyk2008}.
 
 % Done 
 Codewords are orderless in the bag-of-words model. 
@@ -82,35 +82,35 @@ Whilst structural context is useful in describing some action classes, it is oft
 For instance, Gorelick \etal \cite{Gorelick2007} considered human actions as 3D space-time shapes, which are built from foreground silhouettes. Fathi and Mori \cite{Fathi2008} recognised actions using global mid-level features built from optical flow in segmented 3D patches. Kim \etal \cite{Kim2007} applied canonical correlation analysis to describe human actions in videos. The major limitation of these holistic approaches is that segmentation or action detection is required before the extraction of holistic features.  
 
 % Done  
-Some recent studies attempted to augment action recognition algorithms by considering structural information in addition to local appearances. Savarese \etal \cite{Savarese2008} proposed correlograms to describe the co-occurrences of visual codewords in a space-time neighbourhood. Spatial correlograms were also used in the work by Liu and Shah \cite{Liu2008} to encode structural information of visual word clusters. Wong \etal \cite{Wong2007} presented the pLSA-ISM model, which is an extension of the pLSA topic model \cite{Fergus2005} with additional spatial information from implicit shape model (ISM). Tran \etal \cite{Tran2008} extracted motion templates and performed action classification using metric learning. Zhang \etal \cite{Zhang2008} designed motion context, which is a spatiotemporal holistic feature based on the shape-context descriptor.  
+Some recent studies attempted to augment action recognition algorithms by considering structural information in addition to local appearance. Savarese \etal \cite{Savarese2008} proposed correlograms to describe the co-occurrences of visual codewords in a space-time neighbourhood. Spatial correlograms were also used in the work by Liu and Shah \cite{Liu2008} to encode structural information of visual word clusters. Wong \etal \cite{Wong2007} presented the pLSA-ISM model, which is an extension of the pLSA topic model \cite{Fergus2005} with additional spatial information from implicit shape model (ISM). Tran \etal \cite{Tran2008} extracted motion templates and performed action classification using metric learning. Zhang \etal \cite{Zhang2008} proposed motion context, which is a spatiotemporal holistic feature based on the shape-context descriptor.  
 
 % Done  
-Nevertheless, the structural relationship among local features are not fully utilised in the above techniques. Some approaches encode local features with respect to a canonical reference frame \cite{Wong2007, Tran2008, Zhang2008}, \eg a rectangular region-of-interest. In order to detect actions, they require segmentation or additional prepossessing, which are often computationally expensive. Addressing this issue, Ryoo and Aggarwal \cite{Ryoo2009} proposed the spatiotemporal relationship match (SRM) that encodes spatiotemporal relationship between visual codewords using a set of pairwise rules. Kovashka and Grauman \cite{Kovashka2010} exploited structural information by learning an optimal neighbourhood measure of interest points. Albeit high recognition accuracy, speed and quantisation errors remain challenging issues for these approaches because flat k-means codebooks are used.   
+Nevertheless, the structural relationship among local features are not fully utilised in the above techniques. Some approaches encode local features with respect to a canonical reference frame \cite{Wong2007, Tran2008, Zhang2008}, \eg a rectangular region-of-interest. In order to detect actions, they require segmentation or additional prepossessing, which is often computationally expensive. Addressing this issue, Ryoo and Aggarwal \cite{Ryoo2009} proposed the spatiotemporal relationship match (SRM) that encodes the spatiotemporal relationships between visual codewords using a set of pairwise rules. Kovashka and Grauman \cite{Kovashka2010} exploited structural information by learning an optimal neighbourhood measure of interest points. Despite high recognition accuracy, speed and quantisation errors remain challenging issues for these approaches because flat k-means codebooks are used.   
 
 % Done 
 New machine learning techniques have been introduced to improve the accuracy of different action classification tasks.  
-For instance, pyramid match kernel (PMK) \cite{Grauman2005} has been used in object detection and image-based retrieval. PMK constructs multi-resolution, hierarchical histograms where codewords are assigned to bins according to their spatial locations. Similar points that do not match in fine resolutions have the chance to match in lower resolutions, reducing quantisation errors and enhances robustness in spatial domain. PMK has recently been applied in action classification, Liu and Shah \cite{Liu2008} matched interest points in multiple resolutions using PMK and reported improved results over flat histogram intersection kernel. 
-However, PMK only performs hierarchical matching in spatial domain, the semantic similarities among codewords are not modelled.  
+For instance, a pyramid match kernel (PMK) \cite{Grauman2005} has been used in object detection and image-based retrieval. PMK constructs multi-resolution, hierarchical histograms where codewords are assigned to bins according to their spatial locations. Similar points that do not match in fine resolutions have the chance to match in lower resolutions, reducing quantisation errors and enhances robustness in the spatial domain. PMK has recently been applied in action classification, Liu and Shah \cite{Liu2008} matched interest points in multiple resolutions using PMK and reported improved results over the flat histogram intersection kernel. 
+However, PMK only performs hierarchical matching in the spatial domain, the semantic similarities among codewords are not modelled.  
 
 % Done  
-As discussed in chapter \ref{chap/eval}, feature detection and representation also play a crucial role in the performances of action classification systems. Several interest points are specifically designed for spatial temporal data. For example, Laptev \cite{Laptev2005} proposed spatiotemporal interest point (STIP), which is extended from 2D Harris corner detection algorithm. Dollar \etal \cite{Dollar2005} then enhanced the density of STIP by applying Gaussian filter in space and Gabor filter in time.  
+As discussed in chapter \ref{chap/eval}, feature detection and representation also play a crucial role in the performances of action classification systems. Several interest points are specifically designed for spatial temporal data. For example, Laptev \cite{Laptev2005} proposed spatiotemporal interest point (STIP), which is extended from 2D Harris corner detection. Dollar \etal \cite{Dollar2005} then enhanced the density of STIP by applying Gaussian filters in space and Gabor filters in time.  
 Wong and Cipolla \cite{Wong2007a} extracted discriminative regions using non-negative matrix factorisation, decomposing videos into linear combinations of shared space-time components.
-Based on salient region detection algorithm \cite{Mikolajczyk2004}, Oikonomopoulos \etal \cite{Oikonomopoulos2005} computed spatiotemporal saliency by measuring the entropy within a spherical neighbourhood. Messing \etal \cite{Messing2009} used trajectories of tracked keypoints to recognise actions from videos. 
+Based on salient region detection \cite{Mikolajczyk2004}, Oikonomopoulos \etal \cite{Oikonomopoulos2005} computed spatiotemporal saliency by measuring the entropy within a spherical neighbourhood. Messing \etal \cite{Messing2009} used trajectories of tracked keypoints to recognise actions from videos. 
 With respect to feature descriptors, HOG and HOF are popular techniques in earlier action classification methods \cite{Dollar2005, Niebles2008, Schuldt2004}. Scovanner \etal \cite{Scovanner2007} proposed a 3D version of Lowe's seminal SIFT descriptor \cite{Lowe2004}. Willems \etal \cite{Willems2009} presented an extended SURF descriptor in videos for action recognition.  
 % Extra feature descriptor? 
 To summarise, feature extraction is often one of the most computationally expensive processes in action classification systems. Efficient features, or descriptor-less approaches, are investigated to improve the run-time speed of action classification.  
 
 % done 
-In addition to classification accuracy, run-time performance is another essential quality for realistic human action recognition systems. Various techniques are developed to speed up feature extraction and classification. 
+In addition to classification accuracy, run-time performance is another essential quality for realistic human action recognition systems. Various techniques have been developed to speed up feature extraction and classification. 
 Instead of HOG and HOF, Yeffet and Wolf \cite{Yeffet2009} computed dense local trinary patterns, which is an efficient feature derived from local binary patterns originally designed for texture analysis and face recognition \cite{Ahonen2006}. 
 Gilbert \etal \cite{Gilbert2009} proposed a fast multi-action recognition algorithm by finding patterns of dense 2D Harris corners with a data-mining algorithm.
 Patron-Perez and Reid \cite{Patron2007} designed a probabilistic classifier that recognised actions continuously with a sliding window. 
-Bregonzio \etal \cite{Bregonzio2009} considered actions as clouds of points, efficient classification was done by analysing histogram of point clusters. 
+Bregonzio \etal \cite{Bregonzio2009} considered actions as clouds of points, efficient classification was done by analysing a histogram of point clusters. 
 
 %Regarding the classification step in existing systems, standard classifiers are often used.
-Ordinary standard classifiers are often used in existing action classification systems. 
+Standard classifiers are often used in existing action classification systems. 
 K-nearest neighbour classifier, support vector machines and boosting were among the most widely adopted algorithms. New models have been proposed to accelerate the classification process, such as k-NN approximation using decision trees \cite{Lin2009}, randomised ferns \cite{Oshin2009} and Markov chains \cite{Messing2009}.   
-Although real-time performances have been reported by these methods, their computation bottlenecks in feature extraction and vector quantisation have not been addressed. 
+Although real-time performances have been reported by these methods, their computational bottleneck in feature extraction and vector quantisation have not been addressed. 
 
 \section{Overview of the proposed method} 
 \label{sec/act/overview}
@@ -136,7 +136,7 @@ Depending on the target application, simple spatiotemporal video patches can be 
 \section{VFAST interest point detector}
 \label{sec/act/fastest}
 % DONE 
-Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of VFAST interest point detector has been explained in section \ref{sec/eval/vfast}. Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 
+Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of the VFAST interest point detector have been explained in section \ref{sec/eval/vfast}. Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 
 
 % already discussed in ``eval'' chapter
 % For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. 
@@ -185,8 +185,8 @@ The steps of computing VFAST interest points are described in algorithm \ref{alg
 \label{sec/act/stf}
 
 %done
-Semantic texton forest (STF) is an ensemble of randomised decision trees which textonises input video patches into semantic textons. Instead of using random forest as a classifier, it has also been applied to vector quantisation by learning multiple tree-based codebooks \cite{Moosmann2007}. Shotton \etal \cite{Shotton2008} then applied this technique in image segmentation by quantising texture patches using a STF. In this chapter, STF is used to convert video patches into visual codewords.  
-It is an efficient codebook, where feature vectors traverse each of the trees by simple voxel pair tests, without computing filter responses or feature descriptor. STF codebook also demonstrates higher robustness and discriminative power than k-means algorithm because it produces multiple codewords from a feature vector. 
+A semantic texton forest (STF) is an ensemble of randomised decision trees which textonises input video patches into semantic textons. Instead of using random forest as a classifier, it has also been applied to vector quantisation by learning multiple tree-based codebooks \cite{Moosmann2007}. Shotton \etal \cite{Shotton2008} applied this technique to image segmentation by quantising texture patches using a STF. In this chapter, STF is used to convert video patches into visual codewords.  
+It is an efficient codebook, where feature vectors traverse each of the trees by simple voxel pair tests, without computing filter responses or feature descriptors. The STF codebook also demonstrates higher robustness and discriminative power than k-means because it produces multiple codewords from a feature vector. 
 
 % Done 
 The training algorithm of STF is similar to that of supervised classification forest \cite{Breiman2001}. Spatiotemporal patches $\tdata$ are extracted from the VFAST interest points detected in the training videos. 
@@ -198,7 +198,7 @@ At each new node, a pool of candidate split functions are generated randomly, a 
 	\end{aligned}
 	\label{eqn/act/ig}
 \end{equation}
-where $\entropy(\tdata_{\curnode})$ is the information entropy of income dataset $\tdata_{\curnode}$ in current node $\curnode$. $\tdata_{\curnode c}$ denotes the subset of $\tdata_{\curnode}$ that belongs to class $c \in \nclass$. $\tdata_{l}$ and $\tdata_{r}$ are the left and right subsets of $\tdata_{\curnode}$.
+where $\entropy(\tdata_{\curnode})$ is the information entropy of a training dataset $\tdata_{\curnode}$ in current node $\curnode$. $\tdata_{\curnode c}$ denotes the subset of $\tdata_{\curnode}$ that belongs to class $c \in \nclass$. $\tdata_{l}$ and $\tdata_{r}$ are the left and right subsets of $\tdata_{\curnode}$.
 Split functions are assigned to a new node by maximising equation \ref{eqn/act/ig}. As a result, training video patches are clustered recursively down the decision tree. Training is stopped when the new tree nodes reach a certain depth. Algorithm \ref{algo/act/grow} describes the recursive procedure of learning a randomised decision tree in a STF.
 
 \begin{algorithm}[ht] 
@@ -277,7 +277,7 @@ Figure \ref{fig/act/stf} demonstrates how input spatiotemporal patches are clust
 	\label{tab/act/codebook}
 \end{table}
 
-Table \ref{tab/act/codebook} summarises an empirical comparison between STF and k-means algorithms, showing that STF performs much faster than k-means algorithms. Relative speed is measured by computing $1$ million feature vectors with $405$ dimensions, with codebook size $K = 1905$ ($127$ codewords per tree). 
+Table \ref{tab/act/codebook} summarises an empirical comparison between STF and k-means algorithms, showing that STF performs much faster than k-means. Relative speed is measured by computing $1$ million feature vectors with $405$ dimensions, with codebook size $K = 1905$ ($127$ codewords per tree). 
 
 \section{Hierarchical spatiotemporal relationship match}
 \label{sec/act/HSRM}
@@ -332,8 +332,8 @@ A set of 3D histograms $\{ \histogram_1(\vfastset),\dots,\histogram_{M}(\vfastse
 
 \subsection{Pyramid match kernel for HSRM}
 % done 
-Quantisation is a major issue of bag-of-words models for object recognition tasks in general. It is often difficult to determine an optimal codebook size, which is dependent on both training and testing data. 
-If a codebook is too small, useful information is discarded due to quantisation error, affecting its discriminative power. 
+Quantisation is a major issue for bag-of-words models for object recognition tasks in general. It is often difficult to determine an optimal codebook size, which is dependent on both training and testing data. 
+If a codebook is too small, useful information is discarded due to quantisation errors, affecting its discriminative power. 
 Oppositely, over-quantisation is prone to noisy data and over-fitting. An oversized codebook produces sparse and flat visual codeword histograms, which undermines the final classification accuracy.  
 
 % done 
@@ -345,7 +345,7 @@ In a STF, video patches are quantised hierarchically based on its semantic or ap
 \end{itemize} 
 
 % done 
-Pairs of spatiotemporal histograms is matched by pyramid match kernel (PMK) \cite{Grauman2005}. 
+Pairs of spatiotemporal histograms are matched by pyramid match kernel (PMK) \cite{Grauman2005}. 
 %It measures the similarity of two set of features in a multi-resolution histogram space.
 The similarity between two sets of interest points $\vfastset$ and $\vfastsetx$ is measured by PMK from a multi-resolution histogram space for each tree. 
 A kernel function $\kernel(\onevfast,v: \codebooksize \times \codebooksize \rightarrow \mathbb{R})$ is defined as the similarity metric between two sets of input features from input space $\codebooksize \times \codebooksize$, which is equal to all pairwise combinations of codewords within a decision tree.  
@@ -373,7 +373,7 @@ Matches in finer bins score higher similarity than matches in coarser levels by 
 \subsection{Kernel k-means forest classifier}
 
 %done 
-The HSRM algorithm is applied to learn a k-means forest classifier from the video snippets. Given a set of training video data $\vfastset_i$, $M$ independent clustering trees are trained by recursively performing k-means algorithm, using HSRM as the similarity metric. 
+The HSRM algorithm is applied to learn a k-means forest classifier from the video snippets. Given a set of training video data $\vfastset_i$, $M$ independent clustering trees are trained by recursively performing the k-means algorithm, using HSRM as the similarity metric. 
 For the $m$-th tree in STF, the hierarchical k-means algorithm splits current training data into $N$ clusters, $\mathbf{S} = \{\mathbf{S}_1,\dots,\mathbf{S}_N\}$, to maximise the intra-cluster similarity:
 \begin{equation}
 	\displaystyle\argmax_{\mathbf{S}} \displaystyle\sum_{i = 1}^{N}\sum_{\vfastset \in \mathbf{S}_{i}} \kernel_m(\vfastset, \mu_{m,i}),
@@ -391,9 +391,9 @@ where $\mu_{m,i}$ is the centroid of $\mathbf{S}_i$. In the testing stage, HSRM 
 
 % done 
 \subsection{Bag of semantic textons}
-The bag-of-semantic-textons method (BOST) derived from the standard bag-of-words method for image segmentation \cite{Shotton2008}. For each testing video snippet, a histogram $\bost$ is computed from visual words at every node in the STF, thus the size of $\bost$ equals to the total number of tree nodes (except the root), \ie $2\codebooksize - 2$.  
+The bag-of-semantic-textons method (BOST) is derived from the standard bag-of-words method for image segmentation \cite{Shotton2008}. For each testing video snippet, a histogram $\bost$ is computed from visual words at every node in the STF, thus the size of $\bost$ equals to the total number of tree nodes (except the root), \ie $2\codebooksize - 2$.  
 %Since the dimension of $\bost$ $\codebooksize$ is relatively low (\cf the HSRM histogram has $\codebooksize_m \times \codebooksize_m \times |\mathrm{R}|$ dimension), 
-Standard random classification forest \cite{Breiman2001} is used as the classifier for BOST, which has proved powerful in image-based classification. 
+Standard random classification forest \cite{Breiman2001} are used as the classifier for BOST, which has proved powerful in image-based classification. 
 The random forest trained on the BOST histograms classifies a query video $\vfastset$ by the mean class distributions of the assigned leaf nodes $\{\hat{l}_1,\dots,\hat{l}_{M}\}$:
 \begin{equation}
 \mathrm{P}_{B}(c|\vfastset) = \frac{1}{M}\displaystyle\sum_{m=1}^{M}P_{BOST}(c|\hat{l}_m).
@@ -402,7 +402,7 @@ The random forest trained on the BOST histograms classifies a query video $\vfas
 
 %done 
 \subsection{Combined classification} 
-Final action recognition is performed separately by the proposed kernel k-means forest classifier and by BOST. While HSRM has proved effective in most of the cases owing to its both local and structural information, BOST works well owing to its powerful RF classifier on some particular action classes. By integrating classification results of both methods, average performance is significantly improved. Final class label is assigned to the class $c$ which obtains the highest combined posterior probability as
+Final action recognition is performed separately by the proposed kernel k-means forest classifier and by BOST. While HSRM has proved effective in most of the cases owing to its both local and structural information, BOST works well owing to its powerful RF classifier on some particular action classes. By integrating classification results of both methods, average performance is significantly improved. A final class label is assigned to the class $c$ which obtains the highest combined posterior probability as
 \begin{equation}
 	\arg\max_{c}
 	\mathrm{P}(c|\vfastsetx) = 
@@ -454,7 +454,7 @@ The KTH dataset is an established benchmark for action recognition research.
 It contains sequences of six action classes captured from four different environments: boxing, hand-clapping, hand-waving, jogging, running and walking. 
 The videos are taken with changing subjects, camera poses, scales and appearances, as illustrated in figure \ref{fig/act/frames}. 
 The video sequences in the KTH dataset have an average length of $19$ seconds, at a frame rate of $30$ frames per second. 
-To recognise actions within a short response time, video snippet of $1$ second ($30$ frames) in length were extracted on-the-fly from the training and testing sequences. 
+To recognise actions within a short response time, video snippets of $1$ second ($30$ frames) in length were extracted on-the-fly from the training and testing sequences. 
 Each training subsequence (video snippet) was sampled in every $5$ frames, which was collected from the training dataset to build the classifiers. 
 Testing snippets were densely sampled from testing videos in a similar manner. 
 Leave-one-out cross validation was used in the experiments. 
@@ -503,7 +503,7 @@ $rf_M$ & number of tree in the BOST forest& $15$ \\
 
 
 % done 
-Table \ref{tab/act/compare} presents a detailed comparison between the proposed method and other state-of-the art approaches. The combined HSRM-BOST model demonstrates promising results, even only short video snippets are used to recognise actions. 
+Table \ref{tab/act/compare} presents a detailed comparison between the proposed method and other state-of-the art approaches. The combined HSRM-BOST model demonstrates promising results, even though short video snippets are used to recognise actions. 
 The confusion matrices in figure \ref{fig/act/confusion} shows that HSRM and BOST complemented each other to attain improved accuracy. 
 Quantisation effects are soothed by the tree-based STF codebook and pyramid match kernel compared with the original spatiotemporal relationship match method by Ryoo and Aggarwal \cite{Ryoo2009}.
 
@@ -562,7 +562,7 @@ The introduction of STF has greatly improved the run-time performance in feature
 \subsection{UT-interaction dataset}
 % dataset introduction UT
 The UT-interaction dataset contains six classes of realistic human-to-human interactions, including shaking hands, pointing, hugging, pushing, kicking and punching, as visualised in figure \ref{fig/act/frames}. 
-Challenging factors of this dataset include moving background, cluttered scene, camera jitters/zoom and clothing changes. 
+Challenging factors of this dataset include moving background, cluttered scene, camera jitter/zoom and clothing changes. 
 In the experiments, the segmented UT-interaction dataset was used for evaluating the recognition accuracy and speed of the proposed action classification system. 
 In table \ref{tab/act/utcompare}, the proposed method achieves better accuracy in recognising realistic human-human interactions than Ryoo and Aggarwal \cite{Ryoo2009}. 
 With complex human interactions, using both local-appearance and structural cues in HSRM appeared more stable than BOST that uses only local-appearance. 
@@ -598,7 +598,7 @@ The drop in run-time speed for the UT-interaction experiment is mainly due to th
 %advantages: fast, fully utilises structural information
 %limitation: still have some lookahead, not so powerful features, localisation not optimised
 % This chapter has presented a novel solution for action recognition. Different from other published approaches, a major strength of our method is the run-time speed. Real-time performance is achieved by semantic texton forest which works on video pixels generating visual codewords in an extremely fast manner.  HSRM is proposed to capture both spatiotemporal structures and local-appearances of actions and ease quantisation effects based on STF. Furthermore, a novel fast interest point detector and application of random forest and kernel k-means forest classifiers contribute to the acceleration of recognition speed. Experimental results show the comparable accuracies of the proposed method compared to state-of-the-arts. A future challenge will be tackling more complex realistic human actions and partial occlusions, as well as requiring continuous action localisation with a real-time performance.
-In this chapter, the topic of video-based action recognition is studied as an example of 3D object classification task. 
+In this chapter, the topic of video-based action recognition is posed as a 3D object classification task. 
 % A novel real-time solution for video-based human action classification is proposed. 
 Addressing the efficiency issues of existing techniques, a new real-time action recognition algorithm is proposed. 
 Real-time performance is achieved by semantic texton forests which work on video pixels generating visual codewords in an extremely fast manner. Hierarchical spatiotemporal relationship match (HSRM) is also introduced to capture both spatiotemporal structures and local-appearances of video snippets. 

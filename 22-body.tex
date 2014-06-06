@@ -39,7 +39,7 @@ Furthermore, if changes are made to the imaging environments, the whole pose est
 
 % Done 
 Addressing the above issues, this chapter presents several new techniques to estimate 3D human poses for practical application, particularly in uncontrolled environments. 
-A novel pose estimation framework, which incorporates \emph{action detection} and 2D \emph{deformable part model}, is introduced to monocular 3D human pose estimation. 
+A novel pose estimation framework, which incorporates \emph{action detection} and a 2D \emph{deformable part model}, is introduced to monocular 3D human pose estimation. 
 Two different random forest-based pose estimators complement each other by independently detecting body part locations and holistic 3D pose. The contributions of the proposed approach are threefold:  
 
 % Done 
@@ -50,17 +50,20 @@ is still an aspect that is overlooked by existing literature.
 In this work, human activities are considered as a collection of atomic, repeatable actions. 
 Each action is a time series of instantaneous poses, with particular starting and ending poses and their transitions in-between. Given appearance or spatiotemporal motion features, an action detection algorithm infers the current state of an action, which works as a strong prior for pose estimation.   
 
-In this work, action detection is applied to extract spatiotemporal structures of human actions for pose estimation. A new action detection forest algorithm, an extension of Hough forest \cite{Gall2009}, is introduced to infer a global body pose hypothesis.   
+In this work, action detection is applied to extract spatiotemporal structures of human actions for pose estimation. A new action detection forest algorithm, an extension of the Hough forest \cite{Gall2009}, is introduced to infer a global body pose hypothesis.   
 In figure \ref{fig/body/actionexplain}, action detection categorises the action class and then estimates the relative space-time location of the recognised action with respect to the input video. In other words, action detection predicts the current states of an action, which assists 3D pose estimation within the action's time span. Once an action is detected, the current pose hypothesis can be determined by computing the relative spatiotemporal displacements between the current observation and the action's preceding poses as shown in figure \ref{fig/body/actionexplain}.   
-On top of its many benefits to pose estimation, action detection does not impose extra restriction on the imaging environment. As discussed in chapter \ref{chap/act}, there already exist promising approaches for human action classification, action detection is therefore a suitable candidate to improve 3D HPE in realistic applications.   
+On top of its many benefits to pose estimation, action detection does not impose extra restrictions on the imaging environment. As discussed in chapter \ref{chap/act}, there already exist promising approaches for human action classification, action detection is therefore a suitable candidate to improve 3D HPE in realistic applications.   
 
 % DOne 
 \subsubsection{Mid-level features from deformable part model} 
 
 Traditional 3D HPE algorithms rely on low-level appearance features, such as silhouettes, motion templates and shape descriptors \cite{Hogg1983, Rogez2012, Navaratnam2006, Pons-Moll2011, Sigal2012}. Poses are often inferred by learning a mapping from the feature space to the parameterised pose space directly, without considering the mid-level structure of human body.  
-On the contrary, concerning 2D human pose estimation (2D HPE), detection of mid-level body parts is a critical process, as the output pose is essentially constructed from the body parts detected, according to a predefined structure, \eg an articulated model \cite{Felzenszwalb2000, Andriluka2009, Yang2011, Eichner2012}.
+On the contrary, in 2D human pose estimation (2D HPE), the detection of mid-level body parts is a critical process, as the output pose is essentially constructed from the body parts detected, according to a predefined structure, \eg an articulated model \cite{Felzenszwalb2000, Andriluka2009, Yang2011, Eichner2012}.
 
-As a result, 2D part-based pose estimation techniques are applied to infer 3D articulated poses. In the proposed approach, holistic shape features, such as silhouettes, are replaced by a deformable part model (DPM), which detects mid-level 2D body parts from low-level features before inferring the corresponding 3D poses. Existing DPM algorithms perform well in realistic and uncontrolled environments, they have shown promising robustness to cluttered backgrounds and appearance changes, \eg different clothing. On the other side, occlusions and view ambiguities of the DPM part detector are corrected by the 3D pose prior from action detection. Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
+As a result, 2D part-based pose estimation techniques are applied to infer 3D articulated poses. In the proposed approach, holistic shape features, such as silhouettes, are replaced by a deformable part model (DPM), which detects mid-level 2D body parts from low-level features before inferring the corresponding 3D poses. Existing DPM algorithms perform well in realistic and uncontrolled environments, they have shown promising robustness to cluttered backgrounds and appearance changes, \eg different clothing. 
+Occlusions and view ambiguities of the DPM part detector are corrected by the 3D pose prior from action detection. 
+% Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
+Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
 
 % Done 
 \subsubsection{Cross-modality pose estimation} 

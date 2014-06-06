@@ -27,15 +27,15 @@ Helped by the advent of appearance-based image descritors and learning-based cla
 % Nonetheless, structural information is lost when a real world 3D object is projected onto a 2D image, hence 3D pose of an object cannot be recovered effectively via image-based approaches, particularly for 3D pose estimation.  
 
 However, with the simultaneous advances in computing hardware, and the availability of large-scale 3D datasets, research interest in 3D object recognition has been rekindled in the 2010s.  
-Modern computing technologies, such as multicore computing and general purpose GPU acceleration, provide additional computational power for efficient 3D object recognition 3D objects via various machine learning algorithms. Recent appearance of affordable data acquisition technologies, such as depth sensors \cite{Shotton2011}, multi-view stereo systems \cite{Vogiatzis2011} and video cameras in mobile devices, has made web-scale, fully-automatic 3D object recognition possible.  
+Modern computing technologies, such as multicore computing and general purpose GPU acceleration, provide additional computational power for efficient 3D object recognition via various machine learning algorithms. The recent appearance of affordable data acquisition technologies, such as depth sensors \cite{Shotton2011}, multi-view stereo systems \cite{Vogiatzis2011} and video cameras in mobile devices, has made web-scale, fully-automatic 3D object recognition possible.  
 
 This thesis addresses the sub-problems of \emph{classification} and \emph{pose-estimation} for \emph{3D geometric shapes} and \emph{human actions in videos}. 
 % Videos and 3D shape data are the most accessible representation of 3D object data.
 % Videos and 3D shapes are the most applicable and accessible representation of 3D spatial and spatiotemporal objects, which can be obtained from video cameras and affordable modern 3D shape acquisition devices, \eg multi-view stereo \cite{Vogiatzis2011} and Kinect sensor \cite{Shotton2011}.
-Among various 3D object representations, 3D spatial (\eg point clouds and voxels) and spatiotemporal (\eg videos and depth images) visual data have become more accessible and applicable, thanks to the new data capturing technologies such as multi-view stereo \cite{Vogiatzis2011} and depth sensor \cite{Shotton2011}.  
+Among various 3D object representations, 3D spatial (\eg point clouds and voxels) and spatiotemporal (\eg videos and depth images) visual data has become more accessible and applicable, thanks to the new data capturing technologies such as multi-view stereo \cite{Vogiatzis2011} and depth sensors \cite{Shotton2011}.  
 % Photometric textures on 3D shape surfaces are not considered because they are more costly and difficult to be captured.  
-Large-scale benchmark datasets such as Princeton shape benchmark \cite{Shilane2004}, the KTH action dataset \cite{Schuldt2004}, the TOSCA dataset \cite{Bronstein2011} and the Youtube video dataset \cite{Liu2009} have been made available to public, facilitating standardised comparison among different approaches.
-With respect to application, classification and pose estimation are two essential components in many object recognition systems, such as human-computer interface, computer-aided design, automatic fault detection, video surveillance, computer graphics. 
+Large-scale benchmark datasets such as the Princeton shape benchmark \cite{Shilane2004}, the KTH action dataset \cite{Schuldt2004}, the TOSCA dataset \cite{Bronstein2011} and the Youtube video dataset \cite{Liu2009} have been made available to public, facilitating standardised comparison among different approaches.
+With respect to application, classification and pose estimation are two essential components in many object recognition systems, such as human-computer interfaces, computer-aided design, automatic fault detection, video surveillance and computer graphics. 
 % Why classification? Maybe add some more\ldots 
 % Why pose estimation? Matbe add some more\ldots
 
@@ -55,12 +55,12 @@ This thesis studies several long-standing challenges in 3D object classification
 
 Different 3D shape representations lead to diverse features for classification and registration. Designing a generic 3D shape recognition algorithm is therefore difficult. Many existing methods are restricted to certain data representations and formats, the most popular being the triangular mesh, which is a standard for synthetic 3D data, \eg Harris3D \cite{Sipiran2011} and MeshHOG \cite{Zaharescu2009}.     
 While 2D image-based interest points have been studied extensively \cite{Mikolajczyk2005}, there are few comprehensive performance evaluations for 3D interest points. 
-Of particular interest in this thesis is are interest points in volumetric scalar data, \ie voxels, which is a common representation of both 3D and time-varying data. 
+Of particular interest in this thesis are interest points in volumetric scalar data, \ie voxels, which are common representation of both 3D and time-varying data. 
 The conversion from other data formats such as point clouds, meshes and videos, to voxels grids is convenient, making voxel-based studies more widely applicable. 
 % Voxels can be converted conveniently from other data formats, such as point clouds, meshes and videos, providing extra applicability and usability.
 After feature detection and extraction, objects in 3D visual data are classified.  
 Depending on the application, the 3D pose of the classified object will also be estimated afterwards. 
-Being robust to moderate occlusion and appearance changes, bag-of-words model becomes a standard solution for 3D object classification. It does not recover object pose, as it disregards the structural information for better robustness. 
+Being robust to moderate occlusion and appearance changes, the bag-of-words model becomes a standard solution for 3D object classification. It does not recover object pose, as it disregards the structural information in favour of robustness. 
 On the other hand, traditional 3D registration algorithms, such as iterative closest point (ICP) \cite{Besl1992}, do not model the variations among instances within the same object class.
 Part-based object recognition models, such as the constellation models by Weber \etal \cite{Weber2000} and Fergus \etal \cite{Fergus2007}, provide a supervised framework to infer object class and pose information simultaneously. However, traditional part-based approaches often consider an incomplete 3D pose model. Whilst the above part-based model estimate the translation and scaling of an object, rotation is ignored.      
 %Generative part-based models provide a supervised framework to infer scale and translation of an object class \cite{Weber2000, Fergus2007}. However, object rotation is not included in the above models. 
@@ -79,7 +79,7 @@ The bag-of-word model is a well-established approach for video classification ta
 % 1. Background
 % 2. Special Hardware, multiple cameras  
 
-Recent 3D human pose estimation algorithms have achieved promising performances in controlled environments, where input data are captured using calibrated cameras in front of a clean, static background \cite{Rogez2012, Pons-Moll2011, Sigal2012}. 
+Recent 3D human pose estimation algorithms have achieved promising performances in controlled environments, where input data is captured using calibrated cameras in front of a clean, static background \cite{Rogez2012, Pons-Moll2011, Sigal2012}. 
 %On the other hand, 3D human pose estimation in unconstrained environments is still an unexplored area. 
 However, there are few studies on 3D human pose estimation in unconstrained environments.  
 Traditional pose estimation algorithms often rely on low-level appearance features, such as silhouette and motion templates \cite{Bissacco2007, Rogez2012, Ionescu2011, Navaratnam2006}. These features are vulnerable to dynamic scenes; cluttered backgrounds and moving viewpoints in unconstrained videos. 
@@ -119,7 +119,7 @@ The second area is instance-based 3D object recognition, \eg \cite{Mian2006, Rot
    
 % The performance of object recognition and pose estimation of such approach rely mainly on feature matching between the model and query object instance. 
 
-Thirdly, marker-based motion capture systems are not included in the scope of this thesis. They have been widely employed in computer-generated imagery for films and games. Markers are localised easily from a calibrated camera system using multi-view geometry. Poses may then be estimated straightforwardly by mapping the markers to a predefined articulated skeleton. In this thesis, such marker-based approach is not considered because it is restricted to carefully-controlled studio environments.  
+Thirdly, marker-based motion capture systems are not included in the scope of this thesis. They have been widely employed in computer-generated imagery for films and games. Markers are localised easily from a calibrated camera system using multi-view geometry. Poses may then be estimated straightforwardly by mapping the markers to a predefined articulated skeleton. In this thesis, such a marker-based approach is not considered because it is restricted to carefully-controlled studio environments.  
 % With a calibrated camera network, 3D human poses can be recovered using marker-based approaches easily.  
  
 Finally, body shape estimation from images and videos are not considered in the thesis \cite{Guan2009, Rother2009, Chen2011}. 
@@ -136,8 +136,10 @@ The structure of this thesis is outlined in figure \ref{fig/intro/outline}. In p
 
 \subsubsection*{Chapter 2. Evaluation of 3D feature detectors} 
 A performance evaluation of volumetric 3D interest points is presented in this chapter. 
-It first provides an overview of current volumetric interest point detectors found in the literature. A selection of interest point detectors are then evaluated quantiatively using a new performance metric. Finally, the qualitative characteristics of each of the detectors is also discussed. 
-(An abstract of this chapter has appeared in the International Journal of Computer Vision, volume 102, 2013 \cite{Yu2013a}.)  
+It first provides an overview of current volumetric interest point detectors found in the literature. A selection of interest point detectors are then evaluated quantiatively using a new performance metric. 
+% Finally, the qualitative characteristics of each of the detectors is also discussed.
+The qualitative characteristics of the interest points are compared and analysed.
+(This work has also appeared in the International Journal of Computer Vision, volume 102 (1--3), 2013 \cite{Yu2013a}.)  
 
 \subsubsection*{Chapter 3. 3D Constellation model from unknown pose}
 This chapter presents a weakly-supervised constellation model for simultaneous 3D shape recognition and pose estimation. 

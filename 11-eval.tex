@@ -50,7 +50,7 @@
 While three-dimensional object recognition is not a new topic \cite{Fisher1987, Nevatia1977, Marr1978, Bolles1983}, its applications have seen a recent resurgence in computer vision research. 
 
 Approaches to 3D object recognition range from the local to the global. 
-At the global end are those which form a descriptor from an entire object. Such methods generally offer excellent discrimination plus robustness to shape variation. However, they do not cope well with clutter or occlusion, as they require a complete and segmented object in order to extract a holistic feature descriptor. Despite being widely applied to object classification tasks, matching algorithms of holistic shape features do not consider object pose for registration. 
+At the global end, are those which form a descriptor from an entire object. Such methods generally offer excellent discrimination plus robustness to shape variation. However, they do not cope well with clutter or occlusion, as they require a complete and segmented object in order to extract a holistic feature descriptor. Despite being widely applied to object classification tasks, matching algorithms of holistic shape features do not consider object pose for registration. 
 
 % done 
 At the other end of the spectrum are highly local features, such as points. Being completely non-discriminant, such features are usually embedded in a framework that finds geometrical consistency of features across shapes, \eg iterative closest point (ICP) \cite{Besl1992} and RANSAC \cite{Brown2005, Papazov2011}. 
@@ -65,7 +65,7 @@ A common and crucial stage of such approaches is therefore the detection of inte
 This chapter presents a performance evaluation of interest point detectors on scalar volumetric data, as shown in figure \ref{fig/eval/testshapes}.   
 As discussed in chapter \ref{chap/intro}, different from other data-specific 3D interest point detectors for meshes \cite{Sipiran2011,Glomb2009,Zaharescu2009} or point-clouds \cite{Aanaes2012,Unnikrishnan2008}, feature detection from scalar volumetric data is versatile. Such data not only comes directly from volumetric sensors, such as MRIs, but can also be generated or converted from other three dimensional data representations, such as point clouds, meshes or depth images, making the proposed evaluation experiments widely applicable to various 3D object recognition systems.
 In addition, visual saliency of volumetric interest points is defined in a scalar volume but not on a local surface patch. This full three-dimensional representation implies that interest points can be located off an object's surface, \eg inside a cavity or voxels with varying intensities. 
-Furthermore, voxels, which is the 3D equivalent of pixels, make repurposing the many 2D interest point detectors for 3D straightforward. 
+Furthermore, voxels, which are the 3D equivalent of pixels, make repurposing the many 2D interest point detectors for 3D straightforward. 
 
 % done 
 The primary quantitative evaluation criterion used in this work is a novel measure combining both repeatability, based on the number of corresponding points found across two volumes, and the spatial accuracy of correspondences. Detected interest points have a sub-voxel location and a scale, and distances are computed in this space. The qualitative characteristics of the candidate 3D interest point detectors are also presented. 
@@ -87,7 +87,7 @@ The process of interest point detection is the first stage of many object recogn
 Most early studies focus on detecting features on 2D images. Consequently, the paradigm of 2D interest point detection has already been well studied, for instance Tuytelaars and Mikolajczyk \cite{Tuytelaars2008} performed an extensive survey on locally-invariant feature detectors.  
 
 % done 
-Recent advancements in data acquisition techniques have greatly improved the availability of 3D shape data. Large scale synthetic and realistic 3D repositories, such as Google Warehouse \cite{Lai2010} and the B3DO dataset \cite{Janoch2011}, have attracted much interest in shape-based 3D object recognition systems. Consequently, various 3D interest point detection techniques have been proposed alongside with this emerging field of computer vision research. 
+Recent advancements in data acquisition techniques have greatly improved the availability of 3D shape data. Large scale synthetic and realistic 3D repositories, such as Google Warehouse \cite{Lai2010} and the B3DO dataset \cite{Janoch2011}, have attracted much interest in shape-based 3D object recognition systems. Consequently, various 3D interest point detection techniques have been proposed alongside this emerging field of computer vision research. 
 
 % done 
 Existing techniques for 3D interest point detection are categorised as volume-based or geometry-based detectors, according to the representation of input data. Volume-based detectors operate directly on the pixel/voxel values of volumetric scalar data. This type of data includes CT scan volumes \cite{Flitton2010}, time-varying video data \cite{Koelstra2009, Laptev2005, Willems2008, Yu2010}, and binary volumes generated from depth images or 3D meshes \cite{Viksten2008, Knopp2010}.  
@@ -107,7 +107,7 @@ Building on the success of Harris corner detector, Mikolajczyk \cite{Mikolajczyk
 This approach was extended to space-time interest points for video classification by Laptev \cite{Laptev2005}. 
 
 Instead of detecting corners by image gradients, corner detectors that operate directly on image pixels were also proposed. 
-Smith and Brady \cite{Smith1997} presented SUSAN corner detector. It leveraged the proportion of pixels in a neighbourhood, which were dissimilar to the central pixel value.
+Smith and Brady \cite{Smith1997} presented the SUSAN corner detector. It leveraged the proportion of pixels in a neighbourhood, which were dissimilar to the central pixel value.
 The FAST corner detector by Rosten \etal \cite{Rosten2010} used the accelerated segment test (AST), a relaxed version of SUSAN, to locate stable corners in an image.  
 FAST measures the largest number of contiguous pixels on a circle which are significantly darker, or brighter, than the centre pixel. Without computing the derivative at each pixel, the speed of FAST can also be further improved by learning a decision tree classifier for feature detection. Due to its efficient run-time performance, volumetric feature detectors have been applied to video classification based on FAST interest points \cite{Koelstra2009,Yu2010}. 
 
@@ -117,10 +117,10 @@ FAST measures the largest number of contiguous pixels on a circle which are sign
 Lindeberg \cite{Lindeberg1998} studied scale-covariant interest points using the Laplacian-of-Gaussian kernel, which is mathematically equivalent to the trace of the Hessian, as well as the determinant of the Hessian (DoH). Lowe \cite{Lowe2004} approximated the above LoG kernel by a Difference-of-Gaussians (DoG) operator for better computational performance. Recently, the DoG approach was applied to 3D object detection and recognition of synthetic meshes \cite{Wessel2006}, volumetric scans \cite{Flitton2010} and multi-view stereo data \cite{Pham2011}.
 
 % done 
-The Hessian-Laplace detector, by Mikolajczyk and Cordelia \cite{Mikolajczyk2004}, is similar to Harris-Laplace detector. Interest points are detected by evaluating the Hessian matrix of an input image. Similarly, Bay \etal \cite{Bay2008} proposed the speeded-up robust feature (SURF), which accelerated the computation time of determinant-of-Hessian operator using integral images and box filters. Since then SURF has been applied to spatiotemporal data (videos) \cite{Willems2008} and volumetric data generated from synthetic 3D mesh models \cite{Knopp2010}.
+The Hessian-Laplace detector, by Mikolajczyk and Cordelia \cite{Mikolajczyk2004}, is similar to Harris-Laplace detector. Interest points are detected by evaluating the Hessian matrix of an input image. Similarly, Bay \etal \cite{Bay2008} proposed the speeded-up robust feature (SURF), which accelerated the computation time of the determinant-of-Hessian operator using integral images and box filters. Since then SURF has been applied to spatiotemporal data (videos) \cite{Willems2008} and volumetric data generated from synthetic 3D mesh models \cite{Knopp2010}.
 
 % done 
-Region-based detector relies on finding salient regions instead of interest points, an example is maximally stable extremal region (MSER) proposed by Matas \etal \cite{Matas2004}. 
+Region-based detection relies on finding salient regions instead of interest points, an example is maximally stable extremal region (MSER) proposed by Matas \etal \cite{Matas2004}. 
 While both DoG and SURF are grounded on the approximation of the Laplacian-of-Gaussian kernel, MSER finds thresholded regions whose areas are maximally stable as the threshold changes. 
 It is inherently multi-scale, as well as invariant to affine intensity variations and covariant with affine transformations. Three dimensional MSER has already been applied to volumetric data, firstly in the context of segmentation of MRIs \cite{Donoser2006}, and then on video data \cite{Riemenschneider2009}.
 
@@ -131,12 +131,12 @@ A feature characteristic is considered covariant when it undergoes the same tran
 Image-based detectors have been made affine-covariant, in order to approximate the perspective distortion caused by projection of 3D world onto the 2D image plane \cite{Mikolajczyk2002}. 
 Such covariance is not necessary with 3D shapes because most shape acquisition techniques do not have the 3D-2D projection process, thus invariant to view point changes. 
 However, objects might have varying poses during data acquisition, such as translation, rotation and scaling for rigid shapes. Rotation and scale covariance are therefore still essential requirements for processing 3D shape data. 
-In addition, 3D shape data are generally not affected by illumination and lighting conditions, except for texture-mapped meshes \cite{Zaharescu2009}, the quality of shape data is instead determined by the amount of noise and sampling artefacts, \eg holes and occlusions, from the reconstruction process. 
+In addition, 3D shape data is generally not affected by illumination and lighting conditions, except for texture-mapped meshes \cite{Zaharescu2009}, the quality of shape data is instead determined by the amount of noise and sampling artefacts, \eg holes and occlusions, from the reconstruction process. 
 
 \subsection{Methodologies}
 
 % done 
-Empirical performance evaluation is a popular topic in computer vision, and the evaluation of interest point detectors is no exception. Different approaches of performance evaluations can be categorised according to the evaluation criteria and the source of ground truth interest point locations. 
+Empirical performance evaluation is a popular topic in computer vision, and the evaluation of interest point detectors is no exception. Different approaches to performance evaluation can be categorised according to the evaluation criteria and the source of ground truth interest point locations. 
 
 \subsubsection{Evaluation criteria}
 
@@ -168,7 +168,7 @@ In the context of image-based interest points, performance of detectors are ofte
 %With both localisation accuracy and repeatability criteria, the ground truth location of interest points in the scene must be known. The ground truth data can be computed in a variety of ways. 
 In order to compute any of the aforementioned interest point characteristics, the ground truth locations of interest points, or the ground truth homography between two evaluation instances, must be known. Ground truth information can be obtained in a variety of ways.  
 Several approaches specify the location of interest points in an image, either known by design \cite{Rajan1989}, or hand-labelled by multiple people \cite{Heath1997}. 
-Other methods find corresponding pairs of point across two or more images. For example, matching is achieved using planar scenes and computing homographies between images \cite{Schmid2000}, scenes of known geometry manually registered in each image \cite{Rosten2010}, scene geometry captured using structured light \cite{Aanaes2012} and synthetic data \cite{Laptev2005}. 
+Other methods find corresponding pairs of points across two or more images. For example, matching is achieved using planar scenes and computing homographies between images \cite{Schmid2000}, scenes of known geometry manually registered in each image \cite{Rosten2010}, scene geometry captured using structured light \cite{Aanaes2012} and synthetic data \cite{Laptev2005}. 
 In addition, ground truth data for 3D interest point evaluations are likewise obtained from manual annotation \cite{Dutagaci2011}, known projection homography of stereo point clouds \cite{Aanaes2012} and synthetic shape data \cite{Salti2011}. 
 
 % done 
@@ -184,10 +184,10 @@ This section describes the principles and formulations of the 3D interest points
 \label{sec/eval/subvoxel}
 
 % done 
-Scale covariance of interest points is achieved by creating a scale-space of the input volumetric data. An octave of linear scale-space is created by convolving the input volume with a Gaussian smoothing kernel. Such smoothing kernel is applied on the volume recursively to suppress fine-scale structures. Afterwards a new octave is created by down-sampling the input volumes from the previous octave. As a result, a series of volumes, with multiple levels of details, is created. The implementation of scale-space, with respect to interest point detection, has been detailed by Lindeberg \cite{Lindeberg1998}. 
+Scale covariance of interest points is achieved by creating a scale-space of the input volumetric data. An octave of linear scale-space is created by convolving the input volume with a Gaussian smoothing kernel. Such a smoothing kernel is applied on the volume recursively to suppress fine-scale structures. Afterwards a new octave is created by down-sampling the input volumes from the previous octave. As a result, a series of volumes, with multiple levels of detail, is created. The implementation of scale-space, with respect to interest point detection, has been detailed by Lindeberg \cite{Lindeberg1998}. 
 
 % done 
-However, scale-space representation is not computed for MSER because it detects salient regions in different scales. MSER locates interest points by fitting an ellipsoid to the detected salient region \cite{Matas2004}. For other interest point detectors, saliency responses are computed in all volumes within the scale-space. In addition, the subpixel refinement process in SIFT \cite{Lowe2004} is applied on these detectors. Interest points are localised at the sub-voxel level by fitting 4D quadratic functions around the local scale-space maxima, and selecting the maxima of those functions instead. 
+However, a scale-space representation is not computed for MSER because it detects salient regions in different scales. MSER locates interest points by fitting an ellipsoid to the detected salient region \cite{Matas2004}. For other interest point detectors, saliency responses are computed in all volumes within the scale-space. In addition, the subpixel refinement process in SIFT \cite{Lowe2004} is applied to these detectors. Interest points are localised at the sub-voxel level by fitting 4D quadratic functions around the local scale-space maxima, and selecting the maxima of those functions instead. 
 
 % done 
 \subsection{Difference-of-Gaussians (DoG)}
@@ -201,8 +201,8 @@ Interest points are detected at the 4D local maxima, \ie 3D space plus scale, wi
 \end{equation}
 Volume $V(x,y,z;\sigma_s)$ denotes the scale-space representation of the input volumetric data at scale $\sigma_s$.
 
-\subsection{Harris}
-Harris corner detector examines image gradients by shifting in a local window, interest points are detected at positions where large changes are observed in all directions \cite{Harris1988}. While the first 3D extension of the original Harris corner detector uses separate scale parameters for the heterogeneous space and time axes \cite{Laptev2005}, in this work only one scale $\sigma_s$ is shared among three homogeneous spatial axes for simplicity.  
+\subsection{Harris corner detector}
+The Harris corner detector examines image gradients by shifting a local window, interest points are detected at positions where large changes are observed in all directions \cite{Harris1988}. While the first 3D extension of the original Harris corner detector uses separate scale parameters for the heterogeneous space and time axes \cite{Laptev2005}, in this work, only one scale $\sigma_s$ is shared among three homogeneous spatial axes for simplicity.  
 The second-moment matrix $\mathbf{M}$ is computed by smoothing the first derivatives of the volume in scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ by a spherical Gaussian kernel $g(\cdot;\sigma_\textrm{Harris})$: 
 \begin{equation}
 	\begin{aligned}
@@ -221,20 +221,20 @@ The second-moment matrix $\mathbf{M}$ is computed by smoothing the first derivat
 \end{equation}
 where $\mathbf{v}_x$,$\mathbf{v}_y$,$\mathbf{v}_z$ denote the partial derivatives of the volume in scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ along $x$, $y$ and $z$ axes respectively. The second moment matrix $\mathbf{M}$ describes the auto-correlation along different directions in a local neighbourhood of size $\sigma_s$. 
 
-Candidate interest points are located at coordinates $(x,y,z)$ where the second-moment matrix $\mathbf{M}(x,y,z; \sigma_\textrm{Harris}, \sigma_s)$ has large eigenvalues. Interest point are selected at the 4D local maxima in the scale-space of $S_{\textrm{Harris}}$. Locations of interest points are refined using the sub-voxel refinement method described in section \ref{sec/eval/subvoxel}. The window size $\sigma_\textrm{Harris}$ is proportional to expected feature scales $\sigma_s$ by a factor of $0.7$ as suggested by Mikolajczyk and Cordelia \cite{Mikolajczyk2004}. 
+Candidate interest points are located at coordinates $(x,y,z)$ where the second-moment matrix $\mathbf{M}(x,y,z; \sigma_\textrm{Harris}, \sigma_s)$ has large eigenvalues. Interest points are selected at the 4D local maxima in the scale-space of $S_{\textrm{Harris}}$. Locations of interest points are refined using the sub-voxel refinement method described in section \ref{sec/eval/subvoxel}. The window size $\sigma_\textrm{Harris}$ is proportional to expected feature scales $\sigma_s$ by a factor of $0.7$ as suggested by Mikolajczyk and Schmid \cite{Mikolajczyk2004}. 
 
 The saliency response of Harris corner, $S_\textrm{Harris}$, is computed from the determinant and trace of the second-moment matrix $\mathbf{M}$: 
 \begin{equation}
 	S_\textrm{Harris} = \sigma_{s}^3 \:\det(\mathbf{M}) - \kappa\:\mathrm{Tr(\mathbf{M})}^3,
 	\label{eqn/eval/harriscorner}
 \end{equation}
-where $\kappa$ is a tunable sensitivity parameter that controls the reject of edge points.  
-Saliency response $S_\textrm{Harris}$ is normalised by its scale $\sigma_s$ in equation \ref{eqn/eval/harriscorner}.
+where $\kappa$ is a tunable sensitivity parameter that controls the rejection of edge points.  
+The saliency response $S_\textrm{Harris}$ is normalised by its scale $\sigma_s$ in equation \ref{eqn/eval/harriscorner}.
 
 % done 
 \subsection{Determinant-of-Hessian (DoH)}
 \label{sec/eval/doh}
-The DoH interest point is similar to the Harris detector with respect to formulation \cite{Lindeberg1998}. Instead of second-moment matrix, a Hessian matrix $\mathbf{H}$ is computed from $\mathbf{v}$: 
+The DoH interest point is similar to that of the Harris detector with respect to formulation \cite{Lindeberg1998}. Instead of a second-moment matrix, a Hessian matrix $\mathbf{H}$ is computed from $\mathbf{v}$: 
 \begin{equation}
 	\mathbf{H} = 
 	\left[
@@ -251,7 +251,7 @@ where $\mathbf{v}_{xy}$ denotes the second derivative of the volume at scale $\s
 	\mathbf{v}_{xy} = \displaystyle\frac{\partial \mathbf{v}(\mathbf{x};\sigma_s)}{\partial x \partial y}.
 	\label{eqn/eval/hessiandiverative}
 \end{equation}
-The saliency response is the scale-normalised determinant of Hessian matrix $\mathbf{H}$:
+The saliency response is the scale-normalised determinant of the Hessian matrix $\mathbf{H}$:
 \begin{equation}
 	S_{\textrm{Hessian}} = \sigma^3_s \:\mathrm{det}(\mathbf{H}).
 	\label{eqn/eval/hessiansaliency}
@@ -271,7 +271,7 @@ SURF is an efficient approximation of the DoH detector. Second-order derivatives
 Building on the success of the FAST corner detector \cite{Rosten2010}, VFAST \cite{Yu2010} and FAST-3D \cite{Koelstra2009} have been introduced to video-based object classification. 
 The VFAST interest points are detected by directly comparing intensities in the video sequences. Similar to FAST, the VFAST detector can be further accelerated by learning a decision tree-based corner detector from training videos \cite{Rosten2010}. 
 
-The VFAST algorithm performs accelerated segment tests (AST) on three orthogonal planes, $XY$, $XZ$ and $YZ$. The saliency score is computed by maximising the differences $\{ t_{XY}, t_{XZ}, t_{YZ} \}$ that makes at least $n$ contiguous voxels brighter or darker than the nucleus voxel $\vxpatch(x,y,z)$ by a threshold $\delta_{V}$. Consider the voxels values $\becire_{XY}$ on the $XY$ Bresenham circle $\becir_{XY}$, $AST(x,y,z)$ is computed:  
+The VFAST algorithm performs accelerated segment tests (AST) on three orthogonal planes, $XY$, $XZ$ and $YZ$. The saliency score is computed by maximising the differences $\{ t_{XY}, t_{XZ}, t_{YZ} \}$ that make at least $n$ contiguous voxels brighter or darker than the nucleus voxel $\vxpatch(x,y,z)$ by a threshold $\delta_{V}$. Consider the voxels values $\becire_{XY}$ on the $XY$ Bresenham circle $\becir_{XY}$, $AST(x,y,z)$ is computed:  
 \begin{align}
 	t_{XY} & = \max\left(| \vxpatch(x,y,z) > \becire_{XY}|,\;\forall \becire_{XY} \in \becir_{XY} \right)\\ 
 AST_{XY}(x,y,z) & = \left\{
@@ -313,7 +313,7 @@ Interest points are detected at the local maxima in $S_{\textrm{vfast}}$ over bo
 The maximally stable extremal regions (MSER) detector is a region-based blob detection technique proposed by Matas \etal \cite{Matas2004}. Extremal regions are the connected components of a thresholded input data, which can be an image or a volume. Maximally stable regions are selected from a set of nested extremal regions obtained using different thresholds. The extremal regions of an input volume can be enumerated efficiently using the union-find algorithm which has a worst case of $O(N\log(\log(N)))$ \cite{Matas2004}, where $N$ is the number of pixels/voxels. 
 Being essentially robust to rotation and scale changes, MSER has been applied to detection of volumetric regions \cite{Donoser2006,Riemenschneider2009}.
 
-Normally an ellipsoid is fitted to each maximally stable region from the input data \cite{Matas2004}, the position and scale of MSER interest points being represented by the centres and radii of such ellipsoids respectively. In this work a sphere is fitted to the stable regions instead, making the interest points compatible with the proposed evaluation framework.
+Normally an ellipsoid is fitted to each maximally stable region from the input data \cite{Matas2004}, the position and scale of MSER interest points being represented by the centres and radii of such ellipsoids respectively. In this work, a sphere is fitted to the stable regions instead, making the interest points compatible with the proposed evaluation framework.
 
 % done 
 \section{Methodology}
@@ -323,7 +323,7 @@ The traditional repeatability ratio measures the repeatability of interest point
 
 On the other hand, real matching accuracy, \eg ROC curves \cite{Bowyer1999}, requires hand crafted point-to-point ground truth correspondences. This approach is difficult to generalise to large, realistic evaluation datasets such as point clouds from multi-view stereo systems.     
 
-Whilst existing evaluations focused on either localisation accuracy or repeatability, a new performance is used in this work, by combining the two qualities. The proposed combined score is computed based on \emph{repeatability ratio} with respect to \emph{varying accuracy} requirements. This section explains the combined score used in the experiments. 
+Whilst existing evaluations focused on either localisation accuracy or repeatability, a new performance is used in this work, by combining the two qualities. The proposed combined score is computed based on a \emph{repeatability ratio} with respect to \emph{varying accuracy} requirements. This section explains the combined score used in the experiments. 
 
 % done 
 \subsection{Localisation accuracy}
@@ -336,7 +336,7 @@ The logarithm of scale is used to remove multiplicative bias across detectors, a
 
 A key component of the proposed evaluation score is the distance metric for measuring the closeness of two corresponding interest points with respect to their locations and scales. In this work, the Euclidean norm is used:
 \begin{equation}
-	D(\onepoint, \anotherpoint') = \big|\big|\onepoint - \anotherpoint'\big|\big|_{2},
+	D(\onepoint, \anotherpoint') = \big|\big|\onepoint - \anotherpoint'\big|\big|_{2}
 	\label{eqn/eval/matchdistance}
 \end{equation}
 % A key component of the proposed evaluation score is the distance metric for measuring the closeness of two corresponding interest points with respect to their locations and scales. 
@@ -377,7 +377,7 @@ Rosten \etal \cite{Rosten2010} computed the area under $R_\textrm{ratio}$ as a f
 The same principle is applied in the proposed evaluation metric, but it is computed using the repeatability ratio $R_\textrm{ratio}$ under varying distance threshold, $\disp$.  
 The proposed score therefore increases both if a higher proportion of points are matched, and also if matches are more accurate. 
 
-Such combined score is not symmetric with respect to testing instances $\volumep$ and $\volumeq$, symmetry of evaluation score is enforced by computing the average score across two matching directions, using $\volumep$ and $\volumeq$ as the reference frames respectively, in order to compensate for the effect of different interest point densities among the testing instances. Finally, the evaluation score is given as the area under the $\disp$ \textit{versus} $R_\textrm{ratio}$ curve within a maximum matching distance $D$, such that  
+Such a combined score is not symmetric with respect to testing instances $\volumep$ and $\volumeq$; symmetry of evaluation score is enforced by computing the average score across two matching directions, using $\volumep$ and $\volumeq$ as the reference frames respectively, in order to compensate for the effect of different interest point densities among the testing instances. Finally, the evaluation score is given as the area under the $\disp$ \textit{versus} $R_\textrm{ratio}$ curve within a maximum matching distance $D$, such that  
 \begin{equation}
 \areascore=\frac{1}{2D}\int_{0}^{D}R_\textrm{ratio}(\onepointset, \anotherpointset', \disp) + R_\textrm{ratio}(\anotherpointset, \onepointset', \disp) ~ \textrm{d}\disp.
 \label{eqn/eval/rptarea}
@@ -412,7 +412,7 @@ This section describes a comprehensive evaluation of the candidate 3D interest p
 \end{figure}
 
 % done 
-Three different datasets were used in the evaluation experiments. Two of them are synthetic, as large sets of real, registered, 3D data with known ground truths were not commonly available. Synthetic data were used because new test data can be generated and modified easily, \eg controllable noise levels, transformations and sampling densities. Accurate ground truths were generated with the synthetic test data for evaluation.  
+Three different datasets were used in the evaluation experiments. Two of them are synthetic, as large sets of real, registered, 3D data with known ground truths were not commonly available. Synthetic data was used because new test data can be generated and modified easily, \eg controllable noise levels, transformations and sampling densities. Accurate ground truths were generated with the synthetic test data for evaluation.  
 From the graphs in figure \ref{fig/eval/graph2}, synthetic and real testing data produce comparable results in the evaluation experiments. 
 
 % done 
@@ -423,7 +423,7 @@ The point clouds were subsequently voxelised using kernel density estimation wit
 Finally, a linear scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ was created from each volume, in order to detect shape features at different scales, \cf \ref{sec/eval/subvoxel}. All shapes in the dataset underwent this conversion process. 
 
 % done 
-The \mriset dataset consists of two synthetic MRI scans of a human brain, generated from BrainWeb simulated brain database \cite{Cocosco1997}. The ground truth homographies ($20^{\circ}$ rotation and $20$ voxel translation) between the two MRI scans are given for performance evaluation. Since MRI scans are inherently volumetric, voxelisation is not necessary. 
+The \mriset dataset consists of two synthetic MRI scans of a human brain, generated from the BrainWeb simulated brain database \cite{Cocosco1997}. The ground truth homographies ($20^{\circ}$ rotation and $20$ voxel translation) between the two MRI scans are given for performance evaluation. Since MRI scans are inherently volumetric, voxelisation is not necessary. 
 
 % done 
 The third \stereoset dataset contains a series of $16$ point clouds of $8$ objects from the Toshiba CAD model point clouds dataset \cite{Pham2011}, which were captured using a photometric, multi-view stereo system \cite{Vogiatzis2011}. Relative transformations were computed by aligning each point cloud with a reference model using the ICP algorithm \cite{Besl1992} and then refining the registration manually. The same voxelisation technique was used to convert stereo point clouds to volumetric data.
@@ -432,7 +432,7 @@ The third \stereoset dataset contains a series of $16$ point clouds of $8$ objec
 In the \meshset and the \stereoset datasets, high-intensity voxels are located at the object surface, leaving the interior of the shapes hollow as low-intensity voxels. In contrast, the interior of the \mriset data is filled with voxels of different intensities. The experimental results in the next section have demonstrated different behaviours of the detectors in these two voxelisation scenarios.
 
 % done 
-While the synthetic shape instances of the same object completely overlap one another, avoiding bias to the repeatability score mentioned in Willis and Sui \cite{Willis2009}, the real stereo data contain occlusions. While the underside of each object, which varied across instances, was not captured, the shapes in \stereoset were captured with uneven sampling density and generally more sampling noise. The feasibility of performance evaluation using synthetic data is therefore verified by comparing the results on the \meshset dataset with those on the \stereoset dataset. 
+While the synthetic shape instances of the same object completely overlap one another, avoiding bias in the repeatability score mentioned in Willis and Sui \cite{Willis2009}, the real stereo data contain occlusions. While the underside of each object, which varied across instances, was not captured, the shapes in \stereoset were captured with uneven sampling density and generally more sampling noise. The feasibility of performance evaluation using synthetic data is therefore verified by comparing the results on the \meshset dataset with those on the \stereoset dataset. 
 
 %\begin{figure}[ht]
 %\centering
@@ -537,16 +537,16 @@ Scale & 21 \\
 \end{figure}
 
 % done
-Sampling noise and density are crucial factors in 3D interest point detection. As most of the 3D data acquisition techniques rely on shape reconstruction from point clouds or tomograms, existing shape acquisition techniques, such as multi-view stereo and 3D ultrasound, often produce data with high signal-to-noise ratio. 
+Sampling noise and density are crucial factors in 3D interest point detection. As most of the 3D data acquisition techniques rely on shape reconstruction from point clouds or tomograms, existing shape acquisition techniques, such as multi-view stereo and 3D ultrasound, often produce data with a high signal-to-noise ratio. 
 
 % done 
-In the sampling noise test, different levels of Gaussian white noise, with standard deviations $\sigma_{n}$ from $0L$ to $0.03L$, were applied to the \meshset dataset. Figure \ref{fig/eval/noisesample} shows the effect of sampling noise to a sample shape, shape details features disappears gradually as sampling noise level increases. 
-The quantitative experimental result is displayed in figure \ref{fig/eval/graph_noise}. MSER outperforms other interest points, demonstrating high robustness. While the $\areascore$ scores of other detectors declines rapidly, MSER still achieves a high $\areascore$ score. The DoH detector shows a relatively stronger tolerance than detectors like SURF, Harris and VFAST. In contrast, the SURF detector has almost no repeatable point when sampling noise becomes higher than $6.5\%L$.
+In the sampling noise test, different levels of Gaussian white noise, with standard deviations $\sigma_{n}$ from $0L$ to $0.03L$, were applied to the \meshset dataset. Figure \ref{fig/eval/noisesample} shows the effect of sampling noise to a sample shape, shape detail features disappear gradually as sampling noise levels increase. 
+The quantitative experimental result is displayed in figure \ref{fig/eval/graph_noise}. MSER outperforms other interest points, demonstrating high robustness. While the $\areascore$ scores of other detectors declines rapidly, MSER still achieves a high $\areascore$ score. The DoH detector shows stronger tolerance than detectors like SURF, Harris and VFAST. In contrast, the SURF detector has almost no repeatable point when sampling noise becomes higher than $6.5\%L$.
 
 \subsubsection{Sampling density}
 
 % done
-In this experiment, the $\areascore$ score of shapes with various sampling densities were measured. Point clouds were randomly sampled from the input meshes, with point cloud sizes ranging from $4000$ points to $405000$ points. The sampling density directly affected voxelisation process of the point clouds, loss of details and holes were observed in point clouds of low sampling densities. 
+In this experiment, the $\areascore$ score of shapes with various sampling densities were measured. Point clouds were randomly sampled from the input meshes, with point cloud sizes ranging from $4000$ points to $405000$ points. The sampling density directly affects the voxelisation process of the point clouds, loss of details and holes were observed in point clouds of low sampling densities. 
 
 % done 
 Figure \ref{fig/eval/graph_sample} presents the change of $\areascore$ scores versus point cloud size. The scores vary linearly in log scale, thus a diminishing return is observed with increasing sampling density. MSER achieves the best average performance but it also has the largest variance across different shapes. In addition, DoH and DoG produce satisfactory results, with high scores but smaller intra-dataset variance than that of MSER.
@@ -587,9 +587,9 @@ In this experiment, dimensions of voxelised input data were scaled from $50\%$ t
 
 % done 
 Figure \ref{fig/eval/graph_scaling} illustrates the average $\areascore$ measured against different scale changes. 
-From the experimental results, DoG and DoH detectors are relatively more robust to scale. SURF only works well at $100\%$ and its performance drops rapidly outside the original scale, because of the approximated scale-space used. MSER achieves the best result at its original size, but its performance drops steadily when the shape is resized.
+From the experimental results, DoG and DoH detectors are more robust to scale. SURF only works well at $100\%$ and its performance drops rapidly outside the original scale, because of the approximated scale-space used. MSER achieves the best result at its original size, but its performance drops steadily when the shape is resized.
 Generally, repeatability scores of all detectors drop faster in down-sampled volumes (scale $< 100\%$) than in up-sampled volumes (scale $> 100\%$). 
-This was because information content of smaller shape features was discarded when the input volumes were downsized.   
+This is because information content of smaller shape features is discarded when the input volumes are downsized.   
 In addition, the scale-space did not cover any feature with a size smaller than the first octave, therefore fine details were undetected.  
 Meanwhile, the performance of most detectors decreases slowly as scale increases, when some features have become too large to be detected. 
 \begin{figure}[ht]
@@ -620,7 +620,7 @@ The MSER detector obtains the highest percentage of correspondences, yet it prod
 	\centering
 	\begin{tabular}{|cc|ccc|}
 \hline
-& & \multicolumn{3}{c}{\textbf{Sampling noise level}}  \\
+& & \multicolumn{3}{c|}{\textbf{Sampling noise level}} \\
 & &  {\textbf{Low}}  & {\textbf{Medium}}  & {\textbf{High}}  \\
 & & ($0.0025L$) & ($0.01L$) & ($0.02L$) \\
 \hline
@@ -747,7 +747,7 @@ The $\areascore$ scores obtained from the \stereoset dataset, shown in figure \r
 The differences in $\areascore$ scores are due to occlusions, viewpoint changes and uneven sampling density of the \stereoset dataset. 
 
 % done 
-Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, have much sparser point clouds due lack of texture on the surface, but the distribution of detected features is no less dense across any of the detectors, suggesting that the experimental results of the synthetic datasets are representative of sparse point clouds as well as dense ones.
+Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, have much sparser point clouds due to lack of texture on the surface, but the distribution of detected features is no less dense across any of the detectors, suggesting that the experimental results of the synthetic datasets are representative of sparse point clouds as well as dense ones.
 
 \begin{figure}[ht]
 	\centering
@@ -777,7 +777,7 @@ Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, have much spar
 \subsection{Run-time performance}
 
 % done
-Computation efficiency is also a crucial factor for choosing a suitable interest point detector for different computer vision applications. Since the storage size of volumetric data is usually much larger than 2D images, time and memory complexities of the interest point detectors increase accordingly. Operations which are considered efficient for 2D images can become much slower for 3D volumetric data. For non-volumetric input data such as point clouds, extra computation time is required to voxelise the shape. 
+Computation efficiency is also a crucial factor for choosing a suitable interest point detector for different computer vision applications. Since the storage size of volumetric data is usually much larger than 2D images, time and memory complexities of the interest point detectors increase accordingly. Operations which are considered efficient for 2D images can become much slower for 3D volumetric data. For non-volumetric input data such as point clouds, extra computational time is required to voxelise the shape. 
 
 % done 
 Some interest point detectors can also be accelerated by parallel processing techniques, using specialised hardware such as GPUs and FPGAs \cite{Sinha2006, Cornelis2008, Teixeira2008, Bhatia2007, Dohi2011, Kristensen2007}. Table \ref{tab/eval/speedtable} summarises the algorithmic complexities of the candidate detectors and the time required for them to compute interest points on the \meshset dataset. From left to right, it lists (1) the algorithmic complexities, (2) the average processing time for the \meshset dataset, (3) potential parallel implementations and (4) existing machine learning-based acceleration. 
@@ -793,7 +793,7 @@ In order to facilitate a fair evaluation framework, all candidate detectors were
 DoG 		& $O(SN)$ 			& $1.325 $ 			& \checkmark \cite{Sinha2006} & \\
 SURF 		& $O(SN)$ 			& $1.035 $ 			& \checkmark \cite{Cornelis2008} & \\
 Harris 		& $O(SN)$ 			& $1.112 $ 			& \checkmark \cite{Teixeira2008} & \\
-DoH			& $O(SN)$ 			& $1.325 $ 			& \checkmark \cite{Bhatia2007} \\
+DoH			& $O(SN)$ 			& $1.325 $ 			& \checkmark \cite{Bhatia2007} & \\
 VFAST 		& $O(SN)$ 			& $1.670 $ 			& \checkmark \cite{Dohi2011} & \checkmark \cite{Rosten2010}\\
 MSER 		& $O(N\log(\log(N)))$ 	& $2.070 $ 			& \checkmark \cite{Kristensen2007} &\\
 \hline
@@ -803,7 +803,7 @@ MSER 		& $O(N\log(\log(N)))$ 	& $2.070 $ 			& \checkmark \cite{Kristensen2007} &
 \end{table}
 
 % done 
-Theoretically, all detectors have a similar time complexity, except for MSER, which does not implement a Gaussian scale-space. The SURF detector is the fastest among the candidate detectors, as it uses Haar wavelets to accelerate the computation of Gaussian derivatives. Harris also shows high efficiency due to its relatively simple algorithm. MSER is the slowest detector, as its search algorithm for stable regions is less efficient in 3D volumes than in 2D images. Surprisingly, VFAST detector is the second slowest detector in the experiment. Since FAST is a pixel/voxel-wise rule based algorithm, the accelerated segment test in equation \ref{eqn/eval/fastast} cannot utilise the high performance linear algebra routines used by other detectors, such as separable filtering in DoG and SURF. VFAST detector can be accelerated by learning a decision tree classifier from training data \cite{Rosten2010}, which was not implemented in this experiment.
+Theoretically, all detectors have a similar time complexity, except for MSER, which does not implement a Gaussian scale-space. The SURF detector is the fastest among the candidate detectors, as it uses Haar wavelets to accelerate the computation of Gaussian derivatives. Harris also shows high efficiency due to its relatively simple algorithm. MSER is the slowest detector, as its search algorithm for stable regions is less efficient in 3D volumes than in 2D images. Surprisingly, VFAST detector is the second slowest detector in the experiment. Since FAST is a pixel/voxel-wise rule based algorithm, the accelerated segment test in equation \ref{eqn/eval/fastast} cannot utilise the high performance linear algebra routines used by other detectors, such as separable filtering in DoG and SURF. The VFAST detector can be accelerated by learning a decision tree classifier from training data \cite{Rosten2010}, which was not implemented in this experiment.
 
 % done
 \subsection{Qualitative analysis: blobs versus corners}
@@ -813,7 +813,7 @@ The candidate 3D interest point detectors can be roughly classified into three d
 \subsubsection{Region-based blob detection} MSER detects contiguous regions of any shape, \ie not limited to spherical blobs, allowing it to select more robust regions from a greater selection, and hence perform better. MSER performs well in 3D shape data because the shapes of salient regions are inherently less susceptible to viewpoint changes. It can be seen in figures \ref{fig/eval/mesh/mser} and \ref{fig/eval/mvs/mser} that MSER finds features at fewer locations, but over multiple scales. The locations tend to centre on regions of high surface curvature.
 
 % done 
-\subsubsection{Derivative-based blob detection} Theoretically, DoG, DoH and SURF find, in order of preference, spherical blobs, corners and planes. From the experimental results, DoG and DoH give qualitatively similar output, as shown in figures \ref{fig/eval/mesh/dog}, \ref{fig/eval/mvs/dog}, \ref{fig/eval/mesh/hessian} and \ref{fig/eval/mvs/hessian}, finding features such as limb extremities in the \meshset dataset, or sharp corners in the \stereoset dataset, as well as inside shape such as the hull of ``galleon'' and the hole in ``knob''. By contrast, SURF, despite being an approximation of the DoH detector, produces features off the surface (both inside and outside), often over regions of low surface curvature, as shown in figure \ref{fig/eval/testshapes/surf}. Instead of highly repeatable features, derivative-based approaches produce more diverse features than region-based detectors. Finally, their repeatability scores degrade more rapidly than MSER for noisy input data in figure \ref{fig/eval/graph_noise}, mainly due to higher rates of false positive detections. 
+\subsubsection{Derivative-based blob detection} Theoretically, DoG, DoH and SURF find, in order of preference, spherical blobs, corners and planes. From the experimental results, DoG and DoH give qualitatively similar output, as shown in figures \ref{fig/eval/mesh/dog}, \ref{fig/eval/mvs/dog}, \ref{fig/eval/mesh/hessian} and \ref{fig/eval/mvs/hessian}, finding features such as limb extremities in the \meshset dataset, or sharp corners in the \stereoset dataset, as well as internal shape such as the hull of ``galleon'' and the hole in ``knob''. By contrast, SURF, despite being an approximation of the DoH detector, produces features off the surface (both inside and outside), often over regions of low surface curvature, as shown in figure \ref{fig/eval/testshapes/surf}. Instead of highly repeatable features, derivative-based approaches produce more diverse features than region-based detectors. Finally, their repeatability scores degrade more rapidly than MSER for noisy input data in figure \ref{fig/eval/graph_noise}, mainly due to higher rates of false positive detections. 
 
 
 \subsubsection{Corner detection} Harris and VFAST both aim to find areas of high curvature. However, their outputs (figures \ref{fig/eval/testshapes/harris} and \ref{fig/eval/testshapes/fast}) varied qualitatively, with the former tending to find fewer features and more sharp corners than the latter, which finds an even distribution of features over both scale and location. In general, corner detection approaches are relatively less robust to noise and transformations than blob detection techniques. Whilst blobs remain stable in noisy or transformed volumetric data, small scale features like corners are more easily affected by quantisation errors or sampling noise. 
@@ -834,7 +834,7 @@ A novel evaluation metric is introduced by combining two existing performance me
 Six interest point detectors, from existing 3D computer vision applications, were evaluated on three different datasets (meshes, MRI scans and 3D point clouds) under varying noise levels and transformations. 
 
 % done
-Summarising the quantitative results with respect to the proposed $\areascore$ score, MSER achieves the best overall performance, being robust to both noise and rotation. Taking the number of corresponding points into account, DoH and, to a lesser extent, DoG maintains a balanced performance between this and repeatability. Generally speaking, blob detectors (\eg DoH and DoG) perform better than corner detectors (\eg Harris and VFAST) in 3D shapes, such results agree with an evaluation of image-based detectors by Mikolajczyk \etal \cite{Mikolajczyk2005}. Consistent results are obtained from different evaluation datasets, which indicate that both the detectors and evaluation framework are applicable to multiple types of input data. In the context of run-time performance, MSER is the slowest interest point detector in terms of computation time for 3D volumetric data. Evaluation results show that fast detectors for 2D images, \eg FAST, may not obtain consistent performances for 3D data. Hardware acceleration is essential when real-time performance is needed. While parallelised, hardware-accelerated 2D interest points are widely available, volumetric implementations of such detectors are still uncommon. 
+Summarising the quantitative results with respect to the proposed $\areascore$ score, MSER achieves the best overall performance, being robust to both noise and rotation. Taking the number of corresponding points into account, DoH and, to a lesser extent, DoG maintain a balanced performance between this and repeatability. Generally speaking, blob detectors (\eg DoH and DoG) perform better than corner detectors (\eg Harris and VFAST) in 3D shapes, such results agree with an evaluation of image-based detectors by Mikolajczyk \etal \cite{Mikolajczyk2005}. Consistent results are obtained from different evaluation datasets, which indicate that both the detectors and evaluation framework are applicable to multiple types of input data. In the context of run-time performance, MSER is the slowest interest point detector in terms of computational time for 3D volumetric data. Evaluation results show that fast detectors for 2D images, \eg FAST, may not obtain consistent performances for 3D data. Hardware acceleration is essential when real-time performance is needed. While parallelised, hardware-accelerated 2D interest points are widely available, volumetric implementations of such detectors are still uncommon. 
 
 % done
 The candidate interest point detectors were also evaluated qualitatively. 

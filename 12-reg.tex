@@ -4,14 +4,15 @@
 \section{Introduction}
 \label{sec/reg/intro}
 
-Traditional object recognition task, classification in particular, are usually approached by learning low level statistics on local, appearance based features, \eg bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, ignoring structural coherence within an object class for improved robustness. These methods become less reliable when objects' textures are often absent or indistinctive in appearance, such as 3D shape recognition of which input data are often textureless. 
+Traditional object recognition tasks, classification in particular, are usually approached by learning low level statistics on local, appearance based features, \eg bag-of-words \cite{Sivic2005, Fei-Fei2005} and topic models \cite{Fergus2005}, ignoring structural coherence within an object class for improved robustness. These methods become less reliable when objects' textures are often absent or indistinctive in appearance, such as 3D shape recognition for which input data is often textureless. 
 
-Making use of the spatial relationships among local features, part-based model emerges as an effective solution by learning jointly local appearance and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
+Making use of the spatial relationships among local features, a part-based model emerges as an effective solution by learning jointly the local appearance and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
 Part-based models have overcome the limitations of traditional structure-less approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
 
 On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus this problem is still unsolved in 2D part-based models, let alone their 3D counterparts. 
 As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. 
-In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model, as well as registrations for the training instances. The proposed SAP model is explained in figure \ref{fig/reg/concept}, where unorganised training instances with unknown pose in \ref{fig/reg/concept2} are used to learn a probabilistic part-based model in \ref{fig/reg/concept4}. Class label and pose of an object are inferred simultaneously by jointly discovering parts and aligning them to a canonical pose, as outlined in \ref{fig/reg/concept5}. 
+% In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model, as well as registrations for the training instances. 
+In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model for object classification and pose estimation. Training instances are also registered automatically during the training process.
 
 \begin{figure}[ht]
 \centering
@@ -44,6 +45,8 @@ In the proposed framework, training instances with various \emph{unknown poses} 
 \label{fig/reg/concept}
 \end{figure}
 
+The proposed SAP model is explained in figure \ref{fig/reg/concept}, where unorganised training instances with unknown pose in \ref{fig/reg/concept2} are used to learn a probabilistic part-based model in \ref{fig/reg/concept4}. The class label and pose of an object are inferred simultaneously by jointly discovering parts and aligning them to a canonical pose, as outlined in \ref{fig/reg/concept5}. 
+
 The technical contributions of the SAP model are twofold. 
 This work firstly introduces a weakly-supervised learning algorithm to include instance pose as a variable in a generative probabilistic model. Additionally, the proposed particle-enhanced EM algorithm is capable of solving the resulting, difficult inference problem in both training and testing.  
 
@@ -64,11 +67,12 @@ Local feature-based methods are widely used in object recognition tasks, thanks 
 
 On the contrary, part-based models were first articulated by Fischler and Elschlager \cite{Fischler1973} and Marr \cite{Marr1982} as a collection of movable templates or shape primitives, defined within a reference object frame. Notable part-based models include constellations \cite{Weber2000, Fergus2007} and pictorial structures (or deformable part models) \cite{Felzenszwalb2005}. Geometric structure (shape) of an object is either explained probabilistically by a model with fixed part positions \cite{Fergus2007}, or discriminatively by movable parts \cite{Yuille1989, Felzenszwalb2005}.
 
-Early implementations of part-based models were class-specific, where parts arrangements and connections are defined before training, \eg Yuille \etal \cite{Yuille1989} detected facial features using deformable templates. While some part models remain class-specific for deformable pose estimation, \eg human poses \cite{Yang2011, Eichner2012}, recent constellation models have become more general. For instance, Burl \etal \cite{Burl1998} trained a constellation model from hand-picked parts which were represented by Gaussian distributions. Weber \etal \cite{Weber2000} improved the former approach by using an interest point detector \cite{Kadir2001} to learn feature words and approximating the feature-part assignment marginal. Fergus \etal \cite{Fergus2007} introduced scale-invariance to the model and learned shape and appearance models jointly. Most recently, constellation model was also applied to 3D shape recognition \cite{MuktaPrasad2011}.
+Early implementations of part-based models were class-specific, where parts arrangements and connections are defined before training, \eg Yuille \etal \cite{Yuille1989} detected facial features using deformable templates. While some part models remain class-specific for deformable pose estimation, \eg human poses \cite{Yang2011, Eichner2012}, recent constellation models have become more general. For instance, Burl \etal \cite{Burl1998} trained a constellation model from hand-picked parts which were represented by Gaussian distributions. Weber \etal \cite{Weber2000} improved the former approach by using an interest point detector \cite{Kadir2001} to learn feature words and approximating the feature-part assignment marginal. Fergus \etal \cite{Fergus2007} introduced scale-invariance to the model and learned shape and appearance models jointly. Most recently, a constellation model was also applied to 3D shape recognition \cite{MuktaPrasad2011}.
 
-Vote-based methods, \eg implicit shape model \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Barinova2010}.
+Vote-based methods, \eg implicit shape models \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at the test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Barinova2010}.
 
-Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation than appearance-only approaches, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
+%Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation than appearance-only approaches, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
+Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with large appearance variations, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.  
 
 %Alternative approaches, such as part-based models (\eg constellation, pictorial structures) and vote-based approaches (\eg generalised hough transform), utilise the structural coherence of an object class, at a cost of lower flexibility to pose changes. 
 
@@ -82,7 +86,7 @@ Both part-based and vote-based approaches achieve better performance in classify
 % Why not use vote-based methods?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Although part-based and vote-based methods can be used to infer pose at test, they all require registered training instances for learning.  
+Although part-based and vote-based methods can be used to infer pose at test time, they all require registered training instances for learning.  
 Registration can be estimated from matching local features in a pre-processing step, using ICP \cite{Pham2011}, RANSAC \cite{Moreels2007}, bunch graph matching \cite{Wiskott1997} and matrix factorisation \cite{Arie-Nachimson2009}, but these require either good initialisations or manual annotations for bootstrapping. Alternatively, Learned-Miller \cite{Learned-Miller2006} proposed a data-driven method for registering an image collection.  
 % However, we know of no methods which learn a shape and appearance model and infer pose of training instances \emph{jointly}.
 
@@ -90,8 +94,8 @@ Registration can be estimated from matching local features in a pre-processing s
 \label{sec/reg/framework}
 
 The proposed SAP model is explained in this section. 
-Firstly, given a training dataset of a particular class label, a constellation model is learned for that object class without any pose information. Pose of each training instance is initially unknown, \ie an object of that class exists somewhere in the data, which is recovered during the learning process.
-Secondly, given a testing instance of unknown class, the proposed SAP model is able to estimate the class label and pose of the object in the data automatically. 
+Firstly, given a training dataset of a particular class label, a constellation model is learned for that object class without any pose information. The pose of each training instance is initially unknown, \ie an object of that class exists somewhere in the data, which is recovered during the learning process.
+Secondly, given a testing instance of an unknown class, the proposed SAP model is able to estimate the class label and pose of the object in the data automatically. 
 
 \begin{figure}[ht]
 \centering
@@ -120,7 +124,7 @@ A constellation model for a given object class is a generative model of the appe
 
 In the SAP model, each part is either visible or occluded in a given data instance.   
 For simplicity, the presence of each part is independent of other parts, in contrast to \cite{Fergus2007, Weber2000}, whose model consider correlations in part occlusion. 
-The visibility of a part is indicated by the binary variable, $\seen$, which equals to $1$ if the part is seen. Similar to Fergus \etal \cite{Fergus2007}, $\numfeat$ features with pose $\featshape$ and appearance $\featapp$ are identified from each data instance. (The number of extracted features, $\numfeat$, actually varies across instance. It is shown as a constant for simplicity of exposition.)  
+The visibility of a part is indicated by the binary variable, $\seen$, which equals to $1$ if the part is seen. Similar to Fergus \etal \cite{Fergus2007}, $\numfeat$ features with pose $\featshape$ and appearance $\featapp$ are identified from each data instance. (The number of extracted features, $\numfeat$, actually varies across instances. It is shown as a constant for simplicity of exposition.)  
 
 The SAP model assumes that each feature is generated either by a part of the object, or from an unknown background class, which is represented by a part with Gaussian appearance $\{\muapp_0, \sigmaapp_0\}$ and $\{\mushape_0, \sigmashape_0\}$ respectively. 
 The feature to part assignment is indicated by a variable $\assign$, which is a $\numfeat \times (\numpart + 1)$ binary indicator matrix. 
@@ -170,13 +174,14 @@ where all valid assignments forms a uniform distribution. The distribution of ob
 Similarly, the probability of observed spatial arrangement, given model shape $\setpartshape$, assignment $\assign$ and object pose $\pose$, is defined as 
 \begin{align}
 	\displaystyle\prob(\featshape|\setpartshape,\assign,\pose) = & \prod_{\anypart=0}^\numpart
-	\left[\frac{\textstyle\exp\left(-\dist(\pose\comp\featshape, \mushape_\anypart; \sigmashape_\anypart)^2\right)}{\displaystyle\int_{\mathbf{Z}} \exp\left(-\dist(\mathbf{Z}, \mushape_\anypart; \sigmashape_\anypart)^2\right)}\right]^{\assignval_{\anyfeat\anypart}}.
+	% \left[\frac{\textstyle\exp\left(-\dist(\pose\comp\featshape, \mushape_\anypart; \sigmashape_\anypart)^2\right)}{\displaystyle\int_{\mathbf{Z}} \exp\left(-\dist(\mathbf{Z}, \mushape_\anypart; \sigmashape_\anypart)^2\right)}\right]^{\assignval_{\anyfeat\anypart}}.
+	\left[\frac{\textstyle\exp\left(-\dist(\pose\comp\featshape, \mushape_\anypart; \sigmashape_\anypart)^2\right)}{\displaystyle\int \exp\left(-\dist(\mathbf{Z}, \mushape_\anypart; \sigmashape_\anypart)^2\right)d\mathbf{Z}}\right]^{\assignval_{\anyfeat\anypart}}.
 	\label{eqn/reg/shape}
 \end{align}
 The above distribution is in the non-Euclidean shape space, characterised by the distance function, $\dist()$. Object pose $\pose$ is assumed to be a linear, where feature shapes $\featshape$ are transformed by multiplying with the pose matrix $\pose$.   
 
 \section{Learning}
-The learning algorithm seek to maximise the posterior probability of the constellation model parameters, $\setpartapp$ and $\setpartshape$, with respect to the $\numinstance$ given instances:  
+The learning algorithm seeks to maximise the posterior probability of the constellation model parameters, $\setpartapp$ and $\setpartshape$, with respect to the $\numinstance$ given instances:  
 \begin{equation}
 	\begin{aligned}
 		\setpartapp,\setpartshape & = \argmax_{\setpartapp, \setpartshape}
@@ -193,8 +198,10 @@ Normally $\prob(\setfeatapp_\anyinstance, \setfeatshape_\anyinstance | \setparta
 \begin{equation}
 	\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance|\setpartapp,\setpartshape) = 
 	\sum_{\assign_\anyinstance \in \allassign}
-	\displaystyle\int_{\pose_\anyinstance}
-	\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance,\assign_\anyinstance,\pose_\anyinstance|\setpartapp,\setpartshape).
+	% \displaystyle\int_{\pose_\anyinstance}
+	% \prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance,\assign_\anyinstance,\pose_\anyinstance|\setpartapp,\setpartshape).
+	\displaystyle\int
+	\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance,\assign_\anyinstance,\pose_\anyinstance|\setpartapp,\setpartshape) d\pose_{\anyinstance}.
 	\label{eqn/reg/learningobjective}
 \end{equation}
 However, given that the number of possible assignments, $|\allassign|$, is exponential in both $\numpart$ and $\numfeat$, whilst the instance pose, $\pose$, is a multi-dimensional, continuous variable in a non-Euclidean space, both the integrations are practically intractable. For this reason, a particle-based algorithm is employed to approximate the solution without computing all possible assignments and poses.  
@@ -275,7 +282,7 @@ This probability can then be used in binary or multi-class object classifiers by
 \section{Inference}
 \label{sec/reg/optimisation}
 
-Since both training and test objective functions, given by equations \ref{eqn/reg/particleapproximation} and \ref{eqn/reg/testobjective} respectively, involve the latent $\particle$ variables, expectation maximisation (EM) algorithm can be used for inference. 
+Since both training and test objective functions, given by equations \ref{eqn/reg/particleapproximation} and \ref{eqn/reg/testobjective} respectively, involve the latent variables $\particle$, the expectation maximisation (EM) algorithm can be used for inference. 
 Given the likelihood of model parameters in the previous iteration $\parameter^{(t-1)} = \{\partprior^{(t-1)},\particleprior^{(t-1)},\assign^{(t-1)},\setpartapp^{(t-1)},\pose^{(t-1)},\setpartshape^{(t)}\}$ is defined as
 \begin{equation}
 	\expect = \frac{\prob(\spfparticlem)\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance,\assign^{(t-1)}_{\anyinstance\anyparticle},\pose^{(t-1)}_{\anyinstance\anyparticle}|\setpartapp^{(t-1)},\setpartshape^{(t-1)})}{\displaystyle\sum_{\anotherparticle = 1}^{\numparticle} \prob(\particle_{\anyinstance}  =  \anotherparticle)\prob(\setfeatapp_\anyinstance,\setfeatshape_\anyinstance,\assign^{(t-1)}_{\anyinstance\anotherparticle},\pose^{(t-1)}_{\anyinstance\anotherparticle}|\setpartapp^{(t-1)},\setpartshape^{(t-1)})}.
@@ -376,12 +383,12 @@ Since the affine poses cannot be uniquely factorised to SRT components, only the
 Initial parameters $\parameter^{(0)}$ for the EM algorithm are computed as follows. Firstly, the particle poses $\pose^{(0)}$ for each instance are each assigned the inverse pose of an instance feature selected at random. Secondly, parameters $\partprior$ and $\particleprior$ are initialised uniformly as $1/2$ and $1/\numparticle$. Thirdly, k-means clustering is performed on the feature positions $\pose^{(0)}\featshape$, and initial parts $\{\partapp^{(0)}, \partshape^{(0)}\}$ are estimated from the k-means assignments. Finally, assignments $\assign^{(0)}$ are selected by maximising the likelihood of the initial shape model.
 
 \subsubsection{Particle considerations}
-The computational cost of learning the model is linear in the number of particles, $\numparticle$, while there are diminishing returns to be had from increasing $\numparticle$, in terms of successful model convergence. The best number of particles is very much application and data dependent. In the experiments of this chapter, 5--10 particles were sufficient to produce good results, further increasing the number of particle would only accelerate convergence marginally, but computation time was increased linearly. 
+The computational cost of learning the model is linear in the number of particles, $\numparticle$, while there are diminishing returns to be had from increasing $\numparticle$, in terms of successful model convergence. The best number of particles is very much application and data dependent. In the experiments of this chapter, 5--10 particles were sufficient to produce good results, further increasing the number of particle would only accelerate convergence marginally, but computational time would increase linearly. 
 
 By allowing every instance to have multiple poses, equivalent sub-models can form within the model.
 To avoid this issue, after the first convergence, the most probable training instance (with the highest likelihood) is selected, and its most probable particle (with highest likelihood) is retained and fixed, while all other particles are removed. As a result, the pose of the selected instance will be fixed in the subsequent iterations, effectively defining the single \emph{canonical pose} of the class. 
 % To avoid this, after the first convergence of EM we select the instance with the highest likelihood and remove all but one of its particles (that with the highest likelihood), whose pose we then keep fixed, essentially defining the single \emph{canonical pose} of the class.
-Furthermore, when the likelihood of particles heads to zero, or two or more particles converge on the same pose, updating them becomes computationally wasteful. To avoid this, those superfluous particles can either be removed, or their poses can be re-initialised at random. This stochastic approach is applied to aid convergence to a good local optimum.  
+Furthermore, when the likelihood of particles tends to zero, or two or more particles converge on the same pose, updating them becomes computationally wasteful. To avoid this, those superfluous particles can either be removed, or their poses can be re-initialised at random. This stochastic approach is applied to aid convergence to a good local optimum.  
 
 % TODO - 
 % Restructure the section: divide it by datasets not applications (reg and rec)
@@ -520,7 +527,7 @@ Performances figures are given by the ROC equal error rates for binary classific
 \end{table}
 
 %Table \ref{tab/reg/regresult2d} shows the recognition results using the proposed model and the work of Fergus \etal~\cite{Fergus2007}. 
-According to the experimental results, both approaches perform similarly when there is no or small pose variations. However, the performance of Fergus \etal \cite{Fergus2007}, which does not model pose as a variable, drops rapidly as the pose variation level increases. Under large pose variation, traditional constellation model \cite{Fergus2007} ceases working, leading to a random classification. 
+According to the experimental results, both approaches perform similarly when there is no or small pose variations. However, the performance of Fergus \etal \cite{Fergus2007}, which does not model pose as a variable, drops rapidly as the pose variation level increases. Under large pose variation, a traditional constellation model \cite{Fergus2007} ceases working, leading to a random classification. 
 By contrast, the SAP model with direct similarity pose maintains a high recognition rate under large direct similarity pose variations, while the affine model, for which feature rotation and scaling components are absent, performs slightly worse. 
 Under affine transformations, the two types SAP model perform similarly, with a significant drop in performance under large pose variations. Since the computed features, \ie the rotated patches, are not affine-invariant, they are irreversibly distorted by shearing, leading to a weaker appearance model, especially $\partapp$.
 The more flexible affine transformations might also over-fit the poses of some non-object testing instances, creating more false positives that affected the recognition accuracy. 
@@ -546,7 +553,7 @@ The more flexible affine transformations might also over-fit the poses of some n
 Since no ground truth pose is given in the original \textbf{bike} dataset, the registration capability of the SAP models was evaluated using hand-labelled pose information. 
 %We create the registration dataset by selecting two hundred random object images from the \textbf{bike} dataset.
 The registration score for the \textbf{bike} dataset was computed as follows.
-Two hundred bikes images were randomly selected from the \textbf{bike} dataset; they were manually annotated the front and rear wheel centres, $\refptfront$ and $\refptrear$.
+Two hundred bikes images were randomly selected from the \textbf{bike} dataset; they were manually annotated with the front and rear wheel centres, $\refptfront$ and $\refptrear$.
 Similar to the recognition experiment, the dataset was divided into two halves for cross-validation. 
 Reference points (wheel centres) of both the training and testing instances were projected into the canonical pose, using the learned poses. The training data points were then used to learn two normal distributions, $\NormDist(\cdot;\mu_\mathrm{front},\Sigma_\mathrm{front})$ and $\NormDist(\cdot;\mu_\mathrm{rear},\Sigma_\mathrm{rear})$, modelling the wheel centre locations, plus a uniform outlier distribution, $\UniformDist(\backgroundreg)$, using the EM algorithm. A registration score in the range $(0,1)$ was then computed for each training or test instance as
 \begin{equation}
@@ -559,7 +566,7 @@ Comparable training and test scores indicate that the learned model transfers we
 \subsection{Results: 3D shapes}
 
 \subsubsection{Recognition}
-Following Pham \etal \cite{Pham2011}, leave-one-out cross validation scheme was used to measure multi-class recognition accuracy on the \textbf{point cloud} dataset. One instance was taken out from the dataset each time as a test shape, while the remaining $19$ instances were used to train the object recogniser. Ten classes from the dataset were evaluated, thus 200 separate models were trained for the experiments. The optimal operating point, \ie decision threshold, was adjusted from the training data to maintain a maximum false positive rate of $5\%$. 
+Following Pham \etal \cite{Pham2011}, a leave-one-out cross validation scheme was used to measure multi-class recognition accuracy on the \textbf{point cloud} dataset. One instance was taken out from the dataset each time as a test shape, while the remaining $19$ instances were used to train the object recogniser. Ten classes from the dataset were evaluated, thus 200 separate models were trained for the experiments. The optimal operating point, \ie decision threshold, was adjusted from the training data to maintain a maximum false positive rate of $5\%$. 
 
 \begin{figure}[ht]
 	\centering
@@ -609,7 +616,7 @@ Following Pham \etal \cite{Pham2011}, leave-one-out cross validation scheme was 
 %\end{table}
 
 
-Figure \ref{fig/reg/recresult3d} shows the confusion matrices of the proposed SAP model and existing state-of-the-arts, using the direct similarity pose parameterisation. (Note that SAP model is a binary object class classifier, thus the rows of its confusion matrix do not sum to $100$.)
+Figure \ref{fig/reg/recresult3d} shows the confusion matrices of the proposed SAP model and existing state-of-the-art approaches, using the direct similarity pose parameterisation. (Note that SAP model is a binary object class classifier, thus the rows of its confusion matrix do not sum to $100$.)
 The weakly-supervised SAP model achieves satisfactory results of 75.5\% multi-class recognition accuracy, while the latest reported state-of-the-art accuracy, using ground truth pose, is 98.5\% \cite{Woodford2013}. However, in the experiments, all approaches except SAP require manually registered training data.    
 %However, the combined multi-class classifier is biased towards some stronger classes, \eg \emph{bracket}, as shown in figure \ref{fig/reg/confusion_sap}.
 
@@ -640,7 +647,7 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 		\includegraphics[width=\linewidth]{fig/reg/reg3Dtrain_block.png} 
 		\subcaption{Block}
 	\end{subfigure}
-	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist())$, where $\dist()$ is the SRT distance. Note that the bad registered classes, \eg \emph{block}, are clustered.}
+	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist())$, where $\dist()$ is the SRT distance. Note that the badly registered classes, \eg \emph{block}, are clustered.}
 	\label{fig/reg/reg_srtmatrices}
 \end{figure}
 
@@ -760,7 +767,7 @@ Minimum entropy Hough \cite{Woodford2013} & \textbf{83} & 20 & 98 & \textbf{91} 
 
 This chapter is concerned with the classification and pose estimation of 3D geometric shapes. 
 
-Addressing the problem of learning a 3D shape recognition system from large-scale, un-annotated datasets, a generative shape, appearance and pose (SAP) model is presented. Different from traditional part-based model, the proposed SAP framework jointly learns a constellation model and the poses of training instances, additionally providing registration capability on top of recognition. The introduction of latent object pose in training greatly increases the parameter space, leading to a difficult optimisation problem for inference. However, such issue is solved by introducing a novel, particle-based optimisation scheme.  
+Addressing the problem of learning a 3D shape recognition system from large-scale, un-annotated datasets, a generative shape, appearance and pose (SAP) model is presented. Different from traditional part-based model, the proposed SAP framework jointly learns a constellation model and the poses of training instances, additionally providing registration capability on top of recognition. The introduction of latent object pose in training greatly increases the parameter space, leading to a difficult optimisation problem for inference. However, such issues are solved by introducing a novel, particle-based optimisation scheme.  
 
 %We have demonstrated not only that inferring pose 
 The experimental results have demonstrated that inferring pose jointly with shape and appearance is feasible in practice. The proposed system performs only marginally worse than existing state-of-the-arts which use ground truth pose, and significantly improves on other approaches when ground truth pose is not known.  
