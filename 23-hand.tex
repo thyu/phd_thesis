@@ -6,10 +6,10 @@
 % Done  
 Articulated 3D hand pose estimation is another important area in human activity analysis. 
 It serves very different applications compared with body pose estimation, such as gesture and sign language recognition, user interface and computer graphics.
-Nevertheless, articulated hand pose estimation shares a lot of similarities with the popular 3D body pose estimation. Basically, both tasks aim to recognise the configuration of an articulated subject with a high degree of freedom. On the other hand, they require domain knowledge, \eg kinematics \cite{LaGorce2011, Simo-Serra2012}, specialised part detector \cite{Bissacco2007} or actions \cite{Yao2012}, in order to infer complex articulations from limited input data. 
+Nevertheless, articulated hand pose estimation shares a lot of similarities with 3D body pose estimation. Basically, both tasks aim to recognise the configuration of an articulated subject with high degrees of freedom. On the other hand, they require domain knowledge, \eg kinematics \cite{LaGorce2011, Simo-Serra2012}, specialised part detector \cite{Bissacco2007} or actions \cite{Yao2012}, in order to infer complex articulations from limited input data. 
 
 % done 
-While latest depth sensor technologies has enabled body pose estimation in real-time \cite{Baak2011, Shotton2011, Girshick2011, Sun2012}, 3D hand pose estimation still remains an unsolved issue. Despite their similarities, proven approaches for body pose estimation cannot be repurposed directly to hand articulations, due to several unique characteristics of 3D hand pose estimation.  
+While the latest depth sensor technologies have enabled body pose estimation in real-time \cite{Baak2011, Shotton2011, Girshick2011, Sun2012}, 3D hand pose estimation still remains an unsolved issue. Despite their similarities, proven approaches for body pose estimation cannot be repurposed directly to hand articulations, due to several unique characteristics of 3D hand pose estimation.  
 
 % hand shapes 
 \begin{figure}[th]
@@ -47,23 +47,23 @@ While latest depth sensor technologies has enabled body pose estimation in real-
 
 % done 
 \item{\textbf{Occlusions and viewpoint changes}} \\  
-Self occlusions are prevalent in hand articulations. The complex anatomy of human hand provides at least 26 degrees of freedom \cite{Rehg1995, Holden1995}. Compared with limbs in body pose, fingers can perform more sophisticated articulations, leading to numerous possible observations. In addition, different from body poses that are usually upright and frontal \cite{Eichner2012}, varying camera viewpoints can render completely different depth images from the same hand articulation. 
+Self occlusions are prevalent in hand articulations. The complex anatomy of the human hand provides at least 26 degrees of freedom \cite{Rehg1995, Holden1995}. Compared with limbs in body pose, fingers can perform more sophisticated articulations, leading to numerous possible observations. In addition, different from body pose that are usually upright and frontal \cite{Eichner2012}, varying camera viewpoints can render completely different depth images from the same hand articulation. 
 
 % done 
 \item{\textbf{Noisy input data}} \\ 
 Body poses usually occupy larger and relatively static regions in the depth images. 
 Hands, however, are often captured in a lower resolution, leading to more noisy inputs than body poses. 
-Missing parts and quantisation error is common in hand pose data, especially at small, partially occluded parts such as finger tips. Figure \ref{fig/hand/intro4} shows a depth image captured from a realistic environment, its hand shape is different from the synthetic depth image in figure \ref{fig/hand/intro3}.   
+Missing parts and quantisation errors are common in hand pose data, especially at small, partially occluded parts such as finger tips. Figure \ref{fig/hand/intro4} shows a depth image captured from a realistic environment, its hand shape is different from the synthetic depth image in figure \ref{fig/hand/intro3}.   
 Regardless of the object distance, missing values are created when stereo image pairs fail to match on the occlusion boundaries, as shown in figure \ref{fig/hand/intro4}. 
 Unlike sensor noise and depth errors \cite{Girshick2011, Baak2011}, these artefacts cannot be repaired or recovered easily. Consequently, a large discrepancy is observed between synthetic and realistic data.  
 
 % done 
 \item{\textbf{Inefficient data labelling}} \\ 
-Due to noise, occlusions and the inherent complex structure of human hand, realistic data are extremely costly to obtain via manual labelling. 
+Due to noise, occlusions and the inherent complex structure of human hand, realistic data is extremely costly to obtain via manual labelling. 
 Existing state-of-the-art methods leverage either synthetic data \cite{Keskin2012} or model-based visual tracking \cite{LaGorce2011, Oikonomidis2012}, to estimate hand poses without labelled training data. 
 They do not consider the realistic-synthetic discrepancies. 
 Despite achieving encouraging performances on synthetic testing data, these techniques give sub-optimal results when they are tested with realistic data. 
-Furthermore, noisy realistic data make automatic joint detection difficult, whereas in synthetic data joint boundaries are always clean and accurate.
+Furthermore, noisy realistic data makes automatic joint detection difficult, whereas in synthetic data, joint boundaries are always clean and accurate.
 % Whilst handling shape variation is crucial for body pose estimation \cite{Shotton2011}, shape variations of human hands are generally smaller than that of body shape.        
 \end{itemize} 
 
@@ -77,18 +77,18 @@ It subsequently applies knowledge transfer to a different but related target dom
 The \STR\ forest learning algorithm is also semi-supervised. 
 It learns the noisy appearances of realistic data from both labelled and unlabelled data points. 
 As a result, it benefits from the characteristics of both domains. 
-\STR\ forest not only captures a wide range of poses from synthetic data, it also achieves robust performances in challenging environments by learning the noisy, irregular appearances in realistic data. 
+The \STR\ forest not only captures a wide range of poses from synthetic data, it also achieves robust performances in challenging environments by learning the noisy, irregular appearances of realistic data. 
 
 % done 
 In addition to the proposed \STR\ forest, a pseudo-kinematic joint refinement algorithm is proposed to handle occlusions and noisy articulations efficiently. 
-Hypotheses of 3D hand pose estimates from \STR\ forest are verified from this data-driven technique, which models the structure of human hands, without computing sophisticated inverse kinematics. 
+Hypotheses of 3D hand pose estimates from the \STR\ forest are verified by this data-driven technique, which models the structure of human hands, without computing sophisticated inverse kinematics. 
 
 % Why depth image not RGB 
 % done 
-Different from action classification and body pose estimation in chapter \ref{chap/act} and \ref{chap/body}, the proposed system takes sequences of depth images as input rather than videos. 
-Since fingers and palm of a human hand share very similar texture, automatic segmentation of hand is very difficult in traditional videos. 
-In addition, due to occlusions and viewpoint changes, deformable part-based models used in chapter \ref{chap/body}, which requires a stable holistic structure, becomes infeasible for hand pose estimation.   
-Traditional video-based approaches rely on low-level silhouettes and edge features \cite{Rosales2001, Chua2002, Athitsos2003, Stenger2006}, which require to extra computation effort in hand detection and segmentation and limited amount of recognisable poses.   
+Different from the action classification and body pose estimation in chapter \ref{chap/act} and \ref{chap/body}, the proposed system takes sequences of depth images as input rather than videos. 
+Since the fingers and palm of a human hand share very similar texture, automatic segmentation of the hand is very difficult in traditional videos. 
+In addition, due to occlusions and viewpoint changes, deformable part-based models used in chapter \ref{chap/body}, which require a stable holistic structure, becomes infeasible for hand pose estimation.   
+Traditional video-based approaches rely on low-level silhouettes and edge features \cite{Rosales2001, Chua2002, Athitsos2003, Stenger2006}, which require extra computational effort in hand detection and segmentation and limited amount of recognisable poses.   
 Depth images, on the other hand, provide straightforward hand and finger segmentation by providing 2.5D information of the scene. 
 Although range sensors or stereo cameras are required to capture depth images, they are currently leveraged to optimise the performance of hand pose estimation. 
 
@@ -99,10 +99,10 @@ The main contributions of the proposed 3D hand pose estimation framework are as 
 % done, make this longer 
 \begin{itemize}
 \item{\textbf{Realistic-Synthetic fusion}}\\
-Handling the issue of noisy inputs, a transductive learning algorithm for 3D hand pose estimation, namely \STR\ forest, is proposed. \STR\ forest relates the characteristics of realistic and synthetic training data, improving robustness and pose coverage in realistic testing environments.
+Handling the issue of noisy inputs, a transductive learning algorithm for 3D hand pose estimation, namely the \STR\ forest, is proposed. The \STR\ forest relates the characteristics of realistic and synthetic training data, improving robustness and pose coverage in realistic testing environments.
 \item{\textbf{Semi-supervised learning}}\\
 Training a discriminative hand pose recogniser requires a large and extensive training dataset. Hand-labelling of hand pose data, however, is costly and ineffective due to occlusions and complicated articulations of human hands. 
-The \STR\ forest utilises both labelled and unlabelled data in its learning algorithm, improving estimation accuracy while keeping a low labelling cost. 
+The \STR\ forest utilises both labelled and unlabelled data in its learning algorithm, improving estimation accuracy while maintaining a low labelling cost. 
 \item{\textbf{Data-driven pseudo-kinematics}}\\
 	Traditional Hough forest algorithms do not model occlusions and structural consistency of articulations \cite{Gall2009}. A data-driven, pseudo-kinematic technique is therefore introduced to verify the feasibility of hand poses inferred from the preceding \STR\ forest.  
 \end{itemize} 
@@ -116,14 +116,14 @@ The \STR\ forest utilises both labelled and unlabelled data in its learning algo
 Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy-minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
 
 % done 
-Discriminative methods learns a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
+Discriminative methods learn a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
 
 % done 
 \subsubsection{Early approaches} 
-Earlier approaches to 3D hand pose estimation are diversified, different techniques have been applied to single images or videos. Erol \etal \cite{Erol2007} performed a detailed literature survey of hand pose estimation techniques. Chua \etal \cite{Chua2002} recognised hand poses from coloured markers on hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimated articulated hand and viewpoint from a database using probabilistic line matching. Tackling the problem of view ambiguities in hand poses, Guan \etal \cite{Guan2006} designed a multiple camera approach to infer 3D hand poses from contours. Stenger \etal \cite{Stenger2006} presented a model-based hand poses tracking algorithm using a Bayesian filter based on Chamfer matching.  
+Earlier approaches to 3D hand pose estimation are diverse, different techniques have been applied to single images or videos. Erol \etal \cite{Erol2007} performed a detailed literature survey of hand pose estimation techniques. Chua \etal \cite{Chua2002} recognised hand poses from coloured markers on the hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimated articulated hand and viewpoint from a database using probabilistic line matching. Tackling the problem of view ambiguities in hand poses, Guan \etal \cite{Guan2006} designed a multiple camera approach to infer 3D hand poses from contours. Stenger \etal \cite{Stenger2006} presented a model-based hand poses tracking algorithm using a Bayesian filter based on Chamfer matching.  
 
 \subsubsection{Generative approaches} 
-Generative approaches are more popular than discriminative approaches among recent state-of-the-arts, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
+Generative approaches are more popular than discriminative approaches among recent state-of-the-art approaches, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
 In a generative hand pose estimation algorithm, hypotheses are projected from an articulated model, hand poses are tracked by fitting the hypotheses to the test data. 
 For example, De La Gorce \etal \cite{LaGorce2011} used a hand mesh with detailed simulated texture and lighting. 
 Hamer \etal \cite{Hamer2009} addressed strong occlusions using local trackers at separate hand segments. 
@@ -131,20 +131,20 @@ Ballan \etal \cite{Ballan2012} inferred finger articulations by detecting salien
 Oikonomidis \etal \cite{Oikonomidis2011} estimated hand poses in real-time from RGB-D images using particle swarm optimisation. 
 
 Although no training data is required for the above generative approaches, visual tracking and optimisation have imposed several limitations to hand pose estimation.
-Tracking performances depend on the previous pose estimations, output pose estimates may drift away from ground truth when error accumulates over time. 
-When a tracking is eventually lost, accumulated incorrect pose estimates cannot be recovered without manual re-initialisation or re-detection. 
+Tracking performances depends on the previous pose estimations, output pose estimates may drift away from ground truth when errors accumulate over time. 
+When tracking is eventually lost, accumulated incorrect pose estimates cannot be recovered without manual re-initialisation or re-detection. 
 In addition, most generative methods do not consider shape variations among individuals due to the additional complexity involved, affecting their accuracy in realistic applications \cite{Erol2007}.   
-Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with latest GPU acceleration techniques \cite{Oikonomidis2011}, generative methods struggle to attain real-time performance in commodity hardware. 
+Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with the latest GPU acceleration techniques \cite{Oikonomidis2011}, generative methods struggle to attain real-time performance on commodity hardware. 
 
 % Done 
 \subsubsection{Discriminative approaches} 
 Discriminative approaches learn a function that maps from visual features to pose, where the mapping is usually regarded as a classification or regression problem. As opposed to generative approaches that use a predefined visual model, discriminative models are constructed from a training dataset.   
 In discriminative approaches, hand poses are often represented as holistic templates \cite{Wang2009}, joint labels \cite{Shotton2011} or joint coordinates \cite{Girshick2011}.
 Although discriminative methods have proved successful in real-time body pose estimation from depth sensors \cite{Shotton2011, Girshick2011, Baak2011, Sun2012}, they are less common than generative approaches with respect to hand pose estimation.  
-Recent discriminative algorithms for hand pose estimation include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests cite{Keskin2012}.  
+Recent discriminative algorithms for hand pose estimation include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}.  
 
 Run-time performance is the major advantage of discriminative approaches over generative approaches. They involve no iterative optimisation or visual tracking in their testing process, thus inference is usually more efficient than generative pose estimators.  
-Discriminative models also handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. Last but not least, many discriminative approaches are frame-based such that drifting issue in generative approaches does not exist. 
+Discriminative models also handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of the feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. Last but not least, many discriminative approaches are frame-based such that the drifting issue in generative approaches does not exist. 
 
 Discriminative methods, however, rely heavily on training data. The number of recognisable poses of a model is correlated to the size of training dataset. In other words, the overall performance of a discriminative pose estimator is largely determined by its training dataset. 
 Since it is costly to label sufficient realistic data for training, existing approaches resort to synthetic data by means of computer graphics \cite{Romero2009, Keskin2012}, leading to the problem of realistic-synthetic discrepancies.
@@ -157,19 +157,19 @@ Zhu \etal \cite{Zhu2008a} applied visual tracking and inverse kinematics to esti
 Pons-Moll \etal \cite{Pons-Moll2011} presented a multi-camera motion capture system using Mises-Fisher sampling and inverse kinematics.  
 
 However, applying inverse kinematics to hand pose estimation is not as straightforward as that of body pose. As previously mentioned, fingertips are occluded frequently due to self-occlusions, extracting their locations for inverse kinematics is difficult, especially in videos. 
-Lacking a deformable articulated model, few discriminative methods consider the physical characteristics of human hands. For example, Wu and Huang \cite{Wu1999} searched for the optimal solution in inverse kinematics through a genetic algorithm. Additionally, Wang \etal \cite{Wang2009} proposed a data-driven approach to describe inverse kinematics using a colour-coded glove. The colour-coded glove avoided the problem of finger segmentation in video-based systems, a binary coding scheme was designed to perform nearest neighbour search efficiently in a large synthetic database. 
+Lacking a deformable articulated model, few discriminative methods consider the physical characteristics of human hands. For example, Wu and Huang \cite{Wu1999} searched for the optimal solution in inverse kinematics through a genetic algorithm. Additionally, Wang \etal \cite{Wang2009} proposed a data-driven approach to describe inverse kinematics using a colour-coded glove. The colour-coded glove avoided the problem of finger segmentation in video-based systems, a binary coding scheme was designed to perform a nearest neighbour search efficiently in a large synthetic database. 
 
 Coping with the issues of occlusion and computational complexity, this work proposes a data-driven, pseudo-kinematic method to correct strongly occluded poses. Distributions of joint locations are efficiently described in a large database of synthetic hand articulations. Occluded joint centres are recovered by matching the visible joints from the corresponding distributions.
 
 % done 
 \subsection{Transfer learning} 
-Transductive transfer learning is often employed when training data of the target domain are too costly to obtain. 
+Transductive transfer learning is often employed when training data of the target domain is too costly to obtain. 
 It has seen various successful applications \cite{Pan2010}, nonetheless it has not been applied to articulated pose estimation. 
 In this work, realistic-synthetic fusion is realised by extending the idea of cross-modality learning by Bronstein \etal \cite{Bronstein2010} to the proposed \STR\ forest, where the training algorithm preserves the predefined associations between cross-domain data pairs, which are defined in section \ref{sec/hand/dataset}.  
 
 % done 
 \subsection{Semi-supervised forest and regression forest} 
-Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measured data compactness to relate labelled and unlabelled data points. Leistner \etal \cite{Leistner2009} designed a margin metric to evaluate unlabelled data. On the contrary, regression random forest was adopted in body pose estimation \cite{Girshick2011, Sun2012}. In the proposed system, \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work.
+Various semi-supervised forest learning algorithms have been proposed. Shotton \etal \cite{Shotton2013} measured data compactness to relate labelled and unlabelled data points. Leistner \etal \cite{Leistner2009} designed a margin metric to evaluate unlabelled data. On the contrary, a regression random forest was adopted in body pose estimation \cite{Girshick2011, Sun2012}. In the proposed system, a \STR\ forest adaptively combines the aforementioned semi-supervised and regression forest learning techniques in a single frame work.
 
 \section{Overview}
 
@@ -182,9 +182,9 @@ Various semi-supervised forest learning algorithms have been proposed. Shotton \
 
 % done 
 The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}(top). 
-Training data are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truths, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. 
+Training data is collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truh, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. 
 The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points, as shown in figure \ref{fig/hand/concept}. The proposed \STR\ learning algorithm introduces two new techniques to the traditional Hough and regression forest \cite{Gall2011}. 
-Transductive realistic-synthetic associations are preserved throughout the learning process, such that the paired data points pass down to the same node. 
+Transductive realistic-synthetic associations is preserved throughout the learning process, such that the paired data points pass down to the same node. 
 Furthermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using an unsupervised learning term. 
 
 Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within a unified algorithm. Figure \ref{fig/hand/concept}(bottom) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
@@ -204,7 +204,7 @@ The training dataset $\totalset$ is a combination of realistic data $\realset$ a
 		\clset 		& = \left\{ \realset, \synset \right\} & \mbox{(labelled training data) }. \\ 
 	\end{aligned}
 \end{equation}
-A small potion of $\realset$ is labelled, where the labelled and the remaining unlabelled parts are defined as $\reallset$ and $\realuset$ respectively. All synthetic data $\synset$ are labelled with ground truths. In addition, the collection of labelled data $\totalset$ is denoted by $\clset$.  
+A small potion of $\realset$ is labelled, where the labelled and the remaining unlabelled parts are defined as $\reallset$ and $\realuset$ respectively. All synthetic data $\synset$ are labelled with ground truth. In addition, the collection of labelled data $\totalset$ is denoted by $\clset$.  
 
 % done 
 All data points in $\totalset$ are represented by vectorised local patches extracted from depth images. In this work, patches are sampled randomly from the foreground pixels in the training images $\totalset$. Each patch is $64 \times 64$ in size, which is comparable to the patch size in Girshick \etal \cite{Girshick2011}. The total number of training features roughly equals $5\%$ of foreground pixels in the training images. 
@@ -245,9 +245,9 @@ A pool of candidate split functions are generated at each node, the optimal spli
 Instead of using a typical metric such as information gain \cite{Breiman2001} or label variance \cite{Shotton2013}, new quality functions are introduced to the \STR\ forest algorithm in training. The quality function is selected at random among two quality functions $\vpjterm$ and $\tssterm$: 
 \begin{align}
 	\label{eqn/hand/qualityfunction1}
-	\vpjterm & = \viewparam\viewterm + (1 - \viewparam)\classparam\classterm + (1 - \viewparam)(1 - \classparam)\regterm,  \\[3mm] 
+	\vpjterm & = \viewparam\viewterm + (1 - \viewparam)\classparam\classterm + (1 - \viewparam)(1 - \classparam)\regterm  \\[3mm] 
 	\label{eqn/hand/qualityfunction2}
-	\tssterm & = \pairterm^{\tssparam}\usterm.
+	\tssterm & = \pairterm^{\tssparam}\usterm
 \end{align}
 In equation \ref{eqn/hand/qualityfunction1}, $\vpjterm$ is a hybrid quality function for learning classification-regression decision trees in equation \ref{eqn/hand/qualityfunction2}. The transductive and semi-supervised term,$\tssterm$ is used to model the relationship among realistic-synthetic and labelled-unlabelled data. Given the training data $\ctotalset = \{\creallset, \crealuset, \csynset\}$, the quality functions are formulated as follows.   
 
@@ -302,7 +302,7 @@ Subset $\clset_{l}$ and $\clset_{r}$ are the data points that pass down the left
 
 %done 
 \subsubsection{Unsupervised term} 
-The appearances the target domain, \ie realistic data, are modelled in an unsupervised manner.
+The appearances in the target domain, \ie realistic data, are modelled in an unsupervised manner.
 Assuming appearances and poses are correlated under the same viewpoint, pose similarities between a pair of data points can be roughly estimated by the resemblance of their appearances. The unsupervised term $\usterm$ evaluates the similarities among all realistic patches $\realset$ within a node, such that 
 \begin{equation}
 	\usterm = \left[ 1 + 
@@ -384,7 +384,9 @@ For each $\ksynset_{i}$, a $\ngmm$-component, axis-aligned Gaussian mixture mode
 		\GMM_{\mathbf{i}} & = \{\mu_{\mathbf{i}}^{1}\dots\mu_{\mathbf{i}}^{n}\dots\mu_{\mathbf{i}}^{\ngmm};\Sigma_{\mathbf{i}}^{1}\cdots\Sigma_{\mathbf{i}}^{n}\cdots\Sigma_{\mathbf{i}}^{\ngmm}\}.
 	\end{aligned}
 \end{equation}
-The $\onegmm$-th mean and variance in the $\mathbf{i}$-th viewpoint are denoted by $\mu_{\mathbf{i}}^{\onegmm}$ and $\Sigma_{\mathbf{i}}^{\onegmm}$ respectively. The procedures for computing the data-driven kinematic model $\GMM$ is summarised in algorithm \ref{alg/hand/kinematic}. 
+The $\onegmm$-th mean and variance in the $\mathbf{i}$-th viewpoint are denoted by $\mu_{\mathbf{i}}^{\onegmm}$ and $\Sigma_{\mathbf{i}}^{\onegmm}$ respectively. 
+In section \ref{sec/hand/experiments}, a mixture model of $50$ Gaussian distributions is constructed for joint refinement, \ie $\ngmm = 50$. 
+The procedures for computing the data-driven kinematic model $\GMM$ is summarised in algorithm \ref{alg/hand/kinematic}. 
 
 % done 
 \begin{algorithm}
@@ -456,7 +458,7 @@ Given the nearest Gaussian $\{\mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}
 		\big|\big|\mathbf{T}\mu - \mu_{\testviewlabel}^{nn}[\joint]\big|\big|^2_2.
 		\label{eqn/hand/refine1}
 \end{equation}
-The distribution $\{\tilde{\mu}, \tilde{\Sigma}\}$ is one of the Gaussian components in $\testGMM_{\joint}$ that is closer to the corresponding $\joint$-th joint location in $\{\mu_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3}, \Sigma_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3\times3}\}$ taken from $\{ \mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}^{nn} \} $. However, when a joint is fully occluded, its detection result in \ref{eqn/hand/refine1} become unreliable because the regression forest does not consider complete occlusion.   
+The distribution $\{\tilde{\mu}, \tilde{\Sigma}\}$ is one of the Gaussian components in $\testGMM_{\joint}$ that is closer to the corresponding $\joint$-th joint location in $\{\mu_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3}, \Sigma_{\testviewlabel}^{nn}[\joint] \in \mathbb{R}^{3\times3}\}$ taken from $\{ \mu_{\testviewlabel}^{nn}, \Sigma_{\testviewlabel}^{nn} \} $. However, when a joint is fully occluded, its detection result in equation \ref{eqn/hand/refine1} become unreliable because the regression forest does not consider complete occlusion.   
 As a result, the final output of a low-confidence joint $\testonejoint_{l}$ is recovered by merging the Gaussians in equation \ref{eq:refine2} (\cf equation \ref{eqn/body/combine}): 
 \begin{equation}
 	\testonejoint_{\joint} =
@@ -491,15 +493,16 @@ The procedures of refining output poses $\testjoint$ are stated in algorithm \re
 \end{algorithm}
 
 \section{Experiments}
+\label{sec/hand/experiments}
 
 % done 
 \subsection{Evaluation dataset} 
 
-Synthetic training data $\synset$ were rendered using an articulated hand model as shown in figure \ref{fig/hand/label}. 
+Synthetic training data $\synset$ was rendered using an articulated hand model as shown in figure \ref{fig/hand/label}. 
 Instead of adjusting individual joints, each finger was controlled by a bending parameter, such that only realistic articulations, \ie poses that can be performed by a real hand, were recorded in the training dataset. 
 In order to handle the shape variations in realistic environments, mild shape randomisation is applied to the articulated hand model, when generating the depth images in dataset $\synset$. 
 %Different poses performed by the articulated model were subsequently projected to depth images.
-Subsequently synthetic dataset $\synset$ were generated by projecting the articulated model, of different poses, to depth images. In this work, $\synset$ contained $\nsynperview$ depth images per viewpoint, the size of $\synset$ was $\nsynperview \times 3 \times 5 \times 9 = 337.5K$.  
+Subsequently, a synthetic dataset $\synset$ was generated by projecting the articulated model, of different poses, to depth images. In this work, $\synset$ contained $\nsynperview$ depth images per viewpoint, the size of $\synset$ was $\nsynperview \times 3 \times 5 \times 9 = 337.5K$.  
 
 \begin{figure}[ht]
 	\centering
@@ -508,7 +511,7 @@ Subsequently synthetic dataset $\synset$ were generated by projecting the articu
 	\label{fig/hand/label}
 \end{figure}
 
-Meanwhile, realistic data $\realset$ were captured using an Asus Xtion depth sensor. 
+Meanwhile, realistic data $\realset$ was captured using an Asus Xtion depth sensor. 
 There were about $600$ frames per viewpoint, thus the size of $\realset$ is $81K$. 
 Within $\realset$, about $20\%$ of the frames in $\realset$ are labelled. 
 The number of labelled sample $|\reallset|$ is around $10K$.    
@@ -517,9 +520,9 @@ Since labels can be reused for the in-plane rotationally symmetric images (same 
 Visible joints in $\reallset$ were annotated manually using 3D coordinates. However, annotation of occluded joints were labelled using the $(x,y)$ coordinates initially.  
 Realistic-synthetic associations $\assoc$ and the remaining $z$-coordinates in $\reallset$ were computed simultaneously by matching visible joint locations with $\synset$, using least squares and a direct similarity transform, similar to kinematic joint refinement in section \ref{sec/hand/kjr}. 
 Consequently, each data point in $\reallset$ was paired with its closest match $\patch_{syn} \in \synset$, and its occluded $z$ coordinates were approximated by the corresponding $z$ coordinates of $\patch_{syn}$.  
-A joint was model as a 3D truncated Gaussian distribution centred at the joint location, while its variance was defined empirically according to the structure of human hands. Foreground pixels were clustered into one of these distributions and therefore assigned with labels $\jointlabel$. For example, the palm label usually contributed a larger region than the fingertip labels, due to the large variance in the palm joint.
+A joint was modelled as a 3D truncated Gaussian distribution centred at the joint location, while its variance was defined empirically according to the structure of human hands. Foreground pixels were clustered into one of these distributions and therefore assigned with labels $\jointlabel$. For example, the palm label usually contributed a larger region than the fingertip labels, due to the large variance in the palm joint.
 
-Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled with 450, 1000 and 240 frames respectively.  Sequence $A$ was captured with a static viewpoint for the single-view experiment. Sequence $B$ features various viewpoint variations and sequence $C$ contains abrupt changes in both viewpoint and scale. In the experiments, 3 trees were trained with maximum depth varying from 16 (single-view experiment) to 24 (multi-view experiment), depending on the amount of training data.
+Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled needs 50, 1000 and 240 frames respectively.  Sequence $A$ was captured with a static viewpoint for the single-view experiment. Sequence $B$ features various viewpoint variations and sequence $C$ contains abrupt changes in both viewpoint and scale. In the experiments, 3 trees were trained with maximum depth varying from 16 (single-view experiment) to 24 (multi-view experiment), depending on the amount of training data.
 
 % done 
 \subsection{Single view experiment} 
@@ -537,7 +540,7 @@ Performances of candidate algorithms were measured by their pixel-wise classific
 It demonstrates the strengths of realistic-synthetic fusion and semi-supervised learning. 
 Accuracy of baseline method was improved by simply including both domains in training without any algorithmic changes. 
 
-Transductive learning term $\pairterm$ have improved the accuracy substantially, particularly for the finger tips which are less robust in the baseline algorithms.  
+The transductive learning term $\pairterm$ improved the accuracy substantially, particularly for the finger tips which are less robust in the baseline algorithms.  
 By coupling realistic data with synthetic data, the transductive term $\pairterm$ effectively learns the discrepancies between the domains.
 %, which is important in recognising noisy and strongly occluded fingers.
 From figure \ref{fig/hand/single}, some joints are often mislabelled as other more dominating joints after transductive learning, \eg joints in little finger tip (L3) and index proximal (I1). 
@@ -559,7 +562,9 @@ In this experiment, pose estimation accuracy was measured by joint localisation 
 
 Figure \ref{fig/hand/multiquantb} and \ref{fig/hand/multiquantc} show the average localisation errors of testing sequence $B$ and $C$ respectively. It also shows the same error graphs from a stable joint (palm, $P$) and a difficult joint (index finger tip, $I3$). The proposed \STR\ forest, together with the data-driven kinematic joint refinement, outperform FORTH in all aspects, especially for the finger tip joints that are noisy and frequently occluded. Since the proposed approach is frame-based, even though a few large estimation errors are observed, they can be recovered quickly without drifting.    
 
-Experiments with sequence $C$ justify the advantages of the proposed system over tracking-based methods. In the first $200$ frames, \STR\ forest with joint refinement perform just slightly better than FORTH. However, localisation errors in FORTH accumulate after an abrupt change in the testing sequence, the errors have not been recovered since then. Since tracking-based approaches rely on previous results to optimise the current hypothesis iteratively, estimation errors amass and drifting issue worsens over time. On the contrary, frame-based discriminative approaches consider each frame as an independent input, enabling fast error recovery at the expense of a smooth and continuous output, hence small jitters are observed from the hand pose estimation results.  
+Experiments with sequence $C$ justify the advantages of the proposed system over tracking-based methods. In the first $200$ frames, \STR\ forest with joint refinement perform just slightly better than FORTH. However, localisation errors in FORTH accumulate after an abrupt change in the testing sequence, and the incorrect pose does not recover.
+% the errors have not been recovered since then. 
+Since tracking-based approaches rely on previous results to optimise the current hypothesis iteratively, estimation errors amass and drifting issue worsens over time. On the contrary, frame-based discriminative approaches consider each frame as an independent input, enabling fast error recovery at the expense of a smooth and continuous output, hence small jitters are observed from the hand pose estimation results.  
 
 In this experiment, the proposed joint refinement scheme improves the joint estimation accuracy in general, as illustrated in figure \ref{fig/hand/multiquantb} and \ref{fig/hand/multiquantc}. 
 Some large classification errors, \eg figure \ref{fig/hand/multiquantb2}, are corrected after applying joint refinement. It implies that the joint refinement process not only improves the accuracy of joint, but also prevents incorrect detections by validating the output of \STR\ forest with kinematic constraints.
@@ -606,7 +611,7 @@ Some large classification errors, \eg figure \ref{fig/hand/multiquantb2}, are co
 The proposed pose estimation system was also evaluated qualitatively, figure \ref{fig/hand/multiqual} displays some of the experimental results extracted from testing sequence $B$ and $C$.
 In figure \ref{fig/hand/multiqual}, hands are cropped from the original images for better visualisation ($135\times135$ pixels for sequence $B$, $165\times165$ pixels for sequence $C$). During the experiment, the size of the original images (RGB and depth) is $640\times480$ pixels.
 Figure \ref{fig/hand/multiqual}(a) and (b) show the pose estimation results of the same articulation from different view points.  
-Figure \ref{fig/hand/multiqual}(d) shows a frame at the beginning of test sequence $B$, both approaches obtain accurate hand articulations initially. However, the performance of FORTH declined rapidly in the middle of the sequence when its tracking algorithm was lost target and failed to recognise a correct pose in figure \ref{fig/hand/multiqual}(e), yet the \STR\ forest approach still gives correct results. In addition, strong occlusions are shown in figure \ref{fig/hand/multiqual}(f), where FORTH did not work well but \STR\ forest gave the correct pose. In figure \ref{fig/hand/multiqual}, however, both approaches did not produce very accurate results due to strong motion blur, which is indicated by a large blank region in the corresponding depth image.   
+Figure \ref{fig/hand/multiqual}(d) shows a frame at the beginning of test sequence $B$, both approaches obtain accurate hand articulations initially. However, the performance of FORTH declined rapidly in the middle of the sequence when its tracking algorithm lost target and failed to recognise a correct pose in figure \ref{fig/hand/multiqual}(e), yet the \STR\ forest approach still gives correct results. In addition, strong occlusions are shown in figure \ref{fig/hand/multiqual}(f), where FORTH did not work well but the \STR\ forest gave the correct pose. In figure \ref{fig/hand/multiqual}, however, both approaches did not produce very accurate results due to strong motion blur, which is indicated by a large blank region in the corresponding depth image.   
 
 With respect to run-time performance, the proposed \STR\ forest estimated one hand pose at about $25$FPS on an Intel I7 PC without GPU acceleration, whilst the FORTH algorithm ran at $6$FPS on the same hardware configuration plus GPU acceleration (NVidia GT 640). 
 
@@ -636,9 +641,9 @@ Despite sharing many similarities with body pose estimation, practical 3D hand p
 Furthermore, the discrepancies between realistic and synthetic data also undermine the performances of existing systems. 
 
 Dealing with the above issues, this work introduces a semi-supervised transductive approach for articulated hand pose estimation. A novel discriminative pose estimator, namely \STR\ forest, is proposed to infer hand poses using both realistic and synthetic training data. 
-With transductive learning, \STR\ forest recognises a wide range of poses from a small labelled realistic dataset by linking its data points to a large synthetic dataset.
+With transductive learning, the \STR\ forest recognises a wide range of poses from a small labelled realistic dataset by linking its data points to a large synthetic dataset.
 Semi-supervised learning is also applied to fully utilise the sparsely labelled realistic dataset. 
 To improve the estimation accuracy of heavily occluded hand poses, a data-driven pseudo-kinematic technique is used to correct the occluded joints.  
 
 The proposed hand pose estimation system was evaluated with respect to different challenging environments. From the quantitative and qualitative analyses, it demonstrated promising results in estimating articulated hand poses from noisy and strongly occluded data.  
-It also achieved superior accuracy and run-time performance compared with the state-of-the-arts.  
+It also achieved superior accuracy and run-time performance compared with current state-of-the-art approaches.  
