@@ -113,40 +113,43 @@ The \STR\ forest utilises both labelled and unlabelled data in its learning algo
 \subsection{Hand pose estimation}
 
 % done 
-Approaches to 3D hand pose estimation are broadly categorised into generative and discriminative methods. In generative methods, a 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy-minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. Generative methods require no training and recognise a wide range of poses, yet the registration algorithms are usually computationally demanding and prone to tracking error.
+Approaches to full 3D hand pose estimation are broadly categorised into model-based tracking and appearance-based (single frame) methods \cite{Erol2007}. In model-based tracking methods, a parametric 3D articulated hand model is employed to evaluate the observed input for pose recovery. An appearance projection is synthesised from a hand pose hypothesis, which is registered to the current observation using a visual tracking or energy-minimisation algorithm. Various features, such as edges \cite{Guan2006}, silhouettes \cite{Wu2000}, optical flow \cite{Lu2003} and shading \cite{LaGorce2011} are used to guide the object registration process. 
+Model-based methods can recognise a wide range of poses which are tracked by the parametric hand models.
+However, the tracking or searching algorithms used by model-based methods are usually computationally demanding. The tracking algorithms are also prone to drifting errors, therefore model-based methods do not work well over long video sequences. 
 
 % done 
-Discriminative methods learn a mapping from visual features to 3D hand pose articulations through classification or regression techniques. A discriminative hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Discriminative approaches are usually more efficient than generative approaches as no tracking is performed. Additionally, many discriminative methods are frame-based, such that they can recognise hand poses from a single image. However, discriminative approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
+Appearance-based methods learn a mapping from visual features to 3D hand pose articulations through classification or regression techniques. An appearance-based hand pose estimator is constructed from a training dataset offline, which is usually based on holistic shape features \cite{Rosales2001, Athitsos2003, Romero2009, Wang2009, Keskin2012}. Appearance-based approaches are usually more efficient than generative approaches as no tracking is performed. Many appearance-based methods estimate hand pose from a single frame, such that they can recognise hand poses from a single image. However, appearance-based approaches are restricted to a limited set of predefined poses, as they require a large labelled dataset for training, which is often very costly to obtain.  
 
 % done 
 \subsubsection{Early approaches} 
-Earlier approaches to 3D hand pose estimation are diverse, different techniques have been applied to single images or videos. Erol \etal \cite{Erol2007} performed a detailed literature survey of hand pose estimation techniques. Chua \etal \cite{Chua2002} recognised hand poses from coloured markers on the hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimated articulated hand and viewpoint from a database using probabilistic line matching. Tackling the problem of view ambiguities in hand poses, Guan \etal \cite{Guan2006} designed a multiple camera approach to infer 3D hand poses from contours. Stenger \etal \cite{Stenger2006} presented a model-based hand poses tracking algorithm using a Bayesian filter based on Chamfer matching.  
+Earlier approaches to 3D hand pose estimation are diverse, different techniques have been applied to single images or videos. Erol \etal \cite{Erol2007} performed a detailed literature survey of early hand pose estimation techniques. Chua \etal \cite{Chua2002} recognised hand poses from coloured markers on the hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimated articulated hand and viewpoint from a database using probabilistic line matching. Tackling the problem of view ambiguities in hand poses, Guan \etal \cite{Guan2006} designed a multiple camera approach to infer 3D hand poses from contours. Stenger \etal \cite{Stenger2006} presented a model-based hand poses tracking algorithm using a Bayesian filter based on Chamfer matching.  
 
-\subsubsection{Generative approaches} 
-Generative approaches are more popular than discriminative approaches among recent state-of-the-art approaches, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
-In a generative hand pose estimation algorithm, hypotheses are projected from an articulated model, hand poses are tracked by fitting the hypotheses to the test data. 
+\subsubsection{Model-based approaches} 
+Model-based approaches are more popular than appearance-based approaches among recent state-of-the-art approaches, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
+In a model-based hand pose estimator, hypotheses are projected from an articulated model, hand poses are tracked by fitting the hypotheses to the test data. 
 For example, De La Gorce \etal \cite{LaGorce2011} used a hand mesh with detailed simulated texture and lighting. 
 Hamer \etal \cite{Hamer2009} addressed strong occlusions using local trackers at separate hand segments. 
 Ballan \etal \cite{Ballan2012} inferred finger articulations by detecting salient points.  
 Oikonomidis \etal \cite{Oikonomidis2011} estimated hand poses in real-time from RGB-D images using particle swarm optimisation. 
 
-Although no training data is required for the above generative approaches, visual tracking and optimisation have imposed several limitations to hand pose estimation.
+Although no training data is required for the above model-based approaches, visual tracking and optimisation have imposed several limitations to hand pose estimation. 
 Tracking performances depends on the previous pose estimations, output pose estimates may drift away from ground truth when errors accumulate over time. 
 When tracking is eventually lost, accumulated incorrect pose estimates cannot be recovered without manual re-initialisation or re-detection. 
-In addition, most generative methods do not consider shape variations among individuals due to the additional complexity involved, affecting their accuracy in realistic applications \cite{Erol2007}.   
-Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with the latest GPU acceleration techniques \cite{Oikonomidis2011}, generative methods struggle to attain real-time performance on commodity hardware. 
+In addition, most model-based methods do not consider shape variations among individuals due to the additional complexity involved, affecting their accuracy in realistic applications \cite{Erol2007}.   
+Furthermore, their iterative optimisation processes are usually computationally expensive. Despite near real-time performance with the latest GPU acceleration techniques \cite{Oikonomidis2011}, model-based methods struggle to attain real-time performance on commodity hardware. 
 
 % Done 
-\subsubsection{Discriminative approaches} 
-Discriminative approaches learn a function that maps from visual features to pose, where the mapping is usually regarded as a classification or regression problem. As opposed to generative approaches that use a predefined visual model, discriminative models are constructed from a training dataset.   
-In discriminative approaches, hand poses are often represented as holistic templates \cite{Wang2009}, joint labels \cite{Shotton2011} or joint coordinates \cite{Girshick2011}.
-Although discriminative methods have proved successful in real-time body pose estimation from depth sensors \cite{Shotton2011, Girshick2011, Baak2011, Sun2012}, they are less common than generative approaches with respect to hand pose estimation.  
-Recent discriminative algorithms for hand pose estimation include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}.  
+\subsubsection{Appearance-based approaches} 
+Appearance-based approaches learn a function that maps from visual features to pose, where the mapping is usually regarded as a classification or regression problem. As opposed to model-based tracking that use a predefined hand model, appearance-based hand pose estimators are constructed from a training dataset.   
+In appearance-based approaches, hand poses are often represented as holistic templates \cite{Wang2009}, joint labels \cite{Shotton2011} or joint coordinates \cite{Girshick2011}.
+Although appearance-based approaches have proved successful in real-time body pose estimation from depth sensors \cite{Shotton2011, Girshick2011, Baak2011, Sun2012}, they are less common than their model-based counterparts with respect to hand pose estimation.  
+Recent appearance-based 3D hand pose estimation algorithms include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}.  
 
-Run-time performance is the major advantage of discriminative approaches over generative approaches. They involve no iterative optimisation or visual tracking in their testing process, thus inference is usually more efficient than generative pose estimators.  
-Discriminative models also handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of the feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. Last but not least, many discriminative approaches are frame-based such that the drifting issue in generative approaches does not exist. 
+Run-time performance is the major advantage of appearance-basd approaches over model-based approaches. Appearance-based methods involve no iterative optimisation or visual tracking, hence they usually have faster run-time performance than that of model-based approaches. Since appearance-based methods work on individual frames without tracking, the drifting issue in model-based methods does not exist.
+Furthermore, appearance-based hand pose estimators handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of the feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. 
 
-Discriminative methods, however, rely heavily on training data. The number of recognisable poses of a model is correlated to the size of training dataset. In other words, the overall performance of a discriminative pose estimator is largely determined by its training dataset. 
+Appearance-based approaches, however, rely heavily on training data. 
+The number of recognisable poses of a model is limited by the size of training dataset. In other words, the overall performance of an appearance-based pose estimator is largely determined by the quality its training dataset. 
 Since it is costly to label sufficient realistic data for training, existing approaches resort to synthetic data by means of computer graphics \cite{Romero2009, Keskin2012}, leading to the problem of realistic-synthetic discrepancies.
 
 % done 
@@ -253,8 +256,12 @@ In equation \ref{eqn/hand/qualityfunction1}, $\vpjterm$ is a hybrid quality func
 
 % done 
 \subsubsection{Viewpoint classification term} 
+
+
 Traditional information gain is used to evaluate the classification performance of all the viewpoints $\viewlabel$ in labelled data $\clset$ \cite{Breiman2001}.   
-Since a large amount of training samples needs to be evaluated, reservoir sampling is employed to avoid memory restriction and speed up training \cite{Girshick2011}. The information gain $\entropy_{\viewlabel}(\clset)$ is defined as below:
+Since a large amount of training samples needs to be evaluated, reservoir sampling is employed to avoid memory restriction and speed up training \cite{Girshick2011}. 
+Each decision tree is trained on a subset of the training dataset $\ctotalset$ created by reservoir sampling, which chooses data points randomly from $\ctotalset$ without replacement \cite{Vitter1985}. 
+The information gain $\entropy_{\viewlabel}(\clset)$ is defined as below:
 \begin{equation}
 	\label{eqn/hand/viewterm}
 	\begin{aligned}
@@ -328,9 +335,15 @@ The transductive term $\pairterm$ is the ratio of preserved association. It give
 % done  
 \subsubsection{Adaptive switching parameters} 
 Parameters $\{ \viewparam, \classparam, \tssparam \}$ are the weightings of quality terms within the chosen quality function.   
-A three-phase learning strategy is employed in the \STR\ forest. At the early stage of testing, coarse viewpoint classification is preferred to finer joint classification and regression. 
-Learning focus switches from viewpoint classification to joint classification, and then to pose regression.  
-Figure \ref{fig/hand/concept} illustrates the coarse-to-fine structure of trees in the proposed approach, a tree performs mainly classifications at the top levels, its training objective is switched adaptively to regression at the bottom levels. To control the learning phases, margin function $\margin(\cdot)$ is defined to measure classification performance of a tree node: 
+%A three-phase learning strategy is employed in the \STR\ forest. 
+The \STR\ forest adopts a three-phase learning strategy, such that the node learning objectives shifts adaptively from viewpoint classification to joint classification to joint regression. 
+At the early stage of testing, coarse viewpoint classification is preferred to finer joint classification and regression. 
+% Learning focus switches from viewpoint classification to joint classification, and then to pose regression.  
+After the global viewpoint labels have been classified successfully, learning focus switches from viewpoint classification to joint classification. 
+Once the joint labels have been classified, learning objective then switches to joint regression where input data are clustered with respect to their poses.  
+Figure \ref{fig/hand/concept} illustrates the coarse-to-fine structure of trees in the proposed approach, a tree performs mainly classifications at the top levels, its behaviour changes adaptively to joint classification at the middle levels. Finally, joint regression gives more accurate pose estimation at the bottom levels. 
+
+To control the learning phases, margin function $\margin(\cdot)$ is defined to measure classification performance of a tree node: 
 \begin{align}
 	\label{eqn/hand/margin} 
 	\margin_{\viewlabelset}(\clset) & = 
@@ -341,7 +354,9 @@ Figure \ref{fig/hand/concept} illustrates the coarse-to-fine structure of trees 
 	\max_{\jointlabel \in \jointlabelset} p(\jointlabel | \clset) - 
 	\max_{\hat{\jointlabel} \in \jointlabelset, \hat{\jointlabel} \not= \jointlabel} p(\hat{\jointlabel} | \clset).
 \end{align}
-The margin function $\margin(\cdot)$ evaluates the purity of a node, which is the difference between the most probable class and the second most probable class in a node. 
+The margin function $\margin(\cdot)$ indicates the purity of a node, which is the difference between the most probable class and the second most probable class in a node. 
+When a node contains data from the same class, its margin function returns zero.
+On the contrary, if a node contains evenly distributed class labels, its margin function tends to one.
 Equations \ref{eqn/hand/margin} and \ref{eqn/hand/margin2} are responsible for the classification of viewpoint labels $\viewlabel$ and joint labels $\jointlabel$ in $\clset$ respectively. They measure the purity of a node with respect to viewpoint and patch label:
 \begin{equation}
 	\begin{array}{l@{}r}
@@ -349,16 +364,21 @@ Equations \ref{eqn/hand/margin} and \ref{eqn/hand/margin2} are responsible for t
 		\begin{cases}
 			1\mbox{ ~~if } \margin_{\viewlabelset}(\clset) < t_{\viewparam} \\
 			0\mbox{ ~~otherwise }
-		\end{cases}; & 
+		\end{cases} \\
+	\end{array}
+	\label{eq:switchparam1}
+\end{equation}
+\begin{equation}
+	\begin{array}{l@{}r}
 		\classparam = 
 		\begin{cases}
 			1\mbox{ ~~if } \margin_{\jointlabelset}(\clset) < t_{\classparam} \\
 			0\mbox{ ~~otherwise}
 		\end{cases}.
 	\end{array}
-	\label{eq:switchparam}
+	\label{eq:switchparam2}
 \end{equation}
-Two thresholds $t_{\viewparam}$ and $t_{\classparam}$ are defined to control the behaviours of the output decision trees. 
+At top levels, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ tends to one as the viewpoint labels are evenly distributed. As a result, according to equation \ref{eqn/hand/qualityfunction1} and \ref{eq:switchparam1}, the learning algorithm favours viewpoint classification, which is the information gain of viewpoint labels $\viewterm$. As more nodes are constructed down the decision tree, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ decreases as more viewpoint labels are classified. At the middle levels, when $\viewparam$ becomes zero, the learning objective $\classterm$ changes from viewpoint classification to joint label classification. Finally, when joint labels have been classified at the bottom levels, the weightings $\viewparam$ and $\classparam$ are both zero. According to equation \ref{eq:switchparam1}, the learning objective $\vpjterm$ switches to joint regression $\regterm$, grouping training data with respect to their poses. Two tunable thresholds $t_{\viewparam}$ and $t_{\classparam}$ are used to control switching between different learning objectives during the traiing process.
 
 The tunable parameter $\tssparam$ controls the relative importance of transductive term $\pairterm$ to unsupervised term $\usterm$.  
 

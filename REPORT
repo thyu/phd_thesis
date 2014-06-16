@@ -1,37 +1,40 @@
 Tsz-Ho Joint Report and Corrections 6/2/14
 
-The candidate defended his work well and demonstrated a good understanding of his own and related work. The thesis had raised a number of issues with regards the approaches taken. Much of the discussion in the viva was based around clarity of exposition and both examiners agreed that further work was required in revising the thesis to rectify the issues. It was deemed that these corrections were more substantial than minor corrections but that a recommendation that the candidate should be awarded the degree was to be made subject to satisfactory completion of corrections outlined below. These corrections need to be approved by both the supervisor and the examiners before final submission can occur. It also became apparent during the examination that the work of chapter 6 was joint work with another PhD candidate at Imperial. A clear statement should be made in the declaration at the start of the thesis and in the chapter itself, stating which elements of the work are the candidates.
+The candidate defended his work well and demonstrated a good understanding of his own and related work. The thesis had raised a number of issues with regards the approaches taken. Much of the discussion in the viva was based around clarity of exposition and both examiners agreed that further work was required in revising the thesis to rectify the issues. It was deemed that these corrections were more substantial than minor corrections but that a recommendation that the candidate should be awarded the degree was to be made subject to satisfactory completion of corrections outlined below. These corrections need to be approved by both the supervisor and the examiners before final submission can occur. 
 
-There are numerous grammatical errors in the thesis, these have been marked in both examiners copies of the thesis and will be returned to the candidate for correction. Careful proof reading of any new material must be made before final submission.
+V It also became apparent during the examination that the work of chapter 6 was joint work with another PhD candidate at Imperial. A clear statement should be made in the declaration at the start of the thesis and in the chapter itself, stating which elements of the work are the candidates.
 
-The thesis consists of 5 technical chapters (2-6). Chapter 2 is fine but for 3,4,5 and 6. The overview of the approach in each chapter needs to be carefully revised. In chapter 2 the approach is described by a graphical model fig 3.2, in Chapters 4, 5 and 6, figures 4.2, 5.4 and 6.2 respectively provide an overview of the approach of the chapter. In each case, considerable effort needs to be placed on explaining these figures and/or breaking them down to give the reader a clear overview of the approach. In doing so, reference should be made to the relevant subsections of the chapter that describe the associated formalisation of that step. 
+V There are numerous grammatical errors in the thesis, these have been marked in both examiners copies of the thesis and will be returned to the candidate for correction. Careful proof reading of any new material must be made before final submission.
 
-On a more general point, figures and tables are, in general, poorly described. For every single figure, table or graph, the candidate must ensure that 
+- The thesis consists of 5 technical chapters (2-6). Chapter 2 is fine but for 3,4,5 and 6. The overview of the approach in each chapter needs to be carefully revised. In chapter 2 the approach is described by a graphical model fig 3.2, in Chapters 4, 5 and 6, figures 4.2, 5.4 and 6.2 respectively provide an overview of the approach of the chapter. In each case, considerable effort needs to be placed on explaining these figures and/or breaking them down to give the reader a clear overview of the approach. In doing so, reference should be made to the relevant subsections of the chapter that describe the associated formalisation of that step. 
+
+- On a more general point, figures and tables are, in general, poorly described. For every single figure, table or graph, the candidate must ensure that 
 	1) the figure is labelled with appropriate information e.g. axis etc, 
 	2) that the figure caption clear states the purpose of the figure and 
 	3) that a clear description of the figure is provided in the text body. 
-In the case of results, the text should point out to the reader what they are looking at, what points they should note and what conclusions can be drawn from it. Where there are clear limitations, this should be added and used to justify decisions made.
 
-As the work is of two distinct parts, one option would be to move chapters 2 and 3 to appendices and refocus the thesis on the human centric work of chapters 4, 5 and 6. This is not a requirement, but something the candidate might like to consider in discussion with the supervisor. 
+- In the case of results, the text should point out to the reader what they are looking at, what points they should note and what conclusions can be drawn from it. Where there are clear limitations, this should be added and used to justify decisions made.
+
+X As the work is of two distinct parts, one option would be to move chapters 2 and 3 to appendices and refocus the thesis on the human centric work of chapters 4, 5 and 6. This is not a requirement, but something the candidate might like to consider in discussion with the supervisor. 
 
 Minor points:
 	
-- Several references are made to “an Abstract” appearing in conferences or journals. Do you mean full publications rather than abstracts?
+V Several references are made to “an Abstract” appearing in conferences or journals. Do you mean full publications rather than abstracts?
 - Expanding the chapter description on pg 7 and 8 might help in terms of clarity of exposition. But this should be in addition to the chapters to technical chapters stated above.
-- In chapter 2 there is discussion of 2D and 3D interest point descriptors. The paper “Hollywood 3D: Recognizing Actions in 3D Natural Scenes” by Hadfield CVPR2013 gives 3D extensions for most popular 2D detectors and descriptors. You might like to take a look.
-- Please check the figures index’s on pg 43 (fig 3.1), are these are correct? You state that 3.1b shows unorganised training instances with unknown pose ?
-- Why are the figures in Fig 3.3 duplicated ?
-- Table 3.1, say what 10,5 and 6,5 mean.
-- Fig 3.6 provides confusion matrices for a variety of approaches. You need to briefly introduce these approaches. 
-- Pg 66 and elsewhere you use the term “look ahead” is there not a better term you could use ?
-- Fig 4.3 you state “Fig 4.3 illustrates how interest points are detected…..” It might illustrate it but doesn’t clearly communicate how. Needs describing.
+V In chapter 2 there is discussion of 2D and 3D interest point descriptors. The paper “Hollywood 3D: Recognizing Actions in 3D Natural Scenes” by Hadfield CVPR2013 gives 3D extensions for most popular 2D detectors and descriptors. You might like to take a look.
+V Please check the figures index’s on pg 43 (fig 3.1), are these are correct? You state that 3.1b shows unorganised training instances with unknown pose ?
+V Why are the figures in Fig 3.3 duplicated ?
+V Table 3.1, say what 10,5 and 6,5 mean.
+V Fig 3.6 provides confusion matrices for a variety of approaches. You need to briefly introduce these approaches. 
+V Pg 66 and elsewhere you use the term “look ahead” is there not a better term you could use ?
+V Fig 4.3 you state “Fig 4.3 illustrates how interest points are detected…..” It might illustrate it but doesn’t clearly communicate how. Needs describing.
 - HSRM, discussion needs improvement but it would be useful to describe SRM first.
-- Table 4.1 what does the * refer to on relative speed ?
+V Table 4.1 what does the * refer to on relative speed ?
 - Fig 4.5 is very confusing. See clarity of HSRM above.
 - Pg 80 what is alpha? Again, the whole process of vocabulary, HRSM and k-means tree is very unclear
 - Chapter 4/5, you need to discuss the change in action recognition scheme from chapter 4-5. Perhaps by discussing the limitations at the end of chapter 4.
-- Pg 116 you state generative methods requires no training. This is incorrect. By definition a HMM is a generate model yet it requires training.
-- Pg 123, define reservoir sampling
-- Pg 125 needs more discussion about how the weights change the learning process as we move down the tree.
+V Pg 116 you state generative methods requires no training. This is incorrect. By definition a HMM is a generate model yet it requires training.
+V Pg 123, define reservoir sampling
+V Pg 125 needs more discussion about how the weights change the learning process as we move down the tree.
 - For chapter 5 and 6 you need to make at least the test sequences available so others can compare against your work.
 - Future work is too narrow and needs to be expanded.

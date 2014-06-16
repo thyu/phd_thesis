@@ -11,7 +11,7 @@ Recognising human activities from videos is regarded as a challenging problem in
 \paragraph{Run-time performance in realistic recognition systems} Run-time efficiency is of vital importance for real-world object recognition systems. While real-time action classification is required by many time-critical applications, existing algorithms seldom take computational complexity into full consideration. Current state-of-the-art solutions focus on the final classification accuracy in testing. They report promising results on standard human action datasets \cite{Kim2007, Lin2009, Liu2008, Willems2009}. However, such solutions are not as efficient when they are applied to realistic applications, because they either employ sophisticated algorithms or complex features to maximise recognition accuracy at the expense of increased computation time. To summarise, there exists a trade-off between classification accuracy and run-time performance, designing a suitable algorithm for video-based human action analysis is a challenging engineering problem.  
 
 % Done 
-\paragraph{Responsive action recognition}  For many computer vision applications, such as human-computer interface and video surveillance, it is necessary to classify an action within a short response time, \ie look-ahead time, in order to perform a prompt feedback to the observed actions.  The recognition algorithms of such tasks are often repurposed from existing classification algorithms for 2D images, which have been adopted and proved effective in early video-based action recognition research \cite{Schuldt2004, Dollar2005}.  Traditional action recognition systems consider the testing video as a single 3D object. Typically, a class label is assigned after sufficient features are extracted from the entire testing video. It is necessary to minimise the look-ahead time required for time-critical tasks, still there are few attempts to improve the design of existing action recognition systems. Schindler and van Gool \cite{Schindler2008} have shown that, by using appropriate spatiotemporal features, human actions could be recognised from very short video sequences (1--7 frames) with a promising accuracy comparable to state-of-the-art approaches.
+\paragraph{Responsive action recognition}  For many computer vision applications, such as human-computer interface and video surveillance, it is necessary to classify an action within a short response time (classification latency), in order to perform a prompt feedback to the observed actions.  The recognition algorithms of such tasks are often repurposed from existing classification algorithms for 2D images, which have been adopted and proved effective in early video-based action recognition research \cite{Schuldt2004, Dollar2005}.  Traditional action recognition systems consider the testing video as a single 3D object. Typically, a class label is assigned after sufficient features are extracted from the entire testing video. It is necessary to minimise the classification latency time required for time-critical tasks, still there are few attempts to improve the design of existing action recognition systems. Schindler and van Gool \cite{Schindler2008} have shown that, by using appropriate spatiotemporal features, human actions could be recognised from very short video sequences (1--7 frames) with a promising accuracy comparable to state-of-the-art approaches.
 
 % done 
 \paragraph{Spatial and temporal structures}
@@ -44,7 +44,7 @@ In addition to faster training and testing time, Moosmann \etal \cite{Moosmann20
 \paragraph{VFAST spatiotemporal interest point detector} The 3D version of the FAST interest point detector, namely Video-FAST (VFAST), is used to detect spatiotemporal interest points in training and testing videos. Performance evaluation for 3D interest points was discussed in chapter \ref{chap/eval}. VFAST interest points also produce a densed feature set than traditional approaches as shown in chapter \ref{chap/eval}. It is suggested that a densely sampled visual codebook improve recognition performance, according to Nowak \etal \cite{Nowak2006}.
 
 VFAST features are faster than the traditional 3D interest points by Laptev \cite{Laptev2005} and Dollar \etal \cite{Dollar2005}, it is therefore suitable for real-time application. 
-Given a denser set of interest points, action labels can be classified from a shorter sequence without sacrificing too much recognition accuracy, minimising the number of look-ahead frames required. 
+Given a denser set of interest points, action labels can be classified from a shorter sequence without sacrificing too much recognition accuracy, hence the classification response time can be minimised. 
 In addition, scale-space analysis can be applied on VFAST in order to detect interest points across different scales.
 
 % Lastly, several techniques are employed to improve the recognition speed and accuracy. A novel spatiotemporal interest point detector, called VFAST, is designed based on the FAST 2D corners{Rosten2006}. The recognition accuracy is improved by adaptively combining HSRM and the bag of semantic texton (BOST) method \cite{Shotton2008}.
@@ -136,7 +136,15 @@ Depending on the target application, simple spatiotemporal video patches can be 
 \section{VFAST interest point detector}
 \label{sec/act/fastest}
 % DONE 
-Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of the VFAST interest point detector have been explained in section \ref{sec/eval/vfast}. Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 
+Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of the VFAST interest point detector have been explained in section \ref{sec/eval/vfast}. 
+% Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 
+
+Spatiotemporal textons, \ie retangular cuboids of voxels, are used as the input features. 
+Figure \ref{fig/act/fastest} illustrates how the cuboids are extracted from the input videos using VFAST. 
+Salient motions are detected by the VFAST detector using three axis-aligned circles of radius 3 pixels, \ie $r_{XY}, r_{YT}, r_{XT} = 3$, according to algorithm \ref{algo/eval/vfast}. 
+Video cuboids are extracted from the VFAST interest points detected.
+In this work, a video cuboid has dimensions of $5 \times 5$ voxels in space and $9$ voxels in time.
+% Figure \ref{fig/act/fastest} illustrates how the cuboids $\vpatch$ are extracted using the VFAST interest point detector.  
 
 % already discussed in ``eval'' chapter
 % For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. 
@@ -174,7 +182,7 @@ The steps of computing VFAST interest points are described in algorithm \ref{alg
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/act/fig2_new.pdf}
-	\caption{\textbf{Detecting VFAST spatiotemporal interest points.}}
+	\caption{\textbf{Feature detection and extraction. } Spatiotemporal features are detected from the input video by the VFAST detector. Video cuboids are extracted around these interest points for training and testing.}
 	\label{fig/act/fastest}
 \end{figure}
 
@@ -263,13 +271,13 @@ Figure \ref{fig/act/stf} demonstrates how input spatiotemporal patches are clust
 
 \begin{table}
 	\begin{center}
-		\begin{tabular}{|c|c|c|c|}
+		\begin{tabular}{|c|c|c|c|c|}
 			\hline
-			\textbf{ Algorithm} & \textbf{ Complexity} & \textbf{ Relative Speed}* & \textbf{ Hierarchical} \\
+			\textbf{ Algorithm} & \textbf{ Complexity} & \parbox{3cm}{\centering\textbf{Relative Running Time}} & \textbf{Speedup} & \textbf{ Hierarchical} \\
 			\hline
-			k-means & $O(K)$ & $1$ & no \\
-			Hierarchical k-means & $O(b\log_{b}(K))$ & $43.51$ & yes \\
-			{STF} & \textbf{\color{blue}{ $ O(\log_{2}(K)) $ }} & \textbf{\color{blue}{$559.86$}} & \textbf{\color{blue}{yes}}\\
+			k-means & $O(K)$ & $559.86$ & $1\mathrm{x}$ & no \\
+			Hierarchical k-means & $O(b\log_{b}(K))$ & $12.87$ & $43.50\mathrm{x}$ & yes \\
+			{STF} & \textbf{\color{blue}{ $ O(\log_{2}(K)) $ }} & \textbf{\color{blue}{$1$}} & \textbf{\color{blue}$559.86\mathrm{x}$} &  \textbf{\color{blue}{yes}}\\
 			\hline
 		\end{tabular}
 	\end{center}

@@ -14,6 +14,12 @@ As a result, this work aims to address the above problem by introducing a new ap
 % In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model, as well as registrations for the training instances. 
 In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model for object classification and pose estimation. Training instances are also registered automatically during the training process.
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1.0\linewidth]{./fig/reg/reg_intro.pdf}
+	\caption{\textbf{Sample images of the \textbf{bike} dataset.}}
+\end{figure}
+
 \begin{figure}[ht]
 \centering
 \begin{subfigure}[b]{0.28\linewidth} \centering 
@@ -45,7 +51,8 @@ In the proposed framework, training instances with various \emph{unknown poses} 
 \label{fig/reg/concept}
 \end{figure}
 
-The proposed SAP model is explained in figure \ref{fig/reg/concept}, where unorganised training instances with unknown pose in \ref{fig/reg/concept2} are used to learn a probabilistic part-based model in \ref{fig/reg/concept4}. The class label and pose of an object are inferred simultaneously by jointly discovering parts and aligning them to a canonical pose, as outlined in \ref{fig/reg/concept5}. 
+% The proposed SAP model is explained in figure \ref{fig/reg/concept}, where unorganised training instances with unknown pose in \ref{fig/reg/concept2} are used to learn a probabilistic part-based model in \ref{fig/reg/concept4}. The class label and pose of an object are inferred simultaneously by jointly discovering parts and aligning them to a canonical pose, as outlined in \ref{fig/reg/concept5}. 
+The proposed SAP model is explained in figure \ref{fig/reg/concept}. The training data contains instances with different unknown poses, such as the bike image in figure \ref{fig/reg/concept1}. In the proposed method, the SAP model is constructed by learning the appearance, pose and structure of the training instances simultaneously; figure \ref{fig/reg/concept3} visualises the locations and mean appearances of the parts from a SAP model describing a bike image. The training instances are registered automatically during the training process, as shown in the mean images in figures \ref{fig/reg/concept2} and \ref{fig/reg/concept4}. The class label and pose of a testing instance are inferred by jointly discovering parts and aligning them to a canonical pose, as illustrated in figure \ref{fig/reg/concept5}
 
 The technical contributions of the SAP model are twofold. 
 This work firstly introduces a weakly-supervised learning algorithm to include instance pose as a variable in a generative probabilistic model. Additionally, the proposed particle-enhanced EM algorithm is capable of solving the resulting, difficult inference problem in both training and testing.  
@@ -67,9 +74,14 @@ Local feature-based methods are widely used in object recognition tasks, thanks 
 
 On the contrary, part-based models were first articulated by Fischler and Elschlager \cite{Fischler1973} and Marr \cite{Marr1982} as a collection of movable templates or shape primitives, defined within a reference object frame. Notable part-based models include constellations \cite{Weber2000, Fergus2007} and pictorial structures (or deformable part models) \cite{Felzenszwalb2005}. Geometric structure (shape) of an object is either explained probabilistically by a model with fixed part positions \cite{Fergus2007}, or discriminatively by movable parts \cite{Yuille1989, Felzenszwalb2005}.
 
-Early implementations of part-based models were class-specific, where parts arrangements and connections are defined before training, \eg Yuille \etal \cite{Yuille1989} detected facial features using deformable templates. While some part models remain class-specific for deformable pose estimation, \eg human poses \cite{Yang2011, Eichner2012}, recent constellation models have become more general. For instance, Burl \etal \cite{Burl1998} trained a constellation model from hand-picked parts which were represented by Gaussian distributions. Weber \etal \cite{Weber2000} improved the former approach by using an interest point detector \cite{Kadir2001} to learn feature words and approximating the feature-part assignment marginal. Fergus \etal \cite{Fergus2007} introduced scale-invariance to the model and learned shape and appearance models jointly. Most recently, a constellation model was also applied to 3D shape recognition \cite{MuktaPrasad2011}.
+Early implementations of part-based models were class-specific, where parts arrangements and connections are defined before training, \eg Yuille \etal \cite{Yuille1989} detected facial features using deformable templates. While some part models remain class-specific for deformable pose estimation, \eg human poses \cite{Yang2011, Eichner2012}, recent constellation models have become more general. For instance, Burl \etal \cite{Burl1998} trained a constellation model from hand-picked parts which were represented by Gaussian distributions. Weber \etal \cite{Weber2000} improved the former approach by using an interest point detector \cite{Kadir2001} to learn feature words and approximating the feature-part assignment marginal. Fergus \etal \cite{Fergus2007} introduced scale-invariance to the model and learned shape and appearance models jointly. Most recently, a constellation model was also applied to 3D shape recognition \cite{Prasad2011}.
 
-Vote-based methods, \eg implicit shape models \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at the test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Barinova2010}.
+Vote-based methods, \eg Hough transforms \cite{Barinova2010, Woodford2013}, implicit shape models \cite{Leibe2008} and contour fragments \cite{Shotton2008a}, which differ from constellation models in that each feature vote consists of a fixed object pose and class. 
+
+In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at the test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008, Barinova2010} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Woodford2013}. 
+
+For instance, each codeword in an implicit shape model contains a vote vector that points to the reference point of an target object \cite{Leibe2008}. Target objects are detected by finding the local maxima in the Hough space. Barinova \etal \cite{Barinova2010} redeveloped traditional Hough transform within a probabilistic framework, which detect multiple objects without performing the non-maxima suppression step. Woordford \etal \cite{Woodford2013} proposed two variants of Hough transform. The implicity shape transform minimises the memory requirement by utlising the sparsity in the Hough space. The minimum-entropy Hough transform improves recognition and registration accuracy by explaining away the incorrect votes.
+
 
 %Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation than appearance-only approaches, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
 Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with large appearance variations, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.  
@@ -210,7 +222,7 @@ However, given that the number of possible assignments, $|\allassign|$, is expon
 \def\spfparticlem{\particle_{\anyinstance}  =  \anyparticle}
 \def\spfparticle{\particle  =  \anyparticle} 
 \subsection{Particle-based approximation}
-
+\label{sec/reg/particlebasedapprox}
 It is assumed that the vast majority of the mass in the distribution occurs around the optimal configuration of pose and feature assignment for each instance. The particles can be seen as samples of the joint space of $\assign$ and $\pose$, making this technique similar to the Monte Carlo Expectation Maximisation algorithm \cite{Levine2001, Wei1990}, which uses samples to approximate integrations over latent variables. However, the proposed model aims to maximise the likelihood of particles, by optimising $\assign$ and $\pose$, rather than sampling them randomly from the distribution. 
 
 The marginalisation in equation \ref{eqn/reg/learningobjective} can be approximated by sampling points in the solution space, such that 
@@ -413,7 +425,7 @@ The performance evaluation was divided into two parts. Experiments were performe
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=1\linewidth]{./fig/reg/bike_long.png}
+	\includegraphics[width=0.8\linewidth]{./fig/reg/bike.png}
 	\caption{\textbf{Sample images of the \textbf{bike} dataset.}}
 	\label{fig/reg/bike}
 \end{figure}
@@ -491,7 +503,11 @@ It has been found that more sophisticated features, \eg 3D shape context \cite{F
 
 The \textbf{bike} dataset was divided into two equal subsets, training was performed on one half while the remaining half was used in testing. The two subsets were swapped afterwards and final experimental results were combined.
 
-Instances of the \textbf{bike} dataset were transformed randomly by both direct similarity and affine poses. For each type of pose, three levels of transformation were applied. Experimental results were compared with that of Fergus \etal \cite{Fergus2007}.   
+Instances of the \textbf{bike} dataset were initialised randomly by both direct similarity and affine poses. 
+% For each type of pose, three levels of transformation were applied. 
+%Three different pose variation levels (small, medium, large) were applied to each instances.
+These poses were drawn randomly from the three different variation levels (small, medium, large) described in table \ref{tab/reg/posevariation}.
+Experimental results of the proposed SAP model were compared with that of Fergus \etal \cite{Fergus2007}.   
 Table \ref{tab/reg/regresult2d} summarises the experimental results. 
 Performances figures are given by the ROC equal error rates for binary classification testing against the background dataset, such that a 50\% accuracy implies a random classifier. 
 % Direct similarity and affine random transformation were applied to the training and testing instances. For each type of transformation, three levels of transformation were applied and compared with the results of Fergus \etal \cite{Fergus2007}. 
@@ -504,27 +520,68 @@ Performances figures are given by the ROC equal error rates for binary classific
 
 \begin{table}
 	\centering
-	\begin{tabular}{|c|cc|cc|c|}
-		\hline 
-		\textbf{Method} & \multicolumn{2}{|c|}{SAP (similarity)} & \multicolumn{2}{|c|}{SAP (affine)} & Fergus \etal \cite{Fergus2007} \\  
-		\hline 
-		\hline 
-		$\numpart, \numparticle$ & 10, 5 & 6, 5 & 10, 5 & 6, 5 & 6, -- \\		
-		\hline 
-		\textbf{No pose} 		& \textbf{\color{blue}{95.500}} & 90.500 & 95.125 & 91.250 & 95.125 \\ 
-		\hline 
-		\textbf{Small pose} 	& \textbf{\color{blue}{94.625}} & 88.250 & 92.125 & 88.000 & 87.000 \\ 
-		\textbf{Medium pose} 	& \textbf{\color{blue}{93.250}} & 87.250 & 83.125 & 78.250 & 60.000 \\ 
-		\textbf{Large pose} 	& \textbf{\color{blue}{92.250}} & 85.750 & 75.750 & 70.500 & 52.000 \\ 
+	\begin{tabular}{|c|c|c|c|}
 		\hline
-		\textbf{Small pose} 	& \textbf{\color{blue}{94.625}} & 88.250 & 92.125 & 88.000 & 87.000 \\ 
-		\textbf{Medium pose} 	& \textbf{\color{blue}{93.250}} & 87.250 & 83.125 & 78.250 & 60.000 \\ 
-		\textbf{Large pose} 	& \textbf{\color{blue}{92.250}} & 85.750 & 75.750 & 70.500 & 52.000 \\ 
+		\multirow{2}{*}{\textbf{Transformation}} & \multicolumn{3}{c|}{\textbf{Pose variation level}} \\
+		\cline{2-4}
+		& \textbf{Small} & \textbf{Medium} & \textbf{Large} \\
+		\hline
+		\textbf{Rotation (min., max.)} & $(-\pi/6, \pi/6)$ & $(-\pi/3, \pi/3)$ & $(-\pi/2, \pi/2)$ \\
 		\hline 
+		\textbf{Scaling (min., max.)} & $(0.75, 1.33)$ & $(0.60, 1.66)$ & $(0.50, 2.00)$ \\
+		\hline 
+		\textbf{Shearing (affine only, min., max.)} & (0, 0.1) & (0, 0.1) & (0, 0.1) \\
+		\hline
 	\end{tabular}
-	\caption{\textbf{2D classification results.} ROC equal error rates for binary classification of the \textbf{bike} dataset.}
+	\caption{\textbf{Different levels of transformation applied to the bike dataset.} In the experiments, each training or testing instance is initialised by a random pose, generated from its corresponding variation level. The shearing transformation is applicable to affine poses only.}
+	\label{tab/reg/posevariation}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\multirow{2}{*}{\textbf{Method}} & \multicolumn{4}{c|}{\textbf{Pose variations}} \\
+		\cline{2-5}
+		& \textbf{None} & \textbf{Small} & \textbf{Medium} & \textbf{Large} \\
+		\hline
+		SAP (Smilarity, K = 10, Q = 5) & \textbf{\color{blue}95.500} & \textbf{\color{blue}94.625} & \textbf{\color{blue}93.250} & \textbf{\color{blue}92.250} \\
+		\hline
+		SAP (Smilarity, K = 6, Q = 5) & 90.500 & 88.250 & 87.250 & 85.750 \\ 
+		\hline
+		SAP (Affine, K = 10, Q = 5) & 95.125 & 92.125 & 83.125 & 75.750 \\ 
+		SAP (Affine, K = 6, Q = 5) & 91.250 & 88.000 & 78.250 & 70.500 \\ 
+		\hline
+		Furgus \etal \cite{Fergus2007} (K = 6) & 95.125 & 87.000 & 60.000 & 52.000 \\
+		\hline
+	\end{tabular}
+	\caption{\textbf{2D classification results.} ROC equal error rates for binary classification of the \textbf{bike} dataset. $\numpart$ and $\numparticle$ are tunable model parameters, which define the number of parts and the number of pose particles respectively, as described in section \ref{sec/reg/particlebasedapprox}.}
 	\label{tab/reg/regresult2d}
 \end{table}
+
+% \begin{table}
+%	\centering
+%	\begin{tabular}{|p{4.5cm}|cc|cc|c|}
+%		\hline 
+%		\textbf{Method} & \multicolumn{2}{|c|}{SAP (similarity)} & \multicolumn{2}{|c|}{SAP (affine)} & Fergus \etal \cite{Fergus2007} \\  
+%		\hline 
+%		\hline 
+%		$\numpart, \numparticle$ & 10, 5 & 6, 5 & 10, 5 & 6, 5 & 6, -- \\		
+%		\hline 
+%		\textbf{No pose} 		& \textbf{\color{blue}{95.500}} & 90.500 & 95.125 & 91.250 & 95.125 \\ 
+%		\hline 
+%		\textbf{Small pose variations} 	& \textbf{\color{blue}{94.625}} & 88.250 & 92.125 & 88.000 & 87.000 \\ 
+%		\textbf{Medium pose variations} 	& \textbf{\color{blue}{93.250}} & 87.250 & 83.125 & 78.250 & 60.000 \\ 
+%		\textbf{Large pose variations} 	& \textbf{\color{blue}{92.250}} & 85.750 & 75.750 & 70.500 & 52.000 \\ 
+%		\hline
+%		\textbf{Small pose variations} 	& \textbf{\color{blue}{94.625}} & 88.250 & 92.125 & 88.000 & 87.000 \\ 
+%		\textbf{Medium pose variations} 	& \textbf{\color{blue}{93.250}} & 87.250 & 83.125 & 78.250 & 60.000 \\ 
+%		\textbf{Large pose variations} 	& \textbf{\color{blue}{92.250}} & 85.750 & 75.750 & 70.500 & 52.000 \\ 
+%		\hline 
+%	\end{tabular}
+%	\caption{\textbf{2D classification results.} ROC equal error rates for binary classification of the \textbf{bike} dataset. $\numpart$ and $\numparticle$ are tunable model parameters, which define the number of parts and the number of pose particles respectively, as described in section \ref{sec/reg/particlebasedapprox}.}
+%	\label{tab/reg/regresult2d}
+% \end{table}
 
 %Table \ref{tab/reg/regresult2d} shows the recognition results using the proposed model and the work of Fergus \etal~\cite{Fergus2007}. 
 According to the experimental results, both approaches perform similarly when there is no or small pose variations. However, the performance of Fergus \etal \cite{Fergus2007}, which does not model pose as a variable, drops rapidly as the pose variation level increases. Under large pose variation, a traditional constellation model \cite{Fergus2007} ceases working, leading to a random classification. 
@@ -570,27 +627,27 @@ Following Pham \etal \cite{Pham2011}, a leave-one-out cross validation scheme wa
 
 \begin{figure}[ht]
 	\centering
-	\begin{subfigure}[t]{0.32\linewidth}
+	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_sap}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_sap.pdf}
 		\subcaption{SAP}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.32\linewidth}
+	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_meanshift}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_meanshift.pdf}
 		\subcaption{Meanshift \cite{Pham2011}}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.32\linewidth}
+	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_intrinsic}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_intrinsic.pdf}
 		\subcaption{Intrinsic Hough \cite{Woodford2013}}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.32\linewidth}
+	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_minent}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_minent.pdf}
 		\subcaption{Minimum entropy Hough \cite{Woodford2013}}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.32\linewidth}
+	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_blk}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_blk.pdf}
 		\subcaption{BLK \cite{Barinova2010}}
@@ -651,6 +708,25 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 	\label{fig/reg/reg_srtmatrices}
 \end{figure}
 
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[b]{0.33\linewidth}
+		\includegraphics[width=\linewidth]{fig/reg/cluster1.png}
+		\subcaption{Scans 1--8}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\includegraphics[width=\linewidth]{fig/reg/cluster2.png}
+		\subcaption{Scans 9--14}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.30\linewidth}
+		\includegraphics[width=\linewidth]{fig/reg/cluster3.png}
+		\subcaption{Scans 15--20}
+	\end{subfigure}
+	\caption{\textbf{Pose clusters in from data acquisition.} Raw data captured in three distinct poses for the \emph{pipe} class lead to the three pose clusters.}
+	\label{fig/reg/3dclusters}
+\end{figure}
+
+
 \begin{figure}[ht] 
 \centering
 \includegraphics[width=0.19\linewidth]{fig/reg/shape01.png} \hspace{-1.5mm}
@@ -692,24 +768,6 @@ Figure \ref{fig/reg/3dclusters} visualises the groups of distinct poses of the p
 
 %%%%%%%%%%%%%%%%% TESTING REGISTRATION
 For evaluating the performance of 3D object recognition during testing, the $\tilde{\pose}$ of each test instance was compared to that of the training instance which gave the lowest Euclidean distance of its part-wise likelihood with that of the test instance. The per-class registration results are given in table \ref{tab/reg/regresult3d}, where they are compared with state-of-the-art results of a supervised, vote-based approach \cite{Woodford2013}, \ie ground truth pose data were given in training. Despite the SAP model having the handicap of not using ground truth pose, it obtains the highest score on half the classes.
-
-\begin{figure}[ht]
-	\centering
-	\begin{subfigure}[b]{0.33\linewidth}
-		\includegraphics[width=\linewidth]{fig/reg/cluster1.png}
-		\subcaption{Scans 1--8}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.32\linewidth}
-		\includegraphics[width=\linewidth]{fig/reg/cluster2.png}
-		\subcaption{Scans 9--14}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.30\linewidth}
-		\includegraphics[width=\linewidth]{fig/reg/cluster3.png}
-		\subcaption{Scans 15--20}
-	\end{subfigure}
-	\caption{\textbf{Pose clusters in from data acquisition.} Raw data captured in three distinct poses for the \emph{pipe} class lead to the three pose clusters.}
-	\label{fig/reg/3dclusters}
-\end{figure}
 
 \iffalse 
 \begin{table}[t]
