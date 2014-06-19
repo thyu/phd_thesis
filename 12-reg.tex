@@ -9,50 +9,57 @@ Traditional object recognition tasks, classification in particular, are usually 
 Making use of the spatial relationships among local features, a part-based model emerges as an effective solution by learning jointly the local appearance and geometric structure of an object class \cite{Weber2000, Felzenszwalb2005, Fergus2007}. 
 Part-based models have overcome the limitations of traditional structure-less approaches, and reported promising results for image-based object recognition. However, existing part-based models require a priori pose information for learning the spatial structure of an object classes. Specifically, training instances have to be registered to a common reference frame. Such registration often involves manual processing when the poses of training and testing data are unknown. This requirement precludes the use of internet-scale training datasets, \eg ImageNet \cite{Deng2009} and Tiny Image Dataset \cite{Torralba2008}. Processing these datasets is not trivial because instances are mostly unprocessed with varying poses and other qualities, manual rectification is often required before using them in training. 
 
-On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus this problem is still unsolved in 2D part-based models, let alone their 3D counterparts. 
-As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. 
-% In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model, as well as registrations for the training instances. 
-In the proposed framework, training instances with various \emph{unknown poses} are used to learn a constellation model for object classification and pose estimation. Training instances are also registered automatically during the training process.
-
-\begin{figure}[t]
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=1.0\linewidth]{./fig/reg/reg_intro.pdf}
-	\caption{\textbf{Sample images of the \textbf{bike} dataset.}}
+	\caption{\textbf{Overview of the proposed SAP model.} In training, the SAP model is learned from training instances of the same class, using a particle-based EM algorithm. These training instances are registered to a common reference frame simultaneously. The output SAP model, which is represented by the appearance $\partapp$ and shape $\partshape$ of the object class, is used for registration and classification in testing.}
+	\label{fig/reg/overview}
 \end{figure}
+
+
+On the other hand, automatic registration of training data dramatically increases the dimensionality of the parameter space, thus this problem is still unsolved in 2D part-based models, let alone their 3D counterparts. 
+
+As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. In a constellation model, the overall shape of an object class is represented by the spatial distributions of the parts with respect to the reference frame.
+
+The training and testing processes of the proposed framework are illustrated in figure \ref{fig/reg/overview}. 
+Training instances with various unknown poses are used to learn a constellation model for object classification and pose estimation. In the proposed algorithm, a training or testing instance is represented by a bag of pose-invariant features. The SAP model, which describes the appearance and shape of the object class, is learned using a particle-based expectation maximisation (EM) algorithm. The poses of the training instances are simultaneously learned during training. The pose of a testing instance is inferred using the particle-based EM algorithm given the SAP model obtained from training. Object classification is performed simultaneously by evaluating the class likelihood of the test instance in the SAP model.
 
 \begin{figure}[ht]
 \centering
-\begin{subfigure}[b]{0.28\linewidth} \centering 
-	\includegraphics[width=\linewidth]{fig/reg/onebike_before2.png}
-	\subcaption{Input instance}
+\begin{subfigure}[b]{0.90\linewidth} \centering 
+	\includegraphics[height=0.20\linewidth]{fig/reg/onebike_before2.png}
+	\includegraphics[height=0.20\linewidth]{fig/reg/onebike_before3.png}
+	\includegraphics[height=0.20\linewidth]{fig/reg/onebike_before4.png}
+	\subcaption{Sample training instances with different poses}
 	\label{fig/reg/concept1}
-\end{subfigure}
-\begin{subfigure}[b]{0.28\linewidth} \centering 
-	\includegraphics[width=\linewidth]{fig/reg/avgbike_before.png}
-	\subcaption{Mean instance}
-	\label{fig/reg/concept2}
-\end{subfigure} \\ 
-\begin{subfigure}[b]{0.28\linewidth} \centering
+\end{subfigure} \\
+\begin{subfigure}[b]{0.35\linewidth} \centering
 	\includegraphics[width=\linewidth]{fig/reg/pictorial2.pdf}
 	\subcaption{Constellation model}
 	\label{fig/reg/concept4}
-\end{subfigure}
-\begin{subfigure}[b]{0.28\linewidth} \centering 
-	\includegraphics[width=\linewidth]{fig/reg/avgbike_after.png}
-	\subcaption{Registered mean}
-	\label{fig/reg/concept3}
-\end{subfigure}
-\begin{subfigure}[b]{0.28\linewidth} \centering 
+\end{subfigure} \hspace{5mm}
+\begin{subfigure}[b]{0.35\linewidth} \centering 
 	\includegraphics[width=\linewidth]{fig/reg/onebike_after3.pdf}
-	\subcaption{Detected parts}
+	\subcaption{Detected parts of a training instance}
 	\label{fig/reg/concept5}
-\end{subfigure}
-\caption{\textbf{Concept of the SAP model.} (a) A training instance, (b) mean of input instances, (c) the learned constellation model, (d) mean of registered input instances, weighted by their likelihoods, and (e) a registered instance with detected parts annotated.}
+\end{subfigure} \\
+\begin{subfigure}[b]{0.35\linewidth} \centering 
+	\includegraphics[width=\linewidth]{fig/reg/avgbike_before.png}
+	\subcaption{Mean image of training instances (Before training)}
+	\label{fig/reg/concept2}
+\end{subfigure} \hspace{5mm}
+\begin{subfigure}[b]{0.35\linewidth} \centering 
+	\includegraphics[width=\linewidth]{fig/reg/avgbike_after.png}
+	\subcaption{Mean image of training instances (After training)}
+	\label{fig/reg/concept3}
+\end{subfigure} 
+\caption{\textbf{Automatic pose estimation of a 2D SAP model.} (a) Training instances from the \textbf{bike} dataset, with unknown poses, (b) the constellation model learned from the training instances, (c) a registered training instance with detected parts annotated, (d) mean image of input instances before training, and (e) mean image of input instances after automatic pose estimation.}
 \label{fig/reg/concept}
 \end{figure}
 
 % The proposed SAP model is explained in figure \ref{fig/reg/concept}, where unorganised training instances with unknown pose in \ref{fig/reg/concept2} are used to learn a probabilistic part-based model in \ref{fig/reg/concept4}. The class label and pose of an object are inferred simultaneously by jointly discovering parts and aligning them to a canonical pose, as outlined in \ref{fig/reg/concept5}. 
-The proposed SAP model is explained in figure \ref{fig/reg/concept}. The training data contains instances with different unknown poses, such as the bike image in figure \ref{fig/reg/concept1}. In the proposed method, the SAP model is constructed by learning the appearance, pose and structure of the training instances simultaneously; figure \ref{fig/reg/concept3} visualises the locations and mean appearances of the parts from a SAP model describing a bike image. The training instances are registered automatically during the training process, as shown in the mean images in figures \ref{fig/reg/concept2} and \ref{fig/reg/concept4}. The class label and pose of a testing instance are inferred by jointly discovering parts and aligning them to a canonical pose, as illustrated in figure \ref{fig/reg/concept5}
+A two-dimensional example of the SAP model is demonstrated in figure \ref{fig/reg/concept}. The training dataset contains instances with various unknown poses, such as the bike image in figure \ref{fig/reg/concept1}. The SAP model learns the appearance, pose and structure of the training instances simultaneously. 
+Figure \ref{fig/reg/concept3} visualises the locations and mean appearances of the parts from a SAP model describing a bike image, \eg wheels and seat. The instances are registered automatically during the training process, as shown in the mean images in figures \ref{fig/reg/concept2} and \ref{fig/reg/concept4}. The class label and pose of a testing instance are inferred by jointly discovering parts and aligning them to a canonical pose, as illustrated in figure \ref{fig/reg/concept5}
 
 The technical contributions of the SAP model are twofold. 
 This work firstly introduces a weakly-supervised learning algorithm to include instance pose as a variable in a generative probabilistic model. Additionally, the proposed particle-enhanced EM algorithm is capable of solving the resulting, difficult inference problem in both training and testing.  
@@ -105,9 +112,10 @@ Registration can be estimated from matching local features in a pre-processing s
 \section{Model}
 \label{sec/reg/framework}
 
-The proposed SAP model is explained in this section. 
-Firstly, given a training dataset of a particular class label, a constellation model is learned for that object class without any pose information. The pose of each training instance is initially unknown, \ie an object of that class exists somewhere in the data, which is recovered during the learning process.
-Secondly, given a testing instance of an unknown class, the proposed SAP model is able to estimate the class label and pose of the object in the data automatically. 
+This section describes the proposed SAP model, and the distributions of its random variables.
+Given a training dataset of a particular class label, a constellation model is learned for that object class without any pose information. The pose of each training instance is initially unknown, \ie an object of that class exists somewhere in the data, which is recovered during the learning process. 
+As a result, the shape and appearance of the object class is learned in the constellation model, which is used for registration and classification in the testing process. 
+Given a testing instance of an unknown class, the proposed SAP model is able to estimate the class label and pose of the object in the data automatically.
 
 \begin{figure}[ht]
 \centering
@@ -126,13 +134,41 @@ Secondly, given a testing instance of an unknown class, the proposed SAP model i
 	\subcaption{SAP with particle approximation}
 	\label{fig/reg/graphicalModelParticle}
 \end{subfigure}
-\caption{\textbf{Graphical models.} (a) Traditional constellation model, (b) SAP model without particle (c) SAP model with particles to improve inference tractability; latent variables are represented by grey nodes.}
+\caption{\textbf{Graphical models.} (a) Traditional constellation model, \eg \cite{Weber2000}, with no object pose defined; (b) The proposed SAP model without pose particle; (c) SAP model with particles to improve inference tractability, as described in section \ref{sec/reg/particlebasedapprox}; Latent variables are represented by grey nodes.}
 \label{fig/reg/graphicalmodel}
 \end{figure} 
 
+\begin{table}[!th]
+	\centering	
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline	
+		\textbf{Variable} & \textbf{Description} & \textbf{Observed} & \textbf{Latent}& \textbf{Remark}\\ 
+		\hline \hline
+		$\partapp$ & Part appearance & & & fixed in testing \\
+		$\partshape$ & Part shape & & & fixed in testing \\
+		$\featapp$ & Observed object shape & \checkmark & & input data \\
+		$\featshape$ & Observed object appearance & \checkmark & & input data\\
+		$\assign$ & Feature to part assignment & \checkmark & & indicator matrix \\ 
+		\hline	
+		$\pose$ & Instance pose & & & linear transform \\ 
+		\hline	
+		$\seen$ & Visibility of object parts & & \checkmark & indicator vector \\
+		$\particle$ & Particle & & \checkmark & indicator vector \\ 
+		\hline
+		$\partprior$ & Part visibility prior & & & \\
+		$\particleprior$ & Particle prior & & & \\
+		\hline 
+	\end{tabular}
+	\caption{\textbf{The random variables of the proposed SAP model.} The dependencies between the variables are illustrated in the graphical model in figure \ref{fig/reg/graphicalmodel}}
+	\label{tab/reg/graphicalmodel}
+\end{table}
+
 \subsection{Variables}
 
-A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. Appearance and position of a part are described by two Gaussians with diagonal covariances. Part appearance is represented by variable $\partapp=\{\muapp,\sigmaapp\}$, where $\muapp$ and $\sigmaapp$ are the mean and covariance of the corresponding Gaussian. Similarly, variable $\partshape=\{\mushape,\sigmashape\}$ denotes the location of a part. 
+% A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. 
+The proposed SAP model is explained as a probabilistic graphical model in figure \ref{fig/reg/graphicalmodel}. 
+The random variables defined in the model are summarised in table \ref{tab/reg/graphicalmodel}.
+Appearance and position of a part are described by two Gaussians with diagonal covariances. Part appearance is represented by variable $\partapp=\{\muapp,\sigmaapp\}$, where $\muapp$ and $\sigmaapp$ are the mean and covariance of the corresponding Gaussian. Similarly, variable $\partshape=\{\mushape,\sigmashape\}$ denotes the location of a part. 
 
 In the SAP model, each part is either visible or occluded in a given data instance.   
 For simplicity, the presence of each part is independent of other parts, in contrast to \cite{Fergus2007, Weber2000}, whose model consider correlations in part occlusion. 
@@ -157,7 +193,6 @@ The appearance vectors $\partapp$ and $\featapp$ are parameterised according to 
 % Following Fergus \etal \cite{Fergus2007}, we extract $\numfeat$ features\footnote{The number of extracted features, $\numfeat$, varies across instances; it is constant here for simplicity of exposition.} with pose $\featshape$ and appearance $\featapp$ from each data instance; 
 %the model assumes that each feature is generated either by a part from the object, or from an unknown background class (a single part with Gaussian appearance and pose distributions of $\{\muapp_0,\sigmaapp_0\}$ and $\{\mushape_0,\sigmashape_0\}$ respectively), according to an assignment, $\assign$. 
 %\footnote{Since $\assign$ determines the $\seen$ values, the latter appear only for convenience, and are omitted where superfluous.} In addition, we novelly assume that the foreground object itself has a variable pose, $\pose$, completing the graphical model shown in figure \ref{fig/reg/graphicalModelNoParticle}, which assumes there are $\numinstance$ training/test instances.
-
 
 \paragraph{Notation~} Many of the random variables in the proposed model are one of an independent set, indicated by the plates (boxes) in figure \ref{fig/reg/graphicalmodel}. The variable sets using the same letters in calligraphic font, while variables are indexed within these sets by subscript lowercase letters matching the uppercase letter indicating the number of elements in the set. For example, the set of part-feature assignments over all instances is $\setassign = \{\assign_{\anyinstance}\}_{\anyinstance=1}^\numinstance$. Set and subset indices are concatenated, \eg $\assignval_{\anyinstance\anyfeat\anypart}$.
 
@@ -193,6 +228,8 @@ Similarly, the probability of observed spatial arrangement, given model shape $\
 The above distribution is in the non-Euclidean shape space, characterised by the distance function, $\dist()$. Object pose $\pose$ is assumed to be a linear, where feature shapes $\featshape$ are transformed by multiplying with the pose matrix $\pose$.   
 
 \section{Learning}
+\label{sec/reg/learning}
+
 The learning algorithm seeks to maximise the posterior probability of the constellation model parameters, $\setpartapp$ and $\setpartshape$, with respect to the $\numinstance$ given instances:  
 \begin{equation}
 	\begin{aligned}
@@ -345,7 +382,7 @@ Taking negative logs of the terms in equation \ref{eqn/reg/decompose} leads to a
 However, since generally only a small portion of features are actually assigned to parts, \ie $\sum_{\anypart=1}^{\numpart}\seen_\anypart \ll \numfeat$, then $-\log\prob(\assign|\setseen)$ is linearly approximated by $\sum_{\anypart=1}^{\numpart}\seen_\anypart\log\numfeat$,  as $\seen_\anypart$ being a linear function of $\assign$. The optimal $\assign$ for this approximate cost function $\order\left((N + K)^3\right)$ is computed using a linear assignment solver such as the Hungarian algorithm.  
 
 \subsubsection{Updating $\setpartapp$}
-The part appearances, $\partapp_\anypart$, are updated by computing a weighted mean and variance of the feature appearances, $\featapp_{\anyinstance\anyfeat}$. A weight function is first defined in equation \ref{eqn/reg/weightedavg}:
+The part appearance, $\partapp_\anypart$, is updated by computing a weighted mean and variance of the feature appearances, $\featapp_{\anyinstance\anyfeat}$. A weight function is first defined in equation \ref{eqn/reg/weightedavg}:
 \begin{equation}
 	\wavg_k(x) = \frac{\displaystyle\sum_{\anyinstance=1}^\numinstance \displaystyle\sum_{\anyparticle = 1}^{\numparticle} \displaystyle\sum_{\anyfeat=1}^{\numfeat}\expect\assignval_{\anyinstance\anyfeat\anyparticle\anypart} \cdot x}{\displaystyle\sum_{\anyinstance=1}^\numinstance \displaystyle\sum_{\anyparticle = 1}^{\numparticle} \displaystyle\sum_{\anyfeat=1}^{\numfeat}\expect\assignval_{\anyinstance\anyfeat\anyparticle\anypart}}.
 	\label{eqn/reg/weightedavg} 
@@ -398,7 +435,7 @@ Initial parameters $\parameter^{(0)}$ for the EM algorithm are computed as follo
 The computational cost of learning the model is linear in the number of particles, $\numparticle$, while there are diminishing returns to be had from increasing $\numparticle$, in terms of successful model convergence. The best number of particles is very much application and data dependent. In the experiments of this chapter, 5--10 particles were sufficient to produce good results, further increasing the number of particle would only accelerate convergence marginally, but computational time would increase linearly. 
 
 By allowing every instance to have multiple poses, equivalent sub-models can form within the model.
-To avoid this issue, after the first convergence, the most probable training instance (with the highest likelihood) is selected, and its most probable particle (with highest likelihood) is retained and fixed, while all other particles are removed. As a result, the pose of the selected instance will be fixed in the subsequent iterations, effectively defining the single \emph{canonical pose} of the class. 
+To avoid this issue, after the first convergence, the most probable training instance (with the highest likelihood) is selected, and its most probable particle (with highest likelihood) is retained and fixed, while all other particles are removed. As a result, the pose of the selected instance will be fixed in the subsequent iterations, effectively defining the single canonical pose of the class. 
 % To avoid this, after the first convergence of EM we select the instance with the highest likelihood and remove all but one of its particles (that with the highest likelihood), whose pose we then keep fixed, essentially defining the single \emph{canonical pose} of the class.
 Furthermore, when the likelihood of particles tends to zero, or two or more particles converge on the same pose, updating them becomes computationally wasteful. To avoid this, those superfluous particles can either be removed, or their poses can be re-initialised at random. This stochastic approach is applied to aid convergence to a good local optimum.  
 
@@ -830,7 +867,13 @@ Addressing the problem of learning a 3D shape recognition system from large-scal
 %We have demonstrated not only that inferring pose 
 The experimental results have demonstrated that inferring pose jointly with shape and appearance is feasible in practice. The proposed system performs only marginally worse than existing state-of-the-arts which use ground truth pose, and significantly improves on other approaches when ground truth pose is not known.  
 
-% experiments
+% limitations
+However, there are also several limitations to the proposed approach. 
+% complicated learning algorithm that does not guarantee the optimum solution
+
+% too sensitive to feature extraction 
+% only consider linear transformation for pose
+% independent part locations (In Fergus, the part locations are correlated) 
 
 % what is so important? and future work?
 %We hope that this work will lead to object recognition systems learned from large-scale, un-annotated datasets, including those which use only the estimated registrations from training to then learn a different type of model. We plan to extend this approach to learn a 3D constellation model of an object, along with 3D poses, from a series of 2D images.
