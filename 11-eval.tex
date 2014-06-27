@@ -459,10 +459,10 @@ The variations applied to the evaluation datasets are described in table \ref{ta
 % done 
 \begin{table}[ht]
 \centering
-\begin{tabular}{|cc|ccccc|}
+\begin{tabular}{|c|c|ccccc|}
 \hline
-\multirow{2}{*}{ } & \multirow{2}{*}{ } & \multicolumn{5}{c}{\textbf{Variations}} \\ \cline{3-7} 
-& & \textbf{Noise} & \textbf{Density} & \textbf{Scale} & \textbf{Rotation} & \textbf{Translation} \\
+\multicolumn{2}{|c|}{\multirow{2}{*}{ }} & \multicolumn{5}{c|}{\textbf{Variations}} \\ \cline{3-7} 
+\multicolumn{2}{|c|}{} & \textbf{Noise} & \textbf{Density} & \textbf{Scale} & \textbf{Rotation} & \textbf{Translation} \\
 \hline
 \multirow{3}{*}{\textbf{Dataset}} & \meshset & \checkmark & \checkmark & \checkmark & \checkmark & \\
 & \mriset & \checkmark & & & \checkmark & \checkmark \\
@@ -479,8 +479,8 @@ Performances of the candidate detectors were measured as each test parameter was
 \centering
 \begin{tabular}{|c|c|}
 \hline
-\multicolumn{2}{c}{ \textbf{Default parameters for reference shapes }} \\ 
-\hline 
+\multicolumn{2}{|c|}{ \textbf{Default parameters for reference shapes }} \\ 
+\hline
 \textbf{Parameter} & \textbf{Value} \\
 \hline
 Default point cloud size & $50000$ points\\
@@ -492,9 +492,13 @@ Distance threshold $\disp$ & $0.03L$ \\
 Parameter $f$ in equation (\ref{eqn/eval/loc_vec}) & $\sqrt{8}$ \\
 Number of octaves in scale-space & $4$ \\
 \hline
-\multicolumn{2}{c}{ \textbf{ Number of transformed shapes compared }} \\
+\multicolumn{2}{c}{}\\
+\end{tabular}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{ \textbf{ Number of transformed testing shapes compared }} \\
 \hline 
-\textbf{Parameter} & \textbf{Value} \\
+\textbf{Shape variation} & \textbf{Number of steps} \\
 \hline
 Sampling noise & 13 \\
 Sampling density & 17 \\
@@ -513,22 +517,22 @@ Scale & 21 \\
 % done
 \begin{figure}[ht]
 	\centering
-	\begin{subfigure}[t]{0.24\linewidth}\centering
+	\begin{subfigure}[t]{0.33\linewidth}\centering
 		\includegraphics[width=1\linewidth]{./fig/eval/noise_none.png}
 		\subcaption{$\sigma_{n} = 0$}
 		\label{fig/eval/noise_none}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.24\linewidth}\centering
+	\begin{subfigure}[t]{0.33\linewidth}\centering
 		\includegraphics[width=1\linewidth]{./fig/eval/noise_low.png}
 		\subcaption{$\sigma_{n} = 0.0025L$}
 		\label{fig/eval/noise_low}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.24\linewidth}\centering
+	\begin{subfigure}[t]{0.33\linewidth}\centering
 		\includegraphics[width=1\linewidth]{./fig/eval/noise_mid.png}
 		\subcaption{$\sigma_{n} = 0.01L$}
 		\label{fig/eval/noise_mid}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.24\linewidth}\centering
+	\begin{subfigure}[t]{0.33\linewidth}\centering
 		\includegraphics[width=1\linewidth]{./fig/eval/noise_high.png}
 		\subcaption{$\sigma_{n} = 0.02L$}
 		\label{fig/eval/noise_high}
@@ -556,19 +560,19 @@ Figure \ref{fig/eval/graph_sample} presents the change of $\areascore$ scores ve
 \begin{figure}[ht]
 	\centering 
 	\includegraphics[width=0.70\linewidth]{./fig/eval/hlegend.jpg}
-	\begin{subfigure}[t]{0.48\linewidth}
+	\begin{subfigure}[t]{0.49\linewidth}
 		\centering 
 		\includegraphics[width=1\linewidth]{./fig/eval/graph_noise.jpg}
 		\subcaption{Sampling noise}
 		\label{fig/eval/graph_noise}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.48\linewidth}
+	\begin{subfigure}[t]{0.49\linewidth}
 		\centering 
 		\includegraphics[width=1\linewidth]{./fig/eval/graph_sampling.jpg}
 		\subcaption{Sampling density}
 		\label{fig/eval/graph_sample}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores of the \meshset dataset.} Repeatability area scores under (a) sampling noise, (b) sampling density (point cloud size).}
+	\caption{\textbf{Repeatability area scores $\areascore$ of the \meshset dataset.} Repeatability area scores under (a) sampling noise, with standard deviation from $0$ to $0.03L$; (b) sampling density, \ie point cloud size, from $4.5k$ to $400k$ points in log scale. Shaded areas indicate the $25\%$ and $75\%$ quartiles of the corresponding interest point detectors.}
 	\label{fig/eval/graph_graph0} 
 \end{figure}
 
@@ -596,19 +600,19 @@ Meanwhile, the performance of most detectors decreases slowly as scale increases
 \begin{figure}[ht]
 	\centering 
 	\includegraphics[width=0.70\linewidth]{./fig/eval/hlegend.jpg}
-	\begin{subfigure}[t]{0.48\linewidth}
+	\begin{subfigure}[t]{0.49\linewidth}
 		\centering 
 		\includegraphics[width=1\linewidth]{./fig/eval/graph_rotation.jpg}
 		\subcaption{Rotation}
 		\label{fig/eval/graph_rotation}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.48\linewidth}
+	\begin{subfigure}[t]{0.49\linewidth}
 		\centering 
-		\includegraphics[width=1\linewidth]{./fig/eval/graph_scaling.jpg}
+		\includegraphics[width=1\linewidth]{./fig/eval/graph_scaling_new.jpg}
 		\subcaption{Scale}
 		\label{fig/eval/graph_scaling}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores of the \meshset dataset.} Repeatability area scores under varying (a) rotation, (b) scale.}
+	\caption{Repeatability area score \textbf{$\areascore$ of the \meshset dataset.} Repeatability area scores under varying (a) rotation, from $0$ to $90$ degree; (b) scaling factor, from $0.5$ to $2$ in log scale.}
 	\label{fig/eval/graph_graph1} 
 \end{figure}
 
@@ -619,39 +623,37 @@ The MSER detector obtains the highest percentage of correspondences, yet it prod
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|cc|ccc|}
+	\begin{tabular}{|c|c|ccc|}
 \hline
-& & \multicolumn{3}{c|}{\textbf{Sampling noise level}} \\
-& &  {\textbf{Low}}  & {\textbf{Medium}}  & {\textbf{High}}  \\
-& & ($0.0025L$) & ($0.01L$) & ($0.02L$) \\
+\multicolumn{2}{|c|}{} & \multicolumn{3}{c|}{\textbf{Sampling noise level}} \\
+\multicolumn{2}{|c|}{} &  {\textbf{Low}}  & {\textbf{Medium}}  & {\textbf{High}}  \\
+\multicolumn{2}{|c|}{} & ($0.0025L$) & ($0.01L$) & ($0.02L$) \\
 \hline
 \hline
-\multirow{3}{*}{DoG}  & Avg. \# Pts. &   122.0 & 118.2 & 73.1 \\
-& Avg. \# Corr. &  48.8 & 35.1 &  9.3 \\
-& (Corr. \%) & (\textit{39.8\%}) & (\textit{29.7\%}) & (\textit{12.7\%}) \\
-\hline
-\multirow{3}{*}{SURF} & Avg. \# Pts. & 154.7 & 70.4  & 28.7 \\
-& Avg. \# Corr. &  54.7 & 18.4  & 3.84 \\
-& (Corr. \%) &  (\textit{35.3\%}) & (\textit{26.2\%})  & (\textit{13.4\%}) \\
-\hline
-\multirow{3}{*}{Harris} & Avg. \# Pts. & 303.3 & 142.2 &  123.8 \\
-& Avg. \# Corr. & 78.6  & 33.2  &    13.4  \\
-& (Corr. \%) & (\textit{25.9\%}) & (\textit{23.3\%}) & (\textit{10.83\%}) \\
-\hline
-\multirow{3}{*}{DoH}& Avg. \# Pts. &  {\textbf{\color{blue}330.8}} & {\textbf{\color{blue}272.0}} &   {\textbf{\color{blue}201.2}} \\
-& Avg. \# Corr. & {\textbf{\color{blue}117.1}} & {\textbf{\color{blue}72.2}}  &   {\textbf{\color{blue}30.2}} \\
-& (Corr. \%) & (\textit{35.4\%}) & (\textit{26.6\%}) & (\textit{18.2\%}) \\
-\hline
-\multirow{3}{*}{VFAST}& Avg. \# Pts. &  115.9 &  85.5  &  74.6\\ 
-& Avg. \# Corr. & 33.5  & 15.5  &    7.4 \\
-& (Corr. \%) & (\textit{28.8\%}) & (\textit{18.10\%})  & (\textit{9.85\%}) \\
-\hline
-\multirow{3}{*}{MSER}& Avg. \# Pts.  &  99.0  & 74.4  &   52.5 \\
-& Avg. \# Corr. & 59.9 & 44.7  &   28.8 \\
-& (Corr. \%) & ({\textit{\textbf{\color{blue}60.5\%}}})  & ({\textit{\textbf{\color{blue}60.2\%}}})  & ({\textit{\textbf{\color{blue}54.9\%}}})\\
+\multirow{6}{*}{Average number of intrest points} 
+& DoG &   122.0 & 118.2 & 73.1 \\ \cline{2-5}
+& SURF & 154.7 & 70.4  & 28.7 \\ \cline{2-5}
+& Harris & 303.3 & 142.2 &  123.8 \\ \cline{2-5}
+& DoH &  {\textbf{\color{blue}330.8}} & {\textbf{\color{blue}272.0}} &   {\textbf{\color{blue}201.2}} \\ \cline{2-5}
+& VFAST &  115.9 &  85.5  &  74.6\\  \cline{2-5}
+& MSER &  99.0  & 74.4  &   52.5 \\ \hline \hline
+\multirow{6}{*}{Average number of correspondences}
+& DoG &  48.8 & 35.1 &  9.3 \\ \cline{2-5}
+& SURF &  54.7 & 18.4  & 3.84 \\ \cline{2-5}
+& Harris & 78.6  & 33.2  &    13.4  \\  \cline{2-5}
+& DoH & {\textbf{\color{blue}117.1}} & {\textbf{\color{blue}72.2}}  &   {\textbf{\color{blue}30.2}} \\ \cline{2-5}
+& VFAST & 33.5  & 15.5  &    7.4 \\ \cline{2-5}
+& MSER & 59.9 & 44.7  &   28.8 \\ \hline \hline
+\multirow{6}{*}{Correspondence percentage (\%)}
+& DoG & {39.8\%} & {29.7\%} & {12.7\%} \\ \cline{2-5}
+& SURF &  {35.3\%} & {26.2\%}  & {13.4\%} \\ \cline{2-5}
+& Harris & {25.9\%} & {23.3\%} & {10.83\%} \\ \cline{2-5}
+& DoH & {35.4\%} & {26.6\%} & {18.2\%} \\ \cline{2-5}
+& VFAST & {28.8\%} & {18.10\%}  & {9.85\%} \\ \cline{2-5}
+& MSER & {\textbf{\color{blue}60.5\%}}  & {\textbf{\color{blue}60.2\%}}  & {\textbf{\color{blue}54.9\%}}\\ 
 \hline
 \end{tabular}
-\caption{\textbf{Number of detected interest points.} For each row, from top to bottom: average number of interest points detected, average number of correspondence, percentage of corresponding interest point pairs.}
+\caption{\textbf{Number of detected and corresponding interest points in the \meshset dataset, under three different noise levels.} (Top) average number of interest points detected; (Middle) average number of corresponding interest point pairs; (Bottom) corresponding percentage, \ie number of correspondences / number of interest points. Sampling noise levels for testing shapes range from $0.0025L$ to $0.02L$.}
 \label{tab/eval/numcorr}
 \end{table}
 
@@ -667,8 +669,8 @@ The performances of DoG and Harris detectors tend to be stable, though Harris pe
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.70\linewidth]{./fig/eval/hlegend.jpg} \\ 
-	\includegraphics[width=0.48\linewidth]{./fig/eval/graph_keypointnum.jpg}
-	\caption{\textbf{$\areascore$ scores of the \meshset dataset.} Repeatability area score under varying percentage of interest points.}
+	\includegraphics[width=0.49\linewidth]{./fig/eval/graph_keypointnum.jpg}
+	\caption{\textbf{Repeatability area scores $\areascore$ of the \meshset dataset.} Repeatability area score under varying percentage of interest points. }
 	\label{fig/eval/graph_keypointnum}	
 \end{figure}
 
@@ -771,7 +773,7 @@ Some testing instances, \eg ``car'' in figure \ref{fig/eval/mvs}, have much spar
 		\subcaption{$\areascore$ score: \stereoset}		
 		\label{fig/eval/graph_mvs}
 	\end{subfigure}
-	\caption{\textbf{$\areascore$ scores versus displacement threshold $d$.} Left to right: (a) the \meshset dataset, (b) the \mriset dataset and (c) the \stereoset dataset.}
+	\caption{\textbf{Repeatability area scores $\areascore$ versus displacement threshold $d$.} The displacement threshold is measured in terms of $L$. From Left to right: (a) the \meshset dataset, (b) the \mriset dataset and (c) the \stereoset dataset.}
 \label{fig/eval/graph2}
 \end{figure}
 

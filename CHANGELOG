@@ -1,0 +1,65 @@
+Changelog:
+- Corrected grammatical errors
+- Fixed typos
+
+DECLARATION
+===================================
+- Change "abstract" to "paper" in the declaration
+
+EVAL3d
+===================================
+- Cosmetic improvements to Table 2.1, fixed missing table border in the first row
+- Cosmetic improvements to Table 2.2, reviewed the table headers
+- increased the size of figure 2.4
+- Revised the caption of figure 2.5, 2.6
+- Revised the format of Table 2.3, utilising the page width.  
+- Minior change to the caption of figure 1.10
+- In section 1.1, added \cite{Hadfield2013} as an example of treating depth image sequences as spatiotemporal volumes
+- In section 1.2.1, added reference \cite{Hadfield2013} in both corner detector (for 3.5D/4D Harris) and blob detector (for 3.5D/4D Hessian)
+
+REG
+===================================
+- The explanation of a constellation model ("A constellation model is...") has been moved from section 3.3.1 to the end of section 3.1. The explanation has been expanded.
+- A new figure (Figure 3.1) is added as an overview of the proposed approach. The old figure 3.1 becomes 3.2.
+- Added a table (table 3.1) that shows the random variables used in the graphical model.
+- Revised caption of figure 3.2 and figure 3.3
+- Revised table 3.2 (old table 3.1)
+	- Added table 3.3 which provides more information about the "range" of random pose
+	- Added descriptions of K and Q in caption
+	- Rotated the table format
+- Added table 3.3
+- Corrected figure 3.3
+- Increase the size of figure 3.5
+- For the method evaluated in fig 3.6, added brief introduction to Hough transform and it variants, \eg \cite{Woodford2013} and \cite{Barinova2010},  in the related work section.
+- Revised the explanation of figure 3.6
+- Limitations of the proposed method is discussed in the summary
+
+ACTION
+====================================
+- Changed terminology: "look-ahead time" becomes "recognition latency"
+- Redrawn figure 4.2 (Overview of the proposed approach).
+- Revised the caption of figure 4.2
+- Rewritten section 4.3 to describe figure 4.2 properly
+- Revise figure 4.3 and its caption
+- Revised section 4.4 to describe figure 4.3 properly
+- In table 4.1,  "relative running time" is used instead of "relative speed", speedup factor is added to the table for reference.
+- Redrawn figure 4.5 to describe the 3D histograms of the proposed HSRM algorithm.
+- Revised the description for figure 4.5 in the text
+- Added figure 4.6 to illustrate pyramid match kernel for the HSRM histogram.
+- Added the description of figure 4.6 in the text. 
+- Add limitations of the proposed action classification system.
+
+BODY
+====================================
+
+HAND
+====================================
+
+- 6.2.1
+	- Change "generative" and "discriminative" to "model-based" and "appearance-based" respectively, according to Erol 2007.
+	- Change the order of sentences for smoother description in the "apeparance-based" method 
+	- Minor editing
+
+- 6.4.2
+	- In subsection "Viewpoint classification term", reservoir sampling is explained (actually it is "random sampling without replacement"), \cite{Vitter1985} has been added as a reference.
+	- Explained the adaptive switching paramters and how they affects the learning algorithm down the tree.

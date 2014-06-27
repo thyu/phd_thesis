@@ -116,41 +116,37 @@ Although real-time performances have been reported by these methods, their compu
 \label{sec/act/overview}
 
 %done 
-The proposed action classification system is outlined in figure \ref{fig/act/flow}. 
-Salient points in videos are first detected by the proposed VFAST detector. 
-Spatiotemporal patches, extracted from the detected interest points, are quantised into visual codewords using a trained semantic texton forest, which is explained in section \ref{sec/act/stf}. 
-%Using pairwise codewords and their spatiotemporal associations, histograms that capture both local-appearance and structural information are constructed.
-Visual codewords are paired according to a predefined set of association rules, capturing both local appearance and structural information of training and testing videos.  
-Preliminary recognition is performed efficiently using a k-means forest classifier with HSRM in section \ref{sec/act/HSRM}. 
-The results from k-means forest are adaptively combined with the prior-art that uses the bag of semantic texton (BOST) and random forest classifier.
-The feature extraction phase of the proposed framework is flexible. 
-Depending on the target application, simple spatiotemporal video patches can be replaced by more discriminative local features, such as HOG or tracked trajectories.
+The proposed action classification system is outlined in figure \ref{fig/act/flow}. A testing video is first divided into many video snippets, which are overlapping short video sequences. In order to minimise the classification delay, actions are classified sequentially from the snippets instead of the whole testing video. 
+Spatiotemporal features are detected using the VFAST interest point, which has been evaluated in section \ref{src/eval/vfast}.
+Spatiotemporal textons, \ie cuboids of voxels, are extracted from the detected VFAST interest points. They are quantised into visual codewords by a trained semantic texton forest. The learning algorithm of semantic texton forest is described in section \ref{sec/act/stf}. 
+The set of visual codewords are classified by the proposed HSRM algorithm and the traditional bag-of-semantic-textons (BOST) algorithm. These two algorithms are performed simultaneously, their classification results are combined using a late fusion scheme. In the HSRM approach, visual codewords are assigned to 3-D histograms according to a set of association rules, capturing both appearance and structural information of the video snippet. Actions are classified efficiently using a k-means forest classifier in section \ref{sec/act/kmeansforest}, with a pyramid match kernel \cite{Grauman2005}. 
+In the BOST algorithm, a random forest classifier is employed to classify 1-D histograms of visual codewords. 
+The final classification result is combined from the outputs of HSRM and BOST algorithms, using an adaptive late fusion sceheme. 
 
-\begin{figure}[ht]
+% The feature extraction phase of the proposed framework is flexible. 
+% Depending on the target application, simple spatiotemporal video patches can be replaced by more discriminative local features, such as HOG or tracked trajectories.
+
+\begin{figure}[!ht]
 	\centering  	
-	\includegraphics[width=1.0\linewidth]{fig/act/fig1_new4.pdf}
-	\caption{\textbf{Overview of the proposed approach.}}
+	\includegraphics[width=1.0\linewidth]{fig/act/act_intro.pdf}
+	\caption{\textbf{Overview of the proposed approach.} VFAST interest points extracted from the video snippets are encoded into visual codewords by the spatiotemporal semantic texton forest. Two different algorithms, namely the proposed HSRM method and the traditional bag-of-word model, are employed to classify the codewords. Their results are combined using an adaptive late fusion scheme.}
 	\label{fig/act/flow}
 \end{figure}
 
 \section{VFAST interest point detector}
 \label{sec/act/fastest}
 % DONE 
-Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{YT}$ and $r_{XT}$ on $XY$, $YT$ and $XT$ planes respectively. Implementation details of the VFAST interest point detector have been explained in section \ref{sec/eval/vfast}. 
+Video FAST (VFAST) interest points are obtained by extending the FAST corners \cite{Rosten2006} into the spatiotemporal domain. It considers voxels in three orthogonal Bresenham circles $\bcir$ with radii $r_{XY}$, $r_{XZ}$ and $r_{YZ}$ on $XY$, $XZ$ and $YZ$ planes respectively. Implementation details of the VFAST interest point detector have been explained in section \ref{sec/eval/vfast}. 
 % Figure \ref{fig/act/fastest} illustrates how interest points are detected using the 42-pixel V-FAST interest point detector with $r_{xy},r_{xt},r_{yt} = 3$. 
 
-Spatiotemporal textons, \ie retangular cuboids of voxels, are used as the input features. 
-Figure \ref{fig/act/fastest} illustrates how the cuboids are extracted from the input videos using VFAST. 
-Salient motions are detected by the VFAST detector using three axis-aligned circles of radius 3 pixels, \ie $r_{XY}, r_{YT}, r_{XT} = 3$, according to algorithm \ref{algo/eval/vfast}. 
-Video cuboids are extracted from the VFAST interest points detected.
-In this work, a video cuboid has dimensions of $5 \times 5$ voxels in space and $9$ voxels in time.
+Figure \ref{fig/act/fastest} illustrates how the cuboids are extracted from the input videos.
+An input video is considered as a spatiotemporal volume of voxels, hence the VFAST algorithm works along the $X$, $Y$ and $T$ axes instead. Salient motions are detected by VFAST using three axis-aligned circles of radius voxels, \ie $r_{XY}, r_{YT}, r_{XT} = 3$, according to algorithm \ref{algo/eval/vfast}. Spatiotemporal textons are obtained by extracting voxel cuboids from the input videos centered at the VFAST interest point. In this work, a video cuboid has dimensions of $9 \times 9$ voxels in space and $5$ voxels in time.
 % Figure \ref{fig/act/fastest} illustrates how the cuboids $\vpatch$ are extracted using the VFAST interest point detector.  
 
 % already discussed in ``eval'' chapter
 % For a spatiotemporal volume $\vpatch$, FAST saliency is detected on a plane if there exist $n$ contiguous pixels on the circle which are all brighter than the intensity of the reference voxel $\vpatch(x,y,t)$ plus a predefined threshold $\delta^{FAST} \in \{ t_{XY}, t_{XT}, t_{YT} \}$, or all darker than $\vpatch(x,y,t)$ minus $\delta^{FAST}$. An interest point is detected when the reference pixel shows both spatial ($XY$ plane) and temporal ($XT$ plane or $YT$-plane) saliency. 
 \iffalse
 The steps of computing VFAST interest points are described in algorithm \ref{algo/act/vfast}.
-
 %DONE 
 \begin{algorithm}
 	\caption{\textbf{VFAST spatiotemporal interest point detector.}}
@@ -179,10 +175,25 @@ The steps of computing VFAST interest points are described in algorithm \ref{alg
 
 % DONE
 
+\iffalse
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/act/fig2_new.pdf}
 	\caption{\textbf{Feature detection and extraction. } Spatiotemporal features are detected from the input video by the VFAST detector. Video cuboids are extracted around these interest points for training and testing.}
+\end{figure}
+\fi
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[t]{0.48\linewidth} \centering 
+		\includegraphics[height=0.66\linewidth]{./fig/act/act_fast_2.pdf} 
+		\subcaption{Input video as a spatiotemporal volume} 
+	\end{subfigure}
+	\begin{subfigure}[t]{0.48\linewidth} \centering 
+		\includegraphics[height=0.66\linewidth]{./fig/act/act_fast_1.pdf}
+		\subcaption{Voxel patches are extracted from the VFAST interest points} 
+	\end{subfigure}
+	\caption{\textbf{Feature detection and extraction. } (Left) An input video is a 3-D spatiotemporal volume. (Right) Video cuboids are extracted from the VFAST interest points for both training and testing.}
 	\label{fig/act/fastest}
 \end{figure}
 
@@ -291,24 +302,15 @@ Table \ref{tab/act/codebook} summarises an empirical comparison between STF and 
 \label{sec/act/HSRM}
 
 % Done 
-In this work, hierarchical spatiotemporal relationship match (HSRM) is designed to describe both local-appearance and structural information efficiently in one histogram. 
-Figure \ref{fig/act/hsrm} visualises the procedures of the spatiotemporal relationship histogram for hierarchical matching:   
-Firstly, STF quantises local spatiotemporal volumes into visual codewords. 
-Secondly, for each tree in the STF codebook, a three-dimensional histogram is constructed by analysing pairs of codewords for their spatiotemporal co-occurrences. 
-For each histogram, a novel pyramid match kernel is proposed for robust matching. 
-Finally, multiple pyramidal matches are then combined to classify a query video. 
+In this work, hierarchical spatiotemporal relationship match (HSRM) is designed to describe both local-appearance and structural information efficiently in a 3-D histogram. 
+% Figure \ref{fig/act/hsrm} visualises the procedures of the spatiotemporal relationship histogram for hierarchical matching:   
+In section \ref{sec/act/stf}, STF quantises local spatiotemporal volumes into visual codewords. 
+For each tree in the STF codebook, a 3-D histogram is constructed by analysing all possible codeword pairs for their spatiotemporal co-occurrences. The formation of 3-D HSRM histograms is described in section \ref{sec/act/hsrmhistogram}. In section \ref{sec/act/hsrmmatch}, a novel k-means forest algorithm is presented to classify the 3-D HSRM histograms. A pyramid match kernel is used in the k-means forest as the distance metric.
 
 Whereas the original spatiotemporal relationship match (SRM) by Ryoo \etal \cite{Ryoo2009} relies on a flat k-means codebook, HSRM leverages the hierarchical properties of multiple tree-based codebooks and performs robust matching using pyramid match kernels. The tree structure offers a time-efficient way to perform semantic codeword matching between pairs of histograms \cite{Grauman2005}.
 
-% done 
-\begin{figure}[ht]
-	\centering	
-	\includegraphics[width=0.9\linewidth]{fig/act/fig4_new.pdf} 
-	\caption{\textbf{Hierarchical spatiotemporal relationship match (HSRM).}}
-	\label{fig/act/hsrm}
-\end{figure}
-
 \subsection{Building spatiotemporal relationship histograms}
+\label{sec/act/hsrmhistogram}
 
 % done 
 Short video snippets are the basic input units of the proposed system, which are densely sampled from an input video.  
@@ -319,6 +321,14 @@ The $i$-th encoded interest point is described as
 \end{equation}
 where $x_i, y_i, z_i$ represents the $XYT$-location of a feature and $\vcode_{m,i}$ is the corresponding visual codeword, \ie leaf node assigned to $\onevfast_{i}$ by the $m$-th tree. 
 In the proposed system, a set of pair-wise spatiotemporal associations are designed to capture the structural relations among interest points. By analysing all possible pairs $\onevfast_i$ and $\onevfast_j$ in $\vfastset$, space-time structures of codewords are described by the following seven association rules $\mathcal{R} = \{ R_1,\dots,R_7\}$:
+
+\begin{figure}[ht]
+	\centering	
+	\includegraphics[width=1\linewidth]{fig/act/act_hsrm_histogram.pdf} 
+	\caption{\textbf{Codeword histograms of Hierarchical spatiotemporal relationship match (HSRM).} Spatiotemporal textons are converted to visual codewords by the STF. For each decision tree in the STF, a 3-D histogram is constructed to capture spatiotemporal relationships between codewords.}
+	\label{fig/act/hsrm}
+\end{figure}
+
 
 % done 
 \begin{equation}
@@ -332,13 +342,16 @@ In the proposed system, a set of pair-wise spatiotemporal associations are desig
 		R_{6}~{(near Y)}: & (|y_i - y_j| < \mathrm{T_{n}}) \wedge \sim(R_{4}); \\
 		R_{7}~{(far)}: & (|x_i - x_j| < \mathrm{T_{f}}) \wedge (|y_i - y_j| < \mathrm{T_{f}}) \wedge \sim(R_{4} \vee R_{5} \vee R_{6}).
 	\end{array}
+	\label{eqn/act/rules}
 \end{equation}
 
 % done 
 Figure \ref{fig/act/hsrm} illustrates the construction and matching of the spatiotemporal relationship histograms using the proposed HSRM. 
 A set of 3D histograms $\{ \histogram_1(\vfastset),\dots,\histogram_{M}(\vfastset)\}$ are constructed by encoding all possible pairs of feature points in $\vfastset$. The bin $\mathrm{h}_{m}(i,j,k)$ for the $m$-th tree $\histogram_{m}(\vfastset)$ corresponds to the number of matching $(\vcode_{m,i},\vcode_{m,j})$ codeword pairs by an association $R_k$. The total number of bins of $\histogram_m(\vfastset)$, \ie histogram size, is therefore $\codebooksize_m \times \codebooksize_m \times |\mathcal{R}|$. Since the spatiotemporal histograms are sparse, their operations can be greatly accelerated using sparse matrices.  
 
+% done 
 \subsection{Pyramid match kernel for HSRM}
+\label{src/act/hsrmmatch}
 % done 
 Quantisation is a major issue for bag-of-words models for object recognition tasks in general. It is often difficult to determine an optimal codebook size, which is dependent on both training and testing data. 
 If a codebook is too small, useful information is discarded due to quantisation errors, affecting its discriminative power. 
@@ -353,9 +366,9 @@ In a STF, video patches are quantised hierarchically based on its semantic or ap
 \end{itemize} 
 
 % done 
-Pairs of spatiotemporal histograms are matched by pyramid match kernel (PMK) \cite{Grauman2005}. 
+In figure \ref{fig/act/hsrm2}, a HSRM histogram is converted to different resolution levels, by resursively merging adjacent bins. As a result, pairs of spatiotemporal histograms can be compared using the pyramid match kernel (PMK) \cite{Grauman2005}. In section \ref{sec/act/kmeansforest}, the PMK algorithm is used as a similarity kernel in the proposed k-means forest classifier.
 %It measures the similarity of two set of features in a multi-resolution histogram space.
-The similarity between two sets of interest points $\vfastset$ and $\vfastsetx$ is measured by PMK from a multi-resolution histogram space for each tree. 
+The similarity between two sets of video cuboids $\vfastset$ and $\vfastsetx$ is measured by PMK from a multi-resolution histogram space for each tree. 
 A kernel function $\kernel(\onevfast,v: \codebooksize \times \codebooksize \rightarrow \mathbb{R})$ is defined as the similarity metric between two sets of input features from input space $\codebooksize \times \codebooksize$, which is equal to all pairwise combinations of codewords within a decision tree.  
 
 % done
@@ -378,8 +391,15 @@ The match kernel $\mathrm{K}_m$ for HSRM at the $m$-th tree is then defined in e
 \end{equation}
 Matches in finer bins score higher similarity than matches in coarser levels by a factor of $\frac{1}{4^{\resolute-1}}$. A bin with a small bin size implies higher similarity among the feature within the bin, matches in high resolution (small bin size) are assigned a higher weighting.  
 
-\subsection{Kernel k-means forest classifier}
+\begin{figure}[ht]
+	\centering	
+	\includegraphics[width=1\linewidth]{fig/act/act_hsrm_match.pdf} 
+	\caption{\textbf{Matching of HSRM histograms.} Codewords of adjacent tree nodes are semantically similar, a pyramical match kernel is used as a similarity metric in learning the k-means forest classifier. Low-resolution HSRM histograms can be created by merging adjacent bins.}
+	\label{fig/act/hsrm2}
+\end{figure}
 
+\subsection{Kernel k-means forest classifier}
+\label{sec/act/kmeansforest}
 %done 
 The HSRM algorithm is applied to learn a k-means forest classifier from the video snippets. Given a set of training video data $\vfastset_i$, $M$ independent clustering trees are trained by recursively performing the k-means algorithm, using HSRM as the similarity metric. 
 For the $m$-th tree in STF, the hierarchical k-means algorithm splits current training data into $N$ clusters, $\mathbf{S} = \{\mathbf{S}_1,\dots,\mathbf{S}_N\}$, to maximise the intra-cluster similarity:
@@ -520,10 +540,19 @@ Quantisation effects are soothed by the tree-based STF codebook and pyramid matc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.32\linewidth]{fig/act/bost.png}
-\includegraphics[width=0.32\linewidth]{fig/act/mpsrm.png}
-\includegraphics[width=0.32\linewidth]{fig/act/combine.png}
-\caption{\textbf{Confusion matrices of the KTH dataset.} From left to right: BOST, HSRM, and combined classification.}
+\begin{subfigure}[t]{0.32\linewidth} \centering 
+	\includegraphics[width=1\linewidth]{fig/act/bost.png}
+	\subcaption{BOST only} 
+\end{subfigure}
+\begin{subfigure}[t]{0.32\linewidth} \centering 
+	\includegraphics[width=1\linewidth]{fig/act/bost.png}
+	\subcaption{HSRM only} 
+\end{subfigure}
+\begin{subfigure}[t]{0.32\linewidth} \centering 
+	\includegraphics[width=1\linewidth]{fig/act/bost.png}
+	\subcaption{HSRM + BOST} 
+\end{subfigure}
+\caption{\textbf{Confusion matrices of the KTH dataset.} From left to right: BOST, HSRM, and combined classification using late fusion.}
 \label{fig/act/confusion}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -615,3 +644,5 @@ This work takes a short frame sequences, namely video snippets, as the basic inp
 The proposed system demonstrated comparable accuracies over state-of-the-art approaches in the experimental results. 
 % Move to conclusions 
 % Future challenges include tackling more complex realistic human actions and partial occlusions, as well as performing continuous action detection in real-time.
+
+However, there are also several limitations to the proposed approach. Firstly, its feature detection and feature extraction are not scale invariant. In this work, the VFAST interest point detector performs on raw voxel values instead of a scale space. Additionally, fixed size cuboids are extracted from the input video snippets. Secondly, although the proposed system performs well in controlled environments, \eg the KTH dataset, it is vulnerable to appearance changes, such as different clothing or moving background objects. Finally, the spatiotemporal structures of actions are described by a fixed number of association rules in equation \ref{eqn/act/rules}. These rules are manually designed for a particular set of actions, \ie the KTH dataset and the UT-interaction dataset, therefore only a limited set of actions can be learned effectively. 

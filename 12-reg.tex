@@ -479,46 +479,47 @@ The $255$-dimensional appearance space feature was embedded to a compact $15$-di
 
 % 3D dataset, introduction
 \subsubsection{3D evaluation dataset}
+\label{sec/reg/3deval}
 
 \begin{figure}[t]
 	\centering
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_bearing1.png}
 		\caption{Bearing}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_block1.png}
 		\caption{Block}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_bracket1.png}
 		\caption{Bracket}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_cog1.png}
 		\caption{Cog}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_flange1.png}
 		\caption{Flange}
 	\end{subfigure} \\ 
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_knob1.png}
 		\caption{Knob}
 	\end{subfigure} 
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_mini1.png}
 		\caption{Car}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_pipe1.png}
 		\caption{Pipe}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_piston1.png}
 		\caption{Piston 1}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.16\linewidth} \centering
+	\begin{subfigure}[b]{0.19\linewidth} \centering
 		\includegraphics[width=1\linewidth]{./fig/eval/toshiba_piston2.png}
 		\caption{Piston 2}
 	\end{subfigure}
@@ -626,20 +627,28 @@ By contrast, the SAP model with direct similarity pose maintains a high recognit
 Under affine transformations, the two types SAP model perform similarly, with a significant drop in performance under large pose variations. Since the computed features, \ie the rotated patches, are not affine-invariant, they are irreversibly distorted by shearing, leading to a weaker appearance model, especially $\partapp$.
 The more flexible affine transformations might also over-fit the poses of some non-object testing instances, creating more false positives that affected the recognition accuracy. 
 
+		\textbf{Registration scores of the \textit{bike} dataset}
+		{\footnotesize data pose: affine, pose model: similarity}
 \begin{figure}[ht]
 	\centering 
-	\includegraphics[width=1\linewidth]{fig/reg/reg2d_legend.pdf}
 	\begin{subfigure}[b]{0.48\linewidth}
 		\includegraphics[width=\linewidth]{fig/reg/reg2d_simsim.pdf}
+		\subcaption{Similarity model, similarity input pose}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
 		\includegraphics[width=\linewidth]{fig/reg/reg2d_simaff.pdf}
-		\subcaption{SAP (pose model: similarity)}
+		\subcaption{Similarity model, affine input pose}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.48\linewidth}
 		\includegraphics[width=\linewidth]{fig/reg/reg2d_affsim.pdf}
-		\includegraphics[width=\linewidth]{fig/reg/reg2d_affaff.pdf}
-		\subcaption{SAP (pose model: affine)}
+		\subcaption{Affine model, similarity input pose}
 	\end{subfigure}
-	\caption{\textbf{Registration scores for the \textbf{bike} dataset.} (a) similarity and (b) affine poses are evaluated using data with synthetic (left) similarity and (right) affine poses.}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{fig/reg/reg2d_affaff.pdf}
+		\subcaption{Affine model, affine input pose}
+	\end{subfigure}
+	\includegraphics[width=1\linewidth]{fig/reg/reg2d_legend.pdf}
+	\caption{\textbf{Average registration scores of the best $\mathbf{N\%}$ instances in the \textbf{bike} dataset.} The graphs show the registration scores for both training and testing instances under different levels of pose variation: (a) Similarity pose SAP model tested with instances with synthetic similarity poses; (b) Similarity pose model, affine instance pose; (c) Affine pose model, similarity instance pose; (d) Affine pose model, afine instance pose.} 
 	\label{fig/reg/regresult2d}
 \end{figure}
 
@@ -654,7 +663,9 @@ Reference points (wheel centres) of both the training and testing instances were
 	\mathcal{S}_\mathrm{reg} = \frac{\NormDist(\pose\refptfront; \mu_\mathrm{front},\Sigma_\mathrm{front}) + \NormDist(\pose\refptrear; \mu_\mathrm{rear},\Sigma_\mathrm{rear})}{\NormDist(\pose\refptfront; \mu_\mathrm{front},\Sigma_\mathrm{front}) + \NormDist(\pose\refptrear; \mu_\mathrm{rear},\Sigma_\mathrm{rear}) + 2\UniformDist(\backgroundreg)}.
 	\label{eqn/reg/reg2d_score}
 \end{equation}
-Figure \ref{fig/reg/regresult2d} plots the registration scores under different levels of pose variation, which corroborate the recognition results in terms of relative performance. 
+
+In order to evaluate the proposed SAP model, the registration scores of the \textbf{bike} dataset (training and testing instances) are computed according to equation \ref{eqn/reg/reg2d_score}. Figure \ref{fig/reg/regresult2d} plots the average registration scores of the best $N\%$ of the input instances, under different levels of pose variation and pose models (similarity pose and affine pose). From the figure, the registration scores corroborate the recognition results in terms of relative performance. 
+% Figure \ref{fig/reg/regresult2d} plots the registration scores under different levels of pose variation, which corroborate the recognition results in terms of relative performance. 
 Comparable training and test scores indicate that the learned model transfers well to unseen data. The similarity-pose SAP model performs better than its affine-pose variant. Similar to the recognition experiment, it is mainly due to the non-similarity distortion of appearance features, \eg shearing. 
 
 \subsection{Results: 3D shapes}
@@ -868,12 +879,12 @@ Addressing the problem of learning a 3D shape recognition system from large-scal
 The experimental results have demonstrated that inferring pose jointly with shape and appearance is feasible in practice. The proposed system performs only marginally worse than existing state-of-the-arts which use ground truth pose, and significantly improves on other approaches when ground truth pose is not known.  
 
 % limitations
-However, there are also several limitations to the proposed approach. 
-% complicated learning algorithm that does not guarantee the optimum solution
-
-% too sensitive to feature extraction 
-% only consider linear transformation for pose
+However, there are also several limitations to the proposed framework.
+Firstly, the performance of the proposed SAP model is affected by the initial poses of the input instances and the descriptor used for feature extraction. As discussed in section \ref{sec/reg/3deval}, object instances are clustered with respect to their initial poses if their feature descriptors are not completely pose invariant.  
 % independent part locations (In Fergus, the part locations are correlated) 
+Secondly, part locations are represented by a set of independent Gaussian distributions in the proposed SAP model, instead of describing them as a full Gaussian \cite{Fergus2007}. Although this assumption makes the shape model tractable, the spatial relationships among object parts are ignored. 
+Thirdly, the proposed SAP model performs pose estimation using an iterative optimisation algorithm, which is more computationally demanding than other state-of-the-art approaches, such as the traditional constellation model \cite{Weber2000, Fergus2007} or vote-based Hough transforms \cite{Barinova2010, Woodford2013}. 
+Further extensions to the current SAP model, such as an improved inference algorithm, are necessary to solve the aforementioned issues.
 
 % what is so important? and future work?
 %We hope that this work will lead to object recognition systems learned from large-scale, un-annotated datasets, including those which use only the estimated registrations from training to then learn a different type of model. We plan to extend this approach to learn a 3D constellation model of an object, along with 3D poses, from a series of 2D images.
