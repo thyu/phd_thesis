@@ -117,7 +117,7 @@ Although real-time performances have been reported by these methods, their compu
 
 %done 
 The proposed action classification system is outlined in figure \ref{fig/act/flow}. A testing video is first divided into many video snippets, which are overlapping short video sequences. In order to minimise the classification delay, actions are classified sequentially from the snippets instead of the whole testing video. 
-Spatiotemporal features are detected using the VFAST interest point, which has been evaluated in section \ref{src/eval/vfast}.
+Spatiotemporal features are detected using the VFAST interest point, which has been evaluated in section \ref{sec/eval/vfast}.
 Spatiotemporal textons, \ie cuboids of voxels, are extracted from the detected VFAST interest points. They are quantised into visual codewords by a trained semantic texton forest. The learning algorithm of semantic texton forest is described in section \ref{sec/act/stf}. 
 The set of visual codewords are classified by the proposed HSRM algorithm and the traditional bag-of-semantic-textons (BOST) algorithm. These two algorithms are performed simultaneously, their classification results are combined using a late fusion scheme. In the HSRM approach, visual codewords are assigned to 3-D histograms according to a set of association rules, capturing both appearance and structural information of the video snippet. Actions are classified efficiently using a k-means forest classifier in section \ref{sec/act/kmeansforest}, with a pyramid match kernel \cite{Grauman2005}. 
 In the BOST algorithm, a random forest classifier is employed to classify 1-D histograms of visual codewords. 
@@ -307,7 +307,10 @@ In this work, hierarchical spatiotemporal relationship match (HSRM) is designed 
 In section \ref{sec/act/stf}, STF quantises local spatiotemporal volumes into visual codewords. 
 For each tree in the STF codebook, a 3-D histogram is constructed by analysing all possible codeword pairs for their spatiotemporal co-occurrences. The formation of 3-D HSRM histograms is described in section \ref{sec/act/hsrmhistogram}. In section \ref{sec/act/hsrmmatch}, a novel k-means forest algorithm is presented to classify the 3-D HSRM histograms. A pyramid match kernel is used in the k-means forest as the distance metric.
 
-Whereas the original spatiotemporal relationship match (SRM) by Ryoo \etal \cite{Ryoo2009} relies on a flat k-means codebook, HSRM leverages the hierarchical properties of multiple tree-based codebooks and performs robust matching using pyramid match kernels. The tree structure offers a time-efficient way to perform semantic codeword matching between pairs of histograms \cite{Grauman2005}.
+% introduction to SRM
+The proposed HSRM algorithm is a hierarchical extension of the original spatiotemporal relationship match (SRM) by Ryoo \etal \cite{Ryoo2009}. In SRM, feature quantisation is performed by a flat k-means codebook instead of a semantic texton forest. Four assoication rules are defined to describe the spatiotemporal structure of visual codewords. Codeword histograms are constructed by testing every possible pair of visual codewords with the association rules. Testing codeword histograms are classified using N-nearest neighbours, using histogram intersection as the similarity metric.
+
+Whereas the original SRM algorithm relies on a flat k-means codebook, HSRM leverages the hierarchical properties of multiple tree-based codebooks and performs robust matching using pyramid match kernels. The tree structure offers a time-efficient way to perform semantic codeword matching between pairs of histograms \cite{Grauman2005}.
 
 \subsection{Building spatiotemporal relationship histograms}
 \label{sec/act/hsrmhistogram}
@@ -351,7 +354,7 @@ A set of 3D histograms $\{ \histogram_1(\vfastset),\dots,\histogram_{M}(\vfastse
 
 % done 
 \subsection{Pyramid match kernel for HSRM}
-\label{src/act/hsrmmatch}
+\label{sec/act/hsrmmatch}
 % done 
 Quantisation is a major issue for bag-of-words models for object recognition tasks in general. It is often difficult to determine an optimal codebook size, which is dependent on both training and testing data. 
 If a codebook is too small, useful information is discarded due to quantisation errors, affecting its discriminative power. 
@@ -429,8 +432,10 @@ The random forest trained on the BOST histograms classifies a query video $\vfas
 \end{equation}
 
 %done 
-\subsection{Combined classification} 
-Final action recognition is performed separately by the proposed kernel k-means forest classifier and by BOST. While HSRM has proved effective in most of the cases owing to its both local and structural information, BOST works well owing to its powerful RF classifier on some particular action classes. By integrating classification results of both methods, average performance is significantly improved. A final class label is assigned to the class $c$ which obtains the highest combined posterior probability as
+\subsection{Late fusion classification} 
+Final action recognition is performed separately by the proposed kernel k-means forest classifier and by BOST. While HSRM has proved effective in most of the cases owing to its both local and structural information, BOST works well owing to its powerful RF classifier on some particular action classes. By integrating classification results of both methods, average performance is significantly improved. 
+
+A final class label is assigned to the class $c$ which obtains the highest posterior probability in a late fusion sceheme:
 \begin{equation}
 	\arg\max_{c}
 	\mathrm{P}(c|\vfastsetx) = 
@@ -438,7 +443,7 @@ Final action recognition is performed separately by the proposed kernel k-means 
 	\alpha_c \mathrm{P}_{H}(c|\vfastsetx) + (1 - \alpha_c) P_{B}(c|\vfastsetx),
 	\label{eqn/act/combine}
 \end{equation}
-where the weight $\alpha_c$ is set to maximise the true positive ratio (sensitivity) of a class $c \in C$ over the given training dataset $D$, using gradient descent or line search in equation \ref{eqn/act/alpha}:
+The parameter $\alpha_c$ controls the weight of $\mathrm{P}_{H}(c|\vfastsetx)$ and $P_{B}(c|\vfastsetx)$ in the late fusion scheme. It is set to maximise the true positive ratio (sensitivity) of a class $c \in C$ over the given training dataset $D$, using gradient descent or line search in equation \ref{eqn/act/alpha}:
 \begin{equation}
 \begin{aligned}
 	\alpha_c & = \displaystyle\argmax_{\alpha}\mbox{Sensitivity}(\tdata,\alpha) \\[3mm]
@@ -645,4 +650,5 @@ The proposed system demonstrated comparable accuracies over state-of-the-art app
 % Move to conclusions 
 % Future challenges include tackling more complex realistic human actions and partial occlusions, as well as performing continuous action detection in real-time.
 
-However, there are also several limitations to the proposed approach. Firstly, its feature detection and feature extraction are not scale invariant. In this work, the VFAST interest point detector performs on raw voxel values instead of a scale space. Additionally, fixed size cuboids are extracted from the input video snippets. Secondly, although the proposed system performs well in controlled environments, \eg the KTH dataset, it is vulnerable to appearance changes, such as different clothing or moving background objects. Finally, the spatiotemporal structures of actions are described by a fixed number of association rules in equation \ref{eqn/act/rules}. These rules are manually designed for a particular set of actions, \ie the KTH dataset and the UT-interaction dataset, therefore only a limited set of actions can be learned effectively. 
+However, there are several limitations to the proposed approach. Firstly, its feature detection and feature extraction are not scale invariant. In this work, the VFAST interest point detector performs on raw voxel values instead of a scale space. In addition, fixed size cuboids are extracted from the input videos. Secondly, while the proposed approach performs well in controlled environments, \eg the KTH dataset, it is vulnerable to appearance changes, such as clothing or moving background objects. Finally, the relationships among codewords are described by a fixed set of association rules in equation \ref{eqn/act/rules}. These manually designed association rules are limited to a specific set of action data, \eg the KTH dataset or the UT-interaction dataset.
+% The action classification algorithm presented in this chapter is not completely compatible in chapter \ref{chap/body}. 

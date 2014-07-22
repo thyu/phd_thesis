@@ -100,8 +100,8 @@ The main contributions of this thesis are:
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=1\linewidth]{./fig/intro/intro.pdf}
-\caption{\textbf{Thesis outline}} 
+\includegraphics[width=1\linewidth]{./fig/intro/intro2.pdf}
+\caption{\textbf{Thesis outline}. Part I is concerned with the feature detection, classification and pose estimation of 3D geometric shapes. Part II proposes new approaches to human action classification and pose estimation from spatiotemporal data.} 
 \label{fig/intro/outline}
 \end{figure}
 
@@ -135,33 +135,80 @@ The structure of this thesis is outlined in figure \ref{fig/intro/outline}. In p
 %\paragraph{Chapter 2.} This chapter presents a literature review of 3D shape processing techniques.  Recent topics about 3D feature detection, shape representation, shape recognition and pose estimation are discussed.  
 
 \subsubsection*{Chapter 2. Evaluation of 3D feature detectors} 
+\iffalse
 A performance evaluation of volumetric 3D interest points is presented in this chapter. 
-It first provides an overview of current volumetric interest point detectors found in the literature. A selection of interest point detectors are then evaluated quantiatively using a new performance metric. 
+It first provides an overview of current volumetric interest point detectors found in the literature. 
+A selection of interest point detectors are then evaluated quantiatively using a new performance metric. 
 % Finally, the qualitative characteristics of each of the detectors is also discussed.
 The qualitative characteristics of the interest points are compared and analysed.
 (This work has also appeared in the International Journal of Computer Vision, volume 102 (1--3), 2013 \cite{Yu2013a}.)  
+\fi
+
+Feature detection is an essential steps for many 3D object recognition algorithms. Various 3D interest point detectors have been proposed for different applications. While there exist comprehensive reviews for 2D interest point detectors, \eg \cite{Mikolajczyk2004}, 3D interest points have not been studied extensively. 
+
+A performance evaluation of volumetric 3D interest points is presented in this chapter. 
+It first provides an overview of current volumetric interest point detectors found in the literature. 
+A selection of interest point detectors are then evaluated quantiatively using the repeatability area score, which is a new unified metric that describes the repeatability and accuracy of an interest point detector. 
+% Finally, the qualitative characteristics of each of the detectors is also discussed.
+The qualitative characteristics of the interest points are compared.  
+This chapter concludes by categorising and analysing the experimental results of the candidate detectors.
+% ; it is suggested that the choice of 3D interest point detector is application depedent.
+
+(This work has also appeared in the International Journal of Computer Vision, volume 102 (1--3), 2013 \cite{Yu2013a}.)  
 
 \subsubsection*{Chapter 3. 3D Constellation model from unknown pose}
-This chapter presents a weakly-supervised constellation model for simultaneous 3D shape recognition and pose estimation. 
-The proposed model learns the shape, appearance and pose of an object class from training exemplars, \eg images or point clouds, which contain examples of the object in unknown poses.  
+
+This chapter is concerned with the tasks of classification and pose estimation of 3D geometric shapes. 
+Traditional part-based models, such as the constellation model \cite{Weber2000}, do not infer a complete object pose during testing. In addition, their training instances are required to be registered to a common reference frame.
+
+A weakly-supervised constellation model for simultaneous 3D shape recognition and pose estimation is proposed. 
+It learns the shape, appearance and pose of an object class from training exemplars, \eg images or point clouds, which contain examples of the object in unknown poses. 
+A new particle-based expectation-maximisation (EM) algorithm is employed to learn the proposed constellation model. During the training process, data instances are registered by the proposed particle-based EM algorithm.
+The proposed model also performs classification and registration simultaneously in testing. 
 
 \subsection*{Part II --- Human action analysis}
 
 %\paragraph{Chapter 5.} This chapter introduces various sub-problems in human action analysis, including human action recognition, body pose estimation and hand pose estimation.  It discusses the application of random forests and its variants to model human actions and poses. It also reviews the existing approaches for the above sub-problems. 
 
 \subsubsection*{Chapter 4. Human action classification} 
-This chapter addresses the recognition sub-problem in human action analysis. A spatiotemporal semantic and structural forest is proposed to recognise human actions in real-time.    
+\iffalse
+This chapter addresses the recognition sub-problem in human action analysis. 
+A spatiotemporal semantic and structural forest is proposed to recognise human actions in real-time.    
+(This work has been presented in the 2010 British Machine Vision Conference \cite{Yu2010}.)  
+\fi
+
+This chapter addresses the sub-problem of human action classification. A real-time human action classification framework is proposed. Video patches are encoded to visual codewords efficiently by a semantic texton forest \cite{Shotton2008}. The Hierarchical Spatiotemporal Relationship Match (HSRM) is introduced to capture both appearance and structural information of the visual codewords. The classification result from the HSRM algorithm is combined with the output of a traditional bag-of-words model, using a late fusion scheme.  
+
 (This work has been presented in the 2010 British Machine Vision Conference \cite{Yu2010}.)  
 
 \subsubsection*{Chapter 5. 3D human body pose estimation} 
+\iffalse
 This chapter presents a new approach to 3D body pose estimation in unconstrained, monocular videos. 
 A new hybrid decision forest is introduced, in order to perform action detection and pose estimation simultaneously. 
 Pose estimation is based on action detection, which includes joint classification and localisation of actions in videos. 
 (This work has been presented in the 2013 IEEE Conference on Computer Vision and Pattern Recognition \cite{Yu2013}.)  
 % By combining regression random forests with action detection, the proposed method infers 3D poses from unconstrained, monocular videos. 
+\fi
+
+This chapter aims to develop a new approach to estimate 3D body poses from unconstrained, monocular videos. 
+A deformable part model (DPM) is employed to detect 2D body parts, which are highly robust to appearance changes and cluttered backgrounds. 2D shape-based feature vectors are computed from the detected body parts for 3D pose estimation. 
+
+Two different random forest algorithms are introduced to estimate 3D body pose from the 2D feature vectors. 
+A new hybrid action detection forest is proposed to perform action detection and pose estimation. A regression forest is also presented to estimate 3D joint locations at the same time. Pose estimation results from the two forests are combined using a probabilistic late fusion scheme. A new Action-Pose-Estimation (APE) dataset is collected to evaluate the performances of action classification and pose estimation simultaneously. 
+
+(This work has been presented in the 2013 IEEE Conference on Computer Vision and Pattern Recognition \cite{Yu2013}.)  
 
 \subsubsection*{Chapter 6. 3D hand pose estimation} 
-This chapter addresses the sub-problem of 3D hand pose estimation. 
-The regression tree learning algorithm introduced in chapter \ref{chap/body} is further developed to estimate 3D hand pose from different viewpoints. 
-A data-driven inverse kinematic scheme is also described to refine the occluded joints.
-(This work will also be presented in the 14th IEEE International Conference of Computer Vision, 2013 \cite{Tang2013}.)
+
+\iffalse
+This chapter addresses the sub-problem of articulated hand pose estimation. The Semi-supervsed Transductive Regression forest (\STR\ forest) is proposed to estimate 3D hand poses from noisy depth images.
+The action detection tree learning algorithm introduced in chapter \ref{chap/body} is extended to perform various tasks, including viewpoint classification, joint classification and regression. 
+A data-driven inverse kinematic technique is proposed to refine the occluded joints. (This work has been presented in the 14th IEEE International Conference of Computer Vision, 2013 \cite{Tang2013}.)
+\fi
+
+This chapter addresses the sub-problem of articulated hand pose estimation.  Unlike body poses, hand poses are prone to self-occlusions and viewpoint changes. Realistic training data are costly via manual labelling, because of sampling noise and the complex structure of human hands. 
+
+In this work, the Semi-supervised Transductive Regression forest (\STR\ forest) is proposed. Similar to the action detection forest in chapter \ref{chap/body}, the \STR\ forest performs various recognition tasks, including viewpoint classification, joint classiication and regression. It utilises both synthetic and realistic training data by transductive learning, which creates associations between the two training dataset. In addition, semi-supervised learning is employed in the \STR\ forest training algorithm, in order to utilise the unlabelled data.
+Furthermore, a data-driven inverse kinematic technique is also presented to recover the occluded joints from the \STR\ forest.
+
+(This work has been presented in the 14th IEEE International Conference of Computer Vision, 2013 \cite{Tang2013}.)

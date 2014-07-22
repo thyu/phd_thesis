@@ -1,5 +1,5 @@
 \chapter{Conclusion}
-\label{chap/conclusion}
+\label{chap/conradient}
 
 In this thesis, the problems of object classification and pose estimation from 3D visual data has been studied. This chapter concludes the findings of this research, identifies the limitations of the proposed solutions, and suggests possible directions for future work.  
 
@@ -46,8 +46,8 @@ For discriminative pose estimation approaches, such as the solutions proposed in
 
 \section{Future work}
 
+\iffalse
 Interesting work directions are summarised as follows.
-
 \begin{itemize}
 	\item \textbf{Inferring 3D structures from 2D images} \\  
 	In chapter \ref{chap/reg}, the SAP constellation model is built from features of the same modality (3D model from shape descriptor, 2D model from image patches). Inspired from the work of Pepik \etal \cite{Pepik2012} and Sun \etal \cite{Sun2009}, it is interesting to design a framework for building a 3D constellation model using 2D images from multiple unknown viewpoints. However, matching part appearances from extreme viewpoints is a challenging problem.  
@@ -62,6 +62,84 @@ Interesting work directions are summarised as follows.
 	\item \textbf{Hand pose estimation from high-resolution depth images}\\
 	High-resolution, low-noise and real-time time-of-flight cameras have become available recently \cite{Nair2012}. Since they capture high-definition depth images with less missing data, the existing problem of sampling noise will be alleviated. New hand pose estimation algorithms should focus on utilising the high-resolution depth images, in order to provide improved accuracy.  
 \end{itemize}
+\fi
 
+% Interesting work directions are describedas follows. 
+This thesis has introduced several new approaches for classification and pose estimation of 3D geometric shapes and human actions.These approaches have been evaluated by various experiments described in the previous chapters. Their strengths and limitations have been studied and discussed based on the experimental results. To addresses these limitations, potential directions for future research are suggested as follows.
+
+\subsection{New approaches to 3D shape recognition}
+
+This thesis has presented a new approach for 3D geometric shape recognition in chapter \ref{sec/reg}. Instead of vote-based methods \cite{Flitton2010, Knopp2010, Pham2011}, the proposed SAP constellation model performs 3D shape classification and registration simultaneously, without registered training data. However, according to the experimental results, there is still plenty of room for improvement in the model. 
+
+\paragraph{Designing a robust 3D feature descriptor}
+
+As discussed in section \ref{sec/reg/conclusions}, pose clustering and local maxima are the major issues of the SAP framework. The experimental results in section \ref{sec/reg/reg} have shown that feature descriptors of corresponding interest points cannot be matched, therefore testing instances are clustered into several groups by the SAP learning algorithm.  
+
+% Detection and extraction of 3D shape features are crucial to the proposed SAP model as well as other 3D object recognition algorithms.
+The processes of feature detection and feature extraction are crucial to 3D object recognition. 
+In the SAP constellation model, the shapes of object parts are determined by a DoG feature detector, while a $31$-dimensional feature descriptor represents the appearance of each object part.  
+Although the process of 3D feature detection has been evaluated and discussed in chapter \ref{chap/eval}, 3D feature descriptors have not been widely studied.
+% Various types of 3D feature descriptors have been proposed, such as signature-based and histogram-based descriptors. 
+% Each descriptor is designed for a particular task, and their robustness in general use has not been studied.    
+Further work will focus on investigating the impact of different 3D feature descriptors to 3D shape classification, and pose estimation tasks. It is also a potential research direction to develop a robust, rotation-invariant 3D feature descriptor for 3D shape classification and registration.
+
+\paragraph{New approaches for 3D shape classification and registration}
+
+In the proposed SAP model, instead of using a global covariance matrix for part shapes, part shapes are represented by independent spherical Gaussians, which facilitate a simpler, analytical optimisation solution for pose estimation via the particle-based EM algorithm, as described in section \ref{sec/reg/particlebasedapprox}. 
+This assumption restricts the shapes and spatial arrangements of object parts. 
+The spatial dependencies among object parts are also ignored.  
+In the proposed SAP model, direct similarity transforms are used to describe object poses for model simplicity. 
+Object poses are therefore limited to rigid transforms.
+
+As a result, it is crucial to improve the shape and pose models of the SAP framework. 
+However, a simple analytical solution for inference is not feasible when more variables are introduced to the new shape and pose models. 
+Future work should also consider introducing new optimisation methods to perform simultaneous classification and registration efficiently.
+
+\subsection{New directions to 3D human pose estimation}
+
+\paragraph{Real-time video-based 3D pose estimation}
+Run-time performance is of crucial importance in many computer vision applications, such as human-computer interface and video surveillance. Recent literature has already implemented real-time 3D HPE solutions from depth images, \eg \cite{Baak2011, Girshick2011, Sun2012}, but a video-based solution is still absent. Traditional video-based 3D HPE solutions usually require visual tracking or iterative optimisation, which are difficult to attain a real-time performance \cite{Pons-Moll2011, Sigal2012}. Designing a real-time algorithm for video-based 3D human pose estimation is a challenging task. 
+
+This thesis proposes a new video-based 3D HPE algorithm, which replaces traditional iterative optimisation processes by efficient decision tree-based pose estimators. However, the actual computation bottlenack is at the feature extraction process that detects body parts using a deformable part model (DPM). 
+
+Future work should consider methods to make the whole 3D HPE framework real-time. 
+The proposed 3D HPE framework, particularly its feature extraction process, can be accelerated by simplification, parallelisation and GPU computing. 
+For example, in the proposed 3D HPE framework, the 2D DPM detects body parts using a structured SVM \cite{Yang2011}. It is suggested that the run-time performance of the 2D DPM can be improved by replacing the structured SVM with a efficient classifier, such as boosting or random forest.
+
+In addition, new approaches for extracting robust features should also be considered.  
+For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} detects loose 2D body parts efficiently from unconstrained images. Although the poselet algorithm is designed for huamn segmentation originally, it is interesting to investigate if similar techniques can be applied to real-time feature extraction for 3D HPE. 
+
+\paragraph{Combining appearance-based and model-based pose estimator}
+
+In chapter \ref{sec/body} and \ref{sec/hand}, approaches for 3D pose estimation can be roughly categorised into appearance-based and model-based methods.  They show different characteristics in 3D pose estimation.
+Appearance-based approaches are usually less computationally demanding than model-based approaches. 
+% Drifting issue does not exist in appearance-based approaches as visual tracking is not used. 
+Since visual tracking is not used, appearance-based approaches are robust to arupt pose changes.
+On the other hand, model-based methods do not require a big training dataset to recognise a wide range of poses. Inverse kinematic techniques are often employed in model-based approaches for pose refinement. 
+
+A hybrid framework for 3D pose estimation is a potential search direction in the future. There exist various approaches to combine an appearance-based algorithm with a model-based algorithm.  
+For example, an efficient appearance-based algorithm, \eg random forest or k-nearest neighbour \cite{Keskin2012, Baak2011, Ye2011}, estimates a rough 3D pose. Subsequently, the initial pose estimation from the appearance-based pose estimator is used to set up a model-based pose estimator \cite{Pons-Moll2011, Sigal2012, Oikonomidis2011}, which further refines the output 3D pose.
+
+In the above coarse-to-fine hybrid framework, the model-based pose estimator enjoys faster run-time performance thanks to the initialisation by the appearance-based algorithm. Since the appearance-based algorithm does not recognise poses that are not included in the training data, the model-based algorihtm handles unseen poses naturally.
+
+\paragraph{Analysing human actions from high resolution depth data}
+
+High-resolution, low-noise and real-time time-of-flight cameras have become available recently \cite{Nair2012}. 
+The new generation of depth sensors capture depth images with higher resolution and lower sampling noise.  
+The long standing issues of sampling noise and missing data in 3D pose estimation have been largely alleviated. 
+
+Potential future research will focus on leveraging the new depth sensors efficiently, rather than extracting useful information from noisy depth images. 
+Future work should consider more sophisticated pose estimation task, \eg tracking subtle finger movements, or estimating multiple, overlapping 3D human bodies simultaneously.    
+
+% Since they capture high-definition depth images with less missing data, the existing problem of sampling noise will be alleviated. New hand pose estimation algorithms should focus on utilising the high-resolution depth images, in order to provide improved accuracy.  
+
+% The approach is conceptually similar to Keskin \etal \cite{Keskin2012}, but instead of two layers of random forests, a generative pose estimator is used at the fine grained level. 
+% Poses are first estimated efficiently by a discriminative model, at a coarse-grained level, detailed articulations are then inferred by a generative pose estimator. 
+% Poses are estimated accurately and efficiently by a generative model, which is initialised by a discriminative pose estimator. 
+% In addition, the proposed hybrid method also requires fewer labelled training data for its discriminative part. 
+
+% In chapter \ref{chap/reg}, the SAP constellation model is built from features of the same modality (3D model from shape descriptor, 2D model from image patches). Inspired from the work of Pepik \etal \cite{Pepik2012} and Sun \etal \cite{Sun2009}, it is interesting to design a framework for building a 3D constellation model using 2D images from multiple unknown viewpoints. However, matching part appearances from extreme viewpoints is a challenging problem.  
+
+\section{Summary}
 Three-dimensional object recognition have seen substantial improvement over the recent years.
 This thesis have answered several unresolved issues in classification and pose estimation of 3D shapes and human actions by presenting various novel solutions to the problems. While there is still a considerable way to go to achieve fully automatic 3D classification and pose estimation systems, it is believed that this thesis has taken a step towards practical applications. 

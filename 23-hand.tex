@@ -178,19 +178,29 @@ Various semi-supervised forest learning algorithms have been proposed. Shotton \
 
 % different shape --- apperance based 
 \begin{figure}[ht]
-	\includegraphics[width=1.00\linewidth]{fig/hand/overview.pdf}
-	\caption{\textbf{The proposed \STR\ learning model.}}
+	\includegraphics[width=1.00\linewidth]{fig/hand/overview2.pdf}
+	\caption{
+		\textbf{The proposed 3D hand pose estimation framework.} The training dataset contains both realistic and synthetic depth images. The proposed \STR\ forest is constructed from the training dataset to perform three tasks sequentially: viewpoint classification, joint classification and joint regression. Finally, incorrect 3D hand poses from the \STR\ forest is corrected by a data-driven joint refinement scheme. }
 	\label{fig/hand/concept}
 \end{figure}
 
 % done 
-The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}(top). 
-Training data is collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truh, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. 
-The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points, as shown in figure \ref{fig/hand/concept}. The proposed \STR\ learning algorithm introduces two new techniques to the traditional Hough and regression forest \cite{Gall2011}. 
+
+The proposed 3D hand pose estimation framework is illustrated in figure \ref{fig/hand/concept}.
+% The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}(top). 
+The training dataset used in the \STR\ learning algorithm is explained in section \ref{sec/hand/dataset}.
+Training instances are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truh, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points.
+
+The proposed \STR\ learning algorithm is presented in section \ref{sec/hand/strforest}.
+Two new techniques are introduced to the traditional Hough and regression forest \cite{Gall2011}. 
 Transductive realistic-synthetic associations is preserved throughout the learning process, such that the paired data points pass down to the same node. 
 Furthermore, the distribution of labelled and unlabelled realistic data are described jointly in the proposed \STR\ forest using an unsupervised learning term. 
 
-Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within a unified algorithm. Figure \ref{fig/hand/concept}(bottom) shows the different tasks performed by \STR\ forest. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
+Extending the action detection forest in chapter \ref{chap/body}, the \STR\ forest is a hybrid random forest that performs classification and regression tasks adaptively within a unified algorithm, as shown in figure \ref{fig/hand/concept}. At the top levels of each decision tree, it first classifies training patches of depth images, according to their view points. Subsequently, the second classification task takes place to classify patches with respect to their joint labels. Once the patches have been successfully classified, regression models are learned to estimate joint locations through a voting scheme.  
+
+Since the \STR\ forest does not consider the physiological structure of human hands, a data-driven joint refinement technique is introduced to refine the joint locations from the \STR\ forest. 
+The joint refinement algorithm is explained in section \ref{sec/hand/datadriven}.
+
 
 \section{Learning} 
 
@@ -232,6 +242,7 @@ Two patches $\real$ and $\syn$, by definition, are describing the same hand pose
 
 % done 
 \subsection{\STR\ forest} 
+\label{sec/hand/strforest}
 The proposed \STR\ forest performs clustering, classification and regression on both domains in one framework, rather than performing each task in a separate forest. 
 The proposed learning algorithm grows $\ntree$ decision trees by recursively splitting and passing the current training data to two child nodes. 
 The split function $\splitfunc$ of a node is a simple two-pixel test, similar to the proposed 3D HPE system in chapter \ref{chap/body}: 
@@ -384,6 +395,7 @@ The tunable parameter $\tssparam$ controls the relative importance of transducti
 
 % done 
 \subsection{Data-driven kinematic joint refinement}
+\label{sec/hand/datadriven}
 
 Since the proposed \STR\ forest considers joints as independent detection targets, structural information is essential to recover poorly detected joints when they are occluded or missing from the depth image. 
 It is also necessary to discard or correct anatomically impossible pose hypotheses.    
@@ -527,7 +539,7 @@ Subsequently, a synthetic dataset $\synset$ was generated by projecting the arti
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.32\linewidth]{fig/hand/hand.pdf}
-	\caption{\textbf{Colour codes and labels of the 16 hand regions.}}
+	\caption{\textbf{Colour codes and labels of the 16 hand regions.} The joint labels are used in figure \ref{fig/hand/single}. The colour codes are used to visualise the joint classification results in figure \ref{fig/hand/multiqual}.}
 	\label{fig/hand/label}
 \end{figure}
 
@@ -550,7 +562,7 @@ Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/hand/singleview.pdf}
-	\caption{\textbf{Joint classification accuracy of the single view sequence.}}
+	\caption{\textbf{Joint classification accuracy of the single view sequence.} Classification accuracy is defined as the percentage of correct foreground pixels. The unsupervised term $\usterm$ equals to one in the ``Transductive only'' \STR\ forest, hence unlabelled data are not used in training. Data-driven joint refinement is not performed in the baseline and the \STR\ forest approaches.}
 	\label{fig/hand/single}
 \end{figure}
 
@@ -603,7 +615,8 @@ Some large classification errors, \eg figure \ref{fig/hand/multiquantb2}, are co
 		\centering
 		\includegraphics[width=0.95\linewidth]{fig/hand/sq1_tip.pdf}
 	}
-	\caption{\textbf{Quantitative hand pose estimation results --- Sequence $B$}}
+	\caption{\textbf{Quantitative hand pose estimation results --- Sequence $B$.} 
+	These graphs shows the 3D hand pose localisation errors (in mm) against time (in frames). Localisation error is defined as the distance between the estimated joint location and its corresponding ground truth location. In addition to the proposed \STR\ forest and the data-driven joint refinement extension, the FORTH algorithm \cite{Oikonomidis2011} is also included as a reference.}
 	\label{fig/hand/multiquantb}
 \end{figure}
 
@@ -621,7 +634,7 @@ Some large classification errors, \eg figure \ref{fig/hand/multiquantb2}, are co
 		\centering
 		\includegraphics[width=0.95\linewidth]{fig/hand/sq2_tip.pdf}
 	}
-	\caption{\textbf{Quantitative hand pose estimation results --- Sequence $C$.}}
+	\caption{\textbf{Quantitative hand pose estimation results --- Sequence $C$.} Different from sequence $B$, the testing sequence $C$ contains more abrupt changes to viewpoint and pose than sequence $B$.}
 	\label{fig/hand/multiquantc}
 \end{figure}
 
@@ -665,5 +678,9 @@ With transductive learning, the \STR\ forest recognises a wide range of poses fr
 Semi-supervised learning is also applied to fully utilise the sparsely labelled realistic dataset. 
 To improve the estimation accuracy of heavily occluded hand poses, a data-driven pseudo-kinematic technique is used to correct the occluded joints.  
 
-The proposed hand pose estimation system was evaluated with respect to different challenging environments. From the quantitative and qualitative analyses, it demonstrated promising results in estimating articulated hand poses from noisy and strongly occluded data.  
-It also achieved superior accuracy and run-time performance compared with current state-of-the-art approaches.  
+The proposed hand pose estimation system was evaluated with respect to different challenging environments. From the quantitative and qualitative analyses, it demonstrated promising results in estimating articulated hand poses from noisy and strongly occluded data. It also achieved superior accuracy and run-time performance compared with current state-of-the-art approaches. 
+
+% limitation
+On the other hand, there are several limitations that affect the performance of the proposed pose estimation system. 
+For instance, the \STR\ forest does not model the anatomical constraints of human hands,\eg the constant distances between joints, and the limited ranges of joint angles. The data-driven joint refinement scheme (section \ref{src/hand/datadriven}) is an ad hoc extension to rectify anatomically infeasible hand poses from the \STR\ forest. In addition, similar to other appearance-based approaches, the proposed pose estimator does not recognise hand poses that are not present in the training data. Expanding the training dataset greatly increases the computational time of the learning process. 
+Furthermore, the proposed system estimates only one hand pose at a time, which is based on the assumption that one foreground object is presented in each input depth image.    

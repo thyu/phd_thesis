@@ -16,20 +16,6 @@ Most of the above techniques require a well-controlled environment, including a 
 As these ideal imaging conditions rarely exist in reality, the applicability of traditional 3D HPE is greatly restricted. 
 Furthermore, if changes are made to the imaging environments, the whole pose estimator has to be retrained, making the pose estimation algorithm not scalable. 
 
-\begin{figure}[th]
-	\centering
-	\includegraphics[width=1\linewidth]{fig/body/figure1_actionexplain.pdf} 
-	\caption{\textbf{Action detection + 3D pose estimation.} Action detection helps 3D pose estimation by providing the spatiotemporal structure of actions.} 
-	\label{fig/body/actionexplain}
-\end{figure}
-
-\begin{figure}[th]
-	\centering
-	\includegraphics[width=1\linewidth]{fig/body/figure2_transferexplain.pdf}
-	\caption{\textbf{Knowledge transfer capability.}} 
-	\label{fig/body/transferexplain}
-\end{figure}
-
 
 % Make introduction longer?   
 % Occlusion 
@@ -50,6 +36,14 @@ is still an aspect that is overlooked by existing literature.
 In this work, human activities are considered as a collection of atomic, repeatable actions. 
 Each action is a time series of instantaneous poses, with particular starting and ending poses and their transitions in-between. Given appearance or spatiotemporal motion features, an action detection algorithm infers the current state of an action, which works as a strong prior for pose estimation.   
 
+\begin{figure}[th]
+	\centering
+	\includegraphics[width=1\linewidth]{fig/body/body_intro1.pdf} 
+	% \caption{\textbf{Action detection in 3D pose estimation.} Action detection helps 3D pose estimation by providing the spatiotemporal structure of actions.} 
+	\caption{\textbf{Action detection in 3D pose estimation.} Each atomic action has a unique spatiotemporal structure, \eg ``dance'' and ``clap''. Action detection determines the class label and the starting time of an atomic action. For example, a ``dance'' action is detected at time = $T-\Delta t$.  At current time = $T$, a strong pose prior is deduced from the spatiotemporal structure of the ``dance'' action.}
+	\label{fig/body/actionexplain}
+\end{figure}
+
 In this work, action detection is applied to extract spatiotemporal structures of human actions for pose estimation. A new action detection forest algorithm, an extension of the Hough forest \cite{Gall2009}, is introduced to infer a global body pose hypothesis.   
 In figure \ref{fig/body/actionexplain}, action detection categorises the action class and then estimates the relative space-time location of the recognised action with respect to the input video. In other words, action detection predicts the current states of an action, which assists 3D pose estimation within the action's time span. Once an action is detected, the current pose hypothesis can be determined by computing the relative spatiotemporal displacements between the current observation and the action's preceding poses as shown in figure \ref{fig/body/actionexplain}.   
 On top of its many benefits to pose estimation, action detection does not impose extra restrictions on the imaging environment. As discussed in chapter \ref{chap/act}, there already exist promising approaches for human action classification, action detection is therefore a suitable candidate to improve 3D HPE in realistic applications.   
@@ -63,7 +57,17 @@ On the contrary, in 2D human pose estimation (2D HPE), the detection of mid-leve
 As a result, 2D part-based pose estimation techniques are applied to infer 3D articulated poses. In the proposed approach, holistic shape features, such as silhouettes, are replaced by a deformable part model (DPM), which detects mid-level 2D body parts from low-level features before inferring the corresponding 3D poses. Existing DPM algorithms perform well in realistic and uncontrolled environments, they have shown promising robustness to cluttered backgrounds and appearance changes, \eg different clothing. 
 Occlusions and view ambiguities of the DPM part detector are corrected by the 3D pose prior from action detection. 
 % Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
-Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
+% Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining (see figure \ref{fig/body/transferexplain}). 
+Being robust to different imaging conditions, the proposed method is therefore knowledge transferable, learned models can be reused in unseen environments without retraining. 
+
+\iffalse
+\begin{figure}[th]
+	\centering
+	\includegraphics[width=1\linewidth]{fig/body/figure2_transferexplain.pdf}
+	\caption{\textbf{Knowledge transfer capability.} } 
+	\label{fig/body/transferexplain}
+\end{figure}
+\fi
 
 % Done 
 \subsubsection{Cross-modality pose estimation} 
@@ -162,28 +166,33 @@ Most deformable part models (DPM) for 2D HPE are built upon the original seminal
 %Despite achieving remarkable performances, particularly in uncontrolled environments, 
 As DPMs have shown encouraging performances in 2D HPE, especially in uncontrolled environments, it is suggested that similar techniques can be applied to improve 3D HPE. For example, by applying suitable inverse kinematic constraints, 3D poses can be estimated accurately from images with manually labelled parts \cite{Wei2009, Ramakrishna2012}. In addition, the poselet algorithm \cite{Bourdev2009} estimated a rough 3D pose by learning 2D part templates. Andriluka \etal \cite{Andriluka2010} used a pedestrian detector with an automatic deformable DPM algorithm to estimate rough 3D poses in street scenes. Simo-Serra \etal \cite{Simo-Serra2012} applied inverse kinematics to optimise for the most probable 3D pose configuration from multiple noisy 2D DPM hypotheses. To summarise, the above-mentioned approaches demonstrate a greater flexibility than the traditional holistic-based 3D HPE systems. Hence, the use of part-based, mid-level features in multi-action 3D HPE is a topic with great research potential. 
 
+\begin{figure}[!th]
+	\centering
+	\includegraphics[width=0.95\linewidth]{fig/body/body_overview.pdf}
+	\caption{\textbf{Overview of the proposed framework.} A 2D deformable part model (DPM) is used for feature detection. Pose configurations are estimated globally by the action detectino forest, and locally by the regression forest. The final 3D pose is combined probabilistically using a late fusion scheme.}
+	\label{fig/body/overview}
+\end{figure} 
+
 \section{Overview}
 \label{sec/body/method}
 
-\begin{figure}[t]
+The proposed 3D HPE framework is overviewed in figure \ref{fig/body/overview}. 
+Feature detection is done by a 2D deformable part model, which estimates 2D pose configurations in a video snippet. A feature vector is extracted from a 2D pose configuration, by computing the normalised pairwise distances among the body parts. 
+In section \ref{sec/body/adflearn}, action detection is first performed by the action detection forest $\forestd$ to yield a rough holistic 3D pose estimate $\bodyposead$. 
+Given the classe labels $\action$ from action detection, the cross-modality regression forests $\forestr$ are applied to refine the 3D pose estimations in section \ref{sec/body/jrflearn}. 
+While full poses, \ie 3D coordinates of all $\njoints$ joints, are learned in the action detection forest, one joint location is estimated per cross-modality regression forest. 
+$\njoints$ regression forests are hence trained separately in the model to compute another 3D pose configuration $\bodyposepr$. 
+Two pose configurations, $\bodyposead$ and $\bodyposepr$, are estimated independently from action detection forest and pose regression forest. In section \ref{sec/body/combine}, a late fusion scheme is then applied to produce a probabilistic 3D pose estimate $(\finalbodypose, \finalvariance)$.  The proposed graphical model is also explained in figure \ref{fig/body/figure4gm}.
+
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.35\linewidth]{fig/body/figure4.pdf}
 	\caption{\textbf{Graphical representation of the proposed model.}}
 	\label{fig/body/figure4gm}
 \end{figure}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=1\linewidth]{fig/body/figure3_overview.pdf}
-	\caption{\textbf{Overview of the proposed framework.}}
-	\label{fig/body/overview}
-\end{figure} 
-
-
-Figure \ref{fig/body/figure4gm} describes the graphical model of the proposed 3D HPE framework: action detection is first performed to yield a rough holistic 3D pose estimate $\bodyposead$, then cross-modality regression forests with the estimated action classes $\action$ are applied to refine the 3D pose estimations. 
-While full poses, \ie 3D coordinates of all $\njoints$ joints, are learned in the action detection forest, one joint location is estimated per cross-modality regression forest. 
-$\njoints$ regression forests are hence trained separately in the model to compute another 3D pose configuration $\bodyposepr$. 
-The flow of the proposed framework is explained in figure \ref{fig/body/overview}. Two pose configurations are estimated independently from action detection forest and pose regression forest, a late fusion scheme is then applied to produce a probabilistic 3D pose estimate.  
+% why chapter 4 is not used
+The real-time action classification algorithm in chapter \ref{chap/act} is not applied in this 3D HPE framework. The HSRM framework in \ref{chap/act} performs action classification instead of action detection. Although action labels can be classified efficiently, the starting spatiotemporal positions of the actions cannot be determined. In addition, the semantic texton forest used in chapter \ref{chap/act} works on video cuboids, which is sensitive to appearance changes. 
 
 \section{Feature extraction}
 \label{sec/body/featureextraction} 
@@ -226,6 +235,7 @@ Subsequently, 3D poses $\pset$ of each action category are compressed separately
 % Done 
 \subsection{Action detection forest}
 \label{sec/body/adflearn}
+
 The action detection forest, $\forestd$, performs action \emph{classification} and 3D pose \emph{clustering} simultaneously.  
 In each leaf node, the 3D pose vectors $\ppset$ are classified into the action class labels $\aset$ and vectors of similar 3D poses are grouped together.
 For given data triplets $\{\fset,\ppset, \aset\}$, $\ntreed$ decision trees are constructed by recursively splitting the data into two child nodes. 
@@ -460,6 +470,7 @@ Similar to the action detection forest, the regression result for the $j$-th joi
 \end{equation}
 
 \subsection{Combined pose estimation}
+\label{sec/body/combine}
 
 While the action detection phase estimates a 3D body pose globally, the regression forest refines each joint locally. Their results are combined to produce the output estimate. Since each joint is described as a Gaussian distribution in $\forestd$ and $\forestr$, assuming $\bodyposepr_{\timenow}$ and $\bodyposead_{\timenow}$ are independent, the probability that of both observations coincide at $\bodyposez$ is formulated as
 \begin{equation}
@@ -564,24 +575,35 @@ In order to make a fair comparison, the joint coordinates from the frame-based a
 Action classification rates of individual frames by both forests are presented in figure \ref{fig/body/confm}. 
 The action detection forest achieves excellent accuracy, as it has been optimised for classification in the early stage of learning. The use of video snippets also provides temporal cues that improve classification. It complements the regression forests that focus on the localisation accuracy of joints.    
 The average 3D joint localisation errors of the experiments are reported in figure \ref{fig/body/errorplot3d}. 
+The articulated model in figure \ref{fig/body/jointlabels} showns the $15$ joint labels defined in the proposed 3D HPE framework.
 Sample results of the proposed method are also presented in figures \ref{fig/body/APE1}, \ref{fig/body/APE2} and \ref{fig/body/APE3}. 
 
 \begin{figure}[ht]
 \centering
-	\includegraphics[width=0.8\linewidth]{fig/body/errplot3d.pdf} 
-	\caption{\textbf{3D joint localisation errors.} The detected joint locations were compared with the ground truth poses captured from a Kinect sensor.}
+	\includegraphics[width=0.9\linewidth, trim = {0 0 0 8mm}, clip]{fig/body/errplot3d.pdf} 
+	\includegraphics[width=1\linewidth]{fig/body/legend_small.pdf} 
+	\caption{\textbf{3D joint localisation errors.} 3D localisation errors are the Euclidean distances between the estimated joint locations and their corresponding ground truth locations. The proposed 3D HPE approaches, \ie action detection forest and pose regression forest, are compared. }
 \label{fig/body/errorplot3d}
 \end{figure}
+
+\begin{figure}[ht]
+\centering
+	\includegraphics[width=0.45\linewidth]{fig/body/body_body.pdf} 
+	\caption{\textbf{Joint label names of the proposed 3D HPE system.} In this work, a 3D human pose is represented by fifteen 3d joint locations. }
+\label{fig/body/jointlabels}
+\end{figure}
+
 
 Figure \ref{fig/body/errorplot2d} illustrates the 2D localisation errors of the proposed method.
 The proposed framework shows promising results, by extending the flexibility of Yang and Ramanan \cite{Yang2011}, the proposed method shows high robustness in 3D pose estimation and outperforms both state-of-the-art approaches in the 2D tests. The hand parts have the highest localisation errors because of their large movements and frequent occlusions, which are indicated by the big variance ellipsoids in figures \ref{fig/body/APE1}, \ref{fig/body/APE2}, \ref{fig/body/APE3}.
 
-\begin{figure}[ht]
+\begin{sidewaysfigure}[!ht]
 	\centering
-	\includegraphics[width=1.00\linewidth]{fig/body/errplot2d.pdf} 
-	\caption{\textbf{2D joint localisation errors.} Joint locations were back-projected and compared with other state-of-the-art 2D HPE algorithms.}
+	\includegraphics[width=0.9\linewidth, trim = {0 0 0 8mm}, clip]{fig/body/errplot2d.pdf} 
+	\includegraphics[width=0.7\linewidth]{fig/body/legend_big.pdf} 
+	\caption{\textbf{2D joint localisation errors.} 2D localisation errors are the Euclidean distances between the back-projected joint coordinates and their corresponding ground truth locations. The proposed approaches are compared with the state-of-the-art 2D HPE algorithms.}
 \label{fig/body/errorplot2d}
-\end{figure} 
+\end{sidewaysfigure} 
 
 \input{include/body_class3d}
 

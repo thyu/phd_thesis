@@ -23,6 +23,61 @@
 
 \begin{document}
 
+\maketitle
+\frontmatter
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstracts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{abstracts}
+	\input{0f-abs}
+ \end{abstracts}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{declarations}
+ \input{0f-dec} 
+\end{declarations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{acknowledgements}
+	\input{0f-ack}
+\end{acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Tables / Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{KeepFromToc}
+ \tableofcontents \newpage
+ \end{KeepFromToc} 
+ \listoffigures \newpage
+ \listoftables
+\printnomenclature  %% Print the nomenclature
+\addcontentsline{toc}{chapter}{Nomenclature}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mainmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+ \include{01-intro}
+ \part{3D Shape}
+ \include{11-eval}
+ \include{12-reg}
+ \part{Human Action Analysis}
+ \include{21-act}
+ \include{22-body}
+ \addcontentsline{toc}{part}{} % add a fake part to table of contents
+ \include{23-hand}
+\include{31-discussion} 
+\backmatter
+ \appendix
+\include{a1-app}
+
+\iffalse
 %\maketitle
 %\frontmatter
 %\pagenumbering{roman}
@@ -68,14 +123,16 @@
 % \include{11-eval}
 % \include{12-reg}
 % \part{Human Action Analysis}
-\include{21-act}
-%\include{22-body}
+% \include{21-act}
+% \include{22-body}
 % \addcontentsline{toc}{part}{} % add a fake part to table of contents
 % \include{23-hand}
-% \include{31-discussion} 
+\include{31-discussion} 
 \backmatter
 % \appendix
 %\include{a1-app}
+\fi
+
 
 \bibliographystyle{abbrv}
 \renewcommand{\bibname}{References} 

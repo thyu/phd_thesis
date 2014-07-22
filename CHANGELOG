@@ -1,10 +1,26 @@
 Changelog:
-- Corrected grammatical errors
+
+GENERAL CHANGES
+===================================
+- Corrected all grammatical errors and typos marked
+- Done spell checking manually and with a spellchecker
+- All figures are labelled and referenced at least once in the text
+- The testing dataset for chapter 5 is now available at: http://www.thyu.org/ape/
+- The testing dataset for chapter 6 is now available at: http://www.iis.ee.ic.ac.uk/~dtang/hand.html
+
+Abstract
+===================================
 - Fixed typos
+- Expanded the introduction to chapter 5 (body pose estimation) and 6 (hand pose estimation).
 
 DECLARATION
 ===================================
-- Change "abstract" to "paper" in the declaration
+- Changed "abstract" to "paper" in the declaration
+
+INTRODUCTION
+===================================
+- Revised figure 1.1
+- The thesis outline (section 1.2.3) has been extended
 
 EVAL3d
 ===================================
@@ -30,6 +46,7 @@ REG
 - Added table 3.3
 - Corrected figure 3.3
 - Increase the size of figure 3.5
+- Added implementation details of the Toshiba point cloud dataset used in the experiments.
 - For the method evaluated in fig 3.6, added brief introduction to Hough transform and it variants, \eg \cite{Woodford2013} and \cite{Barinova2010},  in the related work section.
 - Revised the explanation of figure 3.6
 - Limitations of the proposed method is discussed in the summary
@@ -45,21 +62,34 @@ ACTION
 - In table 4.1,  "relative running time" is used instead of "relative speed", speedup factor is added to the table for reference.
 - Redrawn figure 4.5 to describe the 3D histograms of the proposed HSRM algorithm.
 - Revised the description for figure 4.5 in the text
+- Added introduction to the origin SRM algorithm \cite{Ryoo2009} in section 4.6
 - Added figure 4.6 to illustrate pyramid match kernel for the HSRM histogram.
-- Added the description of figure 4.6 in the text. 
-- Add limitations of the proposed action classification system.
+- Added the description of figure 4.6 in the text.  - Add limitations of the proposed action classification system.  - Change the title of 4.7.2 from "Combined classification" to "Late fusion classificaiton"
+- Explained parameter $\alpha_c$ in the late fusion scheme
 
 BODY
 ====================================
+- Re-designed figure 5.1
+- Removed the old figure 5.2 as it is not necessary in explaining the knowledge transfer ability of the proposed method.
+- Redrawn figure 5.2 (the overview) and revised its description in the text
+- Revised the description of figure 5.3 (graphical model, the old figure 5.2) in the text
+- Discussed the reasons of not use HSRM algorithm (chapter 4) in section 5.3
+- Revised legend of figure 5.5 and 5.7
+- Added figure 5.6 to show the joint names used in the experiment.
 
 HAND
 ====================================
+- In section 6.2.1, "generative" and "discriminative" approaches are renamed to "model-based" and "appearance-based" respectively, according to the literature review by Erol et al. \cite{Erol2007}.
+- Revised the description of the "apperance-based" methods.  
+- Revised figure 6.2. to explain the proposed framework properly.
+- Revised the text describing figure 6.2 (section 6.3)
+- In section 6.4.2 "Viewpoint classification term", reservoir sampling is explained (actually it is "random sampling without replacement"), \cite{Vitter1985} has been added as a reference.
+- In section 6.4.2, the adaptive switching paramters is explained. 
+- Added caption to figure 6.4
+- Added caption to figure 6.5
+- Added caption to figure 6.6
+- In section 6.7, limitations of the proposed model is discussed
 
-- 6.2.1
-	- Change "generative" and "discriminative" to "model-based" and "appearance-based" respectively, according to Erol 2007.
-	- Change the order of sentences for smoother description in the "apeparance-based" method 
-	- Minor editing
-
-- 6.4.2
-	- In subsection "Viewpoint classification term", reservoir sampling is explained (actually it is "random sampling without replacement"), \cite{Vitter1985} has been added as a reference.
-	- Explained the adaptive switching paramters and how they affects the learning algorithm down the tree.
+CONCLUSIONS
+====================================
+- Future work is expanded and elaborated
