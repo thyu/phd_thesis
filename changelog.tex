@@ -1,0 +1,127 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage{geometry}
+\usepackage{color}
+
+\title{Thesis Change Record \\ {\large Classification and Pose Estimation of 3D Shapes and Human Actions} }
+\author{Tsz-Ho Yu}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{General Changes}
+\begin{itemize}
+\item All grammatical errors and typos marked by the examinars are fixed.
+\item Spellchecking has been performed manually and with a spellchecker program.
+\item All figures are labelled and referenced at least once in the text.
+\item The testing dataset for chapter 5 is now available at: http://www.thyu.org/ape/
+\item The testing dataset for chapter 6 is now available at: http://www.iis.ee.ic.ac.uk/~dtang/hand.html
+\end{itemize}
+
+\section{Abstract}
+\begin{itemize}
+\item All typos are fixed.
+\item Introductions to chapter 5 and 6 are expanded.
+\end{itemize}
+
+\section{Declaration}
+\begin{itemize}
+\item ``Abstract'' are changed to ``paper'' in the declaration.
+\end{itemize}
+
+\section{Chapter 1: Introduction}
+\begin{itemize}
+\item Figure 1.1 has been revised.
+\item The thesis outline (section 1.2.3) has been expanded.
+\end{itemize}
+
+\section{Chapter 2: Evaluation of 3D Feature Detectors}
+
+\begin{itemize}
+\item Cosmetic improvements to Table 2.1: fixed missing table border in the first row
+\item Cosmetic improvements to Table 2.2: revised the table headers
+\item Figure 2.4 is made bigger.
+\item The captions of figure 2.5, 2.6 have been revised.
+\item Table 2.3 has been rotated to utilise full page space. 
+\item The caption of figure 1.10 is edited slightly.
+\item In section 2.1, added a reference \cite{Hadfield2013} as an example of treating depth images as spatiotemporal volumes.
+\item In section 2.2.1, added a reference \cite{Hadfield2013} in both corner detector (for 3.5D/4D Harris) and blob detector (for 3.5D/4D Hessian)
+\end{itemize}
+
+\section{Chapter 3: 3D Constellation Model From Unknown Poses}
+\begin{itemize}
+\item The explanation of a constellation model (``A constellation model is...'') has been expanded and moved from section 3.3.1 to the end of section 3.1. 
+\item A new figure (figure 3.1) is added as an overview of the proposed approach. 
+\item Table (table 3.1) is added to list the random variables used in the graphical model.
+\item The subfigures in figure 3.2 become bigger, more examples has been added to figure 3.2(a); the caption of figure 3.2 is revised.
+\item The caption of figure 3.3 is edited. The layout of figure 3.3 is revised.
+\item Table 3.2 (old table 3.1) is revised:
+	\begin{itemize}
+	\item Table 3.3 is added to provide more information about the random poses used in the experiments.
+	\item Definition of K and Q are added to the caption.
+	\item Table 3.2 is rotated.
+	\end{itemize}
+\item Figure 3.4 (the Bike dataset) is corrected.
+\item Figure 3.5 is made bigger.
+\item Implementation details (feature detector and feature descriptor) of the Toshiba point cloud dataset has been added.
+\item For the method evaluated in figure 3.6, a short introduction to Hough transform and its variants is added, e.g. \cite{Woodford2013} and \cite{Barinova2010}, in the ``related work'' section.
+\item The explanation of figure 3.6 is revised.
+\item Limitations of the proposed method is added in the summary section.
+\end{itemize}
+
+\section{Chapter 4: Human Action Classification}
+
+\begin{itemize}
+\item ``look-ahead time'' is renamed to ``recognition latency'' for clarity.
+\item Figure 4.2 (Overview of the proposed approach) has been redrawn. The caption of figure 4.2 is revised.
+\item Section 4.3 is edited to explain figure 4.2.
+\item Figure 4.3 has been redrawn. The caption of figure 4.3 is revised.
+\item Section 4.4 is edited to explain figure 4.3.
+\item In table 4.1,  ``relative running time'' is used instead of ``relative speed'', speedup factor is added to the table for reference.
+\item Figure 4.5 has been redrawn to explain the 3D histograms of the HSRM algorithm.
+\item The text explaining figure 4.5 is edited.
+\item Introduction to the origin SRM algorithm \cite{Ryoo2009} is added in section 4.6.
+\item Figure 4.6 is added to illustrate pyramid match kernel for the HSRM histogram.
+\item Description of figure 4.6 is added in the text.  
+\item Add limitations of the proposed action classification system.  
+\item The title of section 4.7.2 is changed from ``Combined classification'' to ``Late fusion classificaiton''.
+\item Parameter $\alpha$ in the late fusion scheme is explained in the text.
+\end{itemize}
+
+\section{Chapter 5: 3D Human Body Estimation}
+
+\begin{itemize}
+\item Figure 5.1 has been re-designed.
+\item The old figure 5.2 is removed as it is not related to the knowledge transfer ability of the proposed method.
+\item Figure 5.2 (the overview) has been redrawn.
+\item The description of figure 5.2 in the text is edited.
+\item The description of figure 5.3 (graphical model, the old figure 5.2) in the text is edited.
+\item In section 5.3, the reason of not using the HSRM algorithm (chapter 4) is explained.
+\item The legend of figure 5.5 and 5.7 are revised.
+\item Figure 5.6 is added to show the joint names (joint labels) used in the experiment.
+\end{itemize}
+
+\section{Chapter 6: 3D Hand Pose Estimation} 
+
+\begin{itemize}
+\item In section 6.2.1, ``generative'' and ``discriminative'' approaches are renamed to ``model-based'' and ``appearance-based'' respectively, according to the literature review by Erol et al. \cite{Erol2007}.
+\item The description of the apperance-based methods is revised and updated.  
+\item Figure 6.2 has been redrawn to explain the proposed framework clearly.
+\item Description of figure 6.2 in the text (section 6.3) are revised.
+\item In section 6.4.2 ``viewpoint classification term'', the reservoir sampling method is explained. (It is actually ``random sampling without replacement''), \cite{Vitter1985} is added to the text as a reference.
+\item In section 6.4.2, the adaptive switching paramters is explained. 
+\item Captions are added to figures 6.4, 6.5 and 6.6.
+\item In section 6.7, limitations of the proposed hand pose estimation model is discussed.
+\end{itemize}
+
+\section{Chapter 7: Conclusion}
+\begin{itemize}
+\item Future work is revised and expanded substantially. 
+\end{itemize}
+
+\bibliographystyle{apalike}
+\bibliography{references} 
+
+\end{document}

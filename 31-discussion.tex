@@ -1,5 +1,5 @@
 \chapter{Conclusion}
-\label{chap/conradient}
+\label{chap/conclusion}
 
 In this thesis, the problems of object classification and pose estimation from 3D visual data has been studied. This chapter concludes the findings of this research, identifies the limitations of the proposed solutions, and suggests possible directions for future work.  
 
@@ -22,7 +22,7 @@ A new 3D HPE framework has been proposed to estimate full 3D human poses from re
 A deformable part-model was utilised to detect 2D body parts in video, producing mid-level features that were robust to cluttered background and appearance changes. In addition, a new action detection forest has been used to classify and locate actions in space-time, providing high-level semantic information for pose estimation. Joint locations were subsequently refined using a regression forest. A new action and pose dataset has been collected for performance evaluation. Without using multiple calibrated cameras or tracking algorithms, the proposed method demonstrated encouraging accuracy.
 %, justifying the feasibility of combining action classification/detection with pose estimation.  
 
-Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captured the benefits of both realistic and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled realistic dataset and a large synthetic dataset with generated groundtruths. In addition, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
+Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captured the benefits of both realistic and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled realistic dataset and a large synthetic dataset with generated ground truths. In addition, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
 
 \section{Limitations}
 
@@ -69,7 +69,7 @@ This thesis has introduced several new approaches for classification and pose es
 
 \subsection{New approaches to 3D shape recognition}
 
-This thesis has presented a new approach for 3D geometric shape recognition in chapter \ref{sec/reg}. Instead of vote-based methods \cite{Flitton2010, Knopp2010, Pham2011}, the proposed SAP constellation model performs 3D shape classification and registration simultaneously, without registered training data. However, according to the experimental results, there is still plenty of room for improvement in the model. 
+This thesis has presented a new approach for 3D geometric shape recognition in chapter \ref{chap/reg}. Instead of vote-based methods \cite{Flitton2010, Knopp2010, Pham2011}, the proposed SAP constellation model performs 3D shape classification and registration simultaneously, without registered training data. However, according to the experimental results, there is still plenty of room for improvement in the model. 
 
 \paragraph{Designing a robust 3D feature descriptor}
 
@@ -111,7 +111,7 @@ For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} 
 
 \paragraph{Combining appearance-based and model-based pose estimator}
 
-In chapter \ref{sec/body} and \ref{sec/hand}, approaches for 3D pose estimation can be roughly categorised into appearance-based and model-based methods.  They show different characteristics in 3D pose estimation.
+In chapter \ref{chap/body} and \ref{chap/hand}, approaches for 3D pose estimation can be roughly categorised into appearance-based and model-based methods.  They show different characteristics in 3D pose estimation.
 Appearance-based approaches are usually less computationally demanding than model-based approaches. 
 % Drifting issue does not exist in appearance-based approaches as visual tracking is not used. 
 Since visual tracking is not used, appearance-based approaches are robust to arupt pose changes.

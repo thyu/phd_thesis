@@ -2,94 +2,94 @@ Changelog:
 
 GENERAL CHANGES
 ===================================
-- Corrected all grammatical errors and typos marked
-- Done spell checking manually and with a spellchecker
-- All figures are labelled and referenced at least once in the text
-- The testing dataset for chapter 5 is now available at: http://www.thyu.org/ape/
-- The testing dataset for chapter 6 is now available at: http://www.iis.ee.ic.ac.uk/~dtang/hand.html
+\item Corrected all grammatical errors and typos marked
+\item Done spell checking manually and with a spellchecker
+\item All figures are labelled and referenced at least once in the text
+\item The testing dataset for chapter 5 is now available at: http://www.thyu.org/ape/
+\item The testing dataset for chapter 6 is now available at: http://www.iis.ee.ic.ac.uk/~dtang/hand.html
 
 Abstract
 ===================================
-- Fixed typos
-- Expanded the introduction to chapter 5 (body pose estimation) and 6 (hand pose estimation).
+\item Fixed typos
+\item Expanded the introduction to chapter 5 (body pose estimation) and 6 (hand pose estimation).
 
 DECLARATION
 ===================================
-- Changed "abstract" to "paper" in the declaration
+\item Changed "abstract" to "paper" in the declaration
 
 INTRODUCTION
 ===================================
-- Revised figure 1.1
-- The thesis outline (section 1.2.3) has been extended
+\item Revised figure 1.1
+\item The thesis outline (section 1.2.3) has been extended
 
 EVAL3d
 ===================================
-- Cosmetic improvements to Table 2.1, fixed missing table border in the first row
-- Cosmetic improvements to Table 2.2, reviewed the table headers
-- increased the size of figure 2.4
-- Revised the caption of figure 2.5, 2.6
-- Revised the format of Table 2.3, utilising the page width.  
-- Minior change to the caption of figure 1.10
-- In section 1.1, added \cite{Hadfield2013} as an example of treating depth image sequences as spatiotemporal volumes
-- In section 1.2.1, added reference \cite{Hadfield2013} in both corner detector (for 3.5D/4D Harris) and blob detector (for 3.5D/4D Hessian)
+\item Cosmetic improvements to Table 2.1, fixed missing table border in the first row
+\item Cosmetic improvements to Table 2.2, reviewed the table headers
+\item increased the size of figure 2.4
+\item Revised the caption of figure 2.5, 2.6
+\item Revised the format of Table 2.3, utilising the page width.  
+\item Minior change to the caption of figure 1.10
+\item In section 1.1, added \cite{Hadfield2013} as an example of treating depth image sequences as spatiotemporal volumes
+\item In section 1.2.1, added reference \cite{Hadfield2013} in both corner detector (for 3.5D/4D Harris) and blob detector (for 3.5D/4D Hessian)
 
 REG
 ===================================
-- The explanation of a constellation model ("A constellation model is...") has been moved from section 3.3.1 to the end of section 3.1. The explanation has been expanded.
-- A new figure (Figure 3.1) is added as an overview of the proposed approach. The old figure 3.1 becomes 3.2.
-- Added a table (table 3.1) that shows the random variables used in the graphical model.
-- Revised caption of figure 3.2 and figure 3.3
-- Revised table 3.2 (old table 3.1)
+\item The explanation of a constellation model ("A constellation model is...") has been moved from section 3.3.1 to the end of section 3.1. The explanation has been expanded.
+\item A new figure (Figure 3.1) is added as an overview of the proposed approach. The old figure 3.1 becomes 3.2.
+\item Added a table (table 3.1) that shows the random variables used in the graphical model.
+\item Revised caption of figure 3.2 and figure 3.3
+\item Revised table 3.2 (old table 3.1)
 	- Added table 3.3 which provides more information about the "range" of random pose
 	- Added descriptions of K and Q in caption
 	- Rotated the table format
-- Added table 3.3
-- Corrected figure 3.3
-- Increase the size of figure 3.5
-- Added implementation details of the Toshiba point cloud dataset used in the experiments.
-- For the method evaluated in fig 3.6, added brief introduction to Hough transform and it variants, \eg \cite{Woodford2013} and \cite{Barinova2010},  in the related work section.
-- Revised the explanation of figure 3.6
-- Limitations of the proposed method is discussed in the summary
+\item Added table 3.3
+\item Corrected figure 3.3
+\item Increase the size of figure 3.5
+\item Added implementation details of the Toshiba point cloud dataset used in the experiments.
+\item For the method evaluated in fig 3.6, added brief introduction to Hough transform and it variants, \eg \cite{Woodford2013} and \cite{Barinova2010},  in the related work section.
+\item Revised the explanation of figure 3.6
+\item Limitations of the proposed method is discussed in the summary
 
 ACTION
 ====================================
-- Changed terminology: "look-ahead time" becomes "recognition latency"
-- Redrawn figure 4.2 (Overview of the proposed approach).
-- Revised the caption of figure 4.2
-- Rewritten section 4.3 to describe figure 4.2 properly
-- Revise figure 4.3 and its caption
-- Revised section 4.4 to describe figure 4.3 properly
-- In table 4.1,  "relative running time" is used instead of "relative speed", speedup factor is added to the table for reference.
-- Redrawn figure 4.5 to describe the 3D histograms of the proposed HSRM algorithm.
-- Revised the description for figure 4.5 in the text
-- Added introduction to the origin SRM algorithm \cite{Ryoo2009} in section 4.6
-- Added figure 4.6 to illustrate pyramid match kernel for the HSRM histogram.
-- Added the description of figure 4.6 in the text.  - Add limitations of the proposed action classification system.  - Change the title of 4.7.2 from "Combined classification" to "Late fusion classificaiton"
-- Explained parameter $\alpha_c$ in the late fusion scheme
+\item Changed terminology: "look-ahead time" becomes "recognition latency"
+\item Redrawn figure 4.2 (Overview of the proposed approach).
+\item Revised the caption of figure 4.2
+\item Rewritten section 4.3 to describe figure 4.2 properly
+\item Revise figure 4.3 and its caption
+\item Revised section 4.4 to describe figure 4.3 properly
+\item In table 4.1,  "relative running time" is used instead of "relative speed", speedup factor is added to the table for reference.
+\item Redrawn figure 4.5 to describe the 3D histograms of the proposed HSRM algorithm.
+\item Revised the description for figure 4.5 in the text
+\item Added introduction to the origin SRM algorithm \cite{Ryoo2009} in section 4.6
+\item Added figure 4.6 to illustrate pyramid match kernel for the HSRM histogram.
+\item Added the description of figure 4.6 in the text.  - Add limitations of the proposed action classification system.  - Change the title of 4.7.2 from "Combined classification" to "Late fusion classificaiton"
+\item Explained parameter $\alpha_c$ in the late fusion scheme
 
 BODY
 ====================================
-- Re-designed figure 5.1
-- Removed the old figure 5.2 as it is not necessary in explaining the knowledge transfer ability of the proposed method.
-- Redrawn figure 5.2 (the overview) and revised its description in the text
-- Revised the description of figure 5.3 (graphical model, the old figure 5.2) in the text
-- Discussed the reasons of not use HSRM algorithm (chapter 4) in section 5.3
-- Revised legend of figure 5.5 and 5.7
-- Added figure 5.6 to show the joint names used in the experiment.
+\item Re-designed figure 5.1
+\item Removed the old figure 5.2 as it is not necessary in explaining the knowledge transfer ability of the proposed method.
+\item Redrawn figure 5.2 (the overview) and revised its description in the text
+\item Revised the description of figure 5.3 (graphical model, the old figure 5.2) in the text
+\item Discussed the reasons of not use HSRM algorithm (chapter 4) in section 5.3
+\item Revised legend of figure 5.5 and 5.7
+\item Added figure 5.6 to show the joint names used in the experiment.
 
 HAND
 ====================================
-- In section 6.2.1, "generative" and "discriminative" approaches are renamed to "model-based" and "appearance-based" respectively, according to the literature review by Erol et al. \cite{Erol2007}.
-- Revised the description of the "apperance-based" methods.  
-- Revised figure 6.2. to explain the proposed framework properly.
-- Revised the text describing figure 6.2 (section 6.3)
-- In section 6.4.2 "Viewpoint classification term", reservoir sampling is explained (actually it is "random sampling without replacement"), \cite{Vitter1985} has been added as a reference.
-- In section 6.4.2, the adaptive switching paramters is explained. 
-- Added caption to figure 6.4
-- Added caption to figure 6.5
-- Added caption to figure 6.6
-- In section 6.7, limitations of the proposed model is discussed
+\item In section 6.2.1, "generative" and "discriminative" approaches are renamed to "model-based" and "appearance-based" respectively, according to the literature review by Erol et al. \cite{Erol2007}.
+\item Revised the description of the "apperance-based" methods.  
+\item Revised figure 6.2. to explain the proposed framework properly.
+\item Revised the text describing figure 6.2 (section 6.3)
+\item In section 6.4.2 "Viewpoint classification term", reservoir sampling is explained (actually it is "random sampling without replacement"), \cite{Vitter1985} has been added as a reference.
+\item In section 6.4.2, the adaptive switching paramters is explained. 
+\item Added caption to figure 6.4
+\item Added caption to figure 6.5
+\item Added caption to figure 6.6
+\item In section 6.7, limitations of the proposed model is discussed
 
 CONCLUSIONS
 ====================================
-- Future work is expanded and elaborated
+\item Future work is expanded and elaborated

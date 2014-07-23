@@ -13,9 +13,7 @@ V On a more general point, figures and tables are, in general, poorly described.
 	2) that the figure caption clear states the purpose of the figure and 
 	3) that a clear description of the figure is provided in the text body. 
 
-V In the case of results, the text should point out to the reader what they are looking at, what points they should note and what conclusions can be drawn from it. Where there are clear limitations, this should be added and used to justify decisions made.
-
-X As the work is of two distinct parts, one option would be to move chapters 2 and 3 to appendices and refocus the thesis on the human centric work of chapters 4, 5 and 6. This is not a requirement, but something the candidate might like to consider in discussion with the supervisor. 
+V In the case of results, the text should point out to the reader what they are looking at, what points they should note and what conclusions can be drawn from it. Where there are clear limitations, this should be added and used to justify decisions made. As the work is of two distinct parts, one option would be to move chapters 2 and 3 to appendices and refocus the thesis on the human centric work of chapters 4, 5 and 6. This is not a requirement, but something the candidate might like to consider in discussion with the supervisor. 
 
 Minor points:
 	
@@ -37,4 +35,4 @@ V Pg 116 you state generative methods requires no training. This is incorrect. B
 V Pg 123, define reservoir sampling
 V Pg 125 needs more discussion about how the weights change the learning process as we move down the tree.
 V For chapter 5 and 6 you need to make at least the test sequences available so others can compare against your work.
-- Future work is too narrow and needs to be expanded.
+V Future work is too narrow and needs to be expanded.
