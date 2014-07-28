@@ -7,38 +7,38 @@ In this thesis, the problems of object classification and pose estimation from 3
 
 \subsection{3D shape}
 
-In part I, the classification and registration tasks of 3D shape data were investigated. A comprehensive performance evaluation of 3D interest point detectors has been presented in chapter \ref{chap/eval}. A selection of interest point detectors for volumetric data (voxels) were studied both quantitatively and qualitatively. A novel evaluation metric has been introduced to facilitate a fair and holistic comparison, by combining the repeatability score and localisation accuracy of an interest point detector into a unified measurement. The experimental results have shown that, with respect to the proposed evaluation metric, the performance of various 3D interest points is analogous to that of their original image-based counterparts. Among the candidate interest points, region-based blob detectors, \eg MSER, attained highest repeatability in the experiments, followed by derivative-based blob detectors such as DoG or HoG. Corner detectors, \eg VFAST and Harris, are suitable for noisy or low-resolution 3D shape data, despite being less stable than other detectors. The 3D interest point detectors also demonstrated different qualitative properties. In summary, the choice of 3D interest point is essentially application dependent. 
+In part I, the classification and registration tasks of 3D shape data were investigated. A comprehensive performance evaluation of 3D interest point detectors has been presented in chapter \ref{chap/eval}. A selection of interest point detectors for volumetric data (voxels) were studied both quantitatively and qualitatively. A novel evaluation metric has been introduced to facilitate a fair and holistic comparison, by combining the repeatability score and localisation accuracy of an interest point detector into a unified measurement. The experimental results have shown that, with respect to the proposed evaluation metric, the performance of various 3D interest points is analogous to that of their original image-based counterparts. Among the candidate interest points, region-based blob detectors, \eg MSER, attained the highest repeatability in the experiments, followed by derivative-based blob detectors such as DoG or HoG. Nonetheless, corner detectors, \eg VFAST and Harris, are suitable for noisy or low-resolution 3D shape data, despite being less stable than other detectors. Besides quantitative analysis, the 3D interest point detectors also demonstrated different qualitative properties. Chapter \ref{chap/eval} concludes that the choice of 3D interest point is essentially application dependent. 
 
-Chapter \ref{chap/reg} addressed the sub-problems of 3D shape classification and pose estimation by introducing a shape-appearance-pose (SAP) constellation model. The proposed SAP model learns appearances and locations of object parts in a canonical reference frame in training; it subsequently classifies and registers an object simultaneously to the canonical pose in testing. While existing models require ground truth pose information for training, the proposed SAP algorithm also registers training instances, with unknown initial poses, to the canonical pose during training. Recognition and registration performance of the proposed system was evaluated on both 2D image data and 3D shape data; it demonstrated the feasibility of inferring pose jointly with shape and appearance when training part-based models. 
+Chapter \ref{chap/reg} addressed the sub-problems of 3D shape classification and pose estimation by introducing a shape-appearance-pose (SAP) constellation model. The proposed SAP model learns appearances and locations of object parts in a canonical reference frame in training; it subsequently classifies and registers an object simultaneously to the canonical reference frame in testing. While existing models require ground truth pose information for training, the proposed SAP algorithm also registers training instances, with unknown initial poses, to the canonical pose during training. Recognition and registration performance of the proposed system was evaluated on both 2D image data and 3D shape data; Experimental results demonstrated the feasibility of inferring pose jointly with shape and appearance when training part-based models. 
 
 \subsection{Human action analysis}
 
-In part II, human action classification and pose estimation from spatiotemporal data, \eg videos and sequences of depth images, was studied. Three new solutions were proposed for such tasks based on a random forest, which is an efficient and versatile machine learning technique for classification, clustering or regression. 
+In part II, human action classification and pose estimation from spatiotemporal data, \eg videos and sequences of depth images, were studied. Three new solutions were proposed for such tasks based on a random forest, which is an efficient and versatile machine learning technique for classification, clustering or regression. 
 
-Chapter \ref{chap/act} considered the task of action classification from video. It has presented a novel framework that utilises local appearance and structural information to recognise action classes in real-time. Building on the work of Shotton \etal \cite{Shotton2008}, a semantic texton forest (STF) is applied as a powerful discriminative visual codebook. In addition, hierarchical spatiotemporal relationship match (HSRM) has been proposed to describe the structure of an action by encoding the space-time relationship between visual codewords. A k-means forest classifier has been employed to categorise action classes efficiently, using HSRM as the matching kernel to provide fast and non-linear classification. The proposed system demonstrated real-time performance as well as state-of-the-art accuracy, from experimental results with the KTH and the UT-interaction datasets. 
+Chapter \ref{chap/act} considered the task of action classification from video. It has presented a novel framework that utilises local appearance and structural information to recognise action classes in real-time. Building on the work of Shotton \etal \cite{Shotton2008}, a semantic texton forest (STF) is applied as a powerful discriminative visual codebook. In addition, hierarchical spatiotemporal relationship match (HSRM) has been proposed to describe the structure of an action by encoding the space-time relationship between visual codewords. A k-means forest classifier has been employed to categorise action classes efficiently, using HSRM as the matching kernel to provide fast and non-linear classification. The proposed system demonstrated real-time performance as well as promising accuracy, from experimental results with the KTH and the UT-interaction datasets. 
 
 Chapter \ref{chap/body} investigated the problem of 3D human body pose estimation (3D HPE).
-A new 3D HPE framework has been proposed to estimate full 3D human poses from realistic and monocular video data. Different from traditional approaches, poses were not estimated directly from low-level visual features but a combination of high-level (action) and mid-level (2D body parts) cues. 
-A deformable part-model was utilised to detect 2D body parts in video, producing mid-level features that were robust to cluttered background and appearance changes. In addition, a new action detection forest has been used to classify and locate actions in space-time, providing high-level semantic information for pose estimation. Joint locations were subsequently refined using a regression forest. A new action and pose dataset has been collected for performance evaluation. Without using multiple calibrated cameras or tracking algorithms, the proposed method demonstrated encouraging accuracy.
+A new 3D HPE framework has been proposed to estimate articulated 3D human poses from realistic and monocular video data. Different from traditional approaches, poses were not estimated directly from low-level visual features but a combination of high-level (action) and mid-level (2D body parts) cues. 
+A deformable part-model was utilised to detect 2D body parts in video, producing mid-level features that were robust to cluttered background and appearance changes. A new action detection forest has been used to classify and locate actions in space-time, providing high-level semantic information for pose estimation. Joint locations were subsequently refined using a regression forest. A new action and pose dataset has been collected for performance evaluation. Without using multiple calibrated cameras or tracking algorithms, the proposed method demonstrated encouraging accuracy.
 %, justifying the feasibility of combining action classification/detection with pose estimation.  
 
-Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captured the benefits of both realistic and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled realistic dataset and a large synthetic dataset with generated ground truths. In addition, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
+Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captures the benefits of both realistic and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled realistic dataset and a large synthetic dataset with generated ground truths. Besides, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
 
 \section{Limitations}
 
 \subsection{3D shape} 
 
-As mentioned in section \ref{sec/reg/reg}, the problem of unsupervised 3D shape registration is not completely solved, especially for weak features with a low discriminative power. From the experimental results, clusters of object parts were formed by training instances of different initial poses during the early stage of training. Since the solution space of the SAP model is huge, there is no guarantee that the likelihood would converge to the global maximum. Furthermore, the overly simple 3D descriptor of the \emph{point cloud} dataset may have aggravated the clustering problem.   
+As mentioned in section \ref{sec/reg/reg}, the problem of unsupervised 3D shape registration is not completely solved, especially for weak features with a low discriminative power. From the experimental results, clusters of object parts were formed by training instances of different initial poses during the early stage of training. Since the solution space of the SAP model is huge, there is no guarantee that the likelihood would converge to the global maximum. Furthermore, the overly simple 3D descriptor used in the \emph{point cloud} dataset may have aggravated the clustering problem.   
 
 While non-linear deformation is handled effectively by state-of-the-art discriminative part-based models \cite{Felzenszwalb2010, Andriluka2009, Pishchulin2012}, the SAP model considers a linear transformation, restricting its applications to rigid objects. 
 
-\subsection{Human actions analysis} 
+\subsection{Human action analysis} 
 
-Occlusion has always been the major limitation of visual based human activity analysis. Complicated and realistic actions are often heavily occluded, appearance and motion information cannot be recovered when a large part of action is occluded or not captured from the camera viewpoint. 
+Occlusion has always been the major limitation of visual-based human activity analysis. Complicated and realistic actions are often heavily occluded, appearance and motion information cannot be recovered when a large part of action is occluded or not captured from the camera viewpoint. 
 Despite recognising action classes in real-time without sacrificing accuracy, the action classification algorithm in chapter \ref{chap/act} performs on complete and rarely occluded actions, such as the KTH dataset. 
-In addition, the solution is not scale invariant, input videos are required to be normalised with respect to scale. Otherwise, model parameters have to be re-adjusted manually for input videos with different resolutions.  
+In addition, the solution is not scale invariant, input videos are required to be normalised with respect to scale before feature extraction. Otherwise, model parameters have to be re-adjusted manually for input videos with different resolutions.  
 
-For human body estimation, the deformable part model (DPM) used for feature extraction in chapter \ref{chap/body} does not effectively model occlusions. When a body part is occluded, the DPM often produces false positive detections, without considering whether the part is visible in the scene. Similarly, hand pose estimation in chapter \ref{chap/hand} does not perform properly when self-occlusion is severe. In addition, the data-driven refinement algorithm becomes unreliable under heavy occlusion, when too many unknown joints have to be inferred from a few visible joints. 
+For human body estimation, the deformable part model (DPM) used for feature extraction in chapter \ref{chap/body} does not effectively model occlusions. When a body part is occluded, the DPM often produces false positive detections, without considering whether the part is visible in the scene. Similarly, hand pose estimation in chapter \ref{chap/hand} does not perform properly when self-occlusion is severe. Although the data-driven refinement algorithm is introduced to refine joint locations, it becomes unreliable under heavy occlusion, when too many occluded joints have to be inferred from a few visible joints. 
 
 On the contrary, humans can effortlessly recover occluded poses or partial actions by inferring from the context such as background, speech and interaction with other objects or people in the scene. It is suggested that extra cues are necessary to further improve the accuracy in frequently occluded or partial actions. 
 
@@ -65,11 +65,11 @@ Interesting work directions are summarised as follows.
 \fi
 
 % Interesting work directions are describedas follows. 
-This thesis has introduced several new approaches for classification and pose estimation of 3D geometric shapes and human actions.These approaches have been evaluated by various experiments described in the previous chapters. Their strengths and limitations have been studied and discussed based on the experimental results. To addresses these limitations, potential directions for future research are suggested as follows.
+This thesis has introduced several new approaches for classification and pose estimation of 3D geometric shapes and human actions.These approaches have been evaluated by various experiments described in the previous chapters. Their strengths and limitations have been studied and discussed according to the experimental results. To addresses these limitations, potential directions for future research are suggested as follows.
 
 \subsection{New approaches to 3D shape recognition}
 
-This thesis has presented a new approach for 3D geometric shape recognition in chapter \ref{chap/reg}. Instead of vote-based methods \cite{Flitton2010, Knopp2010, Pham2011}, the proposed SAP constellation model performs 3D shape classification and registration simultaneously, without registered training data. However, according to the experimental results, there is still plenty of room for improvement in the model. 
+This thesis has presented a new approach for 3D geometric shape recognition in chapter \ref{chap/reg}. Instead of vote-based methods \cite{Flitton2010, Knopp2010, Pham2011}, the proposed SAP constellation model is introduced to perform 3D shape classification and registration simultaneously, without using registered training data. However, according to the experimental results, there is still plenty of room for improvement. 
 
 \paragraph{Designing a robust 3D feature descriptor}
 
@@ -77,59 +77,66 @@ As discussed in section \ref{sec/reg/conclusions}, pose clustering and local max
 
 % Detection and extraction of 3D shape features are crucial to the proposed SAP model as well as other 3D object recognition algorithms.
 The processes of feature detection and feature extraction are crucial to 3D object recognition. 
-In the SAP constellation model, the shapes of object parts are determined by a DoG feature detector, while a $31$-dimensional feature descriptor represents the appearance of each object part.  
-Although the process of 3D feature detection has been evaluated and discussed in chapter \ref{chap/eval}, 3D feature descriptors have not been widely studied.
+For the experiment with the point cloud dataset in section \ref{sec/reg/experiments}, the object part shapes are represented by DoG interest points, and the appearance of each object part is represented by a $31$-dimensioal feature descriptor.
+Although several common 3D feature detectors have been evaluated and discussed in chapter \ref{chap/eval}, 3D feature descriptors have not been explored in depth.
 % Various types of 3D feature descriptors have been proposed, such as signature-based and histogram-based descriptors. 
 % Each descriptor is designed for a particular task, and their robustness in general use has not been studied.    
-Further work will focus on investigating the impact of different 3D feature descriptors to 3D shape classification, and pose estimation tasks. It is also a potential research direction to develop a robust, rotation-invariant 3D feature descriptor for 3D shape classification and registration.
+Further work will focus on investigating the impact of different 3D feature descriptors to 3D shape classification, and pose estimation tasks. It is also a potential future work to develop a robust, pose-invariant feature descriptor for 3D shape classification and registration.
 
 \paragraph{New approaches for 3D shape classification and registration}
 
 In the proposed SAP model, instead of using a global covariance matrix for part shapes, part shapes are represented by independent spherical Gaussians, which facilitate a simpler, analytical optimisation solution for pose estimation via the particle-based EM algorithm, as described in section \ref{sec/reg/particlebasedapprox}. 
-This assumption restricts the shapes and spatial arrangements of object parts. 
-The spatial dependencies among object parts are also ignored.  
+However, such assumption restricts the shapes and spatial arrangements of object parts. 
+The spatial dependencies among object parts are also omitted from the model.  
 In the proposed SAP model, direct similarity transforms are used to describe object poses for model simplicity. 
 Object poses are therefore limited to rigid transforms.
 
 As a result, it is crucial to improve the shape and pose models of the SAP framework. 
 However, a simple analytical solution for inference is not feasible when more variables are introduced to the new shape and pose models. 
-Future work should also consider introducing new optimisation methods to perform simultaneous classification and registration efficiently.
+Future work should therefore consider introducing new optimisation methods to perform simultaneous classification and registration efficiently.
 
-\subsection{New directions to 3D human pose estimation}
+\subsection{New directions to 3D human action analysis}
 
 \paragraph{Real-time video-based 3D pose estimation}
-Run-time performance is of crucial importance in many computer vision applications, such as human-computer interface and video surveillance. Recent literature has already implemented real-time 3D HPE solutions from depth images, \eg \cite{Baak2011, Girshick2011, Sun2012}, but a video-based solution is still absent. Traditional video-based 3D HPE solutions usually require visual tracking or iterative optimisation, which are difficult to attain a real-time performance \cite{Pons-Moll2011, Sigal2012}. Designing a real-time algorithm for video-based 3D human pose estimation is a challenging task. 
+Run-time performance is of crucial importance in many computer vision applications, such as human-computer interface and video surveillance. Recent literature has already implemented real-time 3D HPE solutions from depth images \cite{Baak2011, Girshick2011, Sun2012}, but a video-based solution is still absent. For 3D body and hand pose estimation, traditional video-based solutions usually require visual tracking or iterative optimisation, which is difficult to run in real-time \cite{Pons-Moll2011, Sigal2012}. Designing a real-time algorithm for video-based 3D human pose estimation is a challenging task. 
 
-This thesis proposes a new video-based 3D HPE algorithm, which replaces traditional iterative optimisation processes by efficient decision tree-based pose estimators. However, the actual computation bottlenack is at the feature extraction process that detects body parts using a deformable part model (DPM). 
+This thesis proposes a new video-based 3D HPE algorithm, which replaces traditional iterative optimisation processes by efficient decision tree-based pose estimators. However, the actual computation bottleneck is at the feature extraction process that detects body parts using a deformable part model (DPM). 
 
-Future work should consider methods to make the whole 3D HPE framework real-time. 
-The proposed 3D HPE framework, particularly its feature extraction process, can be accelerated by simplification, parallelisation and GPU computing. 
-For example, in the proposed 3D HPE framework, the 2D DPM detects body parts using a structured SVM \cite{Yang2011}. It is suggested that the run-time performance of the 2D DPM can be improved by replacing the structured SVM with a efficient classifier, such as boosting or random forest.
+Future work should consider methods to make the whole 3D pose estimation framework real-time. 
+The 3D HPE system in chapter \ref{chap/body}, particularly its feature extraction process, can be accelerated by simplification, parallelisation or GPU computing. 
+% For example, in the proposed 3D HPE framework, the 2D DPM detects body parts using a structured SVM \cite{Yang2011}. It is suggested that the run-time performance of the 2D DPM can be improved by replacing the structured SVM with a efficient classifier, such as boosting or random forest.
+For example, the run-time performance of the DPM can be improved by replacing its structured SVM classifier \cite{Yang2011} with an efficient classifier, such as boosting or random forest.
 
-In addition, new approaches for extracting robust features should also be considered.  
-For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} detects loose 2D body parts efficiently from unconstrained images. Although the poselet algorithm is designed for huamn segmentation originally, it is interesting to investigate if similar techniques can be applied to real-time feature extraction for 3D HPE. 
+Apart from improving the current feature extraction process with DPM, new approaches for computing robust features should also be considered. 
+% In addition, new approaches for extracting robust features should also be considered.  
+For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} detects loose 2D body parts efficiently from unconstrained images. Although the poselet algorithm is designed for human segmentation originally, it is interesting to investigate if similar techniques can be applied to real-time feature extraction for 3D HPE. 
 
 \paragraph{Combining appearance-based and model-based pose estimator}
 
-In chapter \ref{chap/body} and \ref{chap/hand}, approaches for 3D pose estimation can be roughly categorised into appearance-based and model-based methods.  They show different characteristics in 3D pose estimation.
+% In chapter \ref{chap/body} and \ref{chap/hand}, 
+Approaches for 3D pose estimation are roughly categorised into appearance-based and model-based methods.  They show very different characteristics in 3D pose estimation.
 Appearance-based approaches are usually less computationally demanding than model-based approaches. 
 % Drifting issue does not exist in appearance-based approaches as visual tracking is not used. 
-Since visual tracking is not used, appearance-based approaches are robust to arupt pose changes.
+Since visual tracking is not used, appearance-based approaches are robust to fast and large pose changes.
 On the other hand, model-based methods do not require a big training dataset to recognise a wide range of poses. Inverse kinematic techniques are often employed in model-based approaches for pose refinement. 
 
-A hybrid framework for 3D pose estimation is a potential search direction in the future. There exist various approaches to combine an appearance-based algorithm with a model-based algorithm.  
-For example, an efficient appearance-based algorithm, \eg random forest or k-nearest neighbour \cite{Keskin2012, Baak2011, Ye2011}, estimates a rough 3D pose. Subsequently, the initial pose estimation from the appearance-based pose estimator is used to set up a model-based pose estimator \cite{Pons-Moll2011, Sigal2012, Oikonomidis2011}, which further refines the output 3D pose.
+In order to combine the strengths of model-based and appearance-based approaches, a hybrid framework for 3D pose estimation is considered as a potential future work.
+% A hybrid framework for 3D pose estimation is a potential search direction in the future. 
+There are several methods to facilitate the collaboration between an appearance-based and a model-based algorithm.  
+For example, an efficient appearance-based algorithm, \eg random forest or k-nearest neighbour \cite{Keskin2012, Baak2011, Ye2011}, estimates a rough 3D pose. Subsequently, the intermediate pose from the appearance-based pose estimator is used to set up a model-based pose estimator \cite{Pons-Moll2011, Sigal2012, Oikonomidis2011}, which further refines the output 3D pose.
 
-In the above coarse-to-fine hybrid framework, the model-based pose estimator enjoys faster run-time performance thanks to the initialisation by the appearance-based algorithm. Since the appearance-based algorithm does not recognise poses that are not included in the training data, the model-based algorihtm handles unseen poses naturally.
+The two pose estimation algorithms complement each other in the above coarse-to-fine hybrid framework.
+The model-based pose estimator enjoys faster run-time performance thanks to the initialisation by the appearance-based algorithm. Although the appearance-based algorithm does not recognise poses that are not included in the training data, the model-based algorithm handles unseen poses naturally.
 
 \paragraph{Analysing human actions from high resolution depth data}
 
 High-resolution, low-noise and real-time time-of-flight cameras have become available recently \cite{Nair2012}. 
-The new generation of depth sensors capture depth images with higher resolution and lower sampling noise.  
-The long standing issues of sampling noise and missing data in 3D pose estimation have been largely alleviated. 
+% The new generation of depth sensors 
+They capture depth images with higher resolution and lower sampling noise than their previous generation.
+The longstanding issues of sampling noise and missing data in 3D pose estimation have been largely alleviated. 
 
 Potential future research will focus on leveraging the new depth sensors efficiently, rather than extracting useful information from noisy depth images. 
-Future work should consider more sophisticated pose estimation task, \eg tracking subtle finger movements, or estimating multiple, overlapping 3D human bodies simultaneously.    
+Furthermore, future work should consider more sophisticated pose estimation task, \eg tracking subtle finger movements, or estimating multiple, overlapping 3D human bodies simultaneously.    
 
 % Since they capture high-definition depth images with less missing data, the existing problem of sampling noise will be alleviated. New hand pose estimation algorithms should focus on utilising the high-resolution depth images, in order to provide improved accuracy.  
 
@@ -140,6 +147,6 @@ Future work should consider more sophisticated pose estimation task, \eg trackin
 
 % In chapter \ref{chap/reg}, the SAP constellation model is built from features of the same modality (3D model from shape descriptor, 2D model from image patches). Inspired from the work of Pepik \etal \cite{Pepik2012} and Sun \etal \cite{Sun2009}, it is interesting to design a framework for building a 3D constellation model using 2D images from multiple unknown viewpoints. However, matching part appearances from extreme viewpoints is a challenging problem.  
 
-\section{Summary}
+\section{Final remarks}
 Three-dimensional object recognition have seen substantial improvement over the recent years.
-This thesis have answered several unresolved issues in classification and pose estimation of 3D shapes and human actions by presenting various novel solutions to the problems. While there is still a considerable way to go to achieve fully automatic 3D classification and pose estimation systems, it is believed that this thesis has taken a step towards practical applications. 
+This thesis has answered several unresolved issues in classification and pose estimation of 3D shapes and human actions by presenting various novel solutions to the problems. While there is still a considerable way to go to achieve fully automatic 3D classification and pose estimation systems, it is believed that this thesis has taken a step towards practical applications. 

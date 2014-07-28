@@ -47,7 +47,7 @@ While the latest depth sensor technologies have enabled body pose estimation in 
 
 % done 
 \item{\textbf{Occlusions and viewpoint changes}} \\  
-Self occlusions are prevalent in hand articulations. The complex anatomy of the human hand provides at least 26 degrees of freedom \cite{Rehg1995, Holden1995}. Compared with limbs in body pose, fingers can perform more sophisticated articulations, leading to numerous possible observations. In addition, different from body pose that are usually upright and frontal \cite{Eichner2012}, varying camera viewpoints can render completely different depth images from the same hand articulation. 
+Self occlusions are prevalent in hand articulations. The complex anatomy of the human hand provides at least 26 degrees of freedom \cite{Rehg1995, Holden1995}. Compared with limbs in body pose, fingers can perform more sophisticated articulations, leading to numerous possible observations. In addition, different from body pose that is usually upright and frontal \cite{Eichner2012}, varying camera viewpoints can render completely different depth images from the same hand articulation. 
 
 % done 
 \item{\textbf{Noisy input data}} \\ 
@@ -125,7 +125,7 @@ Appearance-based methods learn a mapping from visual features to 3D hand pose ar
 Earlier approaches to 3D hand pose estimation are diverse, different techniques have been applied to single images or videos. Erol \etal \cite{Erol2007} performed a detailed literature survey of early hand pose estimation techniques. Chua \etal \cite{Chua2002} recognised hand poses from coloured markers on the hand to analyse hand articulations. Athitsos \etal \cite{Athitsos2003} estimated articulated hand and viewpoint from a database using probabilistic line matching. Tackling the problem of view ambiguities in hand poses, Guan \etal \cite{Guan2006} designed a multiple camera approach to infer 3D hand poses from contours. Stenger \etal \cite{Stenger2006} presented a model-based hand poses tracking algorithm using a Bayesian filter based on Chamfer matching.  
 
 \subsubsection{Model-based approaches} 
-Model-based approaches are more popular than appearance-based approaches among recent state-of-the-art approaches, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
+Model-based approaches are more popular than appearance-based approaches among recent state-of-the-art hand pose estimation algorithms, thanks to its ability to handle a wide range of articulations and viewpoint changes.   
 In a model-based hand pose estimator, hypotheses are projected from an articulated model, hand poses are tracked by fitting the hypotheses to the test data. 
 For example, De La Gorce \etal \cite{LaGorce2011} used a hand mesh with detailed simulated texture and lighting. 
 Hamer \etal \cite{Hamer2009} addressed strong occlusions using local trackers at separate hand segments. 
@@ -145,7 +145,7 @@ In appearance-based approaches, hand poses are often represented as holistic tem
 Although appearance-based approaches have proved successful in real-time body pose estimation from depth sensors \cite{Shotton2011, Girshick2011, Baak2011, Sun2012}, they are less common than their model-based counterparts with respect to hand pose estimation.  
 Recent appearance-based 3D hand pose estimation algorithms include approximate nearest neighbour search \cite{Romero2009, Wang2009} and hierarchical random forests \cite{Keskin2012}.  
 
-Run-time performance is the major advantage of appearance-basd approaches over model-based approaches. Appearance-based methods involve no iterative optimisation or visual tracking, hence they usually have faster run-time performance than that of model-based approaches. Since appearance-based methods work on individual frames without tracking, the drifting issue in model-based methods does not exist.
+Run-time performance is the major advantage of appearance-based approaches over model-based approaches. Appearance-based methods involve no iterative optimisation or visual tracking, hence they usually have faster run-time performances than that of model-based approaches. Since appearance-based methods work on individual frames without tracking, the drifting issue in model-based methods does not exist.
 Furthermore, appearance-based hand pose estimators handle shape variations more efficiently by generating extra synthetic training data with different shapes. Recently, the bottleneck of the feature extraction process is resolved using specialised hardware, \eg Kinect sensor \cite{Shotton2011}, achieving real-time performance for practical applications. 
 
 Appearance-based approaches, however, rely heavily on training data. 
@@ -189,7 +189,7 @@ Various semi-supervised forest learning algorithms have been proposed. Shotton \
 The proposed 3D hand pose estimation framework is illustrated in figure \ref{fig/hand/concept}.
 % The concept of \STR\ learning is illustrated in figure \ref{fig/hand/concept}(top). 
 The training dataset used in the \STR\ learning algorithm is explained in section \ref{sec/hand/dataset}.
-Training instances are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truh, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points.
+Training instances are collected from a target domain (realistic depth images) and a source domain (synthetic depth images). Whilst data points in the fully labelled source domains are generated automatically with ground truth, only a small portion of the data points in the target domain are labelled manually and the remaining points are left unlabelled. The synthetic dataset and the realistic dataset are related by establishing associations from the labelled target data points to their corresponding source data points.
 
 The proposed \STR\ learning algorithm is presented in section \ref{sec/hand/strforest}.
 Two new techniques are introduced to the traditional Hough and regression forest \cite{Gall2011}. 
@@ -389,7 +389,7 @@ Equations \ref{eqn/hand/margin} and \ref{eqn/hand/margin2} are responsible for t
 	\end{array}
 	\label{eq:switchparam2}
 \end{equation}
-At top levels, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ tends to one as the viewpoint labels are evenly distributed. As a result, according to equation \ref{eqn/hand/qualityfunction1} and \ref{eq:switchparam1}, the learning algorithm favours viewpoint classification, which is the information gain of viewpoint labels $\viewterm$. As more nodes are constructed down the decision tree, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ decreases as more viewpoint labels are classified. At the middle levels, when $\viewparam$ becomes zero, the learning objective $\classterm$ changes from viewpoint classification to joint label classification. Finally, when joint labels have been classified at the bottom levels, the weightings $\viewparam$ and $\classparam$ are both zero. According to equation \ref{eq:switchparam1}, the learning objective $\vpjterm$ switches to joint regression $\regterm$, grouping training data with respect to their poses. Two tunable thresholds $t_{\viewparam}$ and $t_{\classparam}$ are used to control switching between different learning objectives during the traiing process.
+At top levels, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ tends to one as the viewpoint labels are evenly distributed. As a result, according to equation \ref{eqn/hand/qualityfunction1} and \ref{eq:switchparam1}, the learning algorithm favours viewpoint classification, which is the information gain of viewpoint labels $\viewterm$. As more nodes are constructed down the decision tree, the viewpoint margin $\margin_{\viewlabelset}(\clset)$ decreases as more viewpoint labels are classified. At the middle levels, when $\viewparam$ becomes zero, the learning objective $\classterm$ changes from viewpoint classification to joint label classification. Finally, when joint labels have been classified at the bottom levels, the weightings $\viewparam$ and $\classparam$ are both zero. According to equation \ref{eq:switchparam1}, the learning objective $\vpjterm$ switches to joint regression $\regterm$, grouping training data with respect to their poses. Two tunable thresholds $t_{\viewparam}$ and $t_{\classparam}$ are used to control switching between different learning objectives during the training process.
 
 The tunable parameter $\tssparam$ controls the relative importance of transductive term $\pairterm$ to unsupervised term $\usterm$.  
 
@@ -454,7 +454,7 @@ where $\hat{\mu}$, $\hat{\Sigma}$, $\hat{\rho}$ denote the mean, variance and we
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\linewidth]{fig/hand/fig3.pdf}
-	\caption{\textbf{Pseudo-kinematic joint refinement algorithm.}}
+	\caption{\textbf{Pseudo-kinematic joint refinement algorithm.} Two Gaussian distributions are fitted to the votes from the \STR\ forest. Joint refinement is performed by combining the Gaussians between the \STR\ forest (red Gaussian on the left) and the data-driven kinematic model (green Gaussian).}
 	\label{fig/hand/refine}
 \end{figure}
 
@@ -562,7 +562,9 @@ Three different sequences (sequence $A$,$B$ and $C$) were recorded and labelled 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\linewidth]{fig/hand/singleview.pdf}
-	\caption{\textbf{Joint classification accuracy of the single view sequence.} Classification accuracy is defined as the percentage of correct foreground pixels. The unsupervised term $\usterm$ equals to one in the ``Transductive only'' \STR\ forest, hence unlabelled data are not used in training. Data-driven joint refinement is not performed in the baseline and the \STR\ forest approaches.}
+	\caption{\textbf{Joint classification accuracy of the single view sequence.} Classification accuracy is defined as the percentage of correct foreground pixels. 
+	In the ``Transductive only'' \STR\ forest, the unsupervised term $\usterm$ is fixed and always equals one,  therefore unlabelled data are not used in training the ``Transductive only'' forest. 
+	Data-driven joint refinement is not performed in the baseline and the \STR\ forest approaches.}
 	\label{fig/hand/single}
 \end{figure}
 

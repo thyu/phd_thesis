@@ -14,7 +14,7 @@ Specifically, training instances have to be registered to a common reference fra
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=1.0\linewidth]{./fig/reg/reg_intro.pdf}
-	\caption{\textbf{Overview of the proposed SAP model.} In training, the SAP model is learned from training instances of the same class, using a particle-based EM algorithm. These training instances are registered to a common reference frame simultaneously. The output SAP model, which is represented by the appearance $\partapp$ and shape $\partshape$ of the object class, is used for registration and classification in testing.}
+	\caption{\textbf{Overview of the proposed SAP model.} In training, the SAP model is learned from training instances of the same class, using a particle-based EM algorithm. These training instances are registered to a common reference frame simultaneously. The output SAP model, which describes the appearance $\partapp$ and shape $\partshape$ of the object class, is used for registration and classification in testing.}
 	\label{fig/reg/overview}
 \end{figure}
 
@@ -24,7 +24,7 @@ On the other hand, automatic registration of training data dramatically increase
 As a result, this work aims to address the above problem by introducing a new approach for learning a shape, appearance and pose (SAP) constellation model. A constellation model for a given object class is a generative model of the appearance and shape of that class, consisting of $\numpart$ object parts, each with an independent model for appearance and position in a reference frame. In a constellation model, the overall shape of an object class is represented by the spatial distributions of the parts with respect to the reference frame.
 
 The training and testing processes of the proposed framework are illustrated in figure \ref{fig/reg/overview}. 
-Training instances with various unknown poses are used to learn a constellation model for object classification and pose estimation. In the proposed algorithm, a training or testing instance is represented by a bag of pose-invariant features. The SAP model, which describes the appearance and shape of the object class, is learned using a particle-based expectation maximisation (EM) algorithm. The poses of the training instances are simultaneously learned during training. The pose of a testing instance is inferred using the particle-based EM algorithm given the SAP model obtained from training. Object classification is performed simultaneously by evaluating the class likelihood of the test instance in the SAP model.
+Training instances with various unknown poses are used to learn a constellation model for object classification and pose estimation. In the proposed algorithm, a training or testing instance is represented by a bag of pose-invariant features. The SAP model, which describes the appearance and shape of the object class, is learned using a particle-based expectation-maximisation (EM) algorithm. The poses of the training instances are simultaneously estimated during training. In testing, the pose of an input instance is inferred using the particle-based EM algorithm given the SAP model obtained from training. Object classification is performed simultaneously by evaluating the class likelihood of the test instance in the SAP model.
 
 \begin{figure}[ht]
 \centering
@@ -38,7 +38,7 @@ Training instances with various unknown poses are used to learn a constellation 
 \begin{subfigure}[b]{0.35\linewidth} \centering
 	\includegraphics[width=\linewidth]{fig/reg/pictorial2.pdf}
 	\subcaption{Constellation model}
-	\label{fig/reg/concept4}
+	\label{fig/reg/concept3}
 \end{subfigure} \hspace{5mm}
 \begin{subfigure}[b]{0.35\linewidth} \centering 
 	\includegraphics[width=\linewidth]{fig/reg/onebike_after3.pdf}
@@ -53,9 +53,9 @@ Training instances with various unknown poses are used to learn a constellation 
 \begin{subfigure}[b]{0.35\linewidth} \centering 
 	\includegraphics[width=\linewidth]{fig/reg/avgbike_after.png}
 	\subcaption{Mean image of training instances (After training)}
-	\label{fig/reg/concept3}
+	\label{fig/reg/concept4}
 \end{subfigure} 
-\caption{\textbf{Automatic pose estimation of a 2D SAP model.} (a) Training instances from the \textbf{bike} dataset, with unknown poses, (b) the constellation model learned from the training instances, (c) a registered training instance with detected parts annotated, (d) mean image of input instances before training, and (e) mean image of input instances after automatic pose estimation.}
+\caption{\textbf{Automatic pose estimation of a 2D SAP model.} (a) Training instances from the \textbf{bike} dataset, with unknown poses, (b) the constellation model learned from the training instances, (c) a registered training instance with detected parts annotated, (d) the mean image of input instances before training, and (e) the mean image of input instances after automatic pose estimation.}
 \label{fig/reg/concept}
 \end{figure}
 
@@ -89,7 +89,7 @@ Vote-based methods, \eg Hough transforms \cite{Barinova2010, Woodford2013}, impl
 
 In vote-based methods, their internal object representation tends to be non-parametric, based on a codebook of appearance features, \eg k-means clustering. There is also no explicit model for background clutter, where false positives are discarded through a majority voting process. Such characteristics of vote-based methods allow for much faster inference at the test stage. They have also been applied to both image-based \cite{Leibe2008, Shotton2008, Barinova2010} and 3D shape classification \cite{Flitton2010,  Knopp2010, Pham2011, Woodford2013}. 
 
-For instance, each codeword in an implicit shape model contains a vote vector that points to the reference point of an target object \cite{Leibe2008}. Target objects are detected by finding the local maxima in the Hough space. Barinova \etal \cite{Barinova2010} redeveloped traditional Hough transform within a probabilistic framework, which detect multiple objects without performing the non-maxima suppression step. Woordford \etal \cite{Woodford2013} proposed two variants of Hough transform. The implicity shape transform minimises the memory requirement by utlising the sparsity in the Hough space. The minimum-entropy Hough transform improves recognition and registration accuracy by explaining away the incorrect votes.
+For instance, each codeword in an implicit shape model contains a vote vector that points to the reference point of a target object \cite{Leibe2008}. Target objects are detected by finding the local maxima in the Hough space. Barinova \etal \cite{Barinova2010} redeveloped traditional Hough transform within a probabilistic framework, which detect multiple objects without performing the non-maxima suppression step. Woordford \etal \cite{Woodford2013} proposed two variants of Hough transform. The intrinsic Hough transform minimises the memory requirement by utilising the sparsity in the Hough space. The minimum-entropy Hough transform improves recognition and registration accuracy by explaining away the incorrect votes.
 
 
 %Both part-based and vote-based approaches achieve better performance in classifying textureless objects, or objects with a high intra-class appearance variation than appearance-only approaches, \eg cars or pedestrians. They leverage the spatial structure of an object class, at a cost of lower flexibility to pose changes.     
@@ -122,21 +122,21 @@ Given a testing instance of an unknown class, the proposed SAP model is able to 
 \begin{figure}[ht]
 \centering
 \begin{subfigure}[t]{0.48\linewidth}
-	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelNoPose.pdf}
+	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelNoPose.png}
 	\subcaption{Traditional constellation model}	
 	\label{fig/reg/graphicalModelNoPose}
 \end{subfigure}  
 \begin{subfigure}[t]{0.48\linewidth}
-	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelNoParticle.pdf}
+	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelNoParticle.png}
 	\subcaption{SAP model}	
 	\label{fig/reg/graphicalModelNoParticle}
 \end{subfigure}
 \begin{subfigure}[t]{0.48\linewidth}
-	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelParticle.pdf}
+	\includegraphics[width=0.8\linewidth]{fig/reg/graphicalModelParticle.png}
 	\subcaption{SAP with particle approximation}
 	\label{fig/reg/graphicalModelParticle}
 \end{subfigure}
-\caption{\textbf{Graphical models.} (a) Traditional constellation model, \eg \cite{Weber2000}, with no object pose defined; (b) The proposed SAP model without pose particle; (c) SAP model with particles to improve inference tractability, as described in section \ref{sec/reg/particlebasedapprox}; Latent variables are represented by grey nodes.}
+\caption{\textbf{Graphical models.} (a) Traditional constellation model, \eg Weber \etal \cite{Weber2000}, with no object pose defined; (b) the proposed SAP model without pose particle; (c) a SAP model with particles to improve inference tractability, as described in section \ref{sec/reg/particlebasedapprox}; latent variables are represented by grey nodes.}
 \label{fig/reg/graphicalmodel}
 \end{figure} 
 
@@ -146,15 +146,15 @@ Given a testing instance of an unknown class, the proposed SAP model is able to 
 		\hline	
 		\textbf{Variable} & \textbf{Description} & \textbf{Observed} & \textbf{Latent}& \textbf{Remark}\\ 
 		\hline \hline
-		$\partapp$ & Part appearance & & & fixed in testing \\
-		$\partshape$ & Part shape & & & fixed in testing \\
-		$\featapp$ & Observed object shape & \checkmark & & input data \\
-		$\featshape$ & Observed object appearance & \checkmark & & input data\\
-		$\assign$ & Feature to part assignment & \checkmark & & indicator matrix \\ 
+		$\partapp$ & Part appearance & & & learned in training \\
+		$\partshape$ & Part shape & & & learned in training \\
+		$\featapp$ & Observed shape & \checkmark & & input data \\
+		$\featshape$ & Observed appearance & \checkmark & & input data\\
+		$\assign$ & Feature-part assignment & \checkmark & & indicator matrix \\ 
 		\hline	
 		$\pose$ & Instance pose & & & linear transform \\ 
 		\hline	
-		$\seen$ & Visibility of object parts & & \checkmark & indicator vector \\
+		$\seen$ & Visibility of parts & & \checkmark & indicator vector \\
 		$\particle$ & Particle & & \checkmark & indicator vector \\ 
 		\hline
 		$\partprior$ & Part visibility prior & & & \\
@@ -465,7 +465,7 @@ The performance evaluation was divided into two parts. Experiments were performe
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\linewidth]{./fig/reg/bike.png}
-	\caption{\textbf{Sample images of the \textbf{bike} dataset.}}
+	\caption{\textbf{Sample images of the Caltech \textbf{bike} dataset.}}
 	\label{fig/reg/bike}
 \end{figure}
 
@@ -531,7 +531,7 @@ The $255$-dimensional appearance space feature was embedded to a compact $15$-di
 
 The Toshiba CAD Model \textbf{point cloud} dataset \cite{Ltd.2011} was used for the 3D evaluation. It contains point clouds of 12 real objects acquired using multi-view stereo \cite{Vogiatzis2011}. Each object class contains 20 separate scans of a particular object, captured in a variety of poses. In this experiment, two shape classes, namely ``cog2'' and ``bearing1\_black'' were not included in the experiments because their shapes are too similar to other classes, \ie ``cog1'' and ``bearing1''. The ten classes of shapes included in the experiment are shown in figure \ref{fig/reg/toshiba} 
 
-As point clouds are usually textureless, appearance features of the \textbf{Point cloud} dataset are described by the local shape around the interest points. 
+As point clouds are usually textureless, appearance features of the \textbf{point cloud} dataset are described by the local shape around the interest points. 
 The dataset includes a set of features per point cloud, each with position in scale, rotation and translation.
 Interest points are detected from the voxelised point clouds, using the 3D difference-of-Gaussians (DoG) detector. 
 The reference frame of each interest point is computed by Eigenvalue Decomposition proposed by Salti \etal \cite{Salti2014}. 
@@ -577,7 +577,7 @@ Performances figures are given by the ROC equal error rates for binary classific
 		\textbf{Shearing (affine only, min., max.)} & (0, 0.1) & (0, 0.1) & (0, 0.1) \\
 		\hline
 	\end{tabular}
-	\caption{\textbf{Different levels of transformation applied to the bike dataset.} In the experiments, each training or testing instance is initialised by a random pose, generated from its corresponding variation level. The shearing transformation is applicable to affine poses only.}
+	\caption{\textbf{Different transformations applied to the bike dataset.} In the experiments, each training or testing instance is initialised by a random pose, generated from its corresponding pose variation level. The shearing transformation is applicable to affine poses only.}
 	\label{tab/reg/posevariation}
 \end{table}
 
@@ -599,7 +599,7 @@ Performances figures are given by the ROC equal error rates for binary classific
 		Furgus \etal \cite{Fergus2007} (K = 6) & 95.125 & 87.000 & 60.000 & 52.000 \\
 		\hline
 	\end{tabular}
-	\caption{\textbf{2D classification results.} ROC equal error rates for binary classification of the \textbf{bike} dataset. $\numpart$ and $\numparticle$ are tunable model parameters, which define the number of parts and the number of pose particles respectively, as described in section \ref{sec/reg/particlebasedapprox}.}
+	\caption{\textbf{2D classification results.} ROC equal error rates for binary classification of the \textbf{bike} dataset. As described in section \ref{sec/reg/particlebasedapprox}, $\numpart$ and $\numparticle$ are tunable model parameters, which define the number of parts and the number of pose particles respectively.} 
 	\label{tab/reg/regresult2d}
 \end{table}
 
@@ -633,8 +633,6 @@ By contrast, the SAP model with direct similarity pose maintains a high recognit
 Under affine transformations, the two types SAP model perform similarly, with a significant drop in performance under large pose variations. Since the computed features, \ie the rotated patches, are not affine-invariant, they are irreversibly distorted by shearing, leading to a weaker appearance model, especially $\partapp$.
 The more flexible affine transformations might also over-fit the poses of some non-object testing instances, creating more false positives that affected the recognition accuracy. 
 
-		\textbf{Registration scores of the \textit{bike} dataset}
-		{\footnotesize data pose: affine, pose model: similarity}
 \begin{figure}[ht]
 	\centering 
 	\begin{subfigure}[b]{0.48\linewidth}
@@ -654,7 +652,7 @@ The more flexible affine transformations might also over-fit the poses of some n
 		\subcaption{Affine model, affine input pose}
 	\end{subfigure}
 	\includegraphics[width=1\linewidth]{fig/reg/reg2d_legend.pdf}
-	\caption{\textbf{Average registration scores of the best $\mathbf{N\%}$ instances in the \textbf{bike} dataset.} The graphs show the registration scores for both training and testing instances under different levels of pose variation: (a) Similarity pose SAP model tested with instances with synthetic similarity poses; (b) Similarity pose model, affine instance pose; (c) Affine pose model, similarity instance pose; (d) Affine pose model, afine instance pose.} 
+	\caption{\textbf{Average registration scores of the best $\mathbf{N\%}$ instances in the \textbf{bike} dataset.} The graphs show the registration scores for both training and testing instances under different levels of pose variation: (a) Similarity pose SAP model tested with instances with synthetic similarity poses; (b) Similarity pose model, affine instance pose; (c) Affine pose model, similarity instance pose; (d) Affine pose model, afine instance pose. The registration score is calculated according to equation \ref{eqn/reg/reg2d_score}.} 
 	\label{fig/reg/regresult2d}
 \end{figure}
 
@@ -699,7 +697,7 @@ Following Pham \etal \cite{Pham2011}, a leave-one-out cross validation scheme wa
 	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_minent}
 		\includegraphics[width=1\linewidth]{fig/reg/confusion_minent.pdf}
-		\subcaption{Minimum entropy Hough \cite{Woodford2013}}
+		\subcaption{Min. entropy Hough \cite{Woodford2013}}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.40\linewidth}
 		\label{fig/reg/confusion_blk}
@@ -758,7 +756,7 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 		\includegraphics[width=\linewidth]{fig/reg/reg3Dtrain_block.png} 
 		\subcaption{Block}
 	\end{subfigure}
-	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist())$, where $\dist()$ is the SRT distance. Note that the badly registered classes, \eg \emph{block}, are clustered.}
+	\caption{\textbf{Distance matrices.} The values are visualised in $\exp(-\dist(\cdot))$, where $\dist(\cdot)$ is the SRT distance. Note that the badly registered classes, \eg \emph{block}, are clustered.}
 	\label{fig/reg/reg_srtmatrices}
 \end{figure}
 
@@ -776,7 +774,7 @@ The registration criterion of \cite{Pham2011} is employed in this experiment. A 
 		\includegraphics[width=\linewidth]{fig/reg/cluster3.png}
 		\subcaption{Scans 15--20}
 	\end{subfigure}
-	\caption{\textbf{Pose clusters in from data acquisition.} Raw data captured in three distinct poses for the \emph{pipe} class lead to the three pose clusters.}
+	\caption{\textbf{Pose clusters in from data acquisition.} Raw data captured in three distinct poses for the \emph{pipe} class lead to the three pose clusters. The pose clustering problem is visualised in figure \ref{fig/reg/reg_srtmatrices}.}
 	\label{fig/reg/3dclusters}
 \end{figure}
 
@@ -879,7 +877,7 @@ Minimum entropy Hough \cite{Woodford2013} & \textbf{83} & 20 & 98 & \textbf{91} 
 
 This chapter is concerned with the classification and pose estimation of 3D geometric shapes. 
 
-Addressing the problem of learning a 3D shape recognition system from large-scale, un-annotated datasets, a generative shape, appearance and pose (SAP) model is presented. Different from traditional part-based model, the proposed SAP framework jointly learns a constellation model and the poses of training instances, additionally providing registration capability on top of recognition. The introduction of latent object pose in training greatly increases the parameter space, leading to a difficult optimisation problem for inference. However, such issues are solved by introducing a novel, particle-based optimisation scheme.  
+Addressing the problem of learning a 3D shape recognition system from large-scale, unannotated datasets, a generative shape, appearance and pose (SAP) model is presented. Different from traditional part-based model, the proposed SAP framework jointly learns a constellation model and the poses of training instances, additionally providing registration capability on top of recognition. The introduction of latent object pose in training greatly increases the parameter space, leading to a difficult optimisation problem for inference. However, such issues are solved by introducing a novel, particle-based optimisation scheme.  
 
 %We have demonstrated not only that inferring pose 
 The experimental results have demonstrated that inferring pose jointly with shape and appearance is feasible in practice. The proposed system performs only marginally worse than existing state-of-the-arts which use ground truth pose, and significantly improves on other approaches when ground truth pose is not known.  
@@ -890,7 +888,7 @@ Firstly, the performance of the proposed SAP model is affected by the initial po
 % independent part locations (In Fergus, the part locations are correlated) 
 Secondly, part locations are represented by a set of independent Gaussian distributions in the proposed SAP model, instead of describing them as a full Gaussian \cite{Fergus2007}. Although this assumption makes the shape model tractable, the spatial relationships among object parts are ignored. 
 Thirdly, the proposed SAP model performs pose estimation using an iterative optimisation algorithm, which is more computationally demanding than other state-of-the-art approaches, such as the traditional constellation model \cite{Weber2000, Fergus2007} or vote-based Hough transforms \cite{Barinova2010, Woodford2013}. 
-Further extensions to the current SAP model, such as an improved inference algorithm, are necessary to solve the aforementioned issues.
+Further extensions to the current SAP model, such as an improved inference algorithm, are discussed in chapter \ref{chap/conclusion}. 
 
 % what is so important? and future work?
 %We hope that this work will lead to object recognition systems learned from large-scale, un-annotated datasets, including those which use only the estimated registrations from training to then learn a different type of model. We plan to extend this approach to learn a 3D constellation model of an object, along with 3D poses, from a series of 2D images.

@@ -369,7 +369,7 @@ R_\textrm{ratio}(\onepointset, \anotherpointset', \disp) = \frac{\displaystyle\s
 where $\onepointset = \{\onepoint_i\}_{i=1}^{p}$, the set of $p$ interest points found in $\volumep$, and $\disp$ is a user provided distance threshold. 
 The Heaviside step function $H(\cdot)$ returns $1$ when the input is positive, $0$ otherwise.
 This repeatability measure favours dense interest points over accurate but sparse interest points \cite{Willis2009}. 
-However, it does not affect the fairness of this evaluation framework because fully-overlapped object pairs are used.
+However, it does not affect the fairness of this evaluation framework because fully overlapped object pairs are used.
 %In addition, the symmetry of the combined $\areascore$ score \ref{eqn/eval/rptarea} cancels out the effect of differences in interest points' density.
 
 % done
@@ -421,7 +421,7 @@ The first set, the \meshset dataset, contains $25$ shapes (surface meshes) chose
 This dataset includes a wide range of geometric features, ranging from coarse structures to fine details, as illustrated in figure \ref{fig/eval/sampleshapes}. In the experiment, point clouds were created by sampling 3D points, with a uniform distribution, over the surfaces of the meshes. Gaussian white noise was added to the points to simulate measurement errors introduced during 3D shape acquisition. 
 The point clouds were subsequently voxelised using kernel density estimation with a Gaussian kernel $g(\cdot,\sigma_{KDE})$ as shown in figure \ref{fig/eval/vol_conversion}.
 %This conversion process allows sampling density and noise to be varied when generating the volumes.
-Finally, a linear scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ was created from each volume, in order to detect shape features at different scales, \cf \ref{sec/eval/subvoxel}. All shapes in the dataset underwent this conversion process. 
+Finally, a linear scale-space $\mathbf{v}(\mathbf{x};\sigma_s)$ was created from each volume, in order to detect shape features at different scales, \cf section \ref{sec/eval/subvoxel}. All shapes in the dataset underwent this conversion process. 
 
 % done 
 The \mriset dataset consists of two synthetic MRI scans of a human brain, generated from the BrainWeb simulated brain database \cite{Cocosco1997}. The ground truth homographies ($20^{\circ}$ rotation and $20$ voxel translation) between the two MRI scans are given for performance evaluation. Since MRI scans are inherently volumetric, voxelisation is not necessary. 
@@ -469,7 +469,7 @@ The variations applied to the evaluation datasets are described in table \ref{ta
 & \stereoset & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
 \hline
 \end{tabular}
-\caption{\textbf{Properties of the evaluation datasets.}}
+\caption{\textbf{Properties of the evaluation datasets used in the experiments.}}
 \label{tab/eval/datavar}
 \end{table}
 
@@ -479,7 +479,7 @@ Performances of the candidate detectors were measured as each test parameter was
 \centering
 \begin{tabular}{|c|c|}
 \hline
-\multicolumn{2}{|c|}{ \textbf{Default parameters for reference shapes }} \\ 
+\multicolumn{2}{|c|}{ \textbf{Default parameters for reference and testing shapes }} \\ 
 \hline
 \textbf{Parameter} & \textbf{Value} \\
 \hline
@@ -506,7 +506,7 @@ Noise & 21 \\
 Scale & 21 \\
 \hline
 \end{tabular}
-\caption{\textbf{Reference parameters.} Reference parameters used for the reference shapes and testing shapes.}
+\caption{\textbf{Default parameters in the experiments.} (Top) parameters used for the reference shapes and testing shapes; (Bottom) number of transformation steps applied to the testing shapes.}
 \label{tab/eval/referenceparam}
 \end{table}
 
@@ -612,7 +612,7 @@ Meanwhile, the performance of most detectors decreases slowly as scale increases
 		\subcaption{Scale}
 		\label{fig/eval/graph_scaling}
 	\end{subfigure}
-	\caption{Repeatability area score \textbf{$\areascore$ of the \meshset dataset.} Repeatability area scores under varying (a) rotation, from $0$ to $90$ degree; (b) scaling factor, from $0.5$ to $2$ in log scale.}
+	\caption{Repeatability area score \textbf{$\areascore$ of the \meshset dataset.} Repeatability area scores under varying (a) rotation, from $0$ to $90$ degree; (b) scaling factor, from $0.5$ to $2$ in log scale. Shaded areas indicate the $25\%$ and $75\%$ quartiles of the corresponding interest point detectors.  }
 	\label{fig/eval/graph_graph1} 
 \end{figure}
 
@@ -653,7 +653,7 @@ The MSER detector obtains the highest percentage of correspondences, yet it prod
 & MSER & {\textbf{\color{blue}60.5\%}}  & {\textbf{\color{blue}60.2\%}}  & {\textbf{\color{blue}54.9\%}}\\ 
 \hline
 \end{tabular}
-\caption{\textbf{Number of detected and corresponding interest points in the \meshset dataset, under three different noise levels.} (Top) average number of interest points detected; (Middle) average number of corresponding interest point pairs; (Bottom) corresponding percentage, \ie number of correspondences / number of interest points. Sampling noise levels for testing shapes range from $0.0025L$ to $0.02L$.}
+\caption{\textbf{Number of detected and corresponding interest points in the \meshset dataset, under three different noise levels.} (Top) average number of interest points detected; (Middle) average number of corresponding interest point pairs; (Bottom) interest point correspondence percentage, \ie number of correspondences / number of interest points. Sampling noise levels for testing shapes range from $0.0025L$ to $0.02L$.}
 \label{tab/eval/numcorr}
 \end{table}
 
@@ -670,7 +670,7 @@ The performances of DoG and Harris detectors tend to be stable, though Harris pe
 	\centering
 	\includegraphics[width=0.70\linewidth]{./fig/eval/hlegend.jpg} \\ 
 	\includegraphics[width=0.49\linewidth]{./fig/eval/graph_keypointnum.jpg}
-	\caption{\textbf{Repeatability area scores $\areascore$ of the \meshset dataset.} Repeatability area score under varying percentage of interest points. }
+	\caption{\textbf{Repeatability area scores $\areascore$ of the \meshset dataset.} Repeatability area score under varying percentage of interest points. Shaded areas indicate the $25\%$ and $75\%$ quartiles of the corresponding interest point detectors.}
 	\label{fig/eval/graph_keypointnum}	
 \end{figure}
 
@@ -698,7 +698,7 @@ The $\areascore$ scores are measured from the \mriset dataset with varying $\dis
 		\subcaption{MRI Scan 2}
 		\label{fig/eval/mri2}
 	\end{subfigure}
-	\caption{\textbf{Experiment on MRI data.} Two MRI scans of a human brain, with detected MSER features.}
+	\caption{\textbf{Sample data instances of the MRI dataset.} Two MRI scans of a human brain, with detected MSER features.}
 	\label{fig/eval/mri}
 \end{figure}
 
