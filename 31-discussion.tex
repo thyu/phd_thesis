@@ -22,7 +22,7 @@ A new 3D HPE framework has been proposed to estimate articulated 3D human poses 
 A deformable part-model was utilised to detect 2D body parts in video, producing mid-level features that were robust to cluttered background and appearance changes. A new action detection forest has been used to classify and locate actions in space-time, providing high-level semantic information for pose estimation. Joint locations were subsequently refined using a regression forest. A new action and pose dataset has been collected for performance evaluation. Without using multiple calibrated cameras or tracking algorithms, the proposed method demonstrated encouraging accuracy.
 %, justifying the feasibility of combining action classification/detection with pose estimation.  
 
-Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captures the benefits of both realistic and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled realistic dataset and a large synthetic dataset with generated ground truths. Besides, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
+Finally, 3D hand pose estimation was studied in chapter \ref{chap/hand}. Synthetic data has been used by many existing hand pose estimation systems for training. The proposed STR forest captures the benefits of both real and synthetic data via transductive learning. The STR forest learns the implicit relationship between a small, sparsely labelled real dataset and a large synthetic dataset with generated ground truths. Besides, a data-driven technique was also proposed to recover noisy and occluded joints. Experimental results demonstrated not only the promising performance of this approach with respect to noise and occlusions, but also its superiority in accuracy, robustness and speed over existing methods.
 
 \section{Limitations}
 
@@ -50,7 +50,7 @@ For discriminative pose estimation approaches, such as the solutions proposed in
 Interesting work directions are summarised as follows.
 \begin{itemize}
 	\item \textbf{Inferring 3D structures from 2D images} \\  
-	In chapter \ref{chap/reg}, the SAP constellation model is built from features of the same modality (3D model from shape descriptor, 2D model from image patches). Inspired from the work of Pepik \etal \cite{Pepik2012} and Sun \etal \cite{Sun2009}, it is interesting to design a framework for building a 3D constellation model using 2D images from multiple unknown viewpoints. However, matching part appearances from extreme viewpoints is a challenging problem.  
+	In chapter \ref{chap/reg}, the SAP constellation model is built from features of the same modality (3D model from shape descriptor, 2D model from image patches). Inspired from the work of Pepik \etal \cite{Pepik2012} and Sun \etal \cite{Sun2009}, it would be interesting to design a framework for building a 3D constellation model using 2D images from multiple unknown viewpoints. However, matching part appearances from extreme viewpoints is a challenging problem.  
 	\item \textbf{Context-assisted action classification} \\ 
 	As mentioned in the previous section, additional cues are essential to improve the accuracy of action recognition, particularly for heavily occluded realistic actions. New action classification algorithms should consider new contextual features which provide extra information outside the target object, \eg Ding and Xiao \cite{Ding2012}.   
 	\item \textbf{Real-time pose estimation}\\ 
@@ -105,11 +105,11 @@ This thesis proposes a new video-based 3D HPE algorithm, which replaces traditio
 Future work should consider methods to make the whole 3D pose estimation framework real-time. 
 The 3D HPE system in chapter \ref{chap/body}, particularly its feature extraction process, can be accelerated by simplification, parallelisation or GPU computing. 
 % For example, in the proposed 3D HPE framework, the 2D DPM detects body parts using a structured SVM \cite{Yang2011}. It is suggested that the run-time performance of the 2D DPM can be improved by replacing the structured SVM with a efficient classifier, such as boosting or random forest.
-For example, the run-time performance of the DPM can be improved by replacing its structured SVM classifier \cite{Yang2011} with an efficient classifier, such as boosting or random forest.
+For example, the run-time performance of the DPM can be improved by replacing its structured SVM classifier \cite{Yang2011} with an efficient classifier, such as boosting or random forests.
 
 Apart from improving the current feature extraction process with DPM, new approaches for computing robust features should also be considered. 
 % In addition, new approaches for extracting robust features should also be considered.  
-For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} detects loose 2D body parts efficiently from unconstrained images. Although the poselet algorithm is designed for human segmentation originally, it is interesting to investigate if similar techniques can be applied to real-time feature extraction for 3D HPE. 
+For example, the poselet algorithm proposed by Bourdev \etal \cite{Bourdev2009} detects loose 2D body parts efficiently from unconstrained images. Although the poselet algorithm is designed for human segmentation originally, it would be interesting to investigate if similar techniques can be applied to real-time feature extraction for 3D HPE. 
 
 \paragraph{Combining appearance-based and model-based pose estimator}
 
@@ -120,7 +120,7 @@ Appearance-based approaches are usually less computationally demanding than mode
 Since visual tracking is not used, appearance-based approaches are robust to fast and large pose changes.
 On the other hand, model-based methods do not require a big training dataset to recognise a wide range of poses. Inverse kinematic techniques are often employed in model-based approaches for pose refinement. 
 
-In order to combine the strengths of model-based and appearance-based approaches, a hybrid framework for 3D pose estimation is considered as a potential future work.
+In order to combine the strengths of model-based and appearance-based approaches, a hybrid framework for 3D pose estimation is considered as potential future work.
 % A hybrid framework for 3D pose estimation is a potential search direction in the future. 
 There are several methods to facilitate the collaboration between an appearance-based and a model-based algorithm.  
 For example, an efficient appearance-based algorithm, \eg random forest or k-nearest neighbour \cite{Keskin2012, Baak2011, Ye2011}, estimates a rough 3D pose. Subsequently, the intermediate pose from the appearance-based pose estimator is used to set up a model-based pose estimator \cite{Pons-Moll2011, Sigal2012, Oikonomidis2011}, which further refines the output 3D pose.
@@ -136,7 +136,7 @@ They capture depth images with higher resolution and lower sampling noise than t
 The longstanding issues of sampling noise and missing data in 3D pose estimation have been largely alleviated. 
 
 Potential future research will focus on leveraging the new depth sensors efficiently, rather than extracting useful information from noisy depth images. 
-Furthermore, future work should consider more sophisticated pose estimation task, \eg tracking subtle finger movements, or estimating multiple, overlapping 3D human bodies simultaneously.    
+Furthermore, future work should consider more sophisticated pose estimation tasks, \eg tracking subtle finger movements, or estimating multiple, overlapping 3D human bodies simultaneously.    
 
 % Since they capture high-definition depth images with less missing data, the existing problem of sampling noise will be alleviated. New hand pose estimation algorithms should focus on utilising the high-resolution depth images, in order to provide improved accuracy.  
 

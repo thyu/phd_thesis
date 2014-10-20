@@ -95,7 +95,7 @@ The main contributions of this thesis are:
 	\item A new weakly-supervised constellation model for simultaneous 3D shape recognition and registration, using training data with unknown pose. 
 	\item A real-time algorithm that combines appearance and structural information for video-based action classification using a semantic texton forest. 
 	\item A new technique to estimate 3D human body poses by action detection and regression random forests. 
-	\item A semi-supervised 3D hand pose estimation system that combines synthetic and realistic training data. 
+	\item A semi-supervised 3D hand pose estimation system that combines synthetic and real training data. 
 \end{itemize}
 
 \begin{figure}[t]
@@ -111,7 +111,7 @@ The main contributions of this thesis are:
 In order to concentrate on the most important and relevant topics, several areas of 3D object recognition are not considered within this thesis. 
 
 The first is recognition of textured 3D meshes \cite{Zaharescu2009, Bronstein2011, Kokkinos2012}. Textured meshes are a standard means of representing 3D shapes in computer graphics and computer-aided design (CAD) tasks. 
-%However, realistic 3D shape data are usually captured in textureless point clouds, depth images or voxels. 
+%However, real 3D shape data are usually captured in textureless point clouds, depth images or voxels. 
 However, real world 3D objects are usually captured in the form of texture-less point clouds, depth images or voxels. 
 In addition, instances of the same object class can have different textures. Whilst texture-based appearance features are still useful for instance recognition, they are not suitable for shape classification tasks.  
 
@@ -208,7 +208,7 @@ A data-driven inverse kinematic technique is proposed to refine the occluded joi
 
 This chapter addresses the sub-problem of articulated hand pose estimation.  Unlike body poses, hand poses are prone to self-occlusions and viewpoint changes. Realistic training data are costly via manual labelling, because of the complex structure of human hands. 
 
-In this work, the Semi-supervised Transductive Regression forest (\STR\ forest) is proposed. Similar to the action detection forest in chapter \ref{chap/body}, the \STR\ forest performs various recognition tasks, including viewpoint classification, joint classification and joint regression. It utilises both synthetic and realistic training data by transductive learning, which creates associations between the two training datasets. In addition, semi-supervised learning is employed in the \STR\ forest training algorithm, in order to utilise the unlabelled data.
+In this work, the Semi-supervised Transductive Regression forest (\STR\ forest) is proposed. Similar to the action detection forest in chapter \ref{chap/body}, the \STR\ forest performs various recognition tasks, including viewpoint classification, joint classification and joint regression. It utilises both synthetic and real training data by transductive learning, which creates associations between the two training datasets. In addition, semi-supervised learning is employed in the \STR\ forest training algorithm, in order to utilise the unlabelled data.
 Furthermore, a data-driven inverse kinematic technique is also presented to recover the occluded joints from the \STR\ forest.
 
 (This work has been presented in the 14th IEEE International Conference of Computer Vision, 2013 \cite{Tang2013}.)

@@ -58,7 +58,7 @@ In addition, scale-space analysis can be applied on VFAST in order to detect int
 Machine recognition of human activities has been a long-lasting topic in computer vision research since the seventies, \eg moving light displays \cite{Johansson1973}. Early approaches to human activity analysis were reviewed by C\'edras and Shah \cite{Cedras1995}, Moeslund and Granum \cite{Moeslund2001} and Turaga \etal \cite{Turaga2008}. Contemporary action recognition algorithms were reviewed by Poppe \cite{Poppe2010} and Weinland \etal \cite{Weinland2011}.   
 
 State-of-the-art action recognition methods have shown the effectiveness of local appearance-based features, the bag-of-words model is particularly popular in the literature \cite{Schuldt2004, Dollar2005, Riemenschneider2009, Niebles2008, Wong2007}.
-Figure \ref{fig/act/bow} summarises a typical bag-of-word object recognition pipeline. Feature descriptors are firstly extracted from the detected interest points. Input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie the histogram of visual codewords. A classifier is then trained to assign class labels to the testing objects.
+Figure \ref{fig/act/bow} summarises a typical bag-of-words object recognition pipeline. Feature descriptors are firstly extracted from the detected interest points. Input feature vectors are quantised into visual codewords by a learned codebook. Each object is represented by its frequency list, \ie the histogram of visual codewords. A classifier is then trained to assign class labels to the testing objects.
 
 \begin{figure}[t]
 	\centering  	
@@ -129,7 +129,7 @@ The final classification result is combined from the outputs of HSRM and BOST al
 \begin{figure}[!ht]
 	\centering  	
 	\includegraphics[width=1.0\linewidth]{fig/act/act_intro.pdf}
-	\caption{\textbf{Overview of the proposed approach.} VFAST interest points extracted from the video snippets are encoded into visual codewords by the spatiotemporal semantic texton forest. Two different algorithms, namely the proposed HSRM method and the traditional bag-of-word model, are employed to classify the codewords. Their results are combined using an adaptive late fusion scheme.}
+	\caption{\textbf{Overview of the proposed approach.} VFAST interest points extracted from the video snippets are encoded into visual codewords by the spatiotemporal semantic texton forest. Two different algorithms, namely the proposed HSRM method and the traditional bag-of-words model, are employed to classify the codewords. Their results are combined using an adaptive late fusion scheme.}
 	\label{fig/act/flow}
 \end{figure}
 
@@ -284,7 +284,7 @@ Figure \ref{fig/act/stf} demonstrates how input spatiotemporal patches are clust
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|}
 			\hline
-			\textbf{ Algorithm} & \textbf{ Complexity} & \parbox{3cm}{\centering\textbf{Relative Running Time}} & \textbf{Speedup} & \textbf{ Hierarchical} \\
+			\textbf{ Algorithm} & \textbf{ Complexity} & \parbox{3cm}{\centering\textbf{Relative Run Time}} & \textbf{Speedup} & \textbf{ Hierarchical} \\
 			\hline
 			k-means & $O(K)$ & $559.86$ & $1\mathrm{x}$ & no \\
 			Hierarchical k-means & $O(b\log_{b}(K))$ & $12.87$ & $43.50\mathrm{x}$ & yes \\
@@ -350,7 +350,7 @@ In the proposed system, a set of pair-wise spatiotemporal associations are desig
 
 % done 
 Figure \ref{fig/act/hsrm} illustrates the construction and matching of the spatiotemporal relationship histograms using the proposed HSRM. 
-A set of 3D histograms $\{ \histogram_1(\vfastset),\dots,\histogram_{M}(\vfastset)\}$ are constructed by encoding all possible pairs of feature points in $\vfastset$. The bin $\mathrm{h}_{m}(i,j,k)$ for the $m$-th tree $\histogram_{m}(\vfastset)$ corresponds to the number of matching $(\vcode_{m,i},\vcode_{m,j})$ codeword pairs by an association $R_k$. The total number of bins of $\histogram_m(\vfastset)$, \ie histogram size, is therefore $\codebooksize_m \times \codebooksize_m \times |\mathcal{R}|$. Since the spatiotemporal histograms are sparse, their operations can be greatly accelerated using sparse matrices.  
+A set of 3D histograms $\{ \histogram_1(\vfastset),\dots,\histogram_{M}(\vfastset)\}$ are constructed by encoding all possible pairs of feature points in $\vfastset$. The bin $\mathrm{h}_{m}(i,j,k)$ for the $m$-th tree $\histogram_{m}(\vfastset)$ corresponds to the number of matching $(\vcode_{m,i},\vcode_{m,j})$ codeword pairs by an association $R_k$. The total number of bins of $\histogram_m(\vfastset)$, \ie histogram size, is therefore $\codebooksize_m \times \codebooksize_m \times |\mathcal{R}|$. Since the spatiotemporal histograms are sparse, their operations can be greatly accelerated using sparse matrix routines.  
 
 % done 
 \subsection{Pyramid match kernel for HSRM}
