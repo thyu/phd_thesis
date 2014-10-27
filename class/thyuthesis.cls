@@ -42,10 +42,10 @@
                  linktocpage,
                  pagebackref,
                  colorlinks = true,
-                 linkcolor = camblue,
-                 urlcolor  = camblue,
-                 citecolor = camred,
-                 anchorcolor = green,
+                 linkcolor = black,
+                 urlcolor  = black,
+                 citecolor = black,
+                 anchorcolor = black,
                  hyperindex = true,
                  hyperfigures
                  ]{hyperref} 
